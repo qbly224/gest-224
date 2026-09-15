@@ -12,21 +12,22 @@ catalogue produits/services, et une comptabilité simplifiée
   TypeScript
 - **Base de données** : PostgreSQL, via Prisma ORM
 - **Génération PDF** : à définir en Phase 2 (Puppeteer ou équivalent)
-- **Authentification** : email / mot de passe, un compte = une entreprise
-  (tenant)
+- **Authentification** : email / mot de passe (JWT en cookie httpOnly), un
+  compte = une entreprise (tenant)
 
 ## État du projet
 
-Phase en cours : **Phase 1 — Socle multi-tenant** (schéma de données en
-cours de validation, voir `docs/schema-phase-1-2.md`).
+Phase 1 livrée, prête à tester. Prochaine étape : Phase 2 (devis & facture).
 
 | Phase | Contenu | Statut |
 |---|---|---|
-| 1 | Socle multi-tenant, clients, catalogue | Schéma proposé |
+| 1 | Socle multi-tenant : auth, fiche entreprise, clients, catalogue | ✅ Livré |
 | 2 | Devis & Facture (PDF, numérotation, conversion) | À venir |
 | 3 | Bon de commande, bon de livraison, acompte, avoir | À venir |
 | 4 | Comptabilité simplifiée | À venir |
 | 5 | Mise en marché SaaS (plans, onboarding) | À venir |
+
+Schéma de données complet (phases 1 & 2) : `docs/schema-phase-1-2.md`.
 
 ## Démarrer en local
 
