@@ -17,16 +17,30 @@ catalogue produits/services, et une comptabilité simplifiée
 
 ## État du projet
 
-Phases 1 et 2 livrées, prêtes à tester. Prochaine étape : Phase 3 (bon de
-commande, bon de livraison, acompte, avoir).
+Phases 1 à 3 livrées, prêtes à tester. Prochaine étape : Phase 4
+(comptabilité simplifiée).
 
 | Phase | Contenu | Statut |
 |---|---|---|
 | 1 | Socle multi-tenant : auth, fiche entreprise, clients, catalogue | ✅ Livré |
 | 2 | Devis & Facture (lignes dynamiques, PDF, numérotation, conversion) | ✅ Livré |
-| 3 | Bon de commande, bon de livraison, acompte, avoir | À venir |
+| 3 | Bon de commande, bon de livraison, facture d'acompte, avoir | ✅ Livré |
 | 4 | Comptabilité simplifiée | À venir |
 | 5 | Mise en marché SaaS (plans, onboarding) | À venir |
+
+### Chaîne documentaire (Phase 3)
+
+```
+devis --accepté--> bon de commande --envoyé--> bon de livraison --livré--> facture --émise--> avoir
+  \--accepté---------------------------------------------------------------/  (raccourci direct)
+```
+
+Chaque conversion clone les lignes du document source, prend une nouvelle
+numérotation et référence le document d'origine (`ref_document_id`). Le bon
+de livraison n'affiche ni prix ni TVA. L'avoir se crée depuis une facture
+déjà émise et représente le montant à déduire via des quantités négatives
+(le prix unitaire reste positif) ; une facture peut recevoir plusieurs
+avoirs successifs (avoirs partiels).
 
 ## Génération PDF
 
