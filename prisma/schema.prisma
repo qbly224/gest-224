@@ -1,0 +1,327 @@
+// Gest-224 — Schéma de données (Phases 1 & 2)
+// PostgreSQL — voir docs/schema-phase-1-2.md pour la note explicative complète.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------------------
+
+enum RegimeTva {
+  normal    // TVA calculée et affichée par taux
+  franchise // Franchise en base (art. 293 B du CGI) : aucune TVA facturée
+}
+
+enum RoleUtilisateur {
+  owner   // Créateur du compte / titulaire de l'entreprise
+  membre  // Collaborateur additionnel (prévu pour une évolution future)
+}
+
+enum TypeClient {
+  particulier
+  professionnel
+}
+
+enum TypeArticle {
+  produit
+  service
+}
+
+// L'ensemble des 6 types est déclaré dès la Phase 1 pour que la chaîne
+// documentaire (devis -> commande -> livraison -> facture -> avoir) et la
+// numérotation par type soient stables ; seuls "devis" et "facture" sont
+// exposés dans l'UI/API en Phase 2, les autres arrivent en Phase 3.
+enum TypeDocument {
+  devis
+  bon_commande
+  bon_livraison
+  facture
+  facture_acompte
+  facture_avoir
+}
+
+// Statuts génériques couvrant tous les types de documents. Les transitions
+// valables pour un type donné (ex. un bon_livraison ne passe jamais par
+// "payee") sont contrôlées au niveau applicatif, pas en base.
+enum StatutDocument {
+  brouillon
+  envoye
+  accepte
+  refuse
+  converti           // ex. devis transformé en facture
+  livre              // bon_livraison réceptionné
+  payee_partiellement
+  payee
+  en_retard
+  annule
+}
+
+// ---------------------------------------------------------------------------
+// Tenant (Entreprise) & Utilisateurs
+// ---------------------------------------------------------------------------
+
+model Tenant {
+  id                     String    @id @default(uuid())
+
+  raisonSociale          String    @map("raison_sociale")
+  formeJuridique         String?   @map("forme_juridique")
+  siret                  String    @unique @db.VarChar(14)
+  siren                  String?   @db.VarChar(9)
+  numeroTvaIntracom      String?   @map("numero_tva_intracom")
+  regimeTva              RegimeTva @default(franchise) @map("regime_tva")
+  capitalSocial          Decimal?  @map("capital_social") @db.Decimal(12, 2)
+
+  adresseLigne1          String    @map("adresse_ligne1")
+  adresseLigne2          String?   @map("adresse_ligne2")
+  codePostal             String    @map("code_postal") @db.VarChar(10)
+  ville                  String
+  pays                   String    @default("France")
+
+  email                  String?
+  telephone              String?
+
+  iban                   String?
+  bic                    String?
+
+  // Mentions légales additionnelles libres à faire apparaître sur les PDF
+  // (assurance RC pro, numéro d'agrément, etc.)
+  mentionsLegalesLibres  String?   @map("mentions_legales_libres")
+
+  actif                  Boolean   @default(true)
+  createdAt              DateTime  @default(now()) @map("created_at")
+  updatedAt              DateTime  @updatedAt @map("updated_at")
+
+  users                  User[]
+  clients                Client[]
+  articles               Article[]
+  documents              Document[]
+  numberingSequences     NumberingSequence[]
+
+  @@map("tenants")
+}
+
+model User {
+  id            String          @id @default(uuid())
+
+  tenantId      String          @map("tenant_id")
+  tenant        Tenant          @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  email         String          @unique
+  passwordHash  String          @map("password_hash")
+  nom           String
+  prenom        String
+  role          RoleUtilisateur @default(owner)
+  actif         Boolean         @default(true)
+
+  lastLoginAt   DateTime?       @map("last_login_at")
+  createdAt     DateTime        @default(now()) @map("created_at")
+  updatedAt     DateTime        @updatedAt @map("updated_at")
+
+  documentsCrees Document[]     @relation("DocumentCreePar")
+
+  @@index([tenantId])
+  @@map("users")
+}
+
+// ---------------------------------------------------------------------------
+// Clients
+// ---------------------------------------------------------------------------
+
+model Client {
+  id                    String     @id @default(uuid())
+
+  tenantId              String     @map("tenant_id")
+  tenant                Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  type                  TypeClient @default(professionnel)
+
+  // Professionnel
+  raisonSociale         String?    @map("raison_sociale")
+  siret                 String?
+  numeroTvaIntracom     String?    @map("numero_tva_intracom")
+
+  // Particulier
+  civilite              String?
+  nom                   String?
+  prenom                String?
+
+  adresseLigne1         String     @map("adresse_ligne1")
+  adresseLigne2         String?    @map("adresse_ligne2")
+  codePostal            String     @map("code_postal") @db.VarChar(10)
+  ville                 String
+  pays                  String     @default("France")
+
+  email                 String?
+  telephone             String?
+  notes                 String?
+
+  actif                 Boolean    @default(true)
+  createdAt             DateTime   @default(now()) @map("created_at")
+  updatedAt             DateTime   @updatedAt @map("updated_at")
+
+  documents             Document[]
+
+  @@index([tenantId])
+  @@map("clients")
+}
+
+// ---------------------------------------------------------------------------
+// Catalogue produits / services
+// ---------------------------------------------------------------------------
+
+model Article {
+  id               String          @id @default(uuid())
+
+  tenantId         String          @map("tenant_id")
+  tenant           Tenant          @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  type             TypeArticle     @default(service)
+  reference        String?
+  designation      String
+  description      String?
+  uniteMesure      String?         @default("unité") @map("unite_mesure")
+
+  prixUnitaireHt   Decimal         @map("prix_unitaire_ht") @db.Decimal(10, 2)
+  // Nul si le tenant est en franchise en base (aucune TVA ne s'applique).
+  // Valeurs autorisées en régime normal : 0 / 5.5 / 10 / 20 — contrôlé au
+  // niveau applicatif (cf. note).
+  tauxTva          Decimal?        @map("taux_tva") @db.Decimal(4, 2)
+
+  actif            Boolean         @default(true)
+  createdAt        DateTime        @default(now()) @map("created_at")
+  updatedAt        DateTime        @updatedAt @map("updated_at")
+
+  documentLignes   DocumentLigne[]
+
+  @@index([tenantId])
+  @@map("articles")
+}
+
+// ---------------------------------------------------------------------------
+// Numérotation séquentielle (une série par entreprise x type x année)
+// ---------------------------------------------------------------------------
+
+model NumberingSequence {
+  id             String       @id @default(uuid())
+
+  tenantId       String       @map("tenant_id")
+  tenant         Tenant       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  typeDocument   TypeDocument @map("type_document")
+  annee          Int
+  prefixe        String       @db.VarChar(10) // "DEV", "FA", "BC", "BL", "AC", "AV"
+  dernierNumero  Int          @default(0) @map("dernier_numero")
+
+  updatedAt      DateTime     @updatedAt @map("updated_at")
+
+  // Une seule séquence par entreprise / type / année : le numéro suivant
+  // est obtenu par un SELECT ... FOR UPDATE sur cette ligne dans la même
+  // transaction que la création du document, pour garantir zéro trou.
+  @@unique([tenantId, typeDocument, annee])
+  @@map("numbering_sequences")
+}
+
+// ---------------------------------------------------------------------------
+// Documents (devis, bon de commande, bon de livraison, factures, avoirs)
+// ---------------------------------------------------------------------------
+
+model Document {
+  id             String          @id @default(uuid())
+
+  tenantId       String          @map("tenant_id")
+  tenant         Tenant          @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  type           TypeDocument
+  // Numéro complet, ex. "FA-2026-0001" — généré via NumberingSequence,
+  // jamais modifiable une fois le document validé (sortie de "brouillon").
+  numero         String
+  statut         StatutDocument  @default(brouillon)
+
+  clientId       String          @map("client_id")
+  client         Client          @relation(fields: [clientId], references: [id], onDelete: Restrict)
+
+  // Document d'origine dans la chaîne devis -> commande -> livraison ->
+  // facture, ou facture d'origine pour un avoir.
+  refDocumentId  String?         @map("ref_document_id")
+  refDocument    Document?       @relation("ChaineDocumentaire", fields: [refDocumentId], references: [id])
+  documentsAval  Document[]      @relation("ChaineDocumentaire")
+
+  dateEmission   DateTime        @default(now()) @map("date_emission")
+  // Pertinent pour facture / facture_acompte.
+  dateEcheance   DateTime?       @map("date_echeance")
+
+  conditionsPaiement String?     @map("conditions_paiement")
+  // Mentions obligatoires factures : taux de pénalités de retard et
+  // indemnité forfaitaire de recouvrement (40 € par défaut, Code de
+  // commerce art. L441-10).
+  tauxPenaliteRetard Decimal?    @map("taux_penalite_retard") @db.Decimal(5, 2)
+  indemniteForfaitaire Decimal  @default(40) @map("indemnite_forfaitaire") @db.Decimal(6, 2)
+
+  notes          String?
+
+  montantHt      Decimal         @default(0) @map("montant_ht") @db.Decimal(12, 2)
+  montantTva     Decimal         @default(0) @map("montant_tva") @db.Decimal(12, 2)
+  montantTtc     Decimal         @default(0) @map("montant_ttc") @db.Decimal(12, 2)
+
+  // Copies figées de l'identité vendeur / acheteur au moment de l'émission
+  // (raison sociale, SIRET, adresse, IBAN, régime TVA...). Obligatoire pour
+  // que les mentions légales d'un document déjà émis restent exactes même
+  // si la fiche entreprise ou la fiche client est modifiée ensuite.
+  emetteurSnapshot Json          @map("emetteur_snapshot")
+  clientSnapshot   Json          @map("client_snapshot")
+
+  createdById    String?         @map("created_by_id")
+  createdBy      User?           @relation("DocumentCreePar", fields: [createdById], references: [id])
+
+  envoyeAt       DateTime?       @map("envoye_at")
+  payeAt         DateTime?       @map("paye_at")
+
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+
+  lignes         DocumentLigne[]
+
+  // Numéro unique par entreprise et par type de document (pas de collision
+  // entre séries : FA-2026-0001 et DEV-2026-0001 coexistent).
+  @@unique([tenantId, type, numero])
+  @@index([tenantId])
+  @@index([clientId])
+  @@index([refDocumentId])
+  @@map("documents")
+}
+
+model DocumentLigne {
+  id                String    @id @default(uuid())
+
+  documentId        String    @map("document_id")
+  document          Document  @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  articleId         String?   @map("article_id")
+  article           Article?  @relation(fields: [articleId], references: [id], onDelete: SetNull)
+
+  ordre             Int
+
+  designation       String
+  description       String?
+  uniteMesure       String?   @map("unite_mesure")
+  quantite          Decimal   @db.Decimal(10, 2)
+  prixUnitaireHt    Decimal   @map("prix_unitaire_ht") @db.Decimal(10, 2)
+  // Nul si le tenant est en franchise en base.
+  tauxTva           Decimal?  @map("taux_tva") @db.Decimal(4, 2)
+  remisePourcentage Decimal   @default(0) @map("remise_pourcentage") @db.Decimal(5, 2)
+
+  // Montant HT de la ligne, calculé à l'enregistrement (quantite *
+  // prix_unitaire_ht * (1 - remise_pourcentage/100)) et persisté pour
+  // garantir l'immuabilité d'un document déjà émis.
+  montantHt         Decimal   @map("montant_ht") @db.Decimal(12, 2)
+
+  @@index([documentId])
+  @@map("document_lignes")
+}
