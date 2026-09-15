@@ -3,6 +3,8 @@ import { signOut } from "@/lib/actions/auth";
 
 const links = [
   { href: "/tableau-de-bord", label: "Tableau de bord" },
+  { href: "/devis", label: "Devis" },
+  { href: "/factures", label: "Factures" },
   { href: "/clients", label: "Clients" },
   { href: "/catalogue", label: "Catalogue" },
   { href: "/entreprise", label: "Entreprise" },
