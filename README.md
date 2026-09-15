@@ -17,15 +17,24 @@ catalogue produits/services, et une comptabilité simplifiée
 
 ## État du projet
 
-Phase 1 livrée, prête à tester. Prochaine étape : Phase 2 (devis & facture).
+Phases 1 et 2 livrées, prêtes à tester. Prochaine étape : Phase 3 (bon de
+commande, bon de livraison, acompte, avoir).
 
 | Phase | Contenu | Statut |
 |---|---|---|
 | 1 | Socle multi-tenant : auth, fiche entreprise, clients, catalogue | ✅ Livré |
-| 2 | Devis & Facture (PDF, numérotation, conversion) | À venir |
+| 2 | Devis & Facture (lignes dynamiques, PDF, numérotation, conversion) | ✅ Livré |
 | 3 | Bon de commande, bon de livraison, acompte, avoir | À venir |
 | 4 | Comptabilité simplifiée | À venir |
 | 5 | Mise en marché SaaS (plans, onboarding) | À venir |
+
+## Génération PDF
+
+Les PDF sont générés côté serveur avec Puppeteer, piloté vers un Chromium
+déjà présent sur la machine plutôt que celui téléchargé par défaut par
+Puppeteer. En local/production, définir `CHROMIUM_EXECUTABLE_PATH` si le
+chemin par défaut (`/opt/pw-browsers/chromium`) n'existe pas sur la machine
+cible — sinon installer Chromium et pointer vers son exécutable.
 
 Schéma de données complet (phases 1 & 2) : `docs/schema-phase-1-2.md`.
 
