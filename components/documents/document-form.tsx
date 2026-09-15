@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useId, useMemo, useState } from "react";
+import type { TypeDocument } from "@prisma/client";
 import { initialActionState, type ActionState } from "@/lib/actions/types";
 import { FieldError } from "@/components/forms/field-error";
 import { SubmitButton } from "@/components/forms/submit-button";
@@ -71,7 +72,7 @@ export function DocumentForm({
   action,
   initial,
 }: {
-  type: "devis" | "facture";
+  type: TypeDocument;
   clients: ClientOption[];
   articles: ArticleOption[];
   regimeTvaNormal: boolean;
@@ -98,6 +99,10 @@ export function DocumentForm({
       ? initial.lignes
       : [nouvelleLigne(regimeTvaNormal)]
   );
+
+  // L'avoir rembourse le client : pas d'échéance ni de pénalités de retard.
+  const mentionsFacture = type === "facture" || type === "facture_acompte";
+  const quantiteLibre = type === "facture_avoir";
 
   function updateLigne(key: string, patch: Partial<LigneState>) {
     setLignes((prev) => prev.map((l) => (l.key === key ? { ...l, ...patch } : l)));
@@ -208,7 +213,7 @@ export function DocumentForm({
         </div>
       </div>
 
-      {type === "facture" && (
+      {mentionsFacture && (
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className={labelClass} htmlFor={`${idPrefix}-dateEcheance`}>
@@ -330,12 +335,14 @@ export function DocumentForm({
                 className={`mt-2 grid gap-3 ${regimeTvaNormal ? "grid-cols-5" : "grid-cols-4"}`}
               >
                 <div>
-                  <label className={labelClass}>Quantité</label>
+                  <label className={labelClass}>
+                    {quantiteLibre ? "Quantité (négative = à déduire)" : "Quantité"}
+                  </label>
                   <input
                     data-testid="ligne-quantite"
                     type="number"
                     step="0.01"
-                    min="0"
+                    min={quantiteLibre ? undefined : "0"}
                     required
                     value={ligne.quantite}
                     onChange={(e) => updateLigne(ligne.key, { quantite: e.target.value })}

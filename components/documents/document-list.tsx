@@ -15,10 +15,14 @@ export function DocumentList({
   rows,
   basePath,
   emptyLabel,
+  showMontant = true,
+  montantLabel = "Total TTC",
 }: {
   rows: DocumentListRow[];
   basePath: string;
   emptyLabel: string;
+  showMontant?: boolean;
+  montantLabel?: string;
 }) {
   if (rows.length === 0) {
     return <p className="mt-8 font-sans text-sm text-encre/60">{emptyLabel}</p>;
@@ -32,7 +36,7 @@ export function DocumentList({
           <th className="py-2 font-medium">Client</th>
           <th className="py-2 font-medium">Émis le</th>
           <th className="py-2 font-medium">Statut</th>
-          <th className="py-2 text-right font-medium">Total TTC</th>
+          {showMontant && <th className="py-2 text-right font-medium">{montantLabel}</th>}
         </tr>
       </thead>
       <tbody>
@@ -52,11 +56,13 @@ export function DocumentList({
                 {STATUT_LABELS[row.statut]}
               </span>
             </td>
-            <td className="py-3 text-right font-mono text-encre">
-              {new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(
-                Number(row.montantTtc)
-              )}
-            </td>
+            {showMontant && (
+              <td className="py-3 text-right font-mono text-encre">
+                {new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(
+                  Number(row.montantTtc)
+                )}
+              </td>
+            )}
           </tr>
         ))}
       </tbody>

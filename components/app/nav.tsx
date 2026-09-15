@@ -4,7 +4,11 @@ import { signOut } from "@/lib/actions/auth";
 const links = [
   { href: "/tableau-de-bord", label: "Tableau de bord" },
   { href: "/devis", label: "Devis" },
+  { href: "/bons-commande", label: "Bons de commande" },
+  { href: "/bons-livraison", label: "Bons de livraison" },
   { href: "/factures", label: "Factures" },
+  { href: "/factures-acompte", label: "Acomptes" },
+  { href: "/avoirs", label: "Avoirs" },
   { href: "/clients", label: "Clients" },
   { href: "/catalogue", label: "Catalogue" },
   { href: "/entreprise", label: "Entreprise" },

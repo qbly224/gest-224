@@ -1,8 +1,21 @@
 import "server-only";
-import type { Prisma, TypeDocument } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 import type { EmetteurSnapshot, ClientSnapshot } from "@/lib/documents/snapshot";
 import { nomAffichageClientSnapshot } from "@/lib/documents/snapshot";
 import { calculerTotaux } from "@/lib/documents/calc";
+import type { TypeDocument } from "@prisma/client";
+import { TITRES_DOCUMENT as TITRES } from "@/lib/documents/statut-labels";
+
+const GENRE_FEMININ: Partial<Record<TypeDocument, true>> = {
+  facture: true,
+  facture_acompte: true,
+};
+
+function suiteDe(type: TypeDocument): string {
+  const titre = TITRES[type].toLowerCase();
+  if (type === "facture_avoir") return `à l'${titre}`;
+  return GENRE_FEMININ[type] ? `à la ${titre}` : `au ${titre}`;
+}
 
 export type DocumentAvecLignes = Prisma.DocumentGetPayload<{
   include: {
@@ -10,15 +23,6 @@ export type DocumentAvecLignes = Prisma.DocumentGetPayload<{
     refDocument: { select: { numero: true; type: true } };
   };
 }>;
-
-const TITRES: Record<TypeDocument, string> = {
-  devis: "Devis",
-  bon_commande: "Bon de commande",
-  bon_livraison: "Bon de livraison",
-  facture: "Facture",
-  facture_acompte: "Facture d'acompte",
-  facture_avoir: "Avoir",
-};
 
 function escapeHtml(value: string | null | undefined): string {
   if (!value) return "";
@@ -62,6 +66,8 @@ export function renderDocumentHtml(document: DocumentAvecLignes): string {
   const emetteur = document.emetteurSnapshot as unknown as EmetteurSnapshot;
   const client = document.clientSnapshot as unknown as ClientSnapshot;
   const estFacture = document.type === "facture" || document.type === "facture_acompte";
+  const estAvoir = document.type === "facture_avoir";
+  const masquerPrix = document.type === "bon_livraison";
   const enFranchise = emetteur.regimeTva === "franchise";
 
   const lignes = document.lignes.map((l) => ({
@@ -85,9 +91,13 @@ export function renderDocumentHtml(document: DocumentAvecLignes): string {
           ${l.description ? `<div class="description">${escapeHtml(l.description)}</div>` : ""}
         </td>
         <td class="num">${l.quantite}${l.uniteMesure ? ` ${escapeHtml(l.uniteMesure)}` : ""}</td>
-        <td class="num">${formatEuros(l.prixUnitaireHt)}</td>
+        ${
+          masquerPrix
+            ? ""
+            : `<td class="num">${formatEuros(l.prixUnitaireHt)}</td>
         ${enFranchise ? "" : `<td class="num">${l.tauxTva !== null ? `${l.tauxTva} %` : "—"}</td>`}
-        <td class="num">${formatEuros(l.montantHt)}</td>
+        <td class="num">${formatEuros(l.montantHt)}</td>`
+        }
       </tr>`
     )
     .join("");
@@ -101,8 +111,9 @@ export function renderDocumentHtml(document: DocumentAvecLignes): string {
         )
         .join("");
 
+  const etabli = GENRE_FEMININ[document.type] ? "Établie" : "Établi";
   const refDocumentHtml = document.refDocument
-    ? `<p class="reference">Établi suite au ${TITRES[document.refDocument.type].toLowerCase()} n° ${escapeHtml(document.refDocument.numero)}</p>`
+    ? `<p class="reference">${etabli} suite ${suiteDe(document.refDocument.type)} n° ${escapeHtml(document.refDocument.numero)}</p>`
     : "";
 
   const mentionsPaiementFacture = estFacture
@@ -208,9 +219,13 @@ export function renderDocumentHtml(document: DocumentAvecLignes): string {
         <tr>
           <th>Désignation</th>
           <th class="num">Quantité</th>
-          <th class="num">PU HT</th>
+          ${
+            masquerPrix
+              ? ""
+              : `<th class="num">PU HT</th>
           ${enFranchise ? "" : `<th class="num">TVA</th>`}
-          <th class="num">Total HT</th>
+          <th class="num">Total HT</th>`
+          }
         </tr>
       </thead>
       <tbody>
@@ -218,11 +233,15 @@ export function renderDocumentHtml(document: DocumentAvecLignes): string {
       </tbody>
     </table>
 
-    <div class="totaux">
+    ${
+      masquerPrix
+        ? ""
+        : `<div class="totaux">
       <div class="ligne-total"><span>Total HT</span><span>${formatEuros(totaux.montantHt)}</span></div>
       ${tvaHtml}
-      <div class="ligne-total ttc"><span>Total TTC</span><span>${formatEuros(totaux.montantTtc)}</span></div>
-    </div>
+      <div class="ligne-total ttc"><span>${estAvoir ? "Montant TTC à déduire" : "Total TTC"}</span><span>${formatEuros(totaux.montantTtc)}</span></div>
+    </div>`
+    }
 
     ${mentionsPaiementFacture}
 
