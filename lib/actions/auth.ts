@@ -14,6 +14,7 @@ export async function signUp(
 ): Promise<ActionState> {
   const parsed = signUpSchema.safeParse({
     raisonSociale: formData.get("raisonSociale"),
+    plan: formData.get("plan") || undefined,
     siret: formData.get("siret"),
     regimeTva: formData.get("regimeTva"),
     adresseLigne1: formData.get("adresseLigne1"),
@@ -53,6 +54,7 @@ export async function signUp(
       const tenant = await tx.tenant.create({
         data: {
           raisonSociale: data.raisonSociale,
+          plan: data.plan,
           siret: data.siret,
           regimeTva: data.regimeTva,
           adresseLigne1: data.adresseLigne1,

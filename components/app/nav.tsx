@@ -13,6 +13,7 @@ const links = [
   { href: "/clients", label: "Clients" },
   { href: "/catalogue", label: "Catalogue" },
   { href: "/entreprise", label: "Entreprise" },
+  { href: "/abonnement", label: "Abonnement" },
 ];
 
 export function AppNav({ raisonSociale }: { raisonSociale: string }) {

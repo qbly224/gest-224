@@ -1,15 +1,18 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import Link from "next/link";
 import { signUp } from "@/lib/actions/auth";
 import { initialActionState } from "@/lib/actions/types";
 import { FieldError } from "@/components/forms/field-error";
 import { SubmitButton } from "@/components/forms/submit-button";
 import { inputClass, labelClass, selectClass } from "@/lib/ui";
+import { LISTE_PLANS } from "@/lib/plans";
+import type { PlanAbonnement } from "@prisma/client";
 
-export function SignUpForm() {
+export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
   const [state, formAction] = useActionState(signUp, initialActionState);
+  const [plan, setPlan] = useState<PlanAbonnement>(planInitial);
 
   return (
     <form action={formAction} className="mt-6 space-y-6">
@@ -19,7 +22,37 @@ export function SignUpForm() {
         </p>
       )}
 
-      <fieldset className="space-y-4">
+      <fieldset className="space-y-2">
+        <legend className="font-titre text-lg text-encre">Plan</legend>
+        <input type="hidden" name="plan" value={plan} />
+        <div className="grid grid-cols-3 gap-2">
+          {LISTE_PLANS.map((p) => (
+            <button
+              key={p.id}
+              type="button"
+              onClick={() => setPlan(p.id)}
+              className={`rounded-sm border px-2 py-2 text-center font-sans text-xs transition-colors ${
+                plan === p.id
+                  ? "border-encre bg-encre text-ivoire"
+                  : "border-encre/30 text-encre hover:bg-encre/5"
+              }`}
+            >
+              <div className="font-medium">{p.label}</div>
+              <div className="font-mono">
+                {p.prixMensuel === 0 ? "0 €" : `${p.prixMensuel} €/mois`}
+              </div>
+            </button>
+          ))}
+        </div>
+        <p className="font-sans text-xs text-encre/60">
+          <Link href="/tarifs" className="underline">
+            Comparer les plans
+          </Link>{" "}
+          — modifiable à tout moment depuis votre espace.
+        </p>
+      </fieldset>
+
+      <fieldset className="space-y-4 border-t border-encre/10 pt-4">
         <legend className="font-titre text-lg text-encre">Entreprise</legend>
 
         <div>

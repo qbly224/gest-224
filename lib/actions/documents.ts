@@ -10,6 +10,8 @@ import { documentBaseSchema, documentAvoirSchema } from "@/lib/validation/docume
 import { calculerMontantLigneHt, calculerTotaux } from "@/lib/documents/calc";
 import { getNextNumero } from "@/lib/documents/numbering";
 import { buildEmetteurSnapshot, buildClientSnapshot } from "@/lib/documents/snapshot";
+import { compterDocumentsMoisCourant } from "@/lib/documents/usage";
+import { PLANS } from "@/lib/plans";
 import type { ActionState } from "@/lib/actions/types";
 
 // Types créés/modifiés via le formulaire générique (lignes à quantité
@@ -75,6 +77,16 @@ async function createDocument(
   ]);
   if (!client) {
     return { fieldErrors: { clientId: ["Client introuvable."] } };
+  }
+
+  const limiteDocuments = PLANS[tenant.plan].limiteDocumentsParMois;
+  if (limiteDocuments !== null) {
+    const nbCeMois = await compterDocumentsMoisCourant(session.tenantId);
+    if (nbCeMois >= limiteDocuments) {
+      return {
+        error: `Limite de ${limiteDocuments} documents par mois atteinte pour le plan ${PLANS[tenant.plan].label}. Passez à un plan supérieur depuis la page Abonnement pour continuer.`,
+      };
+    }
   }
 
   // En franchise en base, aucune TVA n'est jamais appliquée, quelle que

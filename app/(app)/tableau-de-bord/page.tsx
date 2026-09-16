@@ -2,6 +2,7 @@ import Link from "next/link";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { calculerSoldeEtVueMensuelle } from "@/lib/comptabilite/agregats";
+import { OnboardingChecklist } from "@/components/app/onboarding-checklist";
 
 function formatEuros(n: number) {
   return new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(n);
@@ -10,10 +11,11 @@ function formatEuros(n: number) {
 export default async function TableauDeBordPage() {
   const session = await requireSession();
 
-  const [tenant, nbClients, nbArticles, compta] = await Promise.all([
+  const [tenant, nbClients, nbArticles, nbDocuments, compta] = await Promise.all([
     prisma.tenant.findUniqueOrThrow({ where: { id: session.tenantId } }),
     prisma.client.count({ where: { tenantId: session.tenantId, actif: true } }),
     prisma.article.count({ where: { tenantId: session.tenantId, actif: true } }),
+    prisma.document.count({ where: { tenantId: session.tenantId } }),
     calculerSoldeEtVueMensuelle(session.tenantId),
   ]);
 
@@ -28,6 +30,25 @@ export default async function TableauDeBordPage() {
             : "normal"}
         </p>
       </div>
+
+      {!tenant.onboardingMasque && (
+        <OnboardingChecklist
+          etapes={[
+            {
+              label: "Renseigner l'IBAN de l'entreprise",
+              fait: Boolean(tenant.iban),
+              href: "/entreprise",
+            },
+            { label: "Ajouter un client", fait: nbClients > 0, href: "/clients/nouveau" },
+            {
+              label: "Ajouter un article au catalogue",
+              fait: nbArticles > 0,
+              href: "/catalogue/nouveau",
+            },
+            { label: "Créer votre premier devis", fait: nbDocuments > 0, href: "/devis/nouveau" },
+          ]}
+        />
+      )}
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div className="rounded-sm border border-encre/20 bg-white/40 p-6">

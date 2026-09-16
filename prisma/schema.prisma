@@ -24,6 +24,16 @@ enum RoleUtilisateur {
   membre  // Collaborateur additionnel (prévu pour une évolution future)
 }
 
+// Aucun paiement réel traité en Phase 5 : le plan choisi à l'inscription
+// pilote uniquement les limites d'usage affichées/vérifiées côté
+// application (cf. lib/plans.ts). Le passage à un vrai paiement (Stripe ou
+// équivalent) est une évolution ultérieure.
+enum PlanAbonnement {
+  gratuit
+  starter
+  pro
+}
+
 enum TypeClient {
   particulier
   professionnel
@@ -93,6 +103,11 @@ model Tenant {
   // Mentions légales additionnelles libres à faire apparaître sur les PDF
   // (assurance RC pro, numéro d'agrément, etc.)
   mentionsLegalesLibres  String?   @map("mentions_legales_libres")
+
+  plan                   PlanAbonnement @default(gratuit)
+  // Masque le guide de démarrage sur le tableau de bord une fois que
+  // l'entreprise n'en a plus besoin (indépendamment de son avancement réel).
+  onboardingMasque       Boolean   @default(false) @map("onboarding_masque")
 
   actif                  Boolean   @default(true)
   createdAt              DateTime  @default(now()) @map("created_at")

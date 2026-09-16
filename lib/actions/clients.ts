@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { clientSchema } from "@/lib/validation/client";
+import { PLANS } from "@/lib/plans";
 import type { ActionState } from "@/lib/actions/types";
 
 function parseClientForm(formData: FormData) {
@@ -38,6 +39,20 @@ export async function createClient(
     return { fieldErrors: parsed.error.flatten().fieldErrors };
   }
   const data = parsed.data;
+
+  const tenant = await prisma.tenant.findUniqueOrThrow({
+    where: { id: session.tenantId },
+    select: { plan: true },
+  });
+  const limiteClients = PLANS[tenant.plan].limiteClients;
+  if (limiteClients !== null) {
+    const nbClients = await prisma.client.count({ where: { tenantId: session.tenantId } });
+    if (nbClients >= limiteClients) {
+      return {
+        error: `Limite de ${limiteClients} clients atteinte pour le plan ${PLANS[tenant.plan].label}. Passez à un plan supérieur depuis la page Abonnement pour continuer.`,
+      };
+    }
+  }
 
   const client = await prisma.client.create({
     data: {

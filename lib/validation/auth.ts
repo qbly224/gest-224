@@ -1,10 +1,12 @@
 import { z } from "zod";
 
 export const regimeTvaSchema = z.enum(["normal", "franchise"]);
+export const planSchema = z.enum(["gratuit", "starter", "pro"]);
 
 export const signUpSchema = z.object({
   // Entreprise
   raisonSociale: z.string().trim().min(1, "La raison sociale est requise."),
+  plan: planSchema.default("gratuit"),
   siret: z
     .string()
     .trim()
