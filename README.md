@@ -17,8 +17,10 @@ catalogue produits/services, et une comptabilité simplifiée
 
 ## État du projet
 
-Phases 1 à 4 livrées, prêtes à tester. Prochaine étape : Phase 5 (mise en
-marché SaaS).
+**MVP complet : les 5 phases sont livrées.** Aucun paiement réel n'est
+traité (voir Phase 5) ; la facturation électronique structurée
+(Factur-X/PDP) n'est volontairement pas implémentée, conformément au
+périmètre initial du MVP.
 
 | Phase | Contenu | Statut |
 |---|---|---|
@@ -26,7 +28,21 @@ marché SaaS).
 | 2 | Devis & Facture (lignes dynamiques, PDF, numérotation, conversion) | ✅ Livré |
 | 3 | Bon de commande, bon de livraison, facture d'acompte, avoir | ✅ Livré |
 | 4 | Comptabilité simplifiée (recettes, dépenses, tableau de bord) | ✅ Livré |
-| 5 | Mise en marché SaaS (plans, onboarding) | À venir |
+| 5 | Mise en marché SaaS (plans, tarifs, onboarding) | ✅ Livré |
+
+### Mise en marché SaaS (Phase 5)
+
+Trois plans (Gratuit / Starter / Pro, `lib/plans.ts`) avec des limites
+d'usage (documents/mois, clients) vérifiées côté serveur — **aucun paiement
+réel n'est traité**, le changement de plan est immédiat et gratuit depuis
+`/abonnement`. Page `/tarifs` publique, choix du plan reporté sur
+`/inscription?plan=...`. Un guide de démarrage s'affiche sur le tableau de
+bord tant que l'IBAN, un client, un article et un premier devis ne sont pas
+créés.
+
+Brancher un vrai paiement (Stripe ou équivalent) est une évolution
+ultérieure qui ne devrait toucher que `lib/plans.ts` et le flux de
+paiement, pas le reste de l'application.
 
 ### Comptabilité simplifiée (Phase 4)
 
