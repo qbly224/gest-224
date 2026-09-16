@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { envoyerFactureAcompte } from "@/lib/actions/documents";
+import { marquerDocumentPaye } from "@/lib/actions/comptabilite";
 import { DocumentDetail } from "@/components/documents/document-detail";
 import { PdfLink } from "@/components/documents/pdf-link";
 
@@ -45,6 +46,16 @@ export default async function FactureAcompteDetailPage({
                 </button>
               </form>
             </>
+          )}
+          {facture.statut === "envoye" && (
+            <form action={marquerDocumentPaye.bind(null, facture.id)}>
+              <button
+                type="submit"
+                className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
+              >
+                Marquer payée
+              </button>
+            </form>
           )}
         </>
       }

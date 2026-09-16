@@ -103,6 +103,8 @@ model Tenant {
   articles               Article[]
   documents              Document[]
   numberingSequences     NumberingSequence[]
+  recettes               Recette[]
+  depenses               Depense[]
 
   @@map("tenants")
 }
@@ -287,6 +289,7 @@ model Document {
   updatedAt      DateTime        @updatedAt @map("updated_at")
 
   lignes         DocumentLigne[]
+  recette        Recette?
 
   // Numéro unique par entreprise et par type de document (pas de collision
   // entre séries : FA-2026-0001 et DEV-2026-0001 coexistent).
@@ -324,4 +327,48 @@ model DocumentLigne {
 
   @@index([documentId])
   @@map("document_lignes")
+}
+
+// ---------------------------------------------------------------------------
+// Comptabilité simplifiée (Phase 4)
+// ---------------------------------------------------------------------------
+
+// Une ligne de recette par document marqué "payée" (facture ou facture
+// d'acompte) — générée automatiquement, jamais saisie à la main.
+model Recette {
+  id            String   @id @default(uuid())
+
+  tenantId      String   @map("tenant_id")
+  tenant        Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  documentId    String   @unique @map("document_id")
+  document      Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  montant       Decimal  @db.Decimal(12, 2)
+  datePaiement  DateTime @map("date_paiement")
+
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@index([tenantId])
+  @@map("recettes")
+}
+
+// Dépense saisie manuellement (catégorie libre, pas de rattachement à un
+// document).
+model Depense {
+  id         String   @id @default(uuid())
+
+  tenantId   String   @map("tenant_id")
+  tenant     Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  date       DateTime
+  libelle    String
+  montant    Decimal  @db.Decimal(12, 2)
+  categorie  String?
+
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@index([tenantId])
+  @@map("depenses")
 }

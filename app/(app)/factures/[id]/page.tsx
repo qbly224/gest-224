@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { envoyerFacture, creerAvoirDepuisFacture } from "@/lib/actions/documents";
+import { marquerDocumentPaye } from "@/lib/actions/comptabilite";
 import { DocumentDetail } from "@/components/documents/document-detail";
 import { PdfLink } from "@/components/documents/pdf-link";
 import { TITRES_DOCUMENT } from "@/lib/documents/statut-labels";
@@ -79,6 +80,16 @@ export default async function FactureDetailPage({
                 </button>
               </form>
             </>
+          )}
+          {facture.statut === "envoye" && (
+            <form action={marquerDocumentPaye.bind(null, facture.id)}>
+              <button
+                type="submit"
+                className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
+              >
+                Marquer payée
+              </button>
+            </form>
           )}
           {facture.statut !== "brouillon" && (
             <form action={creerAvoirDepuisFacture.bind(null, facture.id)}>
