@@ -1,0 +1,12 @@
+# Sert à tester l'image de production en local avant déploiement.
+# DATABASE_URL doit pointer vers une base PostgreSQL déjà existante
+# (locale ou distante) — ce compose n'en fournit pas.
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      SESSION_SECRET: ${SESSION_SECRET}
+    restart: unless-stopped

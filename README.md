@@ -69,10 +69,11 @@ avoirs successifs (avoirs partiels).
 ## Génération PDF
 
 Les PDF sont générés côté serveur avec Puppeteer, piloté vers un Chromium
-déjà présent sur la machine plutôt que celui téléchargé par défaut par
-Puppeteer. En local/production, définir `CHROMIUM_EXECUTABLE_PATH` si le
-chemin par défaut (`/opt/pw-browsers/chromium`) n'existe pas sur la machine
-cible — sinon installer Chromium et pointer vers son exécutable.
+installé sur la machine plutôt que celui téléchargé par défaut par
+Puppeteer. La variable `CHROMIUM_EXECUTABLE_PATH` est **obligatoire** (une
+erreur explicite est levée si elle est absente) : `/usr/bin/chromium` dans
+l'image Docker (déjà réglé), à définir vous-même en développement local
+selon l'endroit où Chromium est installé sur votre machine.
 
 Schéma de données complet (phases 1 & 2) : `docs/schema-phase-1-2.md`.
 
@@ -80,10 +81,63 @@ Schéma de données complet (phases 1 & 2) : `docs/schema-phase-1-2.md`.
 
 ```bash
 npm install
-cp .env.example .env   # renseigner DATABASE_URL
+cp .env.example .env   # renseigner DATABASE_URL, SESSION_SECRET, CHROMIUM_EXECUTABLE_PATH
 npm run prisma:migrate
 npm run dev
 ```
+
+## Déploiement (Docker)
+
+L'image (`Dockerfile`, multi-stage) embarque Chromium pour la génération
+PDF — aucune dépendance externe à installer sur la plateforme cible tant
+qu'elle exécute des conteneurs Docker (Railway, Render, Fly.io, VPS...).
+
+**Variables d'environnement requises en production :**
+
+| Variable | Description |
+|---|---|
+| `DATABASE_URL` | URL de connexion à votre PostgreSQL de production |
+| `SESSION_SECRET` | Chaîne aléatoire longue — générer avec `openssl rand -base64 32` |
+
+`CHROMIUM_EXECUTABLE_PATH` et `PORT` sont déjà définis dans l'image, pas
+besoin de les régler sur la plateforme.
+
+**Étapes :**
+
+```bash
+# 1. Construire l'image
+docker build -t gest-224 .
+
+# 2. Appliquer les migrations sur la base de production (une seule fois,
+#    puis à chaque nouvelle migration — jamais en parallèle sur plusieurs
+#    instances)
+docker run --rm -e DATABASE_URL="$DATABASE_URL" gest-224 npx prisma migrate deploy
+
+# 3. Démarrer le conteneur
+docker run -d -p 3000:3000 \
+  -e DATABASE_URL="$DATABASE_URL" \
+  -e SESSION_SECRET="$SESSION_SECRET" \
+  --name gest-224 gest-224
+```
+
+Sur une plateforme PaaS (Railway, Render...), configurez l'étape 2 comme
+« release command »/« pre-deploy command » exécutée avant chaque
+démarrage, plutôt que dans le `CMD` du conteneur (évite les migrations
+concurrentes si la plateforme démarre plusieurs instances).
+
+Un point de santé est exposé sur `GET /api/health` (vérifie aussi la
+connexion à la base) — à utiliser comme healthcheck de la plateforme.
+
+Pour tester l'image en local avant de déployer : `docker compose up --build`
+(nécessite `DATABASE_URL` et `SESSION_SECRET` dans l'environnement ou un
+fichier `.env` à la racine, lu automatiquement par Docker Compose).
+
+**Non testé dans cet environnement** : le `docker build` et le `docker run`
+n'ont pas pu être exécutés ici faute de démon Docker disponible (seul le
+client Docker est installé). Le Dockerfile a été relu attentivement et
+`npm ci`/`npm run build` valident individuellement en dehors de Docker,
+mais la première construction réelle de l'image reste à faire par vous —
+signalez toute erreur rencontrée pour que je corrige.
 
 ## Direction visuelle
 
