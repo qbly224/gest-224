@@ -108,10 +108,17 @@ export async function marquerDocumentPaye(documentId: string): Promise<void> {
   const basePath = document.type === "facture" ? "/factures" : "/factures-acompte";
 
   await prisma.$transaction(async (tx) => {
-    await tx.document.update({
-      where: { id: documentId },
+    // updateMany conditionné sur le statut, plutôt qu'un update par id suivi
+    // d'une vérification séparée : sans ça, deux clics concurrents peuvent
+    // tous deux passer le contrôle de statut ci-dessus avant que l'un des
+    // deux n'écrive, et le second créerait une seconde recette pour la même
+    // facture (ou plantait sur la contrainte unique documentId).
+    const { count } = await tx.document.updateMany({
+      where: { id: documentId, statut: "envoye" },
       data: { statut: "payee", payeAt: new Date() },
     });
+    if (count === 0) return;
+
     await tx.recette.create({
       data: {
         tenantId: session.tenantId,

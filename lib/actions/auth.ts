@@ -6,12 +6,28 @@ import { prisma } from "@/lib/prisma";
 import { hashPassword, verifyPassword } from "@/lib/auth";
 import { createSession, destroySession } from "@/lib/session";
 import { signUpSchema, loginSchema } from "@/lib/validation/auth";
+import { verifierLimite } from "@/lib/rate-limit";
+import { getClientIp } from "@/lib/client-ip";
 import type { ActionState } from "@/lib/actions/types";
+
+// Hash bcrypt fixe (mot de passe arbitraire, non secret) utilisé pour que la
+// comparaison prenne le même temps que pour un compte existant, même quand
+// l'email n'existe pas — sans ça, l'absence de comparaison bcrypt sur un
+// email inconnu rend le temps de réponse distinguable et permet d'énumérer
+// les comptes enregistrés.
+const HASH_FACTICE = "$2b$12$/fqFA9DHUx7uqv4XnoBCa.IvB52eq4/Tem7TTORGVqOkUe6nr3BuC";
 
 export async function signUp(
   _prevState: ActionState,
   formData: FormData
 ): Promise<ActionState> {
+  const ip = await getClientIp();
+  // Limite large : freine la création massive de comptes (chaque inscription
+  // coûte un hash bcrypt-12 ≈ 300 ms de CPU) sans gêner un usage normal.
+  if (!verifierLimite(`signup:${ip}`, 10, 60 * 60 * 1000)) {
+    return { error: "Trop de tentatives d'inscription. Réessayez plus tard." };
+  }
+
   const parsed = signUpSchema.safeParse({
     raisonSociale: formData.get("raisonSociale"),
     plan: formData.get("plan") || undefined,
@@ -111,10 +127,25 @@ export async function signIn(
   }
 
   const { email, password } = parsed.data;
+  const ip = await getClientIp();
+
+  // Deux limites indépendantes : par IP (freine le brute-force distribué sur
+  // de nombreux comptes) et par email (freine le bourrage d'identifiants
+  // ciblé sur un seul compte depuis plusieurs IP).
+  if (
+    !verifierLimite(`login-ip:${ip}`, 20, 15 * 60 * 1000) ||
+    !verifierLimite(`login-email:${email.toLowerCase()}`, 8, 15 * 60 * 1000)
+  ) {
+    return { error: "Trop de tentatives. Réessayez dans quelques minutes." };
+  }
 
   const user = await prisma.user.findUnique({ where: { email } });
 
+  // Même en l'absence de compte, on effectue une comparaison bcrypt (contre
+  // un hash factice) pour que le temps de réponse ne permette pas de
+  // distinguer un email inconnu d'un email existant.
   if (!user || !user.actif) {
+    await verifyPassword(password, HASH_FACTICE);
     return { error: "Email ou mot de passe incorrect." };
   }
 

@@ -418,7 +418,9 @@ async function clonerVersNouveauType(
 ) {
   const [tenant, client] = await Promise.all([
     prisma.tenant.findUniqueOrThrow({ where: { id: session.tenantId } }),
-    prisma.client.findUniqueOrThrow({ where: { id: source.clientId } }),
+    prisma.client.findFirstOrThrow({
+      where: { id: source.clientId, tenantId: session.tenantId },
+    }),
   ]);
 
   const lignesCalc = source.lignes.map((l) => ({
@@ -569,7 +571,9 @@ export async function creerAvoirDepuisFacture(factureId: string): Promise<void> 
 
   const [tenant, client] = await Promise.all([
     prisma.tenant.findUniqueOrThrow({ where: { id: session.tenantId } }),
-    prisma.client.findUniqueOrThrow({ where: { id: facture.clientId } }),
+    prisma.client.findFirstOrThrow({
+      where: { id: facture.clientId, tenantId: session.tenantId },
+    }),
   ]);
 
   const lignesCalc = facture.lignes.map((l) => ({

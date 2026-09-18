@@ -6,23 +6,23 @@ export const clientSchema = z
   .object({
     type: typeClientSchema,
 
-    raisonSociale: z.string().trim().optional().or(z.literal("")),
-    siret: z.string().trim().optional().or(z.literal("")),
-    numeroTvaIntracom: z.string().trim().optional().or(z.literal("")),
+    raisonSociale: z.string().trim().max(200).optional().or(z.literal("")),
+    siret: z.string().trim().max(14).optional().or(z.literal("")),
+    numeroTvaIntracom: z.string().trim().max(50).optional().or(z.literal("")),
 
-    civilite: z.string().trim().optional().or(z.literal("")),
-    nom: z.string().trim().optional().or(z.literal("")),
-    prenom: z.string().trim().optional().or(z.literal("")),
+    civilite: z.string().trim().max(20).optional().or(z.literal("")),
+    nom: z.string().trim().max(100).optional().or(z.literal("")),
+    prenom: z.string().trim().max(100).optional().or(z.literal("")),
 
-    adresseLigne1: z.string().trim().min(1, "L'adresse est requise."),
-    adresseLigne2: z.string().trim().optional().or(z.literal("")),
-    codePostal: z.string().trim().min(1, "Le code postal est requis."),
-    ville: z.string().trim().min(1, "La ville est requise."),
-    pays: z.string().trim().min(1, "Le pays est requis."),
+    adresseLigne1: z.string().trim().min(1, "L'adresse est requise.").max(200),
+    adresseLigne2: z.string().trim().max(200).optional().or(z.literal("")),
+    codePostal: z.string().trim().min(1, "Le code postal est requis.").max(10),
+    ville: z.string().trim().min(1, "La ville est requise.").max(100),
+    pays: z.string().trim().min(1, "Le pays est requis.").max(100),
 
-    email: z.string().trim().email("Adresse email invalide.").optional().or(z.literal("")),
-    telephone: z.string().trim().optional().or(z.literal("")),
-    notes: z.string().trim().optional().or(z.literal("")),
+    email: z.string().trim().email("Adresse email invalide.").max(254).optional().or(z.literal("")),
+    telephone: z.string().trim().max(30).optional().or(z.literal("")),
+    notes: z.string().trim().max(2000).optional().or(z.literal("")),
   })
   .superRefine((data, ctx) => {
     if (data.type === "professionnel" && !data.raisonSociale) {
