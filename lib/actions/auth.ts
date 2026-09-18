@@ -1,14 +1,27 @@
 "use server";
 
+import { randomBytes, createHash } from "crypto";
 import { redirect } from "next/navigation";
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { hashPassword, verifyPassword } from "@/lib/auth";
 import { createSession, destroySession } from "@/lib/session";
-import { signUpSchema, loginSchema } from "@/lib/validation/auth";
+import {
+  signUpSchema,
+  loginSchema,
+  demandeResetSchema,
+  reinitialiserMotDePasseSchema,
+} from "@/lib/validation/auth";
 import { verifierLimite } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/client-ip";
+import { envoyerEmail } from "@/lib/email";
 import type { ActionState } from "@/lib/actions/types";
+
+const DUREE_TOKEN_RESET_MS = 60 * 60 * 1000; // 1 heure
+
+function hasherToken(token: string): string {
+  return createHash("sha256").update(token).digest("hex");
+}
 
 // Hash bcrypt fixe (mot de passe arbitraire, non secret) utilisé pour que la
 // comparaison prenne le même temps que pour un compte existant, même quand
@@ -171,4 +184,103 @@ export async function signIn(
 export async function signOut(): Promise<void> {
   await destroySession();
   redirect("/connexion");
+}
+
+/**
+ * Toujours le même message de succès, que l'email existe ou non : sinon ce
+ * formulaire deviendrait un moyen d'énumérer les comptes enregistrés.
+ */
+export async function demanderReinitialisation(
+  _prevState: ActionState,
+  formData: FormData
+): Promise<ActionState> {
+  const parsed = demandeResetSchema.safeParse({ email: formData.get("email") });
+  if (!parsed.success) {
+    return { fieldErrors: parsed.error.flatten().fieldErrors };
+  }
+  const { email } = parsed.data;
+  const ip = await getClientIp();
+
+  const succesGenerique: ActionState = { success: true };
+
+  if (
+    !verifierLimite(`reset-ip:${ip}`, 10, 60 * 60 * 1000) ||
+    !verifierLimite(`reset-email:${email.toLowerCase()}`, 3, 60 * 60 * 1000)
+  ) {
+    // On ne révèle pas la limitation : même message générique.
+    return succesGenerique;
+  }
+
+  const user = await prisma.user.findUnique({ where: { email } });
+  if (!user || !user.actif) {
+    return succesGenerique;
+  }
+
+  const token = randomBytes(32).toString("hex");
+  const tokenHash = hasherToken(token);
+
+  await prisma.$transaction([
+    // Invalide toute demande précédente encore active pour cet utilisateur :
+    // un seul lien de réinitialisation valide à la fois.
+    prisma.resetMotDePasse.updateMany({
+      where: { userId: user.id, utilise: false },
+      data: { utilise: true },
+    }),
+    prisma.resetMotDePasse.create({
+      data: {
+        userId: user.id,
+        token: tokenHash,
+        expireA: new Date(Date.now() + DUREE_TOKEN_RESET_MS),
+      },
+    }),
+  ]);
+
+  const lien = `${process.env.APP_URL ?? "http://localhost:3000"}/reinitialiser-mot-de-passe/${token}`;
+  await envoyerEmail(
+    email,
+    "Réinitialisation de votre mot de passe Gest-224",
+    `Vous avez demandé la réinitialisation de votre mot de passe.\n\n` +
+      `Ce lien est valable une heure :\n${lien}\n\n` +
+      `Si vous n'êtes pas à l'origine de cette demande, ignorez cet email.`
+  );
+
+  return succesGenerique;
+}
+
+export async function reinitialiserMotDePasse(
+  _prevState: ActionState,
+  formData: FormData
+): Promise<ActionState> {
+  const parsed = reinitialiserMotDePasseSchema.safeParse({
+    token: formData.get("token"),
+    password: formData.get("password"),
+  });
+  if (!parsed.success) {
+    return { fieldErrors: parsed.error.flatten().fieldErrors };
+  }
+  const { token, password } = parsed.data;
+
+  const reset = await prisma.resetMotDePasse.findUnique({
+    where: { token: hasherToken(token) },
+  });
+
+  if (!reset || reset.utilise || reset.expireA < new Date()) {
+    return { error: "Ce lien de réinitialisation est invalide ou a expiré." };
+  }
+
+  const passwordHash = await hashPassword(password);
+  const maintenant = new Date();
+
+  await prisma.$transaction([
+    prisma.user.update({
+      where: { id: reset.userId },
+      data: { passwordHash, passwordChangedAt: maintenant },
+    }),
+    prisma.resetMotDePasse.update({
+      where: { id: reset.id },
+      data: { utilise: true },
+    }),
+  ]);
+
+  redirect("/connexion?reinitialise=1");
 }

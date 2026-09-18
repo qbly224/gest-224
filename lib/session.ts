@@ -35,9 +35,14 @@ export type SessionPayload = {
   userId: string;
   tenantId: string;
   role: RoleUtilisateur;
+  // Date d'émission du jeton (epoch secondes) — permet à requireSession()
+  // d'invalider les jetons émis avant un changement de mot de passe.
+  emisA: number;
 };
 
-export async function createSession(payload: SessionPayload) {
+export async function createSession(
+  payload: Omit<SessionPayload, "emisA">
+) {
   const token = await new SignJWT({ ...payload })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
@@ -61,15 +66,16 @@ export async function getSession(): Promise<SessionPayload | null> {
 
   try {
     const { payload } = await jwtVerify(token, getSecretKey());
-    const { userId, tenantId, role } = payload as Record<string, unknown>;
+    const { userId, tenantId, role, iat } = payload as Record<string, unknown>;
     if (
       typeof userId !== "string" ||
       typeof tenantId !== "string" ||
-      typeof role !== "string"
+      typeof role !== "string" ||
+      typeof iat !== "number"
     ) {
       return null;
     }
-    return { userId, tenantId, role: role as RoleUtilisateur };
+    return { userId, tenantId, role: role as RoleUtilisateur, emisA: iat };
   } catch {
     return null;
   }

@@ -39,3 +39,15 @@ export const loginSchema = z.object({
 });
 
 export type LoginInput = z.infer<typeof loginSchema>;
+
+export const demandeResetSchema = z.object({
+  email: z.string().trim().email("Adresse email invalide.").max(254),
+});
+
+export const reinitialiserMotDePasseSchema = z.object({
+  token: z.string().trim().min(1),
+  password: z
+    .string()
+    .min(8, "Le mot de passe doit contenir au moins 8 caractères.")
+    .max(72, "Le mot de passe ne peut pas dépasser 72 caractères."),
+});

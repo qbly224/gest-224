@@ -30,6 +30,24 @@ périmètre initial du MVP.
 | 4 | Comptabilité simplifiée (recettes, dépenses, tableau de bord) | ✅ Livré |
 | 5 | Mise en marché SaaS (plans, tarifs, onboarding) | ✅ Livré |
 
+### Authentification & sécurité
+
+Réinitialisation de mot de passe en libre-service (`/mot-de-passe-oublie` →
+lien à usage unique valable 1h → `/reinitialiser-mot-de-passe/[token]`), qui
+invalide automatiquement toutes les sessions ouvertes avant le changement
+(le jeton JWT est comparé à `passwordChangedAt` à chaque page protégée).
+Sans `RESEND_API_KEY` configurée, le lien est journalisé dans les logs
+serveur au lieu d'être envoyé par email — pratique en développement, à
+brancher sur un vrai fournisseur avant d'accueillir de vrais clients (voir
+`lib/email.ts`).
+
+Aussi en place : limitation de tentatives sur connexion/inscription/demande
+de réinitialisation (en mémoire, par processus — donc par instance ; à
+remplacer par un store partagé type Redis si l'app est un jour scalée
+horizontalement), revérification de `actif` (utilisateur et entreprise) à
+chaque page protégée, en-têtes de sécurité HTTP, limites de taille sur tous
+les champs de saisie. Pas encore d'email de vérification ni de MFA.
+
 ### Mise en marché SaaS (Phase 5)
 
 Trois plans (Gratuit / Starter / Pro, `lib/plans.ts`) avec des limites
@@ -98,6 +116,8 @@ qu'elle exécute des conteneurs Docker (Railway, Render, Fly.io, VPS...).
 |---|---|
 | `DATABASE_URL` | URL de connexion à votre PostgreSQL de production |
 | `SESSION_SECRET` | Chaîne aléatoire longue — générer avec `openssl rand -base64 32` |
+| `APP_URL` | URL publique de l'app (ex. `https://app.gest224.fr`) — utilisée dans les liens envoyés par email |
+| `RESEND_API_KEY` / `RESEND_FROM_EMAIL` | Optionnelles mais nécessaires pour que la réinitialisation de mot de passe envoie un vrai email (sinon le lien est seulement journalisé — inutilisable par un vrai client) |
 
 `CHROMIUM_EXECUTABLE_PATH` et `PORT` sont déjà définis dans l'image, pas
 besoin de les régler sur la plateforme.

@@ -8,11 +8,16 @@ import { FieldError } from "@/components/forms/field-error";
 import { SubmitButton } from "@/components/forms/submit-button";
 import { inputClass, labelClass } from "@/lib/ui";
 
-export function LoginForm() {
+export function LoginForm({ reinitialise }: { reinitialise?: boolean }) {
   const [state, formAction] = useActionState(signIn, initialActionState);
 
   return (
     <form action={formAction} className="mt-6 space-y-4">
+      {reinitialise && (
+        <p className="rounded-sm bg-encre/10 px-3 py-2 font-sans text-sm text-encre">
+          Mot de passe réinitialisé. Vous pouvez vous connecter.
+        </p>
+      )}
       {state.error && (
         <p className="rounded-sm bg-red-50 px-3 py-2 font-sans text-sm text-red-700">
           {state.error}
@@ -47,7 +52,12 @@ export function LoginForm() {
         <FieldError messages={state.fieldErrors?.password} />
       </div>
 
-      <SubmitButton>Se connecter</SubmitButton>
+      <div className="flex items-center justify-between">
+        <SubmitButton>Se connecter</SubmitButton>
+        <Link href="/mot-de-passe-oublie" className="font-sans text-sm text-encre/70 underline">
+          Mot de passe oublié ?
+        </Link>
+      </div>
 
       <p className="font-sans text-sm text-encre/70">
         Pas encore de compte ?{" "}

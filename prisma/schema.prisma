@@ -138,10 +138,15 @@ model User {
   actif         Boolean         @default(true)
 
   lastLoginAt   DateTime?       @map("last_login_at")
+  // Horodatage du dernier changement de mot de passe : une session JWT émise
+  // avant cette date est refusée par requireSession(), ce qui invalide tous
+  // les jetons en circulation dès qu'un mot de passe est réinitialisé.
+  passwordChangedAt DateTime?   @map("password_changed_at")
   createdAt     DateTime        @default(now()) @map("created_at")
   updatedAt     DateTime        @updatedAt @map("updated_at")
 
   documentsCrees Document[]     @relation("DocumentCreePar")
+  resetsMotDePasse ResetMotDePasse[]
 
   @@index([tenantId])
   @@map("users")
@@ -386,4 +391,27 @@ model Depense {
 
   @@index([tenantId])
   @@map("depenses")
+}
+
+// ---------------------------------------------------------------------------
+// Réinitialisation de mot de passe
+// ---------------------------------------------------------------------------
+
+// Le champ `token` stocke un hash SHA-256 du jeton envoyé par email, jamais
+// le jeton en clair : une fuite de la base ne permet pas de réutiliser un
+// lien de réinitialisation en circulation.
+model ResetMotDePasse {
+  id        String   @id @default(uuid())
+
+  userId    String   @map("user_id")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  token     String   @unique
+  expireA   DateTime @map("expire_a")
+  utilise   Boolean  @default(false)
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@map("resets_mot_de_passe")
 }
