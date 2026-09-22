@@ -8,14 +8,23 @@ export default async function AppLayout({
   children: React.ReactNode;
 }) {
   const session = await requireSession();
-  const tenant = await prisma.tenant.findUniqueOrThrow({
-    where: { id: session.tenantId },
-    select: { raisonSociale: true },
-  });
+  const [tenant, utilisateur] = await Promise.all([
+    prisma.tenant.findUniqueOrThrow({
+      where: { id: session.tenantId },
+      select: { raisonSociale: true },
+    }),
+    prisma.user.findUniqueOrThrow({
+      where: { id: session.userId },
+      select: { estAdminPlateforme: true },
+    }),
+  ]);
 
   return (
     <div className="min-h-screen">
-      <AppNav raisonSociale={tenant.raisonSociale} />
+      <AppNav
+        raisonSociale={tenant.raisonSociale}
+        estAdminPlateforme={utilisateur.estAdminPlateforme}
+      />
       <main className="mx-auto max-w-5xl px-6 py-8">{children}</main>
     </div>
   );

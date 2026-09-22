@@ -1,6 +1,68 @@
 import "server-only";
 import { prisma } from "@/lib/prisma";
 
+export type RapportComplet = {
+  soldeEtVueMensuelle: SoldeEtVueMensuelle;
+  depensesParCategorie: { categorie: string; montant: number }[];
+  documentsParType: { type: string; nombre: number }[];
+  topClients: { nom: string; montant: number }[];
+};
+
+/** Rapport agrégé complet, réservé aux plans avec `rapportComplet` (cf. lib/plans.ts). */
+export async function calculerRapportComplet(tenantId: string): Promise<RapportComplet> {
+  const [soldeEtVueMensuelle, depenses, documents, recettesAvecClient] = await Promise.all([
+    calculerSoldeEtVueMensuelle(tenantId, 12),
+    prisma.depense.findMany({ where: { tenantId }, select: { montant: true, categorie: true } }),
+    prisma.document.groupBy({
+      by: ["type"],
+      where: { tenantId },
+      _count: { _all: true },
+    }),
+    prisma.recette.findMany({
+      where: { tenantId },
+      select: {
+        montant: true,
+        document: { select: { client: { select: { raisonSociale: true, nom: true, prenom: true } } } },
+      },
+    }),
+  ]);
+
+  const depensesParCategorieMap = new Map<string, number>();
+  for (const d of depenses) {
+    const cle = d.categorie || "Non catégorisé";
+    depensesParCategorieMap.set(cle, (depensesParCategorieMap.get(cle) ?? 0) + Number(d.montant));
+  }
+
+  const clientsMap = new Map<string, number>();
+  for (const r of recettesAvecClient) {
+    const c = r.document.client;
+    const nom = c.raisonSociale || [c.prenom, c.nom].filter(Boolean).join(" ") || "Client inconnu";
+    clientsMap.set(nom, (clientsMap.get(nom) ?? 0) + Number(r.montant));
+  }
+
+  return {
+    soldeEtVueMensuelle,
+    depensesParCategorie: [...depensesParCategorieMap.entries()]
+      .map(([categorie, montant]) => ({ categorie, montant }))
+      .sort((a, b) => b.montant - a.montant),
+    documentsParType: documents.map((d) => ({ type: d.type, nombre: d._count._all })),
+    topClients: [...clientsMap.entries()]
+      .map(([nom, montant]) => ({ nom, montant }))
+      .sort((a, b) => b.montant - a.montant)
+      .slice(0, 10),
+  };
+}
+
+export async function compterDepensesMoisCourant(tenantId: string): Promise<number> {
+  const debutMois = new Date();
+  debutMois.setDate(1);
+  debutMois.setHours(0, 0, 0, 0);
+
+  return prisma.depense.count({
+    where: { tenantId, createdAt: { gte: debutMois } },
+  });
+}
+
 export type MoisAgregat = {
   mois: string; // "2026-01"
   label: string; // "janvier 2026"

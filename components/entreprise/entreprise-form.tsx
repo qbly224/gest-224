@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import type { Tenant } from "@prisma/client";
 import { updateEntreprise } from "@/lib/actions/entreprise";
 import { initialActionState } from "@/lib/actions/types";
@@ -17,6 +17,8 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
     updateEntreprise,
     initialActionState
   );
+  const [apercu, setApercu] = useState<string | null>(null);
+  const [supprimer, setSupprimer] = useState(false);
 
   return (
     <form action={formAction} className="mt-6 space-y-6">
@@ -132,6 +134,61 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
               defaultValue={tenant.capitalSocial ?? ""}
               className={`${inputClass} font-mono`}
             />
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset className="space-y-4 border-t border-encre/10 pt-4">
+        <legend className="font-titre text-lg text-encre">Logo</legend>
+        <p className="font-sans text-xs text-encre/60">
+          Affiché sur vos documents PDF. PNG, JPEG, WebP ou SVG, 500 Ko maximum.
+        </p>
+        <div className="flex items-center gap-4">
+          {(apercu ?? (!supprimer ? tenant.logoDataUrl : null)) ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={apercu ?? tenant.logoDataUrl ?? undefined}
+              alt="Logo actuel"
+              className="h-16 w-auto max-w-[160px] rounded-sm border border-encre/20 object-contain p-1"
+            />
+          ) : (
+            <div className="flex h-16 w-40 items-center justify-center rounded-sm border border-dashed border-encre/20 font-sans text-xs text-encre/40">
+              Aucun logo
+            </div>
+          )}
+          <div className="space-y-2">
+            <input
+              id="logo"
+              name="logo"
+              type="file"
+              accept="image/png,image/jpeg,image/webp,image/svg+xml"
+              onChange={(e) => {
+                const fichier = e.target.files?.[0];
+                if (!fichier) {
+                  setApercu(null);
+                  return;
+                }
+                setSupprimer(false);
+                const reader = new FileReader();
+                reader.onload = () => setApercu(reader.result as string);
+                reader.readAsDataURL(fichier);
+              }}
+              className="block font-sans text-sm text-encre file:mr-3 file:rounded-sm file:border file:border-encre/30 file:bg-transparent file:px-3 file:py-1.5 file:font-sans file:text-sm file:text-encre hover:file:bg-encre/5"
+            />
+            {tenant.logoDataUrl && (
+              <label className="flex items-center gap-2 font-sans text-xs text-encre/70">
+                <input
+                  type="checkbox"
+                  name="supprimerLogo"
+                  checked={supprimer}
+                  onChange={(e) => {
+                    setSupprimer(e.target.checked);
+                    if (e.target.checked) setApercu(null);
+                  }}
+                />
+                Supprimer le logo actuel
+              </label>
+            )}
           </div>
         </div>
       </fieldset>

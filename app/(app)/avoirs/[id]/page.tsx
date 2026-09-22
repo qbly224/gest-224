@@ -4,7 +4,9 @@ import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { envoyerAvoir } from "@/lib/actions/documents";
 import { DocumentDetail } from "@/components/documents/document-detail";
-import { PdfLink } from "@/components/documents/pdf-link";
+import { PdfActions } from "@/components/documents/pdf-actions";
+import { EnvoyerActions } from "@/components/documents/envoyer-actions";
+import type { ClientSnapshot, EmetteurSnapshot } from "@/lib/documents/snapshot";
 
 export default async function AvoirDetailPage({
   params,
@@ -23,6 +25,9 @@ export default async function AvoirDetailPage({
   });
   if (!avoir) notFound();
 
+  const client = avoir.clientSnapshot as unknown as ClientSnapshot;
+  const emetteur = avoir.emetteurSnapshot as unknown as EmetteurSnapshot;
+
   return (
     <DocumentDetail
       titre="Avoir"
@@ -40,7 +45,7 @@ export default async function AvoirDetailPage({
       }
       actions={
         <>
-          <PdfLink documentId={avoir.id} />
+          <PdfActions documentId={avoir.id} numero={avoir.numero} />
           {avoir.statut === "brouillon" && (
             <>
               <Link
@@ -49,14 +54,15 @@ export default async function AvoirDetailPage({
               >
                 Modifier
               </Link>
-              <form action={envoyerAvoir.bind(null, avoir.id)}>
-                <button
-                  type="submit"
-                  className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
-                >
-                  Envoyer
-                </button>
-              </form>
+              <EnvoyerActions
+                envoyerAction={envoyerAvoir.bind(null, avoir.id)}
+                numero={avoir.numero}
+                titre="Avoir"
+                montantTtc={Math.abs(Number(avoir.montantTtc))}
+                clientEmail={client.email}
+                clientTelephone={client.telephone}
+                raisonSociale={emetteur.raisonSociale}
+              />
             </>
           )}
         </>

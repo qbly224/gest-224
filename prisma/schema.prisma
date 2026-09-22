@@ -104,6 +104,12 @@ model Tenant {
   // (assurance RC pro, numéro d'agrément, etc.)
   mentionsLegalesLibres  String?   @map("mentions_legales_libres")
 
+  // Logo encodé en data URL (base64), affiché sur les documents PDF et dans
+  // l'interface. Limité côté applicatif à 500 Ko / image (cf.
+  // lib/actions/entreprise.ts) : pas de stockage objet séparé pour un MVP,
+  // simple colonne texte suffit à ce volume.
+  logoDataUrl            String?   @map("logo_data_url")
+
   plan                   PlanAbonnement @default(gratuit)
   // Masque le guide de démarrage sur le tableau de bord une fois que
   // l'entreprise n'en a plus besoin (indépendamment de son avancement réel).
@@ -136,6 +142,10 @@ model User {
   prenom        String
   role          RoleUtilisateur @default(owner)
   actif         Boolean         @default(true)
+  // Habilité à gérer la plateforme dans son ensemble (tous tenants
+  // confondus, cf. lib/auth-admin.ts et /admin) — jamais vrai par défaut,
+  // promu manuellement en base pour un compte donné.
+  estAdminPlateforme Boolean    @default(false) @map("est_admin_plateforme")
 
   lastLoginAt   DateTime?       @map("last_login_at")
   // Horodatage du dernier changement de mot de passe : une session JWT émise

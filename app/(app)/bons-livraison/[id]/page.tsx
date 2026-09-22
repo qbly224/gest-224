@@ -8,7 +8,9 @@ import {
   convertirBonLivraisonEnFacture,
 } from "@/lib/actions/documents";
 import { DocumentDetail } from "@/components/documents/document-detail";
-import { PdfLink } from "@/components/documents/pdf-link";
+import { PdfActions } from "@/components/documents/pdf-actions";
+import { EnvoyerActions } from "@/components/documents/envoyer-actions";
+import type { ClientSnapshot, EmetteurSnapshot } from "@/lib/documents/snapshot";
 
 export default async function BonLivraisonDetailPage({
   params,
@@ -27,6 +29,9 @@ export default async function BonLivraisonDetailPage({
     },
   });
   if (!bonLivraison) notFound();
+
+  const client = bonLivraison.clientSnapshot as unknown as ClientSnapshot;
+  const emetteur = bonLivraison.emetteurSnapshot as unknown as EmetteurSnapshot;
 
   return (
     <DocumentDetail
@@ -60,7 +65,7 @@ export default async function BonLivraisonDetailPage({
       }
       actions={
         <>
-          <PdfLink documentId={bonLivraison.id} />
+          <PdfActions documentId={bonLivraison.id} numero={bonLivraison.numero} />
           {bonLivraison.statut === "brouillon" && (
             <>
               <Link
@@ -69,14 +74,16 @@ export default async function BonLivraisonDetailPage({
               >
                 Modifier
               </Link>
-              <form action={envoyerBonLivraison.bind(null, bonLivraison.id)}>
-                <button
-                  type="submit"
-                  className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
-                >
-                  Envoyer
-                </button>
-              </form>
+              <EnvoyerActions
+                envoyerAction={envoyerBonLivraison.bind(null, bonLivraison.id)}
+                numero={bonLivraison.numero}
+                titre="Bon de livraison"
+                montantTtc={Number(bonLivraison.montantTtc)}
+                clientEmail={client.email}
+                clientTelephone={client.telephone}
+                raisonSociale={emetteur.raisonSociale}
+                masquerMontant
+              />
             </>
           )}
           {bonLivraison.statut === "envoye" && (

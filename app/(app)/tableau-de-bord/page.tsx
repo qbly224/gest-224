@@ -2,7 +2,10 @@ import Link from "next/link";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { calculerSoldeEtVueMensuelle } from "@/lib/comptabilite/agregats";
+import { compterDocumentsMoisCourant } from "@/lib/documents/usage";
 import { OnboardingChecklist } from "@/components/app/onboarding-checklist";
+import { GraphiqueMensuel } from "@/components/dashboard/graphique-mensuel";
+import { PLANS } from "@/lib/plans";
 
 function formatEuros(n: number) {
   return new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(n);
@@ -11,13 +14,15 @@ function formatEuros(n: number) {
 export default async function TableauDeBordPage() {
   const session = await requireSession();
 
-  const [tenant, nbClients, nbArticles, nbDocuments, compta] = await Promise.all([
+  const [tenant, nbClients, nbArticles, nbDocuments, nbDocumentsCeMois, compta] = await Promise.all([
     prisma.tenant.findUniqueOrThrow({ where: { id: session.tenantId } }),
     prisma.client.count({ where: { tenantId: session.tenantId, actif: true } }),
     prisma.article.count({ where: { tenantId: session.tenantId, actif: true } }),
     prisma.document.count({ where: { tenantId: session.tenantId } }),
+    compterDocumentsMoisCourant(session.tenantId),
     calculerSoldeEtVueMensuelle(session.tenantId),
   ]);
+  const plan = PLANS[tenant.plan];
 
   return (
     <div className="space-y-8">
@@ -50,16 +55,32 @@ export default async function TableauDeBordPage() {
         />
       )}
 
+      <div className="rounded-sm border border-encre/20 bg-white/40 p-8">
+        <p className="font-sans text-sm text-encre/60">Solde global (recettes − dépenses)</p>
+        <p
+          className={`mt-1 font-mono text-5xl ${compta.solde >= 0 ? "text-encre" : "text-red-700"}`}
+        >
+          {formatEuros(compta.solde)}
+        </p>
+        <div className="mt-3 flex gap-6 font-sans text-xs text-encre/60">
+          <span>
+            Recettes totales <span className="font-mono text-encre/80">{formatEuros(compta.totalRecettes)}</span>
+          </span>
+          <span>
+            Dépenses totales <span className="font-mono text-encre/80">{formatEuros(compta.totalDepenses)}</span>
+          </span>
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div className="rounded-sm border border-encre/20 bg-white/40 p-6">
-          <p
-            className={`font-mono text-3xl ${compta.solde >= 0 ? "text-encre" : "text-red-700"}`}
-          >
-            {formatEuros(compta.solde)}
+          <p className="font-mono text-3xl text-encre">
+            {nbDocumentsCeMois}
+            {plan.limiteDocumentsParMois !== null && (
+              <span className="text-encre/50"> / {plan.limiteDocumentsParMois}</span>
+            )}
           </p>
-          <p className="mt-1 font-sans text-sm text-encre/70">
-            Solde (recettes − dépenses)
-          </p>
+          <p className="mt-1 font-sans text-sm text-encre/70">Documents créés ce mois-ci</p>
         </div>
         <div className="rounded-sm border border-encre/20 bg-white/40 p-6">
           <p className="font-mono text-3xl text-encre">{nbClients}</p>
@@ -83,10 +104,17 @@ export default async function TableauDeBordPage() {
             <Link href="/depenses" className="text-encre underline">
               Dépenses
             </Link>
+            <Link href="/rapport" className="text-encre underline">
+              Rapport complet
+            </Link>
           </div>
         </div>
 
-        <table className="mt-4 w-full border-collapse font-sans text-sm">
+        <div className="mt-4 rounded-sm border border-encre/20 bg-white/40 p-6">
+          <GraphiqueMensuel mois={compta.mois} />
+        </div>
+
+        <table className="mt-6 w-full border-collapse font-sans text-sm">
           <thead>
             <tr className="border-b border-encre/20 text-left text-encre/60">
               <th className="py-2 font-medium">Mois</th>

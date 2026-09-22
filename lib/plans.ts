@@ -11,6 +11,8 @@ export type DefinitionPlan = {
   prixMensuel: number;
   limiteDocumentsParMois: number | null; // null = illimité
   limiteClients: number | null;
+  limiteDepensesParMois: number | null;
+  rapportComplet: boolean;
   fonctionnalites: string[];
 };
 
@@ -20,12 +22,14 @@ export const PLANS: Record<PlanAbonnement, DefinitionPlan> = {
     label: "Gratuit",
     prixMensuel: 0,
     limiteDocumentsParMois: 5,
-    limiteClients: 10,
+    limiteClients: 5,
+    limiteDepensesParMois: 5,
+    rapportComplet: false,
     fonctionnalites: [
       "5 documents par mois (devis, factures, etc.)",
-      "10 clients",
+      "5 clients",
       "Génération PDF illimitée",
-      "Comptabilité simplifiée",
+      "Comptabilité simplifiée (5 dépenses/mois)",
     ],
   },
   starter: {
@@ -34,11 +38,14 @@ export const PLANS: Record<PlanAbonnement, DefinitionPlan> = {
     prixMensuel: 19,
     limiteDocumentsParMois: 50,
     limiteClients: 100,
+    limiteDepensesParMois: null,
+    rapportComplet: true,
     fonctionnalites: [
       "50 documents par mois",
       "100 clients",
       "Toute la chaîne documentaire (devis à avoir)",
-      "Comptabilité simplifiée",
+      "Comptabilité simplifiée illimitée",
+      "Rapport complet (comptabilité + activité)",
     ],
   },
   pro: {
@@ -47,11 +54,14 @@ export const PLANS: Record<PlanAbonnement, DefinitionPlan> = {
     prixMensuel: 49,
     limiteDocumentsParMois: null,
     limiteClients: null,
+    limiteDepensesParMois: null,
+    rapportComplet: true,
     fonctionnalites: [
       "Documents illimités",
       "Clients illimités",
       "Toute la chaîne documentaire (devis à avoir)",
-      "Comptabilité simplifiée",
+      "Comptabilité simplifiée illimitée",
+      "Rapport complet (comptabilité + activité)",
     ],
   },
 };

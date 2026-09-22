@@ -5,7 +5,7 @@ import { renderDocumentHtml } from "@/lib/pdf/template";
 import { genererPdf } from "@/lib/pdf/generate";
 
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await getSession();
@@ -14,6 +14,7 @@ export async function GET(
   }
 
   const { id } = await params;
+  const telecharger = new URL(request.url).searchParams.get("telecharger") === "1";
 
   const document = await prisma.document.findFirst({
     where: { id, tenantId: session.tenantId },
@@ -33,7 +34,7 @@ export async function GET(
   return new NextResponse(new Uint8Array(pdf), {
     headers: {
       "Content-Type": "application/pdf",
-      "Content-Disposition": `inline; filename="${document.numero}.pdf"`,
+      "Content-Disposition": `${telecharger ? "attachment" : "inline"}; filename="${document.numero}.pdf"`,
     },
   });
 }

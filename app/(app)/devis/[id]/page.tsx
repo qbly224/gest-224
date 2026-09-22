@@ -10,7 +10,9 @@ import {
   convertirDevisEnBonCommande,
 } from "@/lib/actions/documents";
 import { DocumentDetail } from "@/components/documents/document-detail";
-import { PdfLink } from "@/components/documents/pdf-link";
+import { PdfActions } from "@/components/documents/pdf-actions";
+import { EnvoyerActions } from "@/components/documents/envoyer-actions";
+import type { ClientSnapshot, EmetteurSnapshot } from "@/lib/documents/snapshot";
 
 export default async function DevisDetailPage({
   params,
@@ -32,13 +34,16 @@ export default async function DevisDetailPage({
   });
   if (!devis) notFound();
 
+  const client = devis.clientSnapshot as unknown as ClientSnapshot;
+  const emetteur = devis.emetteurSnapshot as unknown as EmetteurSnapshot;
+
   return (
     <DocumentDetail
       titre="Devis"
       document={devis}
       actions={
         <>
-          <PdfLink documentId={devis.id} />
+          <PdfActions documentId={devis.id} numero={devis.numero} />
           {devis.statut === "brouillon" && (
             <>
               <Link
@@ -47,14 +52,15 @@ export default async function DevisDetailPage({
               >
                 Modifier
               </Link>
-              <form action={envoyerDevis.bind(null, devis.id)}>
-                <button
-                  type="submit"
-                  className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
-                >
-                  Envoyer
-                </button>
-              </form>
+              <EnvoyerActions
+                envoyerAction={envoyerDevis.bind(null, devis.id)}
+                numero={devis.numero}
+                titre="Devis"
+                montantTtc={Number(devis.montantTtc)}
+                clientEmail={client.email}
+                clientTelephone={client.telephone}
+                raisonSociale={emetteur.raisonSociale}
+              />
             </>
           )}
           {devis.statut === "envoye" && (

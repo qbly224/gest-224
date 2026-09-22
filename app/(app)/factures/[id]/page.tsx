@@ -5,8 +5,10 @@ import { prisma } from "@/lib/prisma";
 import { envoyerFacture, creerAvoirDepuisFacture } from "@/lib/actions/documents";
 import { marquerDocumentPaye } from "@/lib/actions/comptabilite";
 import { DocumentDetail } from "@/components/documents/document-detail";
-import { PdfLink } from "@/components/documents/pdf-link";
+import { PdfActions } from "@/components/documents/pdf-actions";
+import { EnvoyerActions } from "@/components/documents/envoyer-actions";
 import { TITRES_DOCUMENT } from "@/lib/documents/statut-labels";
+import type { ClientSnapshot, EmetteurSnapshot } from "@/lib/documents/snapshot";
 
 export default async function FactureDetailPage({
   params,
@@ -28,6 +30,9 @@ export default async function FactureDetailPage({
     },
   });
   if (!facture) notFound();
+
+  const client = facture.clientSnapshot as unknown as ClientSnapshot;
+  const emetteur = facture.emetteurSnapshot as unknown as EmetteurSnapshot;
 
   return (
     <DocumentDetail
@@ -62,7 +67,7 @@ export default async function FactureDetailPage({
       }
       actions={
         <>
-          <PdfLink documentId={facture.id} />
+          <PdfActions documentId={facture.id} numero={facture.numero} />
           {facture.statut === "brouillon" && (
             <>
               <Link
@@ -71,14 +76,15 @@ export default async function FactureDetailPage({
               >
                 Modifier
               </Link>
-              <form action={envoyerFacture.bind(null, facture.id)}>
-                <button
-                  type="submit"
-                  className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
-                >
-                  Envoyer
-                </button>
-              </form>
+              <EnvoyerActions
+                envoyerAction={envoyerFacture.bind(null, facture.id)}
+                numero={facture.numero}
+                titre="Facture"
+                montantTtc={Number(facture.montantTtc)}
+                clientEmail={client.email}
+                clientTelephone={client.telephone}
+                raisonSociale={emetteur.raisonSociale}
+              />
             </>
           )}
           {facture.statut === "envoye" && (

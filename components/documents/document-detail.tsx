@@ -53,6 +53,14 @@ export function DocumentDetail({
     <div>
       <div className="flex items-start justify-between">
         <div>
+          {emetteur.logoDataUrl && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={emetteur.logoDataUrl}
+              alt=""
+              className="mb-3 h-12 w-auto max-w-[160px] object-contain"
+            />
+          )}
           <p className="font-mono text-xs uppercase tracking-wide text-encre/50">{titre}</p>
           <h1 className="font-mono text-2xl text-encre">{document.numero}</h1>
           <p className="mt-1 font-sans text-sm text-encre/70">

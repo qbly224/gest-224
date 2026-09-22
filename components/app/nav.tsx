@@ -10,13 +10,20 @@ const links = [
   { href: "/factures-acompte", label: "Acomptes" },
   { href: "/avoirs", label: "Avoirs" },
   { href: "/depenses", label: "Dépenses" },
+  { href: "/rapport", label: "Rapport" },
   { href: "/clients", label: "Clients" },
   { href: "/catalogue", label: "Catalogue" },
   { href: "/entreprise", label: "Entreprise" },
   { href: "/abonnement", label: "Abonnement" },
 ];
 
-export function AppNav({ raisonSociale }: { raisonSociale: string }) {
+export function AppNav({
+  raisonSociale,
+  estAdminPlateforme = false,
+}: {
+  raisonSociale: string;
+  estAdminPlateforme?: boolean;
+}) {
   return (
     <header className="border-b border-encre/20 bg-ivoire">
       <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-6 py-4">
@@ -32,6 +39,11 @@ export function AppNav({ raisonSociale }: { raisonSociale: string }) {
               {link.label}
             </Link>
           ))}
+          {estAdminPlateforme && (
+            <Link href="/admin" className="font-medium text-encre hover:underline">
+              Admin
+            </Link>
+          )}
           <form action={signOut}>
             <button type="submit" className="hover:text-encre">
               Déconnexion

@@ -1,16 +1,19 @@
+import Link from "next/link";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { compterDocumentsMoisCourant } from "@/lib/documents/usage";
+import { compterDepensesMoisCourant } from "@/lib/comptabilite/agregats";
 import { LISTE_PLANS, PLANS } from "@/lib/plans";
 import { changerPlan } from "@/lib/actions/abonnement";
 
 export default async function AbonnementPage() {
   const session = await requireSession();
 
-  const [tenant, nbClients, nbDocumentsCeMois] = await Promise.all([
+  const [tenant, nbClients, nbDocumentsCeMois, nbDepensesCeMois] = await Promise.all([
     prisma.tenant.findUniqueOrThrow({ where: { id: session.tenantId } }),
     prisma.client.count({ where: { tenantId: session.tenantId } }),
     compterDocumentsMoisCourant(session.tenantId),
+    compterDepensesMoisCourant(session.tenantId),
   ]);
 
   const planActuel = PLANS[tenant.plan];
@@ -25,7 +28,7 @@ export default async function AbonnementPage() {
         plan est immédiat.
       </p>
 
-      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div className="rounded-sm border border-encre/20 bg-white/40 p-6">
           <p className="font-mono text-2xl text-encre">
             {nbDocumentsCeMois}
@@ -46,7 +49,26 @@ export default async function AbonnementPage() {
           </p>
           <p className="mt-1 font-sans text-sm text-encre/70">Clients enregistrés</p>
         </div>
+        <div className="rounded-sm border border-encre/20 bg-white/40 p-6">
+          <p className="font-mono text-2xl text-encre">
+            {nbDepensesCeMois}
+            {planActuel.limiteDepensesParMois !== null && (
+              <span className="text-encre/50"> / {planActuel.limiteDepensesParMois}</span>
+            )}
+          </p>
+          <p className="mt-1 font-sans text-sm text-encre/70">Dépenses saisies ce mois-ci</p>
+        </div>
       </div>
+
+      {planActuel.rapportComplet && (
+        <p className="mt-6 font-sans text-sm text-encre">
+          Votre plan donne accès au{" "}
+          <Link href="/rapport" className="underline">
+            rapport complet
+          </Link>
+          .
+        </p>
+      )}
 
       <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
         {LISTE_PLANS.map((plan) => {

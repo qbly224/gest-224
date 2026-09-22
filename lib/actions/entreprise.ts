@@ -7,11 +7,48 @@ import { requireSession } from "@/lib/auth";
 import { entrepriseSchema } from "@/lib/validation/entreprise";
 import type { ActionState } from "@/lib/actions/types";
 
+const TYPES_LOGO_AUTORISES = new Set([
+  "image/png",
+  "image/jpeg",
+  "image/webp",
+  "image/svg+xml",
+]);
+const TAILLE_LOGO_MAX_OCTETS = 500 * 1024;
+
+async function resoudreLogoDataUrl(
+  formData: FormData
+): Promise<{ ok: true; value: string | null | undefined } | { ok: false; error: string }> {
+  if (formData.get("supprimerLogo") === "on") {
+    return { ok: true, value: null };
+  }
+
+  const fichier = formData.get("logo");
+  if (!(fichier instanceof File) || fichier.size === 0) {
+    // Aucun nouveau fichier envoyé : on laisse le logo existant inchangé.
+    return { ok: true, value: undefined };
+  }
+
+  if (!TYPES_LOGO_AUTORISES.has(fichier.type)) {
+    return { ok: false, error: "Format de logo non supporté (PNG, JPEG, WebP ou SVG uniquement)." };
+  }
+  if (fichier.size > TAILLE_LOGO_MAX_OCTETS) {
+    return { ok: false, error: "Le logo dépasse la taille maximale de 500 Ko." };
+  }
+
+  const buffer = Buffer.from(await fichier.arrayBuffer());
+  return { ok: true, value: `data:${fichier.type};base64,${buffer.toString("base64")}` };
+}
+
 export async function updateEntreprise(
   _prevState: ActionState,
   formData: FormData
 ): Promise<ActionState> {
   const session = await requireSession();
+
+  const logo = await resoudreLogoDataUrl(formData);
+  if (!logo.ok) {
+    return { error: logo.error };
+  }
 
   const parsed = entrepriseSchema.safeParse({
     raisonSociale: formData.get("raisonSociale"),
@@ -60,6 +97,7 @@ export async function updateEntreprise(
         iban: data.iban || null,
         bic: data.bic || null,
         mentionsLegalesLibres: data.mentionsLegalesLibres || null,
+        ...(logo.value !== undefined ? { logoDataUrl: logo.value } : {}),
       },
     });
   } catch (err) {

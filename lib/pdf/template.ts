@@ -152,6 +152,7 @@ export function renderDocumentHtml(document: DocumentAvecLignes): string {
   }
   .page { padding: 6mm; }
   .entete { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10mm; }
+  .logo { max-height: 18mm; max-width: 50mm; object-fit: contain; margin-bottom: 4mm; display: block; }
   .titre { font-size: 22pt; letter-spacing: 0.04em; margin: 0; }
   .numero { font-family: "Courier New", monospace; font-size: 12pt; margin-top: 2mm; }
   .statut { font-family: "Courier New", monospace; font-size: 9pt; text-transform: uppercase; color: #1f3d2c99; }
@@ -182,6 +183,7 @@ export function renderDocumentHtml(document: DocumentAvecLignes): string {
   <div class="page">
     <div class="entete">
       <div>
+        ${emetteur.logoDataUrl ? `<img class="logo" src="${escapeHtml(emetteur.logoDataUrl)}" alt="" />` : ""}
         <p class="titre">${TITRES[document.type]}</p>
         <p class="numero">${escapeHtml(document.numero)}</p>
         <p class="statut">${escapeHtml(document.statut)}</p>

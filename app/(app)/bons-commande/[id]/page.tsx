@@ -4,7 +4,9 @@ import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { envoyerBonCommande, convertirBonCommandeEnBonLivraison } from "@/lib/actions/documents";
 import { DocumentDetail } from "@/components/documents/document-detail";
-import { PdfLink } from "@/components/documents/pdf-link";
+import { PdfActions } from "@/components/documents/pdf-actions";
+import { EnvoyerActions } from "@/components/documents/envoyer-actions";
+import type { ClientSnapshot, EmetteurSnapshot } from "@/lib/documents/snapshot";
 
 export default async function BonCommandeDetailPage({
   params,
@@ -23,6 +25,9 @@ export default async function BonCommandeDetailPage({
     },
   });
   if (!bonCommande) notFound();
+
+  const client = bonCommande.clientSnapshot as unknown as ClientSnapshot;
+  const emetteur = bonCommande.emetteurSnapshot as unknown as EmetteurSnapshot;
 
   return (
     <DocumentDetail
@@ -52,7 +57,7 @@ export default async function BonCommandeDetailPage({
       }
       actions={
         <>
-          <PdfLink documentId={bonCommande.id} />
+          <PdfActions documentId={bonCommande.id} numero={bonCommande.numero} />
           {bonCommande.statut === "brouillon" && (
             <>
               <Link
@@ -61,14 +66,15 @@ export default async function BonCommandeDetailPage({
               >
                 Modifier
               </Link>
-              <form action={envoyerBonCommande.bind(null, bonCommande.id)}>
-                <button
-                  type="submit"
-                  className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
-                >
-                  Envoyer
-                </button>
-              </form>
+              <EnvoyerActions
+                envoyerAction={envoyerBonCommande.bind(null, bonCommande.id)}
+                numero={bonCommande.numero}
+                titre="Bon de commande"
+                montantTtc={Number(bonCommande.montantTtc)}
+                clientEmail={client.email}
+                clientTelephone={client.telephone}
+                raisonSociale={emetteur.raisonSociale}
+              />
             </>
           )}
           {bonCommande.statut === "envoye" && (

@@ -22,6 +22,7 @@ export type EmetteurSnapshot = {
   iban: string | null;
   bic: string | null;
   mentionsLegalesLibres: string | null;
+  logoDataUrl: string | null;
 };
 
 export type ClientSnapshot = {
@@ -60,6 +61,7 @@ export function buildEmetteurSnapshot(tenant: Tenant): EmetteurSnapshot {
     iban: tenant.iban,
     bic: tenant.bic,
     mentionsLegalesLibres: tenant.mentionsLegalesLibres,
+    logoDataUrl: tenant.logoDataUrl,
   };
 }
 
