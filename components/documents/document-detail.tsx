@@ -51,7 +51,7 @@ export function DocumentDetail({
 
   return (
     <div>
-      <div className="flex items-start justify-between">
+      <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           {emetteur.logoDataUrl && (
             // eslint-disable-next-line @next/next/no-img-element
@@ -74,7 +74,7 @@ export function DocumentDetail({
 
       {aval}
 
-      <div className="mt-8 grid grid-cols-2 gap-8 font-sans text-sm">
+      <div className="mt-8 grid grid-cols-1 gap-6 font-sans text-sm sm:grid-cols-2 sm:gap-8">
         <div>
           <h2 className="text-xs uppercase tracking-wide text-encre/50">Émetteur</h2>
           <p className="mt-1 font-medium text-encre">{emetteur.raisonSociale}</p>
@@ -110,7 +110,8 @@ export function DocumentDetail({
         </div>
       )}
 
-      <table className="mt-8 w-full border-collapse font-sans text-sm">
+      <div className="mt-8 overflow-x-auto">
+      <table className="w-full min-w-[420px] border-collapse font-sans text-sm">
         <thead>
           <tr className="border-b border-encre/20 text-left text-encre/60">
             <th className="py-2 font-medium">Désignation</th>
@@ -150,6 +151,7 @@ export function DocumentDetail({
           ))}
         </tbody>
       </table>
+      </div>
 
       {!masquerPrix && (
         <div className="ml-auto mt-6 w-full max-w-xs space-y-1 font-sans text-sm">

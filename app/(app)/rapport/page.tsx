@@ -38,7 +38,7 @@ export default async function RapportPage() {
 
   return (
     <div className="space-y-10">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="font-titre text-2xl text-encre">Rapport complet</h1>
           <p className="mt-1 font-sans text-sm text-encre/70">{tenant.raisonSociale}</p>
@@ -71,7 +71,8 @@ export default async function RapportPage() {
 
       <div>
         <h2 className="font-titre text-lg text-encre">Vue mensuelle (12 mois)</h2>
-        <table className="mt-4 w-full border-collapse font-sans text-sm">
+        <div className="mt-4 overflow-x-auto">
+        <table className="w-full min-w-[420px] border-collapse font-sans text-sm">
           <thead>
             <tr className="border-b border-encre/20 text-left text-encre/60">
               <th className="py-2 font-medium">Mois</th>
@@ -95,6 +96,7 @@ export default async function RapportPage() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">

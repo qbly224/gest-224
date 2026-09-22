@@ -57,7 +57,7 @@ export function ArticleForm({
         </select>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className={labelClass} htmlFor="reference">
             Référence
@@ -109,7 +109,7 @@ export function ArticleForm({
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className={labelClass} htmlFor="prixUnitaireHt">
             Prix unitaire HT (€)

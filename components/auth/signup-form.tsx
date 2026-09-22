@@ -25,7 +25,7 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
       <fieldset className="space-y-2">
         <legend className="font-titre text-lg text-encre">Plan</legend>
         <input type="hidden" name="plan" value={plan} />
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
           {LISTE_PLANS.map((p) => (
             <button
               key={p.id}
@@ -68,7 +68,7 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
           <FieldError messages={state.fieldErrors?.raisonSociale} />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className={labelClass} htmlFor="siret">
               SIRET
@@ -117,7 +117,7 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
           <FieldError messages={state.fieldErrors?.adresseLigne1} />
         </div>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <label className={labelClass} htmlFor="codePostal">
               Code postal
@@ -146,7 +146,7 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
           Votre compte
         </legend>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className={labelClass} htmlFor="prenom">
               Prénom

@@ -28,7 +28,8 @@ export default async function RecettesPage() {
           Aucune recette pour l&apos;instant.
         </p>
       ) : (
-        <table className="mt-6 w-full border-collapse font-sans text-sm">
+        <div className="mt-6 overflow-x-auto">
+        <table className="w-full min-w-[420px] border-collapse font-sans text-sm">
           <thead>
             <tr className="border-b border-encre/20 text-left text-encre/60">
               <th className="py-2 font-medium">Date de paiement</th>
@@ -60,6 +61,7 @@ export default async function RecettesPage() {
             ))}
           </tbody>
         </table>
+        </div>
       )}
     </div>
   );

@@ -29,7 +29,8 @@ export function DocumentList({
   }
 
   return (
-    <table className="mt-6 w-full border-collapse font-sans text-sm">
+    <div className="mt-6 overflow-x-auto">
+    <table className="w-full min-w-[560px] border-collapse font-sans text-sm">
       <thead>
         <tr className="border-b border-encre/20 text-left text-encre/60">
           <th className="py-2 font-medium">Numéro</th>
@@ -67,5 +68,6 @@ export function DocumentList({
         ))}
       </tbody>
     </table>
+    </div>
   );
 }

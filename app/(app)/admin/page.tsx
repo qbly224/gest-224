@@ -46,7 +46,8 @@ export default async function AdminPage() {
         </div>
       </div>
 
-      <table className="w-full border-collapse font-sans text-sm">
+      <div className="overflow-x-auto">
+      <table className="w-full min-w-[720px] border-collapse font-sans text-sm">
         <thead>
           <tr className="border-b border-encre/20 text-left text-encre/60">
             <th className="py-2 font-medium">Entreprise</th>
@@ -109,6 +110,7 @@ export default async function AdminPage() {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

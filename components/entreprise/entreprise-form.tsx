@@ -50,7 +50,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
           <FieldError messages={state.fieldErrors?.raisonSociale} />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className={labelClass} htmlFor="formeJuridique">
               Forme juridique
@@ -78,7 +78,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className={labelClass} htmlFor="siren">
               SIREN
@@ -103,7 +103,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className={labelClass} htmlFor="regimeTva">
               Régime de TVA
@@ -143,7 +143,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
         <p className="font-sans text-xs text-encre/60">
           Affiché sur vos documents PDF. PNG, JPEG, WebP ou SVG, 500 Ko maximum.
         </p>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4">
           {(apercu ?? (!supprimer ? tenant.logoDataUrl : null)) ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -220,7 +220,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
             className={inputClass}
           />
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <label className={labelClass} htmlFor="codePostal">
               Code postal
@@ -264,7 +264,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
 
       <fieldset className="space-y-4 border-t border-encre/10 pt-4">
         <legend className="font-titre text-lg text-encre">Contact</legend>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className={labelClass} htmlFor="email">
               Email
@@ -296,7 +296,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
         <legend className="font-titre text-lg text-encre">
           Coordonnées bancaires
         </legend>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className={labelClass} htmlFor="iban">
               IBAN

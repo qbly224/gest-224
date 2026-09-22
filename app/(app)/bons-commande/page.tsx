@@ -14,7 +14,7 @@ export default async function BonsCommandePage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="font-titre text-2xl text-encre">Bons de commande</h1>
         <Link
           href="/bons-commande/nouveau"

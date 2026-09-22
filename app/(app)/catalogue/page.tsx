@@ -18,7 +18,7 @@ export default async function CataloguePage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="font-titre text-2xl text-encre">
           Catalogue produits / services
         </h1>
@@ -35,7 +35,8 @@ export default async function CataloguePage() {
           Aucun article pour l&apos;instant.
         </p>
       ) : (
-        <table className="mt-6 w-full border-collapse font-sans text-sm">
+        <div className="mt-6 overflow-x-auto">
+        <table className="w-full min-w-[520px] border-collapse font-sans text-sm">
           <thead>
             <tr className="border-b border-encre/20 text-left text-encre/60">
               <th className="py-2 font-medium">Désignation</th>
@@ -91,6 +92,7 @@ export default async function CataloguePage() {
             ))}
           </tbody>
         </table>
+        </div>
       )}
     </div>
   );

@@ -1,6 +1,6 @@
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { AppNav } from "@/components/app/nav";
+import { AppShell } from "@/components/app/app-shell";
 
 export default async function AppLayout({
   children,
@@ -20,12 +20,8 @@ export default async function AppLayout({
   ]);
 
   return (
-    <div className="min-h-screen">
-      <AppNav
-        raisonSociale={tenant.raisonSociale}
-        estAdminPlateforme={utilisateur.estAdminPlateforme}
-      />
-      <main className="mx-auto max-w-5xl px-6 py-8">{children}</main>
-    </div>
+    <AppShell raisonSociale={tenant.raisonSociale} estAdminPlateforme={utilisateur.estAdminPlateforme}>
+      {children}
+    </AppShell>
   );
 }

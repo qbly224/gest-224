@@ -54,7 +54,7 @@ export function ClientForm({
       </div>
 
       {type === "professionnel" ? (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className={labelClass} htmlFor="raisonSociale">
               Raison sociale
@@ -80,7 +80,7 @@ export function ClientForm({
           </div>
         </div>
       ) : (
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <label className={labelClass} htmlFor="civilite">
               Civilité
@@ -156,7 +156,7 @@ export function ClientForm({
             className={inputClass}
           />
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <label className={labelClass} htmlFor="codePostal">
               Code postal
@@ -200,7 +200,7 @@ export function ClientForm({
 
       <fieldset className="space-y-4 border-t border-encre/10 pt-4">
         <legend className="font-titre text-lg text-encre">Contact</legend>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className={labelClass} htmlFor="email">
               Email

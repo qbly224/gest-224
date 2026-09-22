@@ -172,7 +172,7 @@ export function DocumentForm({
 
       <input type="hidden" name="lignesJson" value={lignesJson} />
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className={labelClass} htmlFor={`${idPrefix}-clientId`}>
             Client
@@ -214,7 +214,7 @@ export function DocumentForm({
       </div>
 
       {mentionsFacture && (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className={labelClass} htmlFor={`${idPrefix}-dateEcheance`}>
               Date d&apos;échéance
@@ -332,7 +332,7 @@ export function DocumentForm({
               </div>
 
               <div
-                className={`mt-2 grid gap-3 ${regimeTvaNormal ? "grid-cols-5" : "grid-cols-4"}`}
+                className={`mt-2 grid grid-cols-2 gap-3 sm:grid-cols-3 ${regimeTvaNormal ? "md:grid-cols-5" : "md:grid-cols-4"}`}
               >
                 <div>
                   <label className={labelClass}>
