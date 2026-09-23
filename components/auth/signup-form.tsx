@@ -198,6 +198,25 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
         </div>
       </fieldset>
 
+      <label className="flex items-start gap-2 font-sans text-sm text-encre/80">
+        <input type="checkbox" name="accepteCgu" required className="mt-0.5" />
+        <span>
+          J&apos;accepte les{" "}
+          <Link href="/cgu" target="_blank" className="underline">
+            conditions générales d&apos;utilisation
+          </Link>
+          , les{" "}
+          <Link href="/cgv" target="_blank" className="underline">
+            conditions générales de vente
+          </Link>{" "}
+          et la{" "}
+          <Link href="/confidentialite" target="_blank" className="underline">
+            politique de confidentialité
+          </Link>
+          .
+        </span>
+      </label>
+
       <SubmitButton>Créer mon espace</SubmitButton>
 
       <p className="font-sans text-sm text-encre/70">

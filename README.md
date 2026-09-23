@@ -30,6 +30,21 @@ volontairement pas implémentée, conformément au périmètre initial du MVP.
 | 4 | Comptabilité simplifiée (recettes, dépenses, tableau de bord) | ✅ Livré |
 | 5 | Mise en marché SaaS (plans, tarifs, onboarding) | ✅ Livré |
 
+### Pages publiques (`app/(public)`)
+
+Page d'accueil (`/`, redirige vers `/tableau-de-bord` si déjà connecté),
+`/tarifs`, `/a-propos`, et les pages légales `/cgu`, `/cgv`,
+`/confidentialite`, `/mentions-legales`, partagées par un header/footer
+communs (`components/public/`). **`/mentions-legales` contient un espace
+réservé clairement signalé** : l'identité légale de l'éditeur (raison
+sociale, SIRET, adresse) n'a pas été fournie et doit être complétée avant
+toute ouverture commerciale — de même pour la section « Responsable du
+traitement » de `/confidentialite`. Le reste de ces pages (hébergeurs,
+description du Service, conditions de vente/résiliation, droits RGPD) est
+rédigé mais **n'a pas été relu par un professionnel du droit** ; à faire
+valider avant un lancement réel. L'inscription requiert désormais
+l'acceptation explicite des CGU/CGV/politique de confidentialité.
+
 ### Authentification & sécurité
 
 Réinitialisation de mot de passe en libre-service (`/mot-de-passe-oublie` →
