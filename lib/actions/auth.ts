@@ -15,6 +15,7 @@ import {
 import { verifierLimite } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/client-ip";
 import { envoyerEmail } from "@/lib/email";
+import { creerUrlCheckout } from "@/lib/actions/paiement";
 import type { ActionState } from "@/lib/actions/types";
 
 const DUREE_TOKEN_RESET_MS = 60 * 60 * 1000; // 1 heure
@@ -83,7 +84,12 @@ export async function signUp(
       const tenant = await tx.tenant.create({
         data: {
           raisonSociale: data.raisonSociale,
-          plan: data.plan,
+          // Toujours créé en gratuit : un plan payant choisi sur la page
+          // tarifs n'est appliqué qu'après paiement réel (redirection vers
+          // Stripe Checkout juste après la création de session ci-dessous),
+          // jamais directement ici — sans quoi n'importe qui pourrait
+          // s'inscrire directement sur Pro sans jamais payer.
+          plan: "gratuit",
           siret: data.siret,
           regimeTva: data.regimeTva,
           adresseLigne1: data.adresseLigne1,
@@ -122,6 +128,28 @@ export async function signUp(
     tenantId: created.tenant.id,
     role: created.user.role,
   });
+
+  if (data.plan !== "gratuit") {
+    try {
+      const url = await creerUrlCheckout(created.tenant.id, data.email, data.plan, null);
+      redirect(url);
+    } catch (err) {
+      // Le compte est déjà créé (en gratuit) et la session déjà ouverte :
+      // on ne bloque jamais l'inscription pour un souci de configuration
+      // du paiement. L'utilisateur peut réessayer de passer au plan payant
+      // depuis /abonnement une fois connecté.
+      if (
+        err &&
+        typeof err === "object" &&
+        "digest" in err &&
+        typeof err.digest === "string" &&
+        err.digest.startsWith("NEXT_REDIRECT")
+      ) {
+        throw err;
+      }
+      redirect("/tableau-de-bord?erreurPaiement=1");
+    }
+  }
 
   redirect("/tableau-de-bord");
 }

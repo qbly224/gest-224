@@ -17,10 +17,10 @@ catalogue produits/services, et une comptabilité simplifiée
 
 ## État du projet
 
-**MVP complet : les 5 phases sont livrées.** Aucun paiement réel n'est
-traité (voir Phase 5) ; la facturation électronique structurée
-(Factur-X/PDP) n'est volontairement pas implémentée, conformément au
-périmètre initial du MVP.
+**MVP complet : les 5 phases sont livrées**, plus le paiement réel des
+abonnements (Stripe, voir Phase 5) et un panneau d'administration
+multi-tenant. La facturation électronique structurée (Factur-X/PDP) n'est
+volontairement pas implémentée, conformément au périmètre initial du MVP.
 
 | Phase | Contenu | Statut |
 |---|---|---|
@@ -51,16 +51,49 @@ les champs de saisie. Pas encore d'email de vérification ni de MFA.
 ### Mise en marché SaaS (Phase 5)
 
 Trois plans (Gratuit / Starter / Pro, `lib/plans.ts`) avec des limites
-d'usage (documents/mois, clients) vérifiées côté serveur — **aucun paiement
-réel n'est traité**, le changement de plan est immédiat et gratuit depuis
-`/abonnement`. Page `/tarifs` publique, choix du plan reporté sur
-`/inscription?plan=...`. Un guide de démarrage s'affiche sur le tableau de
-bord tant que l'IBAN, un client, un article et un premier devis ne sont pas
-créés.
+d'usage (documents/mois, clients, dépenses/mois) vérifiées côté serveur ;
+Starter et Pro donnent en plus accès au rapport complet (`/rapport`). Page
+`/tarifs` publique, choix du plan reporté sur `/inscription?plan=...`. Un
+guide de démarrage s'affiche sur le tableau de bord tant que l'IBAN, un
+client, un article et un premier devis ne sont pas créés.
 
-Brancher un vrai paiement (Stripe ou équivalent) est une évolution
-ultérieure qui ne devrait toucher que `lib/plans.ts` et le flux de
-paiement, pas le reste de l'application.
+**Paiement (Stripe).** Un compte est toujours créé en plan gratuit ; choisir
+un plan payant (à l'inscription ou depuis `/abonnement`) redirige vers une
+session Stripe Checkout hébergée. `Tenant.plan` n'est jamais mis à jour
+directement par une action utilisateur pour un plan payant — seul le
+webhook `app/api/stripe/webhook/route.ts` (événements
+`checkout.session.completed` et `customer.subscription.deleted`) ou
+`lib/actions/paiement.ts` (changement d'abonnement existant, résiliation)
+l'écrivent, pour que le plan en base reste toujours le reflet de ce que
+Stripe facture réellement. Le portail Stripe hébergé (moyen de paiement,
+factures, résiliation en libre-service) est accessible depuis
+`/abonnement` dès qu'un client Stripe existe.
+
+Variables requises (voir `.env.example`) : `STRIPE_SECRET_KEY`,
+`STRIPE_WEBHOOK_SECRET`, `STRIPE_PRICE_STARTER`, `STRIPE_PRICE_PRO`. Sans
+`STRIPE_SECRET_KEY`, le passage à un plan payant échoue proprement (message
+d'erreur) — le plan gratuit et le reste de l'application fonctionnent
+normalement.
+
+### Panneau d'administration
+
+`/admin`, réservé aux comptes avec `User.estAdminPlateforme` (jamais vrai
+par défaut, promu manuellement en base) : liste de toutes les entreprises
+inscrites, tous tenants confondus, avec leurs usages et la possibilité de
+changer leur plan ou de les activer/désactiver. Le drapeau est revérifié en
+base à chaque requête (jamais porté par le jeton JWT), donc une révocation
+est immédiate.
+
+### Documents : logo, téléchargement, envoi
+
+Chaque entreprise peut ajouter un logo (`/entreprise`, PNG/JPEG/WebP/SVG,
+500 Ko max, stocké en base en data URL) ; il apparaît sur les PDF et
+l'affichage à l'écran, figé dans le snapshot de chaque document comme le
+reste de l'identité émetteur. Sur la fiche de chaque document : un vrai
+téléchargement PDF (en plus de l'aperçu) et un bouton « Envoyer » qui
+ouvre Gmail ou WhatsApp pré-rempli avec les infos du document — ni l'un ni
+l'autre ne permettant de joindre un fichier via un simple lien, le message
+rappelle de joindre le PDF déjà téléchargé.
 
 ### Comptabilité simplifiée (Phase 4)
 

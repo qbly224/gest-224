@@ -4,10 +4,15 @@ import { prisma } from "@/lib/prisma";
 import { compterDocumentsMoisCourant } from "@/lib/documents/usage";
 import { compterDepensesMoisCourant } from "@/lib/comptabilite/agregats";
 import { LISTE_PLANS, PLANS } from "@/lib/plans";
-import { changerPlan } from "@/lib/actions/abonnement";
+import { choisirPlanPaye, annulerAbonnement, ouvrirPortailFacturation } from "@/lib/actions/paiement";
 
-export default async function AbonnementPage() {
+export default async function AbonnementPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ paiement?: string }>;
+}) {
   const session = await requireSession();
+  const { paiement } = await searchParams;
 
   const [tenant, nbClients, nbDocumentsCeMois, nbDepensesCeMois] = await Promise.all([
     prisma.tenant.findUniqueOrThrow({ where: { id: session.tenantId } }),
@@ -24,9 +29,18 @@ export default async function AbonnementPage() {
       <p className="mt-1 font-sans text-sm text-encre/70">
         Plan actuel : <span className="font-medium text-encre">{planActuel.label}</span>
         {planActuel.prixMensuel > 0 ? ` — ${planActuel.prixMensuel} €/mois` : " — gratuit"}.
-        Aucun paiement n&apos;est traité pour l&apos;instant : le changement de
-        plan est immédiat.
       </p>
+
+      {paiement === "succes" && (
+        <p className="mt-4 rounded-sm bg-encre/10 px-3 py-2 font-sans text-sm text-encre">
+          Paiement confirmé — votre plan a été mis à jour.
+        </p>
+      )}
+      {paiement === "annule" && (
+        <p className="mt-4 rounded-sm bg-red-50 px-3 py-2 font-sans text-sm text-red-700">
+          Paiement annulé — votre plan n&apos;a pas changé.
+        </p>
+      )}
 
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div className="rounded-sm border border-encre/20 bg-white/40 p-6">
@@ -60,15 +74,24 @@ export default async function AbonnementPage() {
         </div>
       </div>
 
-      {planActuel.rapportComplet && (
-        <p className="mt-6 font-sans text-sm text-encre">
-          Votre plan donne accès au{" "}
-          <Link href="/rapport" className="underline">
-            rapport complet
-          </Link>
-          .
-        </p>
-      )}
+      <div className="mt-6 flex flex-wrap items-center gap-4">
+        {planActuel.rapportComplet && (
+          <p className="font-sans text-sm text-encre">
+            Votre plan donne accès au{" "}
+            <Link href="/rapport" className="underline">
+              rapport complet
+            </Link>
+            .
+          </p>
+        )}
+        {tenant.stripeCustomerId && (
+          <form action={ouvrirPortailFacturation}>
+            <button type="submit" className="font-sans text-sm text-encre underline">
+              Gérer mon moyen de paiement et mes factures
+            </button>
+          </form>
+        )}
+      </div>
 
       <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
         {LISTE_PLANS.map((plan) => {
@@ -100,16 +123,28 @@ export default async function AbonnementPage() {
                   </li>
                 ))}
               </ul>
-              <form action={changerPlan} className="mt-6">
-                <input type="hidden" name="plan" value={plan.id} />
-                <button
-                  type="submit"
-                  disabled={estActuel}
-                  className="w-full rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light disabled:cursor-not-allowed disabled:opacity-40"
-                >
-                  {estActuel ? "Plan actuel" : "Passer à ce plan"}
-                </button>
-              </form>
+              {plan.id === "gratuit" ? (
+                <form action={annulerAbonnement} className="mt-6">
+                  <button
+                    type="submit"
+                    disabled={estActuel}
+                    className="w-full rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5 disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    {estActuel ? "Plan actuel" : "Repasser au gratuit"}
+                  </button>
+                </form>
+              ) : (
+                <form action={choisirPlanPaye} className="mt-6">
+                  <input type="hidden" name="plan" value={plan.id} />
+                  <button
+                    type="submit"
+                    disabled={estActuel}
+                    className="w-full rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    {estActuel ? "Plan actuel" : "Passer à ce plan"}
+                  </button>
+                </form>
+              )}
             </div>
           );
         })}

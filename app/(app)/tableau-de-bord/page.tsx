@@ -22,8 +22,13 @@ function formatEuros(n: number) {
   return new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(n);
 }
 
-export default async function TableauDeBordPage() {
+export default async function TableauDeBordPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ erreurPaiement?: string }>;
+}) {
   const session = await requireSession();
+  const { erreurPaiement } = await searchParams;
 
   const [
     tenant,
@@ -63,6 +68,18 @@ export default async function TableauDeBordPage() {
             : "normal"}
         </p>
       </div>
+
+      {erreurPaiement === "1" && (
+        <p className="rounded-sm bg-red-50 px-3 py-2 font-sans text-sm text-red-700">
+          Votre compte a bien été créé, mais le paiement du plan choisi n&apos;a pas pu être
+          initié. Vous êtes sur le plan gratuit — vous pouvez réessayer de passer à un plan
+          payant depuis la page{" "}
+          <Link href="/abonnement" className="underline">
+            Abonnement
+          </Link>
+          .
+        </p>
+      )}
 
       {!tenant.onboardingMasque && (
         <OnboardingChecklist

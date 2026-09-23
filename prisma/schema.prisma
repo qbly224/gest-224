@@ -110,6 +110,15 @@ model Tenant {
   // simple colonne texte suffit à ce volume.
   logoDataUrl            String?   @map("logo_data_url")
 
+  // Paiement des abonnements (Stripe). Null tant que l'entreprise n'a
+  // jamais payé (plan gratuit ou changement de plan encore en attente de
+  // paiement). Synchronisés uniquement par le webhook Stripe
+  // (app/api/stripe/webhook/route.ts) et lib/actions/paiement.ts — jamais
+  // écrits ailleurs, pour que `plan` reste toujours le reflet de ce que
+  // Stripe facture réellement.
+  stripeCustomerId       String?   @unique @map("stripe_customer_id")
+  stripeSubscriptionId   String?   @map("stripe_subscription_id")
+
   plan                   PlanAbonnement @default(gratuit)
   // Masque le guide de démarrage sur le tableau de bord une fois que
   // l'entreprise n'en a plus besoin (indépendamment de son avancement réel).

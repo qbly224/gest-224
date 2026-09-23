@@ -1,10 +1,5 @@
 import type { PlanAbonnement } from "@prisma/client";
 
-// Aucun paiement réel n'est traité en Phase 5 : ces définitions ne pilotent
-// que l'affichage (page tarifs, page abonnement) et les limites d'usage
-// vérifiées côté serveur. Le passage à un vrai processeur de paiement
-// (Stripe ou équivalent) n'a besoin de changer que ce fichier + l'ajout du
-// flux de paiement, pas le reste de l'application.
 export type DefinitionPlan = {
   id: PlanAbonnement;
   label: string;
@@ -70,4 +65,16 @@ export const LISTE_PLANS = [PLANS.gratuit, PLANS.starter, PLANS.pro];
 
 export function estPlanValide(value: string): value is PlanAbonnement {
   return value === "gratuit" || value === "starter" || value === "pro";
+}
+
+/**
+ * Identifiant du Price Stripe associé à un plan payant — configuré via
+ * variables d'environnement (créées dans le dashboard Stripe ou par le
+ * script de provisionnement, cf. scripts/stripe-setup.ts). `null` pour
+ * gratuit (rien à facturer) ou tant que la variable n'est pas encore posée.
+ */
+export function stripePriceId(plan: PlanAbonnement): string | null {
+  if (plan === "starter") return process.env.STRIPE_PRICE_STARTER || null;
+  if (plan === "pro") return process.env.STRIPE_PRICE_PRO || null;
+  return null;
 }
