@@ -12,6 +12,7 @@ import { getNextNumero } from "@/lib/documents/numbering";
 import { buildEmetteurSnapshot, buildClientSnapshot } from "@/lib/documents/snapshot";
 import { compterDocumentsMoisCourant } from "@/lib/documents/usage";
 import { PLANS } from "@/lib/plans";
+import { paiementBloque, MESSAGE_PAIEMENT_BLOQUE } from "@/lib/paiement-guard";
 import type { ActionState } from "@/lib/actions/types";
 
 // Types créés/modifiés via le formulaire générique (lignes à quantité
@@ -77,6 +78,9 @@ async function createDocument(
   ]);
   if (!client) {
     return { fieldErrors: { clientId: ["Client introuvable."] } };
+  }
+  if (paiementBloque(tenant)) {
+    return { error: MESSAGE_PAIEMENT_BLOQUE };
   }
 
   const limiteDocuments = PLANS[tenant.plan].limiteDocumentsParMois;

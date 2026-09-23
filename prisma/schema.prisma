@@ -119,6 +119,14 @@ model Tenant {
   stripeCustomerId       String?   @unique @map("stripe_customer_id")
   stripeSubscriptionId   String?   @map("stripe_subscription_id")
 
+  // Toujours vrai pour le plan gratuit (rien à payer). Pour un plan payant :
+  // vrai dès que Stripe confirme le paiement (webhook), ou en attente
+  // (faux) le temps qu'un admin valide un paiement en espèces — cf.
+  // lib/paiement-guard.ts, qui bloque la création de nouveaux
+  // documents/clients/articles/dépenses tant que c'est faux (lecture de
+  // l'historique toujours possible).
+  paiementValide         Boolean   @default(true) @map("paiement_valide")
+
   plan                   PlanAbonnement @default(gratuit)
   // Masque le guide de démarrage sur le tableau de bord une fois que
   // l'entreprise n'en a plus besoin (indépendamment de son avancement réel).

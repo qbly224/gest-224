@@ -4,7 +4,12 @@ import { prisma } from "@/lib/prisma";
 import { compterDocumentsMoisCourant } from "@/lib/documents/usage";
 import { compterDepensesMoisCourant } from "@/lib/comptabilite/agregats";
 import { LISTE_PLANS, PLANS } from "@/lib/plans";
-import { choisirPlanPaye, annulerAbonnement, ouvrirPortailFacturation } from "@/lib/actions/paiement";
+import {
+  choisirPlanPaye,
+  demanderPlanEspeces,
+  annulerAbonnement,
+  ouvrirPortailFacturation,
+} from "@/lib/actions/paiement";
 
 export default async function AbonnementPage({
   searchParams,
@@ -29,6 +34,10 @@ export default async function AbonnementPage({
       <p className="mt-1 font-sans text-sm text-encre/70">
         Plan actuel : <span className="font-medium text-encre">{planActuel.label}</span>
         {planActuel.prixMensuel > 0 ? ` — ${planActuel.prixMensuel} €/mois` : " — gratuit"}.
+        Le paiement par carte est activé immédiatement ; le paiement en espèces
+        ou par virement applique le plan tout de suite mais reste en attente de
+        validation par un administrateur avant de pouvoir créer de nouveaux
+        éléments.
       </p>
 
       {paiement === "succes" && (
@@ -39,6 +48,14 @@ export default async function AbonnementPage({
       {paiement === "annule" && (
         <p className="mt-4 rounded-sm bg-red-50 px-3 py-2 font-sans text-sm text-red-700">
           Paiement annulé — votre plan n&apos;a pas changé.
+        </p>
+      )}
+
+      {tenant.plan !== "gratuit" && !tenant.paiementValide && (
+        <p className="mt-4 rounded-sm bg-red-50 px-3 py-2 font-sans text-sm text-red-700">
+          Paiement en espèces en attente de validation par un administrateur —
+          vous pouvez consulter votre historique, mais pas créer de nouveaux
+          éléments tant qu&apos;il n&apos;est pas validé.
         </p>
       )}
 
@@ -133,17 +150,35 @@ export default async function AbonnementPage({
                     {estActuel ? "Plan actuel" : "Repasser au gratuit"}
                   </button>
                 </form>
+              ) : estActuel ? (
+                <button
+                  type="button"
+                  disabled
+                  className="mt-6 w-full rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire opacity-40"
+                >
+                  Plan actuel
+                </button>
               ) : (
-                <form action={choisirPlanPaye} className="mt-6">
-                  <input type="hidden" name="plan" value={plan.id} />
-                  <button
-                    type="submit"
-                    disabled={estActuel}
-                    className="w-full rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light disabled:cursor-not-allowed disabled:opacity-40"
-                  >
-                    {estActuel ? "Plan actuel" : "Passer à ce plan"}
-                  </button>
-                </form>
+                <div className="mt-6 space-y-2">
+                  <form action={choisirPlanPaye}>
+                    <input type="hidden" name="plan" value={plan.id} />
+                    <button
+                      type="submit"
+                      className="w-full rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
+                    >
+                      Payer par carte
+                    </button>
+                  </form>
+                  <form action={demanderPlanEspeces}>
+                    <input type="hidden" name="plan" value={plan.id} />
+                    <button
+                      type="submit"
+                      className="w-full rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
+                    >
+                      Payer en espèces / virement
+                    </button>
+                  </form>
+                </div>
               )}
             </div>
           );

@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { articleSchema } from "@/lib/validation/article";
+import { paiementBloque, MESSAGE_PAIEMENT_BLOQUE } from "@/lib/paiement-guard";
 import type { ActionState } from "@/lib/actions/types";
 
 function parseArticleForm(formData: FormData, regimeTva: "normal" | "franchise") {
@@ -29,8 +30,11 @@ export async function createArticle(
   const session = await requireSession();
   const tenant = await prisma.tenant.findUniqueOrThrow({
     where: { id: session.tenantId },
-    select: { regimeTva: true },
+    select: { regimeTva: true, plan: true, paiementValide: true },
   });
+  if (paiementBloque(tenant)) {
+    return { error: MESSAGE_PAIEMENT_BLOQUE };
+  }
 
   const parsed = parseArticleForm(formData, tenant.regimeTva);
   if (!parsed.success) {

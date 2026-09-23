@@ -1,7 +1,11 @@
 import { requirePlatformAdmin } from "@/lib/auth-admin";
 import { prisma } from "@/lib/prisma";
 import { LISTE_PLANS } from "@/lib/plans";
-import { basculerActifTenant, changerPlanTenant } from "@/lib/actions/admin";
+import {
+  basculerActifTenant,
+  changerPlanTenant,
+  basculerPaiementValideTenant,
+} from "@/lib/actions/admin";
 
 export default async function AdminPage() {
   await requirePlatformAdmin();
@@ -57,6 +61,7 @@ export default async function AdminPage() {
             <th className="py-2 text-right font-medium">Documents</th>
             <th className="py-2 font-medium">Créée le</th>
             <th className="py-2 font-medium">Plan</th>
+            <th className="py-2 font-medium">Paiement</th>
             <th className="py-2 font-medium">Statut</th>
           </tr>
         </thead>
@@ -91,6 +96,24 @@ export default async function AdminPage() {
                     OK
                   </button>
                 </form>
+              </td>
+              <td className="py-2">
+                {t.plan === "gratuit" ? (
+                  <span className="font-mono text-xs text-encre/40">—</span>
+                ) : (
+                  <form action={basculerPaiementValideTenant.bind(null, t.id)}>
+                    <button
+                      type="submit"
+                      className={`rounded-sm border px-2 py-0.5 font-sans text-xs ${
+                        t.paiementValide
+                          ? "border-encre/30 text-encre hover:bg-encre/5"
+                          : "border-red-300 text-red-700 hover:bg-red-50"
+                      }`}
+                    >
+                      {t.paiementValide ? "Validé" : "En attente — valider"}
+                    </button>
+                  </form>
+                )}
               </td>
               <td className="py-2">
                 <form action={basculerActifTenant.bind(null, t.id)}>

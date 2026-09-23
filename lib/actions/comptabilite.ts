@@ -7,6 +7,7 @@ import { requireSession } from "@/lib/auth";
 import { depenseSchema } from "@/lib/validation/depense";
 import { compterDepensesMoisCourant } from "@/lib/comptabilite/agregats";
 import { PLANS } from "@/lib/plans";
+import { paiementBloque, MESSAGE_PAIEMENT_BLOQUE } from "@/lib/paiement-guard";
 import type { ActionState } from "@/lib/actions/types";
 
 function parseDepenseForm(formData: FormData) {
@@ -31,8 +32,11 @@ export async function createDepense(
 
   const tenant = await prisma.tenant.findUniqueOrThrow({
     where: { id: session.tenantId },
-    select: { plan: true },
+    select: { plan: true, paiementValide: true },
   });
+  if (paiementBloque(tenant)) {
+    return { error: MESSAGE_PAIEMENT_BLOQUE };
+  }
   const limiteDepenses = PLANS[tenant.plan].limiteDepensesParMois;
   if (limiteDepenses !== null) {
     const nbCeMois = await compterDepensesMoisCourant(session.tenantId);

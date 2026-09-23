@@ -6,6 +6,7 @@ import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { clientSchema } from "@/lib/validation/client";
 import { PLANS } from "@/lib/plans";
+import { paiementBloque, MESSAGE_PAIEMENT_BLOQUE } from "@/lib/paiement-guard";
 import type { ActionState } from "@/lib/actions/types";
 
 function parseClientForm(formData: FormData) {
@@ -42,8 +43,11 @@ export async function createClient(
 
   const tenant = await prisma.tenant.findUniqueOrThrow({
     where: { id: session.tenantId },
-    select: { plan: true },
+    select: { plan: true, paiementValide: true },
   });
+  if (paiementBloque(tenant)) {
+    return { error: MESSAGE_PAIEMENT_BLOQUE };
+  }
   const limiteClients = PLANS[tenant.plan].limiteClients;
   if (limiteClients !== null) {
     const nbClients = await prisma.client.count({ where: { tenantId: session.tenantId } });

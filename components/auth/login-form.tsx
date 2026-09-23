@@ -8,7 +8,13 @@ import { FieldError } from "@/components/forms/field-error";
 import { SubmitButton } from "@/components/forms/submit-button";
 import { inputClass, labelClass } from "@/lib/ui";
 
-export function LoginForm({ reinitialise }: { reinitialise?: boolean }) {
+export function LoginForm({
+  reinitialise,
+  compteSupprime,
+}: {
+  reinitialise?: boolean;
+  compteSupprime?: boolean;
+}) {
   const [state, formAction] = useActionState(signIn, initialActionState);
 
   return (
@@ -16,6 +22,11 @@ export function LoginForm({ reinitialise }: { reinitialise?: boolean }) {
       {reinitialise && (
         <p className="rounded-sm bg-encre/10 px-3 py-2 font-sans text-sm text-encre">
           Mot de passe réinitialisé. Vous pouvez vous connecter.
+        </p>
+      )}
+      {compteSupprime && (
+        <p className="rounded-sm bg-encre/10 px-3 py-2 font-sans text-sm text-encre">
+          Votre compte a été supprimé.
         </p>
       )}
       {state.error && (

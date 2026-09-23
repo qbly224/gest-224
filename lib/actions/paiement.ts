@@ -81,7 +81,30 @@ export async function choisirPlanPaye(formData: FormData): Promise<void> {
     proration_behavior: "create_prorations",
   });
 
-  await prisma.tenant.update({ where: { id: tenant.id }, data: { plan } });
+  await prisma.tenant.update({
+    where: { id: tenant.id },
+    data: { plan, paiementValide: true },
+  });
+
+  revalidatePath("/abonnement");
+  revalidatePath("/tableau-de-bord");
+}
+
+/**
+ * Choix d'un plan payant réglé en espèces / virement, hors Stripe : le
+ * plan est appliqué immédiatement mais reste bloqué en écriture
+ * (paiementValide=false, cf. lib/paiement-guard.ts) tant qu'un
+ * administrateur ne l'a pas validé depuis /admin.
+ */
+export async function demanderPlanEspeces(formData: FormData): Promise<void> {
+  const session = await requireSession();
+  const plan = formData.get("plan");
+  if (typeof plan !== "string" || !estPlanValide(plan) || plan === "gratuit") return;
+
+  await prisma.tenant.update({
+    where: { id: session.tenantId },
+    data: { plan, paiementValide: false },
+  });
 
   revalidatePath("/abonnement");
   revalidatePath("/tableau-de-bord");
@@ -105,7 +128,7 @@ export async function annulerAbonnement(): Promise<void> {
 
   await prisma.tenant.update({
     where: { id: tenant.id },
-    data: { plan: "gratuit", stripeSubscriptionId: null },
+    data: { plan: "gratuit", stripeSubscriptionId: null, paiementValide: true },
   });
 
   revalidatePath("/abonnement");

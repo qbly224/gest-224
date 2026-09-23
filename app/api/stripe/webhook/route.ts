@@ -44,7 +44,12 @@ export async function POST(request: Request) {
       if (tenantId && plan && estPlanValide(plan) && customerId && subscriptionId) {
         await prisma.tenant.update({
           where: { id: tenantId },
-          data: { plan, stripeCustomerId: customerId, stripeSubscriptionId: subscriptionId },
+          data: {
+            plan,
+            paiementValide: true,
+            stripeCustomerId: customerId,
+            stripeSubscriptionId: subscriptionId,
+          },
         });
       }
       break;
@@ -59,7 +64,7 @@ export async function POST(request: Request) {
       if (tenantId) {
         await prisma.tenant.updateMany({
           where: { id: tenantId, stripeSubscriptionId: subscription.id },
-          data: { plan: "gratuit", stripeSubscriptionId: null },
+          data: { plan: "gratuit", stripeSubscriptionId: null, paiementValide: true },
         });
       }
       break;
