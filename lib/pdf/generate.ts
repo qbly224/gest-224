@@ -28,11 +28,18 @@ function getBrowser(): Promise<Browser> {
       .launch({
         executablePath: getExecutablePath(),
         headless: true,
-        // --disable-dev-shm-usage : le /dev/shm par défaut d'un conteneur
-        // Docker (64 Mo) est trop petit pour Chromium, qui plante au
-        // lancement ("Failed to launch the browser process") sur des hôtes
-        // contraints comme Render — Chromium utilise /tmp à la place.
-        args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"],
+        // --disable-dev-shm-usage et --disable-crash-reporter sont déjà les
+        // valeurs par défaut de Puppeteer ; explicites ici en plus par
+        // sécurité. La vraie cause d'un échec de lancement observé en
+        // production ("chrome_crashpad_handler: --database is required")
+        // était HOME=/nonexistent pour l'utilisateur système du conteneur
+        // (corrigé dans le Dockerfile), pas ces flags.
+        args: [
+          "--no-sandbox",
+          "--disable-setuid-sandbox",
+          "--disable-dev-shm-usage",
+          "--disable-crash-reporter",
+        ],
       })
       .catch((err) => {
         // Sans ce reset, un premier échec de lancement (Chromium absent,

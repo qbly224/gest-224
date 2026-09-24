@@ -35,8 +35,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       chromium openssl ca-certificates fonts-liberation \
     && rm -rf /var/lib/apt/lists/*
 
+# --home + ENV HOME : sans ça, un utilisateur --system créé par adduser a
+# pour $HOME "/nonexistent" (déjà visible dans nos logs sur des erreurs npm
+# sans rapport). Chromium en hérite pour la base de données de son
+# gestionnaire de crash (chrome_crashpad_handler) et échoue au lancement
+# avec "chrome_crashpad_handler: --database is required" — confirmé en
+# lisant les logs d'erreur de production.
 RUN addgroup --system --gid 1001 nodejs \
-    && adduser --system --uid 1001 --ingroup nodejs nextjs
+    && adduser --system --uid 1001 --ingroup nodejs --home /home/nextjs nextjs \
+    && mkdir -p /home/nextjs \
+    && chown nextjs:nodejs /home/nextjs
+ENV HOME=/home/nextjs
 
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
