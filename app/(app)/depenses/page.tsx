@@ -2,6 +2,7 @@ import Link from "next/link";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { supprimerDepense } from "@/lib/actions/comptabilite";
+import { BoutonSupprimer } from "@/components/forms/bouton-supprimer";
 
 function formatEuros(n: number) {
   return new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(n);
@@ -59,12 +60,9 @@ export default async function DepensesPage() {
                 </td>
                 <td className="py-3 text-right">
                   <form action={supprimerDepense.bind(null, d.id)}>
-                    <button
-                      type="submit"
-                      className="font-sans text-xs text-encre/60 hover:text-encre hover:underline"
-                    >
-                      Supprimer
-                    </button>
+                    <BoutonSupprimer
+                      confirmMessage={`Supprimer la dépense « ${d.libelle} » ? Cette action est définitive.`}
+                    />
                   </form>
                 </td>
               </tr>

@@ -111,6 +111,35 @@ export async function signUp(
         },
       });
 
+      // Un client et un article de démonstration, désactivables comme
+      // n'importe quelle fiche, pour que le nouvel utilisateur voie tout de
+      // suite à quoi ressemble l'app sans avoir à d'abord tout créer à la
+      // main. Pas de devis de démo : les documents ne sont jamais
+      // supprimables (traçabilité comptable) et compteraient dans le quota
+      // mensuel du plan gratuit — un cadeau empoisonné pour qui débute.
+      await tx.client.create({
+        data: {
+          tenantId: tenant.id,
+          type: "professionnel",
+          raisonSociale: "Client de démonstration (à modifier ou désactiver)",
+          adresseLigne1: "1 rue de la Démonstration",
+          codePostal: "75000",
+          ville: "Paris",
+          pays: "France",
+        },
+      });
+
+      await tx.article.create({
+        data: {
+          tenantId: tenant.id,
+          type: "service",
+          designation: "Prestation de démonstration (à modifier ou désactiver)",
+          uniteMesure: "unité",
+          prixUnitaireHt: 100,
+          tauxTva: data.regimeTva === "normal" ? 20 : null,
+        },
+      });
+
       return { tenant, user };
     });
   } catch (err) {

@@ -2,7 +2,7 @@ import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { DocumentList } from "@/components/documents/document-list";
 import { DocumentFiltres } from "@/components/documents/document-filtres";
-import { construireWhereDocuments } from "@/lib/documents/filtres";
+import { construireWhereDocuments, construireOrderByDocuments } from "@/lib/documents/filtres";
 import { nomAffichageClientSnapshot } from "@/lib/documents/snapshot";
 import type { ClientSnapshot } from "@/lib/documents/snapshot";
 
@@ -11,13 +11,13 @@ const STATUTS_DISPONIBLES = ["brouillon", "envoye"] as const;
 export default async function AvoirsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; statut?: string }>;
+  searchParams: Promise<{ q?: string; statut?: string; depuis?: string; jusqua?: string; tri?: string; ordre?: string }>;
 }) {
-  const { q, statut } = await searchParams;
+  const { q, statut, depuis, jusqua, tri, ordre } = await searchParams;
   const session = await requireSession();
   const avoirs = await prisma.document.findMany({
-    where: construireWhereDocuments(session.tenantId, "facture_avoir", { q, statut }),
-    orderBy: { createdAt: "desc" },
+    where: construireWhereDocuments(session.tenantId, "facture_avoir", { q, statut, depuis, jusqua }),
+    orderBy: construireOrderByDocuments(tri, ordre),
   });
 
   return (
@@ -28,14 +28,28 @@ export default async function AvoirsPage({
         (bouton « Créer un avoir »).
       </p>
 
-      <DocumentFiltres q={q} statut={statut} statutsDisponibles={[...STATUTS_DISPONIBLES]} />
+      <DocumentFiltres
+        q={q}
+        statut={statut}
+        depuis={depuis}
+        jusqua={jusqua}
+        statutsDisponibles={[...STATUTS_DISPONIBLES]}
+      />
 
       <DocumentList
         basePath="/avoirs"
         emptyLabel={
-          q || statut ? "Aucun avoir ne correspond à ces critères." : "Aucun avoir pour l'instant."
+          q || statut || depuis || jusqua
+            ? "Aucun avoir ne correspond à ces critères."
+            : "Aucun avoir pour l'instant."
         }
         montantLabel="Montant à déduire"
+        q={q}
+        statut={statut}
+        depuis={depuis}
+        jusqua={jusqua}
+        tri={tri}
+        ordre={ordre}
         rows={avoirs.map((d) => ({
           id: d.id,
           numero: d.numero,

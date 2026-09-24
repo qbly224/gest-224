@@ -81,6 +81,10 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
               placeholder="14 chiffres"
               className={`${inputClass} font-mono`}
             />
+            <p className="mt-1 font-sans text-xs text-encre/50">
+              Sans espaces, sur votre extrait Kbis ou sur{" "}
+              <span className="italic">annuaire-entreprises.data.gouv.fr</span>.
+            </p>
             <FieldError messages={state.fieldErrors?.siret} />
           </div>
 
@@ -100,6 +104,10 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
               </option>
               <option value="normal">Régime normal</option>
             </select>
+            <p className="mt-1 font-sans text-xs text-encre/50">
+              En doute ? La plupart des auto-entrepreneurs sont en franchise en
+              base (pas de TVA facturée). Votre expert-comptable confirme si besoin.
+            </p>
             <FieldError messages={state.fieldErrors?.regimeTva} />
           </div>
         </div>

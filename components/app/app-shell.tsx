@@ -1,7 +1,8 @@
 "use client";
 
 import { Suspense, useState } from "react";
-import { Menu, X } from "lucide-react";
+import Link from "next/link";
+import { Menu, Search, X } from "lucide-react";
 import { SidebarNav } from "@/components/app/sidebar-nav";
 import { Toast } from "@/components/app/toast";
 
@@ -63,7 +64,14 @@ export function AppShell({
           >
             <Menu size={22} />
           </button>
-          <span className="font-titre text-base text-encre">Gest-224</span>
+          <span className="flex-1 font-titre text-base text-encre">Gest-224</span>
+          <Link
+            href="/recherche"
+            aria-label="Rechercher"
+            className="rounded-sm p-1.5 text-encre hover:bg-encre/10"
+          >
+            <Search size={20} />
+          </Link>
         </header>
 
         <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-6 sm:py-8">{children}</main>

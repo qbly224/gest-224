@@ -1,16 +1,50 @@
 import Link from "next/link";
+import { Phone } from "lucide-react";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { toggleClientActif } from "@/lib/actions/clients";
+import type { Prisma } from "@prisma/client";
+
+type ChampTriClient = "nom" | "ville";
+
+function lienTri(
+  params: { q?: string; statut?: string },
+  champ: ChampTriClient,
+  triActuel?: string,
+  ordreActuel?: string
+): string {
+  const nouvelOrdre = triActuel === champ && ordreActuel === "asc" ? "desc" : "asc";
+  const sp = new URLSearchParams();
+  if (params.q) sp.set("q", params.q);
+  if (params.statut) sp.set("statut", params.statut);
+  sp.set("tri", champ);
+  sp.set("ordre", nouvelOrdre);
+  return `?${sp.toString()}`;
+}
+
+function flecheTri(champ: ChampTriClient, triActuel?: string, ordreActuel?: string): string {
+  if (triActuel !== champ) return "";
+  return ordreActuel === "asc" ? " ↑" : " ↓";
+}
 
 export default async function ClientsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; statut?: string }>;
+  searchParams: Promise<{ q?: string; statut?: string; tri?: string; ordre?: string }>;
 }) {
-  const { q, statut } = await searchParams;
+  const { q, statut, tri, ordre } = await searchParams;
   const session = await requireSession();
   const terme = q?.trim();
+  const direction = ordre === "asc" ? "asc" : "desc";
+
+  let orderBy: Prisma.ClientOrderByWithRelationInput | Prisma.ClientOrderByWithRelationInput[] = {
+    createdAt: "desc",
+  };
+  if (tri === "nom") {
+    orderBy = [{ raisonSociale: direction }, { nom: direction }];
+  } else if (tri === "ville") {
+    orderBy = { ville: direction };
+  }
 
   const clients = await prisma.client.findMany({
     where: {
@@ -28,7 +62,7 @@ export default async function ClientsPage({
           }
         : {}),
     },
-    orderBy: { createdAt: "desc" },
+    orderBy,
   });
 
   return (
@@ -79,12 +113,21 @@ export default async function ClientsPage({
         </p>
       ) : (
         <div className="mt-6 overflow-x-auto">
-        <table className="w-full min-w-[560px] border-collapse font-sans text-sm">
+        <table className="w-full min-w-[620px] border-collapse font-sans text-sm">
           <thead>
             <tr className="border-b border-encre/20 text-left text-encre/60">
-              <th className="py-2 font-medium">Nom / Raison sociale</th>
-              <th className="py-2 font-medium">Ville</th>
+              <th className="py-2 font-medium hover:text-encre cursor-pointer select-none">
+                <Link href={lienTri({ q, statut }, "nom", tri, ordre)}>
+                  Nom / Raison sociale{flecheTri("nom", tri, ordre)}
+                </Link>
+              </th>
+              <th className="py-2 font-medium hover:text-encre cursor-pointer select-none">
+                <Link href={lienTri({ q, statut }, "ville", tri, ordre)}>
+                  Ville{flecheTri("ville", tri, ordre)}
+                </Link>
+              </th>
               <th className="py-2 font-medium">Email</th>
+              <th className="py-2 font-medium">Téléphone</th>
               <th className="py-2 font-medium">Statut</th>
               <th className="py-2 font-medium" />
             </tr>
@@ -110,6 +153,19 @@ export default async function ClientsPage({
                   <td className="py-3 text-encre/70">{client.ville}</td>
                   <td className="py-3 text-encre/70">
                     {client.email ?? "—"}
+                  </td>
+                  <td className="py-3 text-encre/70">
+                    {client.telephone ? (
+                      <a
+                        href={`tel:${client.telephone}`}
+                        className="inline-flex items-center gap-1 hover:text-encre hover:underline"
+                      >
+                        <Phone size={14} strokeWidth={1.75} />
+                        {client.telephone}
+                      </a>
+                    ) : (
+                      "—"
+                    )}
                   </td>
                   <td className="py-3">
                     <span

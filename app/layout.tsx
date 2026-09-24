@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Lora, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -13,6 +13,15 @@ const ibmPlexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: "Gest-224",
   description: "Gestion commerciale multi-entreprises",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Gest-224",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#1f3d2c",
 };
 
 export default function RootLayout({

@@ -41,6 +41,8 @@ export default async function TableauDeBordPage({
     compta,
     documentsParMois,
     croissanceClients,
+    nbFacturesEnRetard,
+    nbFacturesAcompteEnRetard,
   ] = await Promise.all([
     prisma.tenant.findUniqueOrThrow({ where: { id: session.tenantId } }),
     prisma.client.count({ where: { tenantId: session.tenantId, actif: true } }),
@@ -52,6 +54,22 @@ export default async function TableauDeBordPage({
     calculerSoldeEtVueMensuelle(session.tenantId),
     documentsParMoisRecents(session.tenantId),
     croissanceClientsRecente(session.tenantId),
+    prisma.document.count({
+      where: {
+        tenantId: session.tenantId,
+        type: "facture",
+        statut: "envoye",
+        dateEcheance: { lt: new Date() },
+      },
+    }),
+    prisma.document.count({
+      where: {
+        tenantId: session.tenantId,
+        type: "facture_acompte",
+        statut: "envoye",
+        dateEcheance: { lt: new Date() },
+      },
+    }),
   ]);
   const plan = PLANS[tenant.plan];
   const soldeMensuel = compta.mois.map((m) => m.solde);
@@ -68,6 +86,29 @@ export default async function TableauDeBordPage({
             : "normal"}
         </p>
       </div>
+
+      {(nbFacturesEnRetard > 0 || nbFacturesAcompteEnRetard > 0) && (
+        <p className="rounded-sm bg-red-50 px-3 py-2 font-sans text-sm text-red-700">
+          {nbFacturesEnRetard > 0 && (
+            <>
+              {nbFacturesEnRetard} facture{nbFacturesEnRetard > 1 ? "s" : ""} en retard de paiement.{" "}
+              <Link href="/factures?enRetard=1" className="underline">
+                Voir
+              </Link>
+              {nbFacturesAcompteEnRetard > 0 && " · "}
+            </>
+          )}
+          {nbFacturesAcompteEnRetard > 0 && (
+            <>
+              {nbFacturesAcompteEnRetard} facture{nbFacturesAcompteEnRetard > 1 ? "s" : ""} d&apos;acompte en
+              retard.{" "}
+              <Link href="/factures-acompte?enRetard=1" className="underline">
+                Voir
+              </Link>
+            </>
+          )}
+        </p>
+      )}
 
       {erreurPaiement === "1" && (
         <p className="rounded-sm bg-red-50 px-3 py-2 font-sans text-sm text-red-700">
