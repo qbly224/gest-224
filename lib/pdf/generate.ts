@@ -28,7 +28,11 @@ function getBrowser(): Promise<Browser> {
       .launch({
         executablePath: getExecutablePath(),
         headless: true,
-        args: ["--no-sandbox", "--disable-setuid-sandbox"],
+        // --disable-dev-shm-usage : le /dev/shm par défaut d'un conteneur
+        // Docker (64 Mo) est trop petit pour Chromium, qui plante au
+        // lancement ("Failed to launch the browser process") sur des hôtes
+        // contraints comme Render — Chromium utilise /tmp à la place.
+        args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"],
       })
       .catch((err) => {
         // Sans ce reset, un premier échec de lancement (Chromium absent,
