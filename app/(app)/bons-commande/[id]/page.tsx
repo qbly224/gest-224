@@ -2,7 +2,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { envoyerBonCommande, convertirBonCommandeEnBonLivraison } from "@/lib/actions/documents";
+import {
+  envoyerBonCommande,
+  convertirBonCommandeEnBonLivraison,
+  dupliquerDocument,
+} from "@/lib/actions/documents";
 import { DocumentDetail } from "@/components/documents/document-detail";
 import { PdfActions } from "@/components/documents/pdf-actions";
 import { EnvoyerActions } from "@/components/documents/envoyer-actions";
@@ -58,6 +62,14 @@ export default async function BonCommandeDetailPage({
       actions={
         <>
           <PdfActions documentId={bonCommande.id} numero={bonCommande.numero} />
+          <form action={dupliquerDocument.bind(null, bonCommande.id)}>
+            <button
+              type="submit"
+              className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
+            >
+              Dupliquer
+            </button>
+          </form>
           {bonCommande.statut === "brouillon" && (
             <>
               <Link

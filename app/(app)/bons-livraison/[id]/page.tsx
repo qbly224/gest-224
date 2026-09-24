@@ -6,6 +6,7 @@ import {
   envoyerBonLivraison,
   marquerBonLivraisonLivre,
   convertirBonLivraisonEnFacture,
+  dupliquerDocument,
 } from "@/lib/actions/documents";
 import { DocumentDetail } from "@/components/documents/document-detail";
 import { PdfActions } from "@/components/documents/pdf-actions";
@@ -66,6 +67,14 @@ export default async function BonLivraisonDetailPage({
       actions={
         <>
           <PdfActions documentId={bonLivraison.id} numero={bonLivraison.numero} />
+          <form action={dupliquerDocument.bind(null, bonLivraison.id)}>
+            <button
+              type="submit"
+              className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
+            >
+              Dupliquer
+            </button>
+          </form>
           {bonLivraison.statut === "brouillon" && (
             <>
               <Link

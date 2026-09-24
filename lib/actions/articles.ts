@@ -6,6 +6,7 @@ import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { articleSchema } from "@/lib/validation/article";
 import { paiementBloque, MESSAGE_PAIEMENT_BLOQUE } from "@/lib/paiement-guard";
+import { withToast } from "@/lib/toast";
 import type { ActionState } from "@/lib/actions/types";
 
 function parseArticleForm(formData: FormData, regimeTva: "normal" | "franchise") {
@@ -56,7 +57,7 @@ export async function createArticle(
   });
 
   revalidatePath("/catalogue");
-  redirect(`/catalogue/${article.id}`);
+  redirect(withToast(`/catalogue/${article.id}`, "Article créé."));
 }
 
 export async function updateArticle(
@@ -116,4 +117,5 @@ export async function toggleArticleActif(articleId: string): Promise<void> {
 
   revalidatePath("/catalogue");
   revalidatePath(`/catalogue/${articleId}`);
+  redirect(withToast("/catalogue", existing.actif ? "Article désactivé." : "Article réactivé."));
 }

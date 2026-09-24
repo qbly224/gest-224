@@ -3,10 +3,31 @@ import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { toggleClientActif } from "@/lib/actions/clients";
 
-export default async function ClientsPage() {
+export default async function ClientsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string; statut?: string }>;
+}) {
+  const { q, statut } = await searchParams;
   const session = await requireSession();
+  const terme = q?.trim();
+
   const clients = await prisma.client.findMany({
-    where: { tenantId: session.tenantId },
+    where: {
+      tenantId: session.tenantId,
+      ...(statut === "actifs" ? { actif: true } : statut === "desactives" ? { actif: false } : {}),
+      ...(terme
+        ? {
+            OR: [
+              { raisonSociale: { contains: terme, mode: "insensitive" } },
+              { nom: { contains: terme, mode: "insensitive" } },
+              { prenom: { contains: terme, mode: "insensitive" } },
+              { email: { contains: terme, mode: "insensitive" } },
+              { ville: { contains: terme, mode: "insensitive" } },
+            ],
+          }
+        : {}),
+    },
     orderBy: { createdAt: "desc" },
   });
 
@@ -22,9 +43,39 @@ export default async function ClientsPage() {
         </Link>
       </div>
 
+      <form className="mt-4 flex flex-wrap items-center gap-2" method="get">
+        <input
+          type="search"
+          name="q"
+          defaultValue={q ?? ""}
+          placeholder="Rechercher un nom, une ville, un email…"
+          className="w-full max-w-xs rounded-sm border border-encre/30 bg-ivoire px-3 py-2 font-sans text-sm text-encre placeholder:text-encre/40 focus:border-encre focus:outline-none"
+        />
+        <select
+          name="statut"
+          defaultValue={statut ?? ""}
+          className="rounded-sm border border-encre/30 bg-ivoire px-3 py-2 font-sans text-sm text-encre focus:border-encre focus:outline-none"
+        >
+          <option value="">Tous</option>
+          <option value="actifs">Actifs</option>
+          <option value="desactives">Désactivés</option>
+        </select>
+        <button
+          type="submit"
+          className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
+        >
+          Filtrer
+        </button>
+        {(q || statut) && (
+          <a href="?" className="font-sans text-xs text-encre/60 underline">
+            Réinitialiser
+          </a>
+        )}
+      </form>
+
       {clients.length === 0 ? (
         <p className="mt-8 font-sans text-sm text-encre/60">
-          Aucun client pour l&apos;instant.
+          {q || statut ? "Aucun client ne correspond à ces critères." : "Aucun client pour l'instant."}
         </p>
       ) : (
         <div className="mt-6 overflow-x-auto">

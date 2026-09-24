@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { envoyerAvoir } from "@/lib/actions/documents";
+import { envoyerAvoir, dupliquerDocument } from "@/lib/actions/documents";
 import { DocumentDetail } from "@/components/documents/document-detail";
 import { PdfActions } from "@/components/documents/pdf-actions";
 import { EnvoyerActions } from "@/components/documents/envoyer-actions";
@@ -46,6 +46,14 @@ export default async function AvoirDetailPage({
       actions={
         <>
           <PdfActions documentId={avoir.id} numero={avoir.numero} />
+          <form action={dupliquerDocument.bind(null, avoir.id)}>
+            <button
+              type="submit"
+              className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
+            >
+              Dupliquer
+            </button>
+          </form>
           {avoir.statut === "brouillon" && (
             <>
               <Link

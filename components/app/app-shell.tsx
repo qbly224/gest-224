@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { SidebarNav } from "@/components/app/sidebar-nav";
+import { Toast } from "@/components/app/toast";
 
 export function AppShell({
   raisonSociale,
@@ -67,6 +68,10 @@ export function AppShell({
 
         <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-6 sm:py-8">{children}</main>
       </div>
+
+      <Suspense fallback={null}>
+        <Toast />
+      </Suspense>
     </div>
   );
 }

@@ -8,6 +8,7 @@ import { depenseSchema } from "@/lib/validation/depense";
 import { compterDepensesMoisCourant } from "@/lib/comptabilite/agregats";
 import { PLANS } from "@/lib/plans";
 import { paiementBloque, MESSAGE_PAIEMENT_BLOQUE } from "@/lib/paiement-guard";
+import { withToast } from "@/lib/toast";
 import type { ActionState } from "@/lib/actions/types";
 
 function parseDepenseForm(formData: FormData) {
@@ -59,7 +60,7 @@ export async function createDepense(
 
   revalidatePath("/depenses");
   revalidatePath("/tableau-de-bord");
-  redirect("/depenses");
+  redirect(withToast("/depenses", "Dépense enregistrée."));
 }
 
 export async function updateDepense(
@@ -93,7 +94,7 @@ export async function updateDepense(
 
   revalidatePath("/depenses");
   revalidatePath("/tableau-de-bord");
-  redirect("/depenses");
+  redirect(withToast("/depenses", "Dépense modifiée."));
 }
 
 export async function supprimerDepense(depenseId: string): Promise<void> {
@@ -107,6 +108,7 @@ export async function supprimerDepense(depenseId: string): Promise<void> {
 
   revalidatePath("/depenses");
   revalidatePath("/tableau-de-bord");
+  redirect(withToast("/depenses", "Dépense supprimée."));
 }
 
 /**
@@ -153,4 +155,5 @@ export async function marquerDocumentPaye(documentId: string): Promise<void> {
   revalidatePath(`${basePath}/${documentId}`);
   revalidatePath("/tableau-de-bord");
   revalidatePath("/recettes");
+  redirect(withToast(`${basePath}/${documentId}`, "Facture marquée payée."));
 }

@@ -13,6 +13,8 @@ import { buildEmetteurSnapshot, buildClientSnapshot } from "@/lib/documents/snap
 import { compterDocumentsMoisCourant } from "@/lib/documents/usage";
 import { PLANS } from "@/lib/plans";
 import { paiementBloque, MESSAGE_PAIEMENT_BLOQUE } from "@/lib/paiement-guard";
+import { withToast } from "@/lib/toast";
+import { TITRES_DOCUMENT } from "@/lib/documents/statut-labels";
 import type { ActionState } from "@/lib/actions/types";
 
 // Types créés/modifiés via le formulaire générique (lignes à quantité
@@ -142,7 +144,9 @@ async function createDocument(
   });
 
   revalidatePath(BASE_PATH[type]);
-  redirect(`${BASE_PATH[type]}/${document.id}`);
+  redirect(
+    withToast(`${BASE_PATH[type]}/${document.id}`, `${TITRES_DOCUMENT[type]} créé en brouillon.`)
+  );
 }
 
 export async function createDevis(prevState: ActionState, formData: FormData) {
@@ -355,6 +359,7 @@ async function marquerEnvoye(type: TypeDocument, documentId: string): Promise<vo
   });
   revalidatePath(BASE_PATH[type]);
   revalidatePath(`${BASE_PATH[type]}/${documentId}`);
+  redirect(withToast(`${BASE_PATH[type]}/${documentId}`, `${TITRES_DOCUMENT[type]} marqué envoyé.`));
 }
 
 export async function envoyerDevis(documentId: string): Promise<void> {
@@ -384,6 +389,7 @@ export async function accepterDevis(documentId: string): Promise<void> {
   await prisma.document.update({ where: { id: documentId }, data: { statut: "accepte" } });
   revalidatePath("/devis");
   revalidatePath(`/devis/${documentId}`);
+  redirect(withToast(`/devis/${documentId}`, "Devis marqué accepté."));
 }
 
 export async function refuserDevis(documentId: string): Promise<void> {
@@ -394,6 +400,7 @@ export async function refuserDevis(documentId: string): Promise<void> {
   await prisma.document.update({ where: { id: documentId }, data: { statut: "refuse" } });
   revalidatePath("/devis");
   revalidatePath(`/devis/${documentId}`);
+  redirect(withToast(`/devis/${documentId}`, "Devis marqué refusé."));
 }
 
 export async function marquerBonLivraisonLivre(documentId: string): Promise<void> {
@@ -404,6 +411,7 @@ export async function marquerBonLivraisonLivre(documentId: string): Promise<void
   await prisma.document.update({ where: { id: documentId }, data: { statut: "livre" } });
   revalidatePath("/bons-livraison");
   revalidatePath(`/bons-livraison/${documentId}`);
+  redirect(withToast(`/bons-livraison/${documentId}`, "Bon de livraison marqué livré."));
 }
 
 // --- Chaîne documentaire : conversions --------------------------------------
@@ -501,7 +509,7 @@ export async function convertirDevisEnFacture(devisId: string): Promise<void> {
   revalidatePath("/devis");
   revalidatePath(`/devis/${devisId}`);
   revalidatePath("/factures");
-  redirect(`/factures/${facture.id}`);
+  redirect(withToast(`/factures/${facture.id}`, "Devis converti en facture."));
 }
 
 /** Devis accepté -> bon de commande. */
@@ -518,7 +526,7 @@ export async function convertirDevisEnBonCommande(devisId: string): Promise<void
   revalidatePath("/devis");
   revalidatePath(`/devis/${devisId}`);
   revalidatePath("/bons-commande");
-  redirect(`/bons-commande/${bonCommande.id}`);
+  redirect(withToast(`/bons-commande/${bonCommande.id}`, "Devis converti en bon de commande."));
 }
 
 /** Bon de commande envoyé -> bon de livraison. */
@@ -535,7 +543,9 @@ export async function convertirBonCommandeEnBonLivraison(bonCommandeId: string):
   revalidatePath("/bons-commande");
   revalidatePath(`/bons-commande/${bonCommandeId}`);
   revalidatePath("/bons-livraison");
-  redirect(`/bons-livraison/${bonLivraison.id}`);
+  redirect(
+    withToast(`/bons-livraison/${bonLivraison.id}`, "Bon de commande converti en bon de livraison.")
+  );
 }
 
 /** Bon de livraison livré -> facture. */
@@ -555,7 +565,7 @@ export async function convertirBonLivraisonEnFacture(bonLivraisonId: string): Pr
   revalidatePath("/bons-livraison");
   revalidatePath(`/bons-livraison/${bonLivraisonId}`);
   revalidatePath("/factures");
-  redirect(`/factures/${facture.id}`);
+  redirect(withToast(`/factures/${facture.id}`, "Bon de livraison converti en facture."));
 }
 
 /**
@@ -628,5 +638,99 @@ export async function creerAvoirDepuisFacture(factureId: string): Promise<void> 
   revalidatePath("/factures");
   revalidatePath(`/factures/${factureId}`);
   revalidatePath("/avoirs");
-  redirect(`/avoirs/${avoir.id}`);
+  redirect(withToast(`/avoirs/${avoir.id}`, "Avoir créé en brouillon."));
+}
+
+// --- Duplication -------------------------------------------------------
+
+/**
+ * Reprend les lignes d'un document existant (quel que soit son statut) dans
+ * un nouveau document du même type, en brouillon, avec une nouvelle
+ * numérotation et les données vendeur/client actualisées. Contrairement à
+ * une conversion, le document source n'est pas modifié et n'est pas lié au
+ * nouveau (pas de refDocumentId) : c'est un point de départ indépendant.
+ */
+export async function dupliquerDocument(documentId: string): Promise<void> {
+  const session = await requireSession();
+
+  const source = await prisma.document.findFirst({
+    where: { id: documentId, tenantId: session.tenantId },
+    include: { lignes: { orderBy: { ordre: "asc" } } },
+  });
+  if (!source) return;
+
+  const [tenant, client] = await Promise.all([
+    prisma.tenant.findUniqueOrThrow({ where: { id: session.tenantId } }),
+    prisma.client.findFirst({ where: { id: source.clientId, tenantId: session.tenantId } }),
+  ]);
+  if (!client) {
+    redirect(withToast(`${BASE_PATH[source.type]}/${documentId}`, "Client introuvable."));
+  }
+  if (paiementBloque(tenant)) {
+    redirect(withToast(`${BASE_PATH[source.type]}/${documentId}`, MESSAGE_PAIEMENT_BLOQUE));
+  }
+
+  const limiteDocuments = PLANS[tenant.plan].limiteDocumentsParMois;
+  if (limiteDocuments !== null) {
+    const nbCeMois = await compterDocumentsMoisCourant(session.tenantId);
+    if (nbCeMois >= limiteDocuments) {
+      redirect(
+        withToast(
+          `${BASE_PATH[source.type]}/${documentId}`,
+          `Limite de ${limiteDocuments} documents par mois atteinte pour le plan ${PLANS[tenant.plan].label}.`
+        )
+      );
+    }
+  }
+
+  const dateEmission = new Date();
+  const dateEcheance = source.dateEcheance
+    ? new Date(dateEmission.getTime() + 30 * 86_400_000)
+    : null;
+
+  const nouveauDocument = await prisma.$transaction(async (tx) => {
+    const numero = await getNextNumero(tx, session.tenantId, source.type);
+    return tx.document.create({
+      data: {
+        tenantId: session.tenantId,
+        type: source.type,
+        numero,
+        statut: "brouillon",
+        clientId: client.id,
+        dateEmission,
+        dateEcheance,
+        conditionsPaiement: source.conditionsPaiement,
+        tauxPenaliteRetard: source.tauxPenaliteRetard,
+        notes: source.notes,
+        montantHt: source.montantHt,
+        montantTva: source.montantTva,
+        montantTtc: source.montantTtc,
+        emetteurSnapshot: buildEmetteurSnapshot(tenant),
+        clientSnapshot: buildClientSnapshot(client),
+        createdById: session.userId,
+        lignes: {
+          create: source.lignes.map((l, index) => ({
+            ordre: index,
+            articleId: l.articleId,
+            designation: l.designation,
+            description: l.description,
+            uniteMesure: l.uniteMesure,
+            quantite: l.quantite,
+            prixUnitaireHt: l.prixUnitaireHt,
+            tauxTva: l.tauxTva,
+            remisePourcentage: l.remisePourcentage,
+            montantHt: l.montantHt,
+          })),
+        },
+      },
+    });
+  });
+
+  revalidatePath(BASE_PATH[source.type]);
+  redirect(
+    withToast(
+      `${BASE_PATH[source.type]}/${nouveauDocument.id}`,
+      `${TITRES_DOCUMENT[source.type]} dupliqué en brouillon.`
+    )
+  );
 }

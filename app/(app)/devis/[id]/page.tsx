@@ -8,6 +8,7 @@ import {
   refuserDevis,
   convertirDevisEnFacture,
   convertirDevisEnBonCommande,
+  dupliquerDocument,
 } from "@/lib/actions/documents";
 import { DocumentDetail } from "@/components/documents/document-detail";
 import { PdfActions } from "@/components/documents/pdf-actions";
@@ -44,6 +45,14 @@ export default async function DevisDetailPage({
       actions={
         <>
           <PdfActions documentId={devis.id} numero={devis.numero} />
+          <form action={dupliquerDocument.bind(null, devis.id)}>
+            <button
+              type="submit"
+              className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
+            >
+              Dupliquer
+            </button>
+          </form>
           {devis.statut === "brouillon" && (
             <>
               <Link

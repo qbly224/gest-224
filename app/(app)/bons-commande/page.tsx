@@ -2,13 +2,22 @@ import Link from "next/link";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { DocumentList } from "@/components/documents/document-list";
+import { DocumentFiltres } from "@/components/documents/document-filtres";
+import { construireWhereDocuments } from "@/lib/documents/filtres";
 import { nomAffichageClientSnapshot } from "@/lib/documents/snapshot";
 import type { ClientSnapshot } from "@/lib/documents/snapshot";
 
-export default async function BonsCommandePage() {
+const STATUTS_DISPONIBLES = ["brouillon", "envoye", "converti"] as const;
+
+export default async function BonsCommandePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string; statut?: string }>;
+}) {
+  const { q, statut } = await searchParams;
   const session = await requireSession();
   const bons = await prisma.document.findMany({
-    where: { tenantId: session.tenantId, type: "bon_commande" },
+    where: construireWhereDocuments(session.tenantId, "bon_commande", { q, statut }),
     orderBy: { createdAt: "desc" },
   });
 
@@ -24,9 +33,15 @@ export default async function BonsCommandePage() {
         </Link>
       </div>
 
+      <DocumentFiltres q={q} statut={statut} statutsDisponibles={[...STATUTS_DISPONIBLES]} />
+
       <DocumentList
         basePath="/bons-commande"
-        emptyLabel="Aucun bon de commande pour l'instant."
+        emptyLabel={
+          q || statut
+            ? "Aucun bon de commande ne correspond à ces critères."
+            : "Aucun bon de commande pour l'instant."
+        }
         rows={bons.map((d) => ({
           id: d.id,
           numero: d.numero,

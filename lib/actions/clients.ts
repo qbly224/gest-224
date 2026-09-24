@@ -7,6 +7,7 @@ import { prisma } from "@/lib/prisma";
 import { clientSchema } from "@/lib/validation/client";
 import { PLANS } from "@/lib/plans";
 import { paiementBloque, MESSAGE_PAIEMENT_BLOQUE } from "@/lib/paiement-guard";
+import { withToast } from "@/lib/toast";
 import type { ActionState } from "@/lib/actions/types";
 
 function parseClientForm(formData: FormData) {
@@ -80,7 +81,7 @@ export async function createClient(
   });
 
   revalidatePath("/clients");
-  redirect(`/clients/${client.id}`);
+  redirect(withToast(`/clients/${client.id}`, "Client créé."));
 }
 
 export async function updateClient(
@@ -144,4 +145,5 @@ export async function toggleClientActif(clientId: string): Promise<void> {
 
   revalidatePath("/clients");
   revalidatePath(`/clients/${clientId}`);
+  redirect(withToast("/clients", existing.actif ? "Client désactivé." : "Client réactivé."));
 }

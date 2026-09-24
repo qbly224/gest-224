@@ -2,13 +2,22 @@ import Link from "next/link";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { DocumentList } from "@/components/documents/document-list";
+import { DocumentFiltres } from "@/components/documents/document-filtres";
+import { construireWhereDocuments } from "@/lib/documents/filtres";
 import { nomAffichageClientSnapshot } from "@/lib/documents/snapshot";
 import type { ClientSnapshot } from "@/lib/documents/snapshot";
 
-export default async function FacturesAcomptePage() {
+const STATUTS_DISPONIBLES = ["brouillon", "envoye", "payee"] as const;
+
+export default async function FacturesAcomptePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string; statut?: string }>;
+}) {
+  const { q, statut } = await searchParams;
   const session = await requireSession();
   const factures = await prisma.document.findMany({
-    where: { tenantId: session.tenantId, type: "facture_acompte" },
+    where: construireWhereDocuments(session.tenantId, "facture_acompte", { q, statut }),
     orderBy: { createdAt: "desc" },
   });
 
@@ -24,9 +33,15 @@ export default async function FacturesAcomptePage() {
         </Link>
       </div>
 
+      <DocumentFiltres q={q} statut={statut} statutsDisponibles={[...STATUTS_DISPONIBLES]} />
+
       <DocumentList
         basePath="/factures-acompte"
-        emptyLabel="Aucune facture d'acompte pour l'instant."
+        emptyLabel={
+          q || statut
+            ? "Aucune facture d'acompte ne correspond à ces critères."
+            : "Aucune facture d'acompte pour l'instant."
+        }
         rows={factures.map((d) => ({
           id: d.id,
           numero: d.numero,

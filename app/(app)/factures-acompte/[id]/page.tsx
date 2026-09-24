@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { envoyerFactureAcompte } from "@/lib/actions/documents";
+import { envoyerFactureAcompte, dupliquerDocument } from "@/lib/actions/documents";
 import { marquerDocumentPaye } from "@/lib/actions/comptabilite";
 import { DocumentDetail } from "@/components/documents/document-detail";
 import { PdfActions } from "@/components/documents/pdf-actions";
@@ -34,6 +34,14 @@ export default async function FactureAcompteDetailPage({
       actions={
         <>
           <PdfActions documentId={facture.id} numero={facture.numero} />
+          <form action={dupliquerDocument.bind(null, facture.id)}>
+            <button
+              type="submit"
+              className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
+            >
+              Dupliquer
+            </button>
+          </form>
           {facture.statut === "brouillon" && (
             <>
               <Link
