@@ -79,9 +79,7 @@ export function GraphiqueMensuel({ mois }: { mois: MoisAgregat[] }) {
                 rx={4}
                 fill={COULEUR_RECETTES}
               >
-                <title>
-                  {m.label} — Recettes : {formatEuros(m.recettes)}
-                </title>
+                <title>{`${m.label} — Recettes : ${formatEuros(m.recettes)}`}</title>
               </rect>
               <rect
                 x={xGroupe + largeurBarre + espaceEntreBarres}
@@ -91,9 +89,7 @@ export function GraphiqueMensuel({ mois }: { mois: MoisAgregat[] }) {
                 rx={4}
                 fill={COULEUR_DEPENSES}
               >
-                <title>
-                  {m.label} — Dépenses : {formatEuros(m.depenses)}
-                </title>
+                <title>{`${m.label} — Dépenses : ${formatEuros(m.depenses)}`}</title>
               </rect>
               <text
                 x={i * largeurGroupe + largeurGroupe / 2}
