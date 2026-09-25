@@ -28,14 +28,14 @@ export function AppShell({
 
       {/* Tiroir mobile/tablette */}
       {ouvert && (
-        <div className="fixed inset-0 z-40 lg:hidden">
+        <div className="fixed inset-0 z-[60] lg:hidden">
           <div
             className="absolute inset-0 bg-black/30"
             onClick={() => setOuvert(false)}
             aria-hidden="true"
           />
-          <aside className="absolute inset-y-0 left-0 w-72 max-w-[85vw] bg-ivoire shadow-xl">
-            <div className="flex items-center justify-end px-3 pt-3">
+          <aside className="absolute inset-y-0 left-0 flex w-72 max-w-[85vw] flex-col bg-ivoire shadow-xl">
+            <div className="flex shrink-0 items-center justify-end px-3 pt-3">
               <button
                 type="button"
                 onClick={() => setOuvert(false)}
@@ -45,11 +45,13 @@ export function AppShell({
                 <X size={20} />
               </button>
             </div>
-            <SidebarNav
-              raisonSociale={raisonSociale}
-              estAdminPlateforme={estAdminPlateforme}
-              onNavigate={() => setOuvert(false)}
-            />
+            <div className="min-h-0 flex-1">
+              <SidebarNav
+                raisonSociale={raisonSociale}
+                estAdminPlateforme={estAdminPlateforme}
+                onNavigate={() => setOuvert(false)}
+              />
+            </div>
           </aside>
         </div>
       )}
