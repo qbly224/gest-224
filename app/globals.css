@@ -6,3 +6,19 @@ body {
   background-color: #f6f1e7;
   color: #1f3d2c;
 }
+
+@keyframes auth-drift {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--auth-drift-r, 0deg));
+  }
+  50% {
+    transform: translateY(-16px) rotate(var(--auth-drift-r, 0deg));
+  }
+}
+
+.auth-drift {
+  animation-name: auth-drift;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Lora, Inter, IBM_Plex_Mono } from "next/font/google";
+import { CookieConsent } from "@/components/app/cookie-consent";
 import "./globals.css";
 
 const lora = Lora({ subsets: ["latin"], variable: "--font-lora" });
@@ -33,6 +34,7 @@ export default function RootLayout({
         className={`${lora.variable} ${inter.variable} ${ibmPlexMono.variable} font-sans`}
       >
         {children}
+        <CookieConsent />
       </body>
     </html>
   );

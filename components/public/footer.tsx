@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CookieLink } from "@/components/public/cookie-link";
 
 const colonnes = [
   {
@@ -17,6 +18,7 @@ const colonnes = [
       { href: "/cgv", label: "Conditions générales de vente" },
       { href: "/confidentialite", label: "Politique de confidentialité" },
       { href: "/mentions-legales", label: "Mentions légales" },
+      { href: "#cookies", label: "Cookies" },
     ],
   },
 ];
@@ -41,9 +43,13 @@ export function PublicFooter() {
               <ul className="mt-3 space-y-2 font-sans text-sm text-encre/70">
                 {colonne.liens.map((l) => (
                   <li key={l.href}>
-                    <Link href={l.href} className="hover:text-encre hover:underline">
-                      {l.label}
-                    </Link>
+                    {l.href === "#cookies" ? (
+                      <CookieLink />
+                    ) : (
+                      <Link href={l.href} className="hover:text-encre hover:underline">
+                        {l.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
