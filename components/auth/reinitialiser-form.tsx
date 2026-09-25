@@ -35,7 +35,7 @@ export function ReinitialiserForm({ token }: { token: string }) {
         <FieldError messages={state.fieldErrors?.password} />
       </div>
 
-      <SubmitButton>Réinitialiser le mot de passe</SubmitButton>
+      <SubmitButton fullWidth>Réinitialiser le mot de passe</SubmitButton>
     </form>
   );
 }

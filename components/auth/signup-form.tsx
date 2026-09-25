@@ -225,7 +225,7 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
         </span>
       </label>
 
-      <SubmitButton>Créer mon espace</SubmitButton>
+      <SubmitButton fullWidth>Créer mon espace</SubmitButton>
 
       <p className="font-sans text-sm text-encre/70">
         Déjà inscrit ?{" "}

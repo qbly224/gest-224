@@ -9,8 +9,9 @@ export default async function ReinitialiserMotDePassePage({
 
   return (
     <>
-      <p className="mt-1 font-sans text-sm text-encre/70">
-        Choisir un nouveau mot de passe
+      <h1 className="font-titre text-3xl text-encre">Nouveau mot de passe</h1>
+      <p className="mt-2 font-sans text-sm text-encre/70">
+        Choisissez un nouveau mot de passe pour votre compte.
       </p>
       <ReinitialiserForm token={token} />
     </>

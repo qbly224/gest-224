@@ -35,9 +35,9 @@ export function DemandeResetForm() {
         <FieldError messages={state.fieldErrors?.email} />
       </div>
 
-      <SubmitButton>Envoyer le lien de réinitialisation</SubmitButton>
+      <SubmitButton fullWidth>Envoyer le lien de réinitialisation</SubmitButton>
 
-      <p className="font-sans text-sm text-encre/70">
+      <p className="border-t border-encre/10 pt-4 text-center font-sans text-sm text-encre/70">
         <Link href="/connexion" className="underline">
           Retour à la connexion
         </Link>

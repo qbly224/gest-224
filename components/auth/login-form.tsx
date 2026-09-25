@@ -63,16 +63,17 @@ export function LoginForm({
         <FieldError messages={state.fieldErrors?.password} />
       </div>
 
-      <div className="flex items-center justify-between">
-        <SubmitButton>Se connecter</SubmitButton>
+      <div className="flex items-center justify-end">
         <Link href="/mot-de-passe-oublie" className="font-sans text-sm text-encre/70 underline">
           Mot de passe oublié ?
         </Link>
       </div>
 
-      <p className="font-sans text-sm text-encre/70">
+      <SubmitButton fullWidth>Se connecter</SubmitButton>
+
+      <p className="border-t border-encre/10 pt-4 text-center font-sans text-sm text-encre/70">
         Pas encore de compte ?{" "}
-        <Link href="/inscription" className="underline">
+        <Link href="/inscription" className="font-medium text-encre underline">
           Créer une entreprise
         </Link>
       </p>
