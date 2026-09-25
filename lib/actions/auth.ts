@@ -293,13 +293,21 @@ export async function demanderReinitialisation(
   ]);
 
   const lien = `${process.env.APP_URL ?? "http://localhost:3000"}/reinitialiser-mot-de-passe/${token}`;
-  await envoyerEmail(
-    email,
-    "Réinitialisation de votre mot de passe Gest-224",
-    `Vous avez demandé la réinitialisation de votre mot de passe.\n\n` +
-      `Ce lien est valable une heure :\n${lien}\n\n` +
-      `Si vous n'êtes pas à l'origine de cette demande, ignorez cet email.`
-  );
+  try {
+    await envoyerEmail(
+      email,
+      "Réinitialisation de votre mot de passe Gest-224",
+      `Vous avez demandé la réinitialisation de votre mot de passe.\n\n` +
+        `Ce lien est valable une heure :\n${lien}\n\n` +
+        `Si vous n'êtes pas à l'origine de cette demande, ignorez cet email.`
+    );
+  } catch (err) {
+    // Un souci côté fournisseur d'email (clé invalide, domaine non vérifié,
+    // quota atteint...) ne doit jamais faire planter la demande pour
+    // l'utilisateur ni révéler d'information : on journalise côté serveur
+    // pour le diagnostic et on renvoie quand même le message générique.
+    console.error("[reset-password] Échec de l'envoi de l'email:", err);
+  }
 
   return succesGenerique;
 }
