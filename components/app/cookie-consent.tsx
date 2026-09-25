@@ -37,7 +37,7 @@ export function CookieConsent() {
   return (
     <div
       role="status"
-      className="fixed inset-x-0 bottom-0 z-50 border-t-2 border-encre bg-ivoire px-4 py-4 shadow-[0_-10px_30px_rgba(0,0,0,0.15)] sm:px-6"
+      className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-encre bg-ivoire px-4 py-4 shadow-[0_-10px_30px_rgba(0,0,0,0.15)] sm:px-6"
     >
       <div className="mx-auto flex max-w-3xl flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
         <p className="font-sans text-sm text-encre/80">

@@ -19,8 +19,10 @@ export function AppShell({
 
   return (
     <div className="flex min-h-screen">
-      {/* Sidebar fixe — bureau uniquement */}
-      <aside className="hidden w-64 shrink-0 border-r border-encre/15 bg-ivoire lg:block">
+      {/* Sidebar fixe — bureau uniquement. z-50 : passe au-dessus du bandeau
+          cookies (z-40), sinon celui-ci masque le bas de la sidebar
+          (bouton Déconnexion) tant qu'il n'a pas été fermé. */}
+      <aside className="relative z-50 hidden w-64 shrink-0 border-r border-encre/15 bg-ivoire lg:block">
         <div className="sticky top-0 h-screen">
           <SidebarNav raisonSociale={raisonSociale} estAdminPlateforme={estAdminPlateforme} />
         </div>
