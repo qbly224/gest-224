@@ -6,7 +6,7 @@ import { signIn } from "@/lib/actions/auth";
 import { initialActionState } from "@/lib/actions/types";
 import { FieldError } from "@/components/forms/field-error";
 import { SubmitButton } from "@/components/forms/submit-button";
-import { inputClass, labelClass } from "@/lib/ui";
+import { ledgerInputClass, ledgerLabelClass, ledgerErrorClass, ledgerNoticeClass } from "@/lib/auth-ui";
 
 export function LoginForm({
   reinitialise,
@@ -18,25 +18,19 @@ export function LoginForm({
   const [state, formAction] = useActionState(signIn, initialActionState);
 
   return (
-    <form action={formAction} className="mt-6 space-y-4">
+    <form action={formAction} className="mt-8 space-y-5">
       {reinitialise && (
-        <p className="rounded-sm bg-encre/10 px-3 py-2 font-sans text-sm text-encre">
+        <p className={ledgerNoticeClass}>
           Mot de passe réinitialisé. Vous pouvez vous connecter.
         </p>
       )}
       {compteSupprime && (
-        <p className="rounded-sm bg-encre/10 px-3 py-2 font-sans text-sm text-encre">
-          Votre compte a été supprimé.
-        </p>
+        <p className={ledgerNoticeClass}>Votre compte a été supprimé.</p>
       )}
-      {state.error && (
-        <p className="rounded-sm bg-red-50 px-3 py-2 font-sans text-sm text-red-700">
-          {state.error}
-        </p>
-      )}
+      {state.error && <p className={ledgerErrorClass}>{state.error}</p>}
 
       <div>
-        <label className={labelClass} htmlFor="email">
+        <label className={ledgerLabelClass} htmlFor="email">
           Email
         </label>
         <input
@@ -44,13 +38,13 @@ export function LoginForm({
           name="email"
           type="email"
           required
-          className={inputClass}
+          className={ledgerInputClass}
         />
         <FieldError messages={state.fieldErrors?.email} />
       </div>
 
       <div>
-        <label className={labelClass} htmlFor="password">
+        <label className={ledgerLabelClass} htmlFor="password">
           Mot de passe
         </label>
         <input
@@ -58,18 +52,25 @@ export function LoginForm({
           name="password"
           type="password"
           required
-          className={inputClass}
+          className={ledgerInputClass}
         />
         <FieldError messages={state.fieldErrors?.password} />
       </div>
 
       <div className="flex items-center justify-end">
-        <Link href="/mot-de-passe-oublie" className="font-sans text-sm text-encre/70 underline">
+        <Link
+          href="/mot-de-passe-oublie"
+          className="font-sans text-xs text-encre/60 underline underline-offset-2"
+        >
           Mot de passe oublié ?
         </Link>
       </div>
 
-      <SubmitButton fullWidth>Se connecter</SubmitButton>
+      <div className="pt-2">
+        <SubmitButton fullWidth variant="stamp">
+          Se connecter
+        </SubmitButton>
+      </div>
 
       <p className="border-t border-encre/10 pt-4 text-center font-sans text-sm text-encre/70">
         Pas encore de compte ?{" "}

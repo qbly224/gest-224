@@ -6,15 +6,15 @@ import { demanderReinitialisation } from "@/lib/actions/auth";
 import { initialActionState } from "@/lib/actions/types";
 import { FieldError } from "@/components/forms/field-error";
 import { SubmitButton } from "@/components/forms/submit-button";
-import { inputClass, labelClass } from "@/lib/ui";
+import { ledgerInputClass, ledgerLabelClass, ledgerNoticeClass } from "@/lib/auth-ui";
 
 export function DemandeResetForm() {
   const [state, formAction] = useActionState(demanderReinitialisation, initialActionState);
 
   if (state.success) {
     return (
-      <div className="mt-6 space-y-4">
-        <p className="rounded-sm bg-encre/10 px-3 py-2 font-sans text-sm text-encre">
+      <div className="mt-8 space-y-4">
+        <p className={ledgerNoticeClass}>
           Si un compte existe avec cette adresse, un email contenant un lien
           de réinitialisation vient d&apos;être envoyé (valable une heure).
         </p>
@@ -26,16 +26,20 @@ export function DemandeResetForm() {
   }
 
   return (
-    <form action={formAction} className="mt-6 space-y-4">
+    <form action={formAction} className="mt-8 space-y-5">
       <div>
-        <label className={labelClass} htmlFor="email">
+        <label className={ledgerLabelClass} htmlFor="email">
           Email
         </label>
-        <input id="email" name="email" type="email" required className={inputClass} />
+        <input id="email" name="email" type="email" required className={ledgerInputClass} />
         <FieldError messages={state.fieldErrors?.email} />
       </div>
 
-      <SubmitButton fullWidth>Envoyer le lien de réinitialisation</SubmitButton>
+      <div className="pt-2">
+        <SubmitButton fullWidth variant="stamp">
+          Envoyer le lien
+        </SubmitButton>
+      </div>
 
       <p className="border-t border-encre/10 pt-4 text-center font-sans text-sm text-encre/70">
         <Link href="/connexion" className="underline">
