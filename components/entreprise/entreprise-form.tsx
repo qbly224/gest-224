@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import { useTranslations } from "next-intl";
 import type { Tenant } from "@prisma/client";
 import { updateEntreprise } from "@/lib/actions/entreprise";
 import { initialActionState } from "@/lib/actions/types";
@@ -13,6 +14,7 @@ type SerializedTenant = Omit<Tenant, "capitalSocial"> & {
 };
 
 export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
+  const t = useTranslations("app.entreprise");
   const [state, formAction] = useActionState(
     updateEntreprise,
     initialActionState
@@ -24,7 +26,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
     <form action={formAction} className="mt-6 space-y-6">
       {state.success && (
         <p className="rounded-sm bg-encre/10 px-3 py-2 font-sans text-sm text-encre">
-          Fiche entreprise enregistrée.
+          {t("enregistre")}
         </p>
       )}
       {state.error && (
@@ -34,11 +36,11 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
       )}
 
       <fieldset className="space-y-4">
-        <legend className="font-titre text-lg text-encre">Identité</legend>
+        <legend className="font-titre text-lg text-encre">{t("sectionIdentite")}</legend>
 
         <div>
           <label className={labelClass} htmlFor="raisonSociale">
-            Raison sociale
+            {t("raisonSociale")}
           </label>
           <input
             id="raisonSociale"
@@ -53,7 +55,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className={labelClass} htmlFor="formeJuridique">
-              Forme juridique
+              {t("formeJuridique")}
             </label>
             <input
               id="formeJuridique"
@@ -64,7 +66,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
           </div>
           <div>
             <label className={labelClass} htmlFor="siret">
-              SIRET
+              {t("siret")}
             </label>
             <input
               id="siret"
@@ -75,8 +77,9 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
               className={`${inputClass} font-mono`}
             />
             <p className="mt-1 font-sans text-xs text-encre/50">
-              Sans espaces, sur votre extrait Kbis ou sur{" "}
-              <span className="italic">annuaire-entreprises.data.gouv.fr</span>.
+              {t.rich("siretHint", {
+                italic: (chunks) => <span className="italic">{chunks}</span>,
+              })}
             </p>
             <FieldError messages={state.fieldErrors?.siret} />
           </div>
@@ -85,7 +88,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className={labelClass} htmlFor="siren">
-              SIREN
+              {t("siren")}
             </label>
             <input
               id="siren"
@@ -96,7 +99,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
           </div>
           <div>
             <label className={labelClass} htmlFor="numeroTvaIntracom">
-              N° TVA intracommunautaire
+              {t("numeroTvaIntracom")}
             </label>
             <input
               id="numeroTvaIntracom"
@@ -110,7 +113,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className={labelClass} htmlFor="regimeTva">
-              Régime de TVA
+              {t("regimeTva")}
             </label>
             <select
               id="regimeTva"
@@ -119,19 +122,14 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
               defaultValue={tenant.regimeTva}
               className={selectClass}
             >
-              <option value="franchise">
-                Franchise en base (art. 293 B du CGI)
-              </option>
-              <option value="normal">Régime normal</option>
+              <option value="franchise">{t("regimeFranchise")}</option>
+              <option value="normal">{t("regimeNormal")}</option>
             </select>
-            <p className="mt-1 font-sans text-xs text-encre/50">
-              En doute ? La plupart des auto-entrepreneurs sont en franchise en
-              base (pas de TVA facturée). Votre expert-comptable confirme si besoin.
-            </p>
+            <p className="mt-1 font-sans text-xs text-encre/50">{t("regimeTvaHint")}</p>
           </div>
           <div>
             <label className={labelClass} htmlFor="capitalSocial">
-              Capital social (€)
+              {t("capitalSocial")}
             </label>
             <input
               id="capitalSocial"
@@ -147,21 +145,19 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
       </fieldset>
 
       <fieldset className="space-y-4 border-t border-encre/10 pt-4">
-        <legend className="font-titre text-lg text-encre">Logo</legend>
-        <p className="font-sans text-xs text-encre/60">
-          Affiché sur vos documents PDF. PNG, JPEG, WebP ou SVG, 500 Ko maximum.
-        </p>
+        <legend className="font-titre text-lg text-encre">{t("sectionLogo")}</legend>
+        <p className="font-sans text-xs text-encre/60">{t("logoDescription")}</p>
         <div className="flex flex-wrap items-center gap-4">
           {(apercu ?? (!supprimer ? tenant.logoDataUrl : null)) ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={apercu ?? tenant.logoDataUrl ?? undefined}
-              alt="Logo actuel"
+              alt={t("logoAlt")}
               className="h-16 w-auto max-w-[160px] rounded-sm border border-encre/20 object-contain p-1"
             />
           ) : (
             <div className="flex h-16 w-40 items-center justify-center rounded-sm border border-dashed border-encre/20 font-sans text-xs text-encre/40">
-              Aucun logo
+              {t("aucunLogo")}
             </div>
           )}
           <div className="space-y-2">
@@ -194,7 +190,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
                     if (e.target.checked) setApercu(null);
                   }}
                 />
-                Supprimer le logo actuel
+                {t("supprimerLogo")}
               </label>
             )}
           </div>
@@ -202,11 +198,11 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
       </fieldset>
 
       <fieldset className="space-y-4 border-t border-encre/10 pt-4">
-        <legend className="font-titre text-lg text-encre">Adresse</legend>
+        <legend className="font-titre text-lg text-encre">{t("sectionAdresse")}</legend>
 
         <div>
           <label className={labelClass} htmlFor="adresseLigne1">
-            Adresse
+            {t("adresse")}
           </label>
           <input
             id="adresseLigne1"
@@ -219,7 +215,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
         </div>
         <div>
           <label className={labelClass} htmlFor="adresseLigne2">
-            Complément d&apos;adresse
+            {t("complementAdresse")}
           </label>
           <input
             id="adresseLigne2"
@@ -231,7 +227,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <label className={labelClass} htmlFor="codePostal">
-              Code postal
+              {t("codePostal")}
             </label>
             <input
               id="codePostal"
@@ -244,7 +240,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
           </div>
           <div className="col-span-2">
             <label className={labelClass} htmlFor="ville">
-              Ville
+              {t("ville")}
             </label>
             <input
               id="ville"
@@ -258,7 +254,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
         </div>
         <div>
           <label className={labelClass} htmlFor="pays">
-            Pays
+            {t("pays")}
           </label>
           <input
             id="pays"
@@ -271,11 +267,11 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
       </fieldset>
 
       <fieldset className="space-y-4 border-t border-encre/10 pt-4">
-        <legend className="font-titre text-lg text-encre">Contact</legend>
+        <legend className="font-titre text-lg text-encre">{t("sectionContact")}</legend>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className={labelClass} htmlFor="email">
-              Email
+              {t("email")}
             </label>
             <input
               id="email"
@@ -288,7 +284,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
           </div>
           <div>
             <label className={labelClass} htmlFor="telephone">
-              Téléphone
+              {t("telephone")}
             </label>
             <input
               id="telephone"
@@ -301,13 +297,11 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
       </fieldset>
 
       <fieldset className="space-y-4 border-t border-encre/10 pt-4">
-        <legend className="font-titre text-lg text-encre">
-          Coordonnées bancaires
-        </legend>
+        <legend className="font-titre text-lg text-encre">{t("sectionBancaire")}</legend>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className={labelClass} htmlFor="iban">
-              IBAN
+              {t("iban")}
             </label>
             <input
               id="iban"
@@ -318,7 +312,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
           </div>
           <div>
             <label className={labelClass} htmlFor="bic">
-              BIC
+              {t("bic")}
             </label>
             <input
               id="bic"
@@ -331,20 +325,18 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
       </fieldset>
 
       <fieldset className="space-y-4 border-t border-encre/10 pt-4">
-        <legend className="font-titre text-lg text-encre">
-          Mentions légales complémentaires
-        </legend>
+        <legend className="font-titre text-lg text-encre">{t("sectionMentionsLegales")}</legend>
         <textarea
           id="mentionsLegalesLibres"
           name="mentionsLegalesLibres"
           rows={3}
           defaultValue={tenant.mentionsLegalesLibres ?? ""}
           className={inputClass}
-          placeholder="Assurance RC pro, agrément, etc."
+          placeholder={t("mentionsLegalesPlaceholder")}
         />
       </fieldset>
 
-      <SubmitButton>Enregistrer</SubmitButton>
+      <SubmitButton>{t("enregistrer")}</SubmitButton>
     </form>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { useTranslations } from "next-intl";
 import type { Article, RegimeTva } from "@prisma/client";
 import { initialActionState, type ActionState } from "@/lib/actions/types";
 import { FieldError } from "@/components/forms/field-error";
@@ -27,13 +28,14 @@ export function ArticleForm({
   regimeTva: RegimeTva;
   action: ArticleFormAction;
 }) {
+  const t = useTranslations("app.catalogue");
   const [state, formAction] = useActionState(action, initialActionState);
 
   return (
     <form action={formAction} className="mt-6 space-y-6">
       {state.success && (
         <p className="rounded-sm bg-encre/10 px-3 py-2 font-sans text-sm text-encre">
-          Article enregistré.
+          {t("enregistre")}
         </p>
       )}
       {state.error && (
@@ -44,7 +46,7 @@ export function ArticleForm({
 
       <div>
         <label className={labelClass} htmlFor="type">
-          Type
+          {t("type")}
         </label>
         <select
           id="type"
@@ -52,15 +54,15 @@ export function ArticleForm({
           defaultValue={article?.type ?? "service"}
           className={selectClass}
         >
-          <option value="service">Service</option>
-          <option value="produit">Produit</option>
+          <option value="service">{t("service")}</option>
+          <option value="produit">{t("produit")}</option>
         </select>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className={labelClass} htmlFor="reference">
-            Référence
+            {t("reference")}
           </label>
           <input
             id="reference"
@@ -71,7 +73,7 @@ export function ArticleForm({
         </div>
         <div>
           <label className={labelClass} htmlFor="uniteMesure">
-            Unité
+            {t("unite")}
           </label>
           <input
             id="uniteMesure"
@@ -84,7 +86,7 @@ export function ArticleForm({
 
       <div>
         <label className={labelClass} htmlFor="designation">
-          Désignation
+          {t("designation")}
         </label>
         <input
           id="designation"
@@ -98,7 +100,7 @@ export function ArticleForm({
 
       <div>
         <label className={labelClass} htmlFor="description">
-          Description
+          {t("description")}
         </label>
         <textarea
           id="description"
@@ -112,7 +114,7 @@ export function ArticleForm({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className={labelClass} htmlFor="prixUnitaireHt">
-            Prix unitaire HT (€)
+            {t("prixUnitaireHt")}
           </label>
           <input
             id="prixUnitaireHt"
@@ -130,7 +132,7 @@ export function ArticleForm({
         {regimeTva === "normal" ? (
           <div>
             <label className={labelClass} htmlFor="tauxTva">
-              Taux de TVA
+              {t("tauxTva")}
             </label>
             <select
               id="tauxTva"
@@ -148,15 +150,13 @@ export function ArticleForm({
           </div>
         ) : (
           <div>
-            <p className={labelClass}>TVA</p>
-            <p className="mt-2 font-mono text-sm text-encre/60">
-              TVA non applicable, art. 293 B du CGI
-            </p>
+            <p className={labelClass}>{t("tva")}</p>
+            <p className="mt-2 font-mono text-sm text-encre/60">{t("tvaNonApplicable")}</p>
           </div>
         )}
       </div>
 
-      <SubmitButton>Enregistrer</SubmitButton>
+      <SubmitButton>{t("enregistrer")}</SubmitButton>
     </form>
   );
 }

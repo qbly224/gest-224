@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { updateDepense } from "@/lib/actions/comptabilite";
@@ -11,6 +12,7 @@ export default async function ModifierDepensePage({
 }) {
   const { id } = await params;
   const session = await requireSession();
+  const t = await getTranslations("app.depenses");
 
   const depense = await prisma.depense.findFirst({
     where: { id, tenantId: session.tenantId },
@@ -19,7 +21,7 @@ export default async function ModifierDepensePage({
 
   return (
     <div>
-      <h1 className="font-titre text-2xl text-encre">Modifier la dépense</h1>
+      <h1 className="font-titre text-2xl text-encre">{t("modifierTitre")}</h1>
       <DepenseForm
         depense={{ ...depense, montant: depense.montant.toString() }}
         action={updateDepense.bind(null, depense.id)}

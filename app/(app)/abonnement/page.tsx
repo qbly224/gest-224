@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { compterDocumentsMoisCourant } from "@/lib/documents/usage";
@@ -17,6 +18,7 @@ export default async function AbonnementPage({
   searchParams: Promise<{ paiement?: string }>;
 }) {
   const session = await requireSession();
+  const t = await getTranslations("app.abonnement");
   const { paiement } = await searchParams;
 
   const [tenant, nbClients, nbDocumentsCeMois, nbDepensesCeMois] = await Promise.all([
@@ -30,32 +32,29 @@ export default async function AbonnementPage({
 
   return (
     <div>
-      <h1 className="font-titre text-2xl text-encre">Abonnement</h1>
+      <h1 className="font-titre text-2xl text-encre">{t("titre")}</h1>
       <p className="mt-1 font-sans text-sm text-encre/70">
-        Plan actuel : <span className="font-medium text-encre">{planActuel.label}</span>
-        {planActuel.prixMensuel > 0 ? ` — ${planActuel.prixMensuel} €/mois` : " — gratuit"}.
-        Le paiement par carte est activé immédiatement ; le paiement en espèces
-        ou par virement applique le plan tout de suite mais reste en attente de
-        validation par un administrateur avant de pouvoir créer de nouveaux
-        éléments.
+        {t("planActuelLabel")} <span className="font-medium text-encre">{planActuel.label}</span>{" "}
+        {planActuel.prixMensuel > 0
+          ? t("prixSuffix", { prix: planActuel.prixMensuel })
+          : t("gratuitSuffix")}
+        . {t("descriptionPaiement")}
       </p>
 
       {paiement === "succes" && (
         <p className="mt-4 rounded-sm bg-encre/10 px-3 py-2 font-sans text-sm text-encre">
-          Paiement confirmé — votre plan a été mis à jour.
+          {t("paiementSucces")}
         </p>
       )}
       {paiement === "annule" && (
         <p className="mt-4 rounded-sm bg-red-50 px-3 py-2 font-sans text-sm text-red-700">
-          Paiement annulé — votre plan n&apos;a pas changé.
+          {t("paiementAnnule")}
         </p>
       )}
 
       {tenant.plan !== "gratuit" && !tenant.paiementValide && (
         <p className="mt-4 rounded-sm bg-red-50 px-3 py-2 font-sans text-sm text-red-700">
-          Paiement en espèces en attente de validation par un administrateur —
-          vous pouvez consulter votre historique, mais pas créer de nouveaux
-          éléments tant qu&apos;il n&apos;est pas validé.
+          {t("paiementEnAttente")}
         </p>
       )}
 
@@ -67,9 +66,7 @@ export default async function AbonnementPage({
               <span className="text-encre/50"> / {planActuel.limiteDocumentsParMois}</span>
             )}
           </p>
-          <p className="mt-1 font-sans text-sm text-encre/70">
-            Documents créés ce mois-ci
-          </p>
+          <p className="mt-1 font-sans text-sm text-encre/70">{t("documentsCeMois")}</p>
         </div>
         <div className="rounded-sm border border-encre/20 bg-white/40 p-6">
           <p className="font-mono text-2xl text-encre">
@@ -78,7 +75,7 @@ export default async function AbonnementPage({
               <span className="text-encre/50"> / {planActuel.limiteClients}</span>
             )}
           </p>
-          <p className="mt-1 font-sans text-sm text-encre/70">Clients enregistrés</p>
+          <p className="mt-1 font-sans text-sm text-encre/70">{t("clientsEnregistres")}</p>
         </div>
         <div className="rounded-sm border border-encre/20 bg-white/40 p-6">
           <p className="font-mono text-2xl text-encre">
@@ -87,16 +84,16 @@ export default async function AbonnementPage({
               <span className="text-encre/50"> / {planActuel.limiteDepensesParMois}</span>
             )}
           </p>
-          <p className="mt-1 font-sans text-sm text-encre/70">Dépenses saisies ce mois-ci</p>
+          <p className="mt-1 font-sans text-sm text-encre/70">{t("depensesCeMois")}</p>
         </div>
       </div>
 
       <div className="mt-6 flex flex-wrap items-center gap-4">
         {planActuel.rapportComplet && (
           <p className="font-sans text-sm text-encre">
-            Votre plan donne accès au{" "}
+            {t("accesRapport")}{" "}
             <Link href="/rapport" className="underline">
-              rapport complet
+              {t("rapportComplet")}
             </Link>
             .
           </p>
@@ -104,7 +101,7 @@ export default async function AbonnementPage({
         {tenant.stripeCustomerId && (
           <form action={ouvrirPortailFacturation}>
             <button type="submit" className="font-sans text-sm text-encre underline">
-              Gérer mon moyen de paiement et mes factures
+              {t("gererPaiement")}
             </button>
           </form>
         )}
@@ -124,13 +121,13 @@ export default async function AbonnementPage({
                 <h2 className="font-titre text-xl text-encre">{plan.label}</h2>
                 {estActuel && (
                   <span className="font-mono text-xs uppercase text-encre/60">
-                    Plan actuel
+                    {t("planActuelBadge")}
                   </span>
                 )}
               </div>
               <p className="mt-2 font-mono text-2xl text-encre">
                 {plan.prixMensuel === 0 ? "0 €" : `${plan.prixMensuel} €`}
-                <span className="font-sans text-sm text-encre/60"> / mois</span>
+                <span className="font-sans text-sm text-encre/60"> {t("parMois")}</span>
               </p>
               <ul className="mt-4 flex-1 space-y-2 font-sans text-sm text-encre/80">
                 {plan.fonctionnalites.map((f) => (
@@ -147,7 +144,7 @@ export default async function AbonnementPage({
                     disabled={estActuel}
                     className="w-full rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5 disabled:cursor-not-allowed disabled:opacity-40"
                   >
-                    {estActuel ? "Plan actuel" : "Repasser au gratuit"}
+                    {estActuel ? t("planActuelBadge") : t("repasserGratuit")}
                   </button>
                 </form>
               ) : estActuel ? (
@@ -156,7 +153,7 @@ export default async function AbonnementPage({
                   disabled
                   className="mt-6 w-full rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire opacity-40"
                 >
-                  Plan actuel
+                  {t("planActuelBadge")}
                 </button>
               ) : (
                 <div className="mt-6 space-y-2">
@@ -166,7 +163,7 @@ export default async function AbonnementPage({
                       type="submit"
                       className="w-full rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
                     >
-                      Payer par carte
+                      {t("payerCarte")}
                     </button>
                   </form>
                   <form action={demanderPlanEspeces}>
@@ -175,7 +172,7 @@ export default async function AbonnementPage({
                       type="submit"
                       className="w-full rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
                     >
-                      Payer en espèces / virement
+                      {t("payerEspeces")}
                     </button>
                   </form>
                 </div>

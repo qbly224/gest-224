@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { useTranslations } from "next-intl";
 import type { Depense } from "@prisma/client";
 import { initialActionState, type ActionState } from "@/lib/actions/types";
 import { FieldError } from "@/components/forms/field-error";
@@ -21,6 +22,7 @@ export function DepenseForm({
   depense?: SerializedDepense;
   action: DepenseFormAction;
 }) {
+  const t = useTranslations("app.depenses");
   const [state, formAction] = useActionState(action, initialActionState);
 
   return (
@@ -33,7 +35,7 @@ export function DepenseForm({
 
       <div>
         <label className={labelClass} htmlFor="date">
-          Date
+          {t("champDate")}
         </label>
         <input
           id="date"
@@ -50,7 +52,7 @@ export function DepenseForm({
 
       <div>
         <label className={labelClass} htmlFor="libelle">
-          Libellé
+          {t("champLibelle")}
         </label>
         <input
           id="libelle"
@@ -65,7 +67,7 @@ export function DepenseForm({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className={labelClass} htmlFor="montant">
-            Montant (€)
+            {t("champMontant")}
           </label>
           <input
             id="montant"
@@ -81,19 +83,19 @@ export function DepenseForm({
         </div>
         <div>
           <label className={labelClass} htmlFor="categorie">
-            Catégorie (libre)
+            {t("champCategorie")}
           </label>
           <input
             id="categorie"
             name="categorie"
             defaultValue={depense?.categorie ?? ""}
-            placeholder="Ex. Fournitures, Loyer, Carburant..."
+            placeholder={t("champCategoriePlaceholder")}
             className={inputClass}
           />
         </div>
       </div>
 
-      <SubmitButton>Enregistrer</SubmitButton>
+      <SubmitButton>{t("enregistrer")}</SubmitButton>
     </form>
   );
 }

@@ -1,11 +1,13 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import { useTranslations } from "next-intl";
 import { supprimerCompte } from "@/lib/actions/compte";
 import { initialActionState } from "@/lib/actions/types";
 import { inputClass, labelClass } from "@/lib/ui";
 
 export function SupprimerCompteForm() {
+  const t = useTranslations("app.entreprise");
   const [state, formAction] = useActionState(supprimerCompte, initialActionState);
   const [confirme, setConfirme] = useState(false);
 
@@ -23,13 +25,11 @@ export function SupprimerCompteForm() {
           onChange={(e) => setConfirme(e.target.checked)}
           className="mt-0.5"
         />
-        Je comprends que cette action est définitive et supprimera immédiatement
-        toute l&apos;entreprise : clients, catalogue, devis, factures, comptabilité —
-        sans possibilité de récupération.
+        {t("suppressionConfirmLabel")}
       </label>
       <div>
         <label className={labelClass} htmlFor="motDePasse">
-          Confirmer avec votre mot de passe
+          {t("suppressionMotDePasse")}
         </label>
         <input
           id="motDePasse"
@@ -44,7 +44,7 @@ export function SupprimerCompteForm() {
         disabled={!confirme}
         className="rounded-sm bg-red-700 px-4 py-2 font-sans text-sm font-medium text-white hover:bg-red-800 disabled:cursor-not-allowed disabled:opacity-40"
       >
-        Supprimer définitivement mon compte
+        {t("suppressionBouton")}
       </button>
     </form>
   );

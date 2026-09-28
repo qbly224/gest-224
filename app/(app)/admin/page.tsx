@@ -1,3 +1,4 @@
+import { getTranslations, getLocale } from "next-intl/server";
 import { requirePlatformAdmin } from "@/lib/auth-admin";
 import { prisma } from "@/lib/prisma";
 import { LISTE_PLANS } from "@/lib/plans";
@@ -6,9 +7,13 @@ import {
   changerPlanTenant,
   basculerPaiementValideTenant,
 } from "@/lib/actions/admin";
+import { formatDate } from "@/lib/format";
+import type { Locale } from "@/i18n/config";
 
 export default async function AdminPage() {
   await requirePlatformAdmin();
+  const t = await getTranslations("app.admin");
+  const locale = (await getLocale()) as Locale;
 
   const tenants = await prisma.tenant.findMany({
     orderBy: { createdAt: "desc" },
@@ -26,27 +31,25 @@ export default async function AdminPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="font-titre text-2xl text-encre">Administration de la plateforme</h1>
-        <p className="mt-1 font-sans text-sm text-encre/70">
-          Vue sur l&apos;ensemble des entreprises inscrites sur Gest-224.
-        </p>
+        <h1 className="font-titre text-2xl text-encre">{t("titre")}</h1>
+        <p className="mt-1 font-sans text-sm text-encre/70">{t("description")}</p>
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div className="rounded-sm border border-encre/20 bg-white/40 p-6">
           <p className="font-mono text-3xl text-encre">
             {tenants.length}
-            <span className="text-encre/50"> / {nbTenantsActifs} actives</span>
+            <span className="text-encre/50"> / {nbTenantsActifs} {t("actives")}</span>
           </p>
-          <p className="mt-1 font-sans text-sm text-encre/70">Entreprises inscrites</p>
+          <p className="mt-1 font-sans text-sm text-encre/70">{t("entreprisesInscrites")}</p>
         </div>
         <div className="rounded-sm border border-encre/20 bg-white/40 p-6">
           <p className="font-mono text-3xl text-encre">{nbUsersTotal}</p>
-          <p className="mt-1 font-sans text-sm text-encre/70">Utilisateurs</p>
+          <p className="mt-1 font-sans text-sm text-encre/70">{t("utilisateurs")}</p>
         </div>
         <div className="rounded-sm border border-encre/20 bg-white/40 p-6">
           <p className="font-mono text-3xl text-encre">{nbDocumentsTotal}</p>
-          <p className="mt-1 font-sans text-sm text-encre/70">Documents créés (tous tenants)</p>
+          <p className="mt-1 font-sans text-sm text-encre/70">{t("documentsCrees")}</p>
         </div>
       </div>
 
@@ -54,33 +57,33 @@ export default async function AdminPage() {
       <table className="w-full min-w-[720px] border-collapse font-sans text-sm">
         <thead>
           <tr className="border-b border-encre/20 text-left text-encre/60">
-            <th className="py-2 font-medium">Entreprise</th>
-            <th className="py-2 font-medium">SIRET</th>
-            <th className="py-2 text-right font-medium">Users</th>
-            <th className="py-2 text-right font-medium">Clients</th>
-            <th className="py-2 text-right font-medium">Documents</th>
-            <th className="py-2 font-medium">Créée le</th>
-            <th className="py-2 font-medium">Plan</th>
-            <th className="py-2 font-medium">Paiement</th>
-            <th className="py-2 font-medium">Statut</th>
+            <th className="py-2 font-medium">{t("colEntreprise")}</th>
+            <th className="py-2 font-medium">{t("colSiret")}</th>
+            <th className="py-2 text-right font-medium">{t("colUsers")}</th>
+            <th className="py-2 text-right font-medium">{t("colClients")}</th>
+            <th className="py-2 text-right font-medium">{t("colDocuments")}</th>
+            <th className="py-2 font-medium">{t("colCreeLe")}</th>
+            <th className="py-2 font-medium">{t("colPlan")}</th>
+            <th className="py-2 font-medium">{t("colPaiement")}</th>
+            <th className="py-2 font-medium">{t("colStatut")}</th>
           </tr>
         </thead>
         <tbody>
-          {tenants.map((t) => (
-            <tr key={t.id} className="border-b border-encre/10 align-middle">
-              <td className="py-2 text-encre">{t.raisonSociale}</td>
-              <td className="py-2 font-mono text-xs text-encre/70">{t.siret}</td>
-              <td className="py-2 text-right font-mono text-encre/80">{t._count.users}</td>
-              <td className="py-2 text-right font-mono text-encre/80">{t._count.clients}</td>
-              <td className="py-2 text-right font-mono text-encre/80">{t._count.documents}</td>
+          {tenants.map((t2) => (
+            <tr key={t2.id} className="border-b border-encre/10 align-middle">
+              <td className="py-2 text-encre">{t2.raisonSociale}</td>
+              <td className="py-2 font-mono text-xs text-encre/70">{t2.siret}</td>
+              <td className="py-2 text-right font-mono text-encre/80">{t2._count.users}</td>
+              <td className="py-2 text-right font-mono text-encre/80">{t2._count.clients}</td>
+              <td className="py-2 text-right font-mono text-encre/80">{t2._count.documents}</td>
               <td className="py-2 font-mono text-xs text-encre/70">
-                {new Intl.DateTimeFormat("fr-FR").format(t.createdAt)}
+                {formatDate(t2.createdAt, locale)}
               </td>
               <td className="py-2">
-                <form action={changerPlanTenant.bind(null, t.id)} className="flex items-center gap-1">
+                <form action={changerPlanTenant.bind(null, t2.id)} className="flex items-center gap-1">
                   <select
                     name="plan"
-                    defaultValue={t.plan}
+                    defaultValue={t2.plan}
                     className="rounded-sm border border-encre/30 bg-transparent px-1 py-0.5 font-sans text-xs text-encre"
                   >
                     {LISTE_PLANS.map((p) => (
@@ -93,39 +96,39 @@ export default async function AdminPage() {
                     type="submit"
                     className="rounded-sm border border-encre/30 px-2 py-0.5 font-sans text-xs text-encre hover:bg-encre/5"
                   >
-                    OK
+                    {t("ok")}
                   </button>
                 </form>
               </td>
               <td className="py-2">
-                {t.plan === "gratuit" ? (
+                {t2.plan === "gratuit" ? (
                   <span className="font-mono text-xs text-encre/40">—</span>
                 ) : (
-                  <form action={basculerPaiementValideTenant.bind(null, t.id)}>
+                  <form action={basculerPaiementValideTenant.bind(null, t2.id)}>
                     <button
                       type="submit"
                       className={`rounded-sm border px-2 py-0.5 font-sans text-xs ${
-                        t.paiementValide
+                        t2.paiementValide
                           ? "border-encre/30 text-encre hover:bg-encre/5"
                           : "border-red-300 text-red-700 hover:bg-red-50"
                       }`}
                     >
-                      {t.paiementValide ? "Validé" : "En attente — valider"}
+                      {t2.paiementValide ? t("valide") : t("enAttenteValider")}
                     </button>
                   </form>
                 )}
               </td>
               <td className="py-2">
-                <form action={basculerActifTenant.bind(null, t.id)}>
+                <form action={basculerActifTenant.bind(null, t2.id)}>
                   <button
                     type="submit"
                     className={`rounded-sm border px-2 py-0.5 font-sans text-xs ${
-                      t.actif
+                      t2.actif
                         ? "border-encre/30 text-encre hover:bg-encre/5"
                         : "border-red-300 text-red-700 hover:bg-red-50"
                     }`}
                   >
-                    {t.actif ? "Active" : "Désactivée"}
+                    {t2.actif ? t("active") : t("desactivee")}
                   </button>
                 </form>
               </td>

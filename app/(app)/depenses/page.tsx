@@ -1,15 +1,16 @@
 import Link from "next/link";
+import { getTranslations, getLocale } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { supprimerDepense } from "@/lib/actions/comptabilite";
 import { BoutonSupprimer } from "@/components/forms/bouton-supprimer";
-
-function formatEuros(n: number) {
-  return new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(n);
-}
+import { formatEuros, formatDate } from "@/lib/format";
+import type { Locale } from "@/i18n/config";
 
 export default async function DepensesPage() {
   const session = await requireSession();
+  const t = await getTranslations("app.depenses");
+  const locale = (await getLocale()) as Locale;
   const depenses = await prisma.depense.findMany({
     where: { tenantId: session.tenantId },
     orderBy: { date: "desc" },
@@ -18,37 +19,33 @@ export default async function DepensesPage() {
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="font-titre text-2xl text-encre">Dépenses</h1>
+        <h1 className="font-titre text-2xl text-encre">{t("titre")}</h1>
         <Link
           href="/depenses/nouveau"
           className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
         >
-          Nouvelle dépense
+          {t("nouveauBouton")}
         </Link>
       </div>
 
       {depenses.length === 0 ? (
-        <p className="mt-8 font-sans text-sm text-encre/60">
-          Aucune dépense enregistrée pour l&apos;instant.
-        </p>
+        <p className="mt-8 font-sans text-sm text-encre/60">{t("emptyDefault")}</p>
       ) : (
         <div className="mt-6 overflow-x-auto">
         <table className="w-full min-w-[520px] border-collapse font-sans text-sm">
           <thead>
             <tr className="border-b border-encre/20 text-left text-encre/60">
-              <th className="py-2 font-medium">Date</th>
-              <th className="py-2 font-medium">Libellé</th>
-              <th className="py-2 font-medium">Catégorie</th>
-              <th className="py-2 text-right font-medium">Montant</th>
+              <th className="py-2 font-medium">{t("colDate")}</th>
+              <th className="py-2 font-medium">{t("colLibelle")}</th>
+              <th className="py-2 font-medium">{t("colCategorie")}</th>
+              <th className="py-2 text-right font-medium">{t("colMontant")}</th>
               <th className="py-2" />
             </tr>
           </thead>
           <tbody>
             {depenses.map((d) => (
               <tr key={d.id} className="border-b border-encre/10">
-                <td className="py-3 font-mono text-encre/70">
-                  {new Intl.DateTimeFormat("fr-FR").format(d.date)}
-                </td>
+                <td className="py-3 font-mono text-encre/70">{formatDate(d.date, locale)}</td>
                 <td className="py-3 text-encre">
                   <Link href={`/depenses/${d.id}/modifier`} className="hover:underline">
                     {d.libelle}
@@ -56,12 +53,12 @@ export default async function DepensesPage() {
                 </td>
                 <td className="py-3 text-encre/70">{d.categorie ?? "—"}</td>
                 <td className="py-3 text-right font-mono text-encre">
-                  {formatEuros(Number(d.montant))}
+                  {formatEuros(Number(d.montant), locale)}
                 </td>
                 <td className="py-3 text-right">
                   <form action={supprimerDepense.bind(null, d.id)}>
                     <BoutonSupprimer
-                      confirmMessage={`Supprimer la dépense « ${d.libelle} » ? Cette action est définitive.`}
+                      confirmMessage={t("confirmSuppression", { libelle: d.libelle })}
                     />
                   </form>
                 </td>

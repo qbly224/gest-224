@@ -1,8 +1,8 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { nomAffichageClientSnapshot } from "@/lib/documents/snapshot";
-import { TITRES_DOCUMENT, STATUT_LABELS } from "@/lib/documents/statut-labels";
 import type { ClientSnapshot } from "@/lib/documents/snapshot";
 import type { TypeDocument } from "@prisma/client";
 
@@ -22,6 +22,9 @@ export default async function RecherchePage({
 }) {
   const { q } = await searchParams;
   const session = await requireSession();
+  const t = await getTranslations("app.recherche");
+  const tTypes = await getTranslations("app.typesDocument");
+  const tStatuts = await getTranslations("app.statuts");
   const terme = q?.trim();
 
   const [clients, documents] = terme
@@ -58,28 +61,28 @@ export default async function RecherchePage({
 
   return (
     <div>
-      <h1 className="font-titre text-2xl text-encre">Recherche</h1>
+      <h1 className="font-titre text-2xl text-encre">{t("titre")}</h1>
       <form className="mt-4" method="get">
         <input
           type="search"
           name="q"
           autoFocus
           defaultValue={q ?? ""}
-          placeholder="Nom de client, numéro de devis/facture…"
+          placeholder={t("placeholder")}
           className="w-full max-w-md rounded-sm border border-encre/30 bg-ivoire px-3 py-2 font-sans text-sm text-encre placeholder:text-encre/40 focus:border-encre focus:outline-none"
         />
       </form>
 
       {!terme ? (
-        <p className="mt-6 font-sans text-sm text-encre/60">
-          Tapez un nom de client ou un numéro de document pour lancer la recherche.
-        </p>
+        <p className="mt-6 font-sans text-sm text-encre/60">{t("invite")}</p>
       ) : (
         <div className="mt-8 space-y-8">
           <div>
-            <h2 className="font-titre text-lg text-encre">Clients ({clients.length})</h2>
+            <h2 className="font-titre text-lg text-encre">
+              {t("clientsTitre", { count: clients.length })}
+            </h2>
             {clients.length === 0 ? (
-              <p className="mt-2 font-sans text-sm text-encre/60">Aucun client trouvé.</p>
+              <p className="mt-2 font-sans text-sm text-encre/60">{t("aucunClient")}</p>
             ) : (
               <ul className="mt-2 space-y-1.5 font-sans text-sm">
                 {clients.map((c) => (
@@ -97,9 +100,11 @@ export default async function RecherchePage({
           </div>
 
           <div>
-            <h2 className="font-titre text-lg text-encre">Documents ({documents.length})</h2>
+            <h2 className="font-titre text-lg text-encre">
+              {t("documentsTitre", { count: documents.length })}
+            </h2>
             {documents.length === 0 ? (
-              <p className="mt-2 font-sans text-sm text-encre/60">Aucun document trouvé.</p>
+              <p className="mt-2 font-sans text-sm text-encre/60">{t("aucunDocument")}</p>
             ) : (
               <ul className="mt-2 space-y-1.5 font-sans text-sm">
                 {documents.map((d) => (
@@ -112,9 +117,9 @@ export default async function RecherchePage({
                     </Link>
                     <span className="text-encre/50">
                       {" "}
-                      — {TITRES_DOCUMENT[d.type]} —{" "}
+                      — {tTypes(d.type)} —{" "}
                       {nomAffichageClientSnapshot(d.clientSnapshot as unknown as ClientSnapshot)} —{" "}
-                      {STATUT_LABELS[d.statut]}
+                      {tStatuts(d.statut)}
                     </span>
                   </li>
                 ))}

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Phone } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { toggleClientActif } from "@/lib/actions/clients";
@@ -34,6 +35,7 @@ export default async function ClientsPage({
 }) {
   const { q, statut, tri, ordre } = await searchParams;
   const session = await requireSession();
+  const t = await getTranslations("app.clients");
   const terme = q?.trim();
   const direction = ordre === "asc" ? "asc" : "desc";
 
@@ -68,12 +70,12 @@ export default async function ClientsPage({
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="font-titre text-2xl text-encre">Clients</h1>
+        <h1 className="font-titre text-2xl text-encre">{t("titre")}</h1>
         <Link
           href="/clients/nouveau"
           className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
         >
-          Nouveau client
+          {t("nouveauBouton")}
         </Link>
       </div>
 
@@ -82,7 +84,7 @@ export default async function ClientsPage({
           type="search"
           name="q"
           defaultValue={q ?? ""}
-          placeholder="Rechercher un nom, une ville, un email…"
+          placeholder={t("rechercherPlaceholder")}
           className="w-full max-w-xs rounded-sm border border-encre/30 bg-ivoire px-3 py-2 font-sans text-sm text-encre placeholder:text-encre/40 focus:border-encre focus:outline-none"
         />
         <select
@@ -90,26 +92,26 @@ export default async function ClientsPage({
           defaultValue={statut ?? ""}
           className="rounded-sm border border-encre/30 bg-ivoire px-3 py-2 font-sans text-sm text-encre focus:border-encre focus:outline-none"
         >
-          <option value="">Tous</option>
-          <option value="actifs">Actifs</option>
-          <option value="desactives">Désactivés</option>
+          <option value="">{t("tous")}</option>
+          <option value="actifs">{t("actifs")}</option>
+          <option value="desactives">{t("desactives")}</option>
         </select>
         <button
           type="submit"
           className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
         >
-          Filtrer
+          {t("filtrer")}
         </button>
         {(q || statut) && (
           <a href="?" className="font-sans text-xs text-encre/60 underline">
-            Réinitialiser
+            {t("reinitialiser")}
           </a>
         )}
       </form>
 
       {clients.length === 0 ? (
         <p className="mt-8 font-sans text-sm text-encre/60">
-          {q || statut ? "Aucun client ne correspond à ces critères." : "Aucun client pour l'instant."}
+          {q || statut ? t("emptyFiltre") : t("emptyDefault")}
         </p>
       ) : (
         <div className="mt-6 overflow-x-auto">
@@ -118,17 +120,17 @@ export default async function ClientsPage({
             <tr className="border-b border-encre/20 text-left text-encre/60">
               <th className="py-2 font-medium hover:text-encre cursor-pointer select-none">
                 <Link href={lienTri({ q, statut }, "nom", tri, ordre)}>
-                  Nom / Raison sociale{flecheTri("nom", tri, ordre)}
+                  {t("colNom")}{flecheTri("nom", tri, ordre)}
                 </Link>
               </th>
               <th className="py-2 font-medium hover:text-encre cursor-pointer select-none">
                 <Link href={lienTri({ q, statut }, "ville", tri, ordre)}>
-                  Ville{flecheTri("ville", tri, ordre)}
+                  {t("colVille")}{flecheTri("ville", tri, ordre)}
                 </Link>
               </th>
-              <th className="py-2 font-medium">Email</th>
-              <th className="py-2 font-medium">Téléphone</th>
-              <th className="py-2 font-medium">Statut</th>
+              <th className="py-2 font-medium">{t("colEmail")}</th>
+              <th className="py-2 font-medium">{t("colTelephone")}</th>
+              <th className="py-2 font-medium">{t("colStatut")}</th>
               <th className="py-2 font-medium" />
             </tr>
           </thead>
@@ -175,7 +177,7 @@ export default async function ClientsPage({
                           : "font-mono text-xs text-encre/40"
                       }
                     >
-                      {client.actif ? "actif" : "désactivé"}
+                      {client.actif ? t("actif") : t("desactive")}
                     </span>
                   </td>
                   <td className="py-3 text-right">
@@ -184,7 +186,7 @@ export default async function ClientsPage({
                         type="submit"
                         className="font-sans text-xs text-encre/60 hover:text-encre hover:underline"
                       >
-                        {client.actif ? "Désactiver" : "Réactiver"}
+                        {client.actif ? t("desactiver") : t("reactiver")}
                       </button>
                     </form>
                   </td>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import { useTranslations } from "next-intl";
 import type { Client } from "@prisma/client";
 import { initialActionState, type ActionState } from "@/lib/actions/types";
 import { FieldError } from "@/components/forms/field-error";
@@ -19,6 +20,7 @@ export function ClientForm({
   client?: Client;
   action: ClientFormAction;
 }) {
+  const t = useTranslations("app.clients");
   const [state, formAction] = useActionState(action, initialActionState);
   const [type, setType] = useState<"particulier" | "professionnel">(
     client?.type ?? "professionnel"
@@ -28,7 +30,7 @@ export function ClientForm({
     <form action={formAction} className="mt-6 space-y-6">
       {state.success && (
         <p className="rounded-sm bg-encre/10 px-3 py-2 font-sans text-sm text-encre">
-          Client enregistré.
+          {t("enregistre")}
         </p>
       )}
       {state.error && (
@@ -39,7 +41,7 @@ export function ClientForm({
 
       <div>
         <label className={labelClass} htmlFor="type">
-          Type de client
+          {t("typeClient")}
         </label>
         <select
           id="type"
@@ -48,8 +50,8 @@ export function ClientForm({
           onChange={(e) => setType(e.target.value as typeof type)}
           className={selectClass}
         >
-          <option value="professionnel">Professionnel</option>
-          <option value="particulier">Particulier</option>
+          <option value="professionnel">{t("professionnel")}</option>
+          <option value="particulier">{t("particulier")}</option>
         </select>
       </div>
 
@@ -57,7 +59,7 @@ export function ClientForm({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className={labelClass} htmlFor="raisonSociale">
-              Raison sociale
+              {t("raisonSociale")}
             </label>
             <input
               id="raisonSociale"
@@ -69,7 +71,7 @@ export function ClientForm({
           </div>
           <div>
             <label className={labelClass} htmlFor="siret">
-              SIRET
+              {t("siret")}
             </label>
             <input
               id="siret"
@@ -83,7 +85,7 @@ export function ClientForm({
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <label className={labelClass} htmlFor="civilite">
-              Civilité
+              {t("civilite")}
             </label>
             <input
               id="civilite"
@@ -94,7 +96,7 @@ export function ClientForm({
           </div>
           <div>
             <label className={labelClass} htmlFor="prenom">
-              Prénom
+              {t("prenom")}
             </label>
             <input
               id="prenom"
@@ -105,7 +107,7 @@ export function ClientForm({
           </div>
           <div>
             <label className={labelClass} htmlFor="nom">
-              Nom
+              {t("nom")}
             </label>
             <input
               id="nom"
@@ -120,7 +122,7 @@ export function ClientForm({
 
       <div>
         <label className={labelClass} htmlFor="numeroTvaIntracom">
-          N° TVA intracommunautaire
+          {t("numeroTva")}
         </label>
         <input
           id="numeroTvaIntracom"
@@ -131,10 +133,10 @@ export function ClientForm({
       </div>
 
       <fieldset className="space-y-4 border-t border-encre/10 pt-4">
-        <legend className="font-titre text-lg text-encre">Adresse</legend>
+        <legend className="font-titre text-lg text-encre">{t("adresse")}</legend>
         <div>
           <label className={labelClass} htmlFor="adresseLigne1">
-            Adresse
+            {t("adresseLigne1")}
           </label>
           <input
             id="adresseLigne1"
@@ -147,7 +149,7 @@ export function ClientForm({
         </div>
         <div>
           <label className={labelClass} htmlFor="adresseLigne2">
-            Complément d&apos;adresse
+            {t("complementAdresse")}
           </label>
           <input
             id="adresseLigne2"
@@ -159,7 +161,7 @@ export function ClientForm({
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <label className={labelClass} htmlFor="codePostal">
-              Code postal
+              {t("codePostal")}
             </label>
             <input
               id="codePostal"
@@ -172,7 +174,7 @@ export function ClientForm({
           </div>
           <div className="col-span-2">
             <label className={labelClass} htmlFor="ville">
-              Ville
+              {t("ville")}
             </label>
             <input
               id="ville"
@@ -186,7 +188,7 @@ export function ClientForm({
         </div>
         <div>
           <label className={labelClass} htmlFor="pays">
-            Pays
+            {t("pays")}
           </label>
           <input
             id="pays"
@@ -199,11 +201,11 @@ export function ClientForm({
       </fieldset>
 
       <fieldset className="space-y-4 border-t border-encre/10 pt-4">
-        <legend className="font-titre text-lg text-encre">Contact</legend>
+        <legend className="font-titre text-lg text-encre">{t("contact")}</legend>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className={labelClass} htmlFor="email">
-              Email
+              {t("email")}
             </label>
             <input
               id="email"
@@ -216,7 +218,7 @@ export function ClientForm({
           </div>
           <div>
             <label className={labelClass} htmlFor="telephone">
-              Téléphone
+              {t("telephone")}
             </label>
             <input
               id="telephone"
@@ -228,7 +230,7 @@ export function ClientForm({
         </div>
         <div>
           <label className={labelClass} htmlFor="notes">
-            Notes
+            {t("notes")}
           </label>
           <textarea
             id="notes"
@@ -240,7 +242,7 @@ export function ClientForm({
         </div>
       </fieldset>
 
-      <SubmitButton>Enregistrer</SubmitButton>
+      <SubmitButton>{t("enregistrer")}</SubmitButton>
     </form>
   );
 }

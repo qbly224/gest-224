@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { updateArticle } from "@/lib/actions/articles";
@@ -11,6 +12,7 @@ export default async function ModifierArticlePage({
 }) {
   const { id } = await params;
   const session = await requireSession();
+  const t = await getTranslations("app.catalogue");
 
   const [article, tenant] = await Promise.all([
     prisma.article.findFirst({ where: { id, tenantId: session.tenantId } }),
@@ -26,7 +28,7 @@ export default async function ModifierArticlePage({
 
   return (
     <div>
-      <h1 className="font-titre text-2xl text-encre">Modifier l&apos;article</h1>
+      <h1 className="font-titre text-2xl text-encre">{t("modifierTitre")}</h1>
       <ArticleForm
         article={{
           ...article,
