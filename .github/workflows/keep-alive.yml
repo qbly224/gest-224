@@ -1,0 +1,17 @@
+name: Keep Render service awake
+
+# Le plan gratuit Render met le service en veille après 15 minutes sans
+# requête (le prochain visiteur attend alors ~20-30s le réveil). Un ping
+# régulier sur /api/health empêche cette mise en veille, sans dépendre
+# d'un service tiers ni changer de plan.
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping /api/health
+        run: curl -fsS --max-time 60 https://gest-224.onrender.com/api/health
