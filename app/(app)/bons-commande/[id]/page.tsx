@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import {
@@ -19,6 +20,8 @@ export default async function BonCommandeDetailPage({
 }) {
   const { id } = await params;
   const session = await requireSession();
+  const t = await getTranslations("app.bonsCommande");
+  const ta = await getTranslations("app.documentActions");
 
   const bonCommande = await prisma.document.findFirst({
     where: { id, tenantId: session.tenantId, type: "bon_commande" },
@@ -35,12 +38,12 @@ export default async function BonCommandeDetailPage({
 
   return (
     <DocumentDetail
-      titre="Bon de commande"
+      titre={t("titreSingulier")}
       document={bonCommande}
       reference={
         bonCommande.refDocument && (
           <p className="mt-1 font-sans text-xs italic text-encre/60">
-            Établi suite au devis{" "}
+            {t("etablieSuiteDevis")}{" "}
             <Link href={`/devis/${bonCommande.refDocument.id}`} className="font-mono underline">
               {bonCommande.refDocument.numero}
             </Link>
@@ -50,7 +53,7 @@ export default async function BonCommandeDetailPage({
       aval={
         bonCommande.documentsAval.length > 0 ? (
           <p className="mt-4 font-sans text-sm text-encre/70">
-            Converti en bon de livraison{" "}
+            {t("convertiEnBonLivraison")}{" "}
             {bonCommande.documentsAval.map((d) => (
               <Link key={d.id} href={`/bons-livraison/${d.id}`} className="font-mono underline">
                 {d.numero}
@@ -67,7 +70,7 @@ export default async function BonCommandeDetailPage({
               type="submit"
               className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
             >
-              Dupliquer
+              {ta("dupliquer")}
             </button>
           </form>
           {bonCommande.statut === "brouillon" && (
@@ -76,12 +79,12 @@ export default async function BonCommandeDetailPage({
                 href={`/bons-commande/${bonCommande.id}/modifier`}
                 className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
               >
-                Modifier
+                {ta("modifier")}
               </Link>
               <EnvoyerActions
                 envoyerAction={envoyerBonCommande.bind(null, bonCommande.id)}
                 numero={bonCommande.numero}
-                titre="Bon de commande"
+                titre={t("titreSingulier")}
                 montantTtc={Number(bonCommande.montantTtc)}
                 clientEmail={client.email}
                 clientTelephone={client.telephone}
@@ -95,7 +98,7 @@ export default async function BonCommandeDetailPage({
                 type="submit"
                 className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
               >
-                Convertir en bon de livraison
+                {ta("convertirBonLivraison")}
               </button>
             </form>
           )}

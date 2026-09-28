@@ -1,4 +1,5 @@
 import { notFound, redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { updateFacture } from "@/lib/actions/documents";
@@ -12,6 +13,7 @@ export default async function ModifierFacturePage({
 }) {
   const { id } = await params;
   const session = await requireSession();
+  const t = await getTranslations("app.factures");
 
   const facture = await prisma.document.findFirst({
     where: { id, tenantId: session.tenantId, type: "facture" },
@@ -34,7 +36,7 @@ export default async function ModifierFacturePage({
   return (
     <div>
       <h1 className="font-titre text-2xl text-encre">
-        Modifier la facture {facture.numero}
+        {t("titreModifier", { numero: facture.numero })}
       </h1>
       <DocumentForm
         type="facture"

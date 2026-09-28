@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { DocumentList } from "@/components/documents/document-list";
@@ -16,6 +17,7 @@ export default async function BonsCommandePage({
 }) {
   const { q, statut, depuis, jusqua, tri, ordre } = await searchParams;
   const session = await requireSession();
+  const t = await getTranslations("app.bonsCommande");
   const bons = await prisma.document.findMany({
     where: construireWhereDocuments(session.tenantId, "bon_commande", { q, statut, depuis, jusqua }),
     orderBy: construireOrderByDocuments(tri, ordre),
@@ -24,12 +26,12 @@ export default async function BonsCommandePage({
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="font-titre text-2xl text-encre">Bons de commande</h1>
+        <h1 className="font-titre text-2xl text-encre">{t("titre")}</h1>
         <Link
           href="/bons-commande/nouveau"
           className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
         >
-          Nouveau bon de commande
+          {t("nouveauBouton")}
         </Link>
       </div>
 
@@ -43,11 +45,7 @@ export default async function BonsCommandePage({
 
       <DocumentList
         basePath="/bons-commande"
-        emptyLabel={
-          q || statut || depuis || jusqua
-            ? "Aucun bon de commande ne correspond à ces critères."
-            : "Aucun bon de commande pour l'instant."
-        }
+        emptyLabel={q || statut || depuis || jusqua ? t("emptyFiltre") : t("emptyDefault")}
         q={q}
         statut={statut}
         depuis={depuis}

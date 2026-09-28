@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import {
@@ -20,6 +21,8 @@ export default async function BonLivraisonDetailPage({
 }) {
   const { id } = await params;
   const session = await requireSession();
+  const t = await getTranslations("app.bonsLivraison");
+  const ta = await getTranslations("app.documentActions");
 
   const bonLivraison = await prisma.document.findFirst({
     where: { id, tenantId: session.tenantId, type: "bon_livraison" },
@@ -36,13 +39,13 @@ export default async function BonLivraisonDetailPage({
 
   return (
     <DocumentDetail
-      titre="Bon de livraison"
+      titre={t("titreSingulier")}
       document={bonLivraison}
       masquerPrix
       reference={
         bonLivraison.refDocument && (
           <p className="mt-1 font-sans text-xs italic text-encre/60">
-            Établi suite au bon de commande{" "}
+            {t("etablieSuiteBonCommande")}{" "}
             <Link
               href={`/bons-commande/${bonLivraison.refDocument.id}`}
               className="font-mono underline"
@@ -55,7 +58,7 @@ export default async function BonLivraisonDetailPage({
       aval={
         bonLivraison.documentsAval.length > 0 ? (
           <p className="mt-4 font-sans text-sm text-encre/70">
-            Converti en facture{" "}
+            {t("convertiEnFacture")}{" "}
             {bonLivraison.documentsAval.map((d) => (
               <Link key={d.id} href={`/factures/${d.id}`} className="font-mono underline">
                 {d.numero}
@@ -72,7 +75,7 @@ export default async function BonLivraisonDetailPage({
               type="submit"
               className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
             >
-              Dupliquer
+              {ta("dupliquer")}
             </button>
           </form>
           {bonLivraison.statut === "brouillon" && (
@@ -81,12 +84,12 @@ export default async function BonLivraisonDetailPage({
                 href={`/bons-livraison/${bonLivraison.id}/modifier`}
                 className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
               >
-                Modifier
+                {ta("modifier")}
               </Link>
               <EnvoyerActions
                 envoyerAction={envoyerBonLivraison.bind(null, bonLivraison.id)}
                 numero={bonLivraison.numero}
-                titre="Bon de livraison"
+                titre={t("titreSingulier")}
                 montantTtc={Number(bonLivraison.montantTtc)}
                 clientEmail={client.email}
                 clientTelephone={client.telephone}
@@ -101,7 +104,7 @@ export default async function BonLivraisonDetailPage({
                 type="submit"
                 className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
               >
-                Marquer livré
+                {ta("marquerLivre")}
               </button>
             </form>
           )}
@@ -111,7 +114,7 @@ export default async function BonLivraisonDetailPage({
                 type="submit"
                 className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
               >
-                Convertir en facture
+                {ta("convertirFacture")}
               </button>
             </form>
           )}

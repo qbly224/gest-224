@@ -1,4 +1,5 @@
 import { notFound, redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { updateBonLivraison } from "@/lib/actions/documents";
@@ -12,6 +13,7 @@ export default async function ModifierBonLivraisonPage({
 }) {
   const { id } = await params;
   const session = await requireSession();
+  const t = await getTranslations("app.bonsLivraison");
 
   const bonLivraison = await prisma.document.findFirst({
     where: { id, tenantId: session.tenantId, type: "bon_livraison" },
@@ -34,7 +36,7 @@ export default async function ModifierBonLivraisonPage({
   return (
     <div>
       <h1 className="font-titre text-2xl text-encre">
-        Modifier le bon de livraison {bonLivraison.numero}
+        {t("titreModifier", { numero: bonLivraison.numero })}
       </h1>
       <DocumentForm
         type="bon_livraison"

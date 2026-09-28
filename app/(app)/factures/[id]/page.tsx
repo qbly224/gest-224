@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import {
@@ -11,7 +12,6 @@ import { marquerDocumentPaye } from "@/lib/actions/comptabilite";
 import { DocumentDetail } from "@/components/documents/document-detail";
 import { PdfActions } from "@/components/documents/pdf-actions";
 import { EnvoyerActions } from "@/components/documents/envoyer-actions";
-import { TITRES_DOCUMENT } from "@/lib/documents/statut-labels";
 import type { ClientSnapshot, EmetteurSnapshot } from "@/lib/documents/snapshot";
 
 export default async function FactureDetailPage({
@@ -21,6 +21,9 @@ export default async function FactureDetailPage({
 }) {
   const { id } = await params;
   const session = await requireSession();
+  const t = await getTranslations("app.factures");
+  const ta = await getTranslations("app.documentActions");
+  const tTypes = await getTranslations("app.typesDocument");
 
   const facture = await prisma.document.findFirst({
     where: { id, tenantId: session.tenantId, type: "facture" },
@@ -40,14 +43,14 @@ export default async function FactureDetailPage({
 
   return (
     <DocumentDetail
-      titre="Facture"
+      titre={t("titreSingulier")}
       document={facture}
       afficherPaiement
       reference={
         facture.refDocument && (
           <p className="mt-1 font-sans text-xs italic text-encre/60">
-            Établie suite au{" "}
-            {TITRES_DOCUMENT[facture.refDocument.type].toLowerCase()}{" "}
+            {t("etablieSuite")}{" "}
+            {tTypes(facture.refDocument.type).toLowerCase()}{" "}
             <Link
               href={`${facture.refDocument.type === "devis" ? "/devis" : "/bons-livraison"}/${facture.refDocument.id}`}
               className="font-mono underline"
@@ -60,7 +63,7 @@ export default async function FactureDetailPage({
       aval={
         facture.documentsAval.length > 0 ? (
           <p className="mt-4 font-sans text-sm text-encre/70">
-            Avoir(s) émis :{" "}
+            {t("avoirsEmis")}{" "}
             {facture.documentsAval.map((a) => (
               <Link key={a.id} href={`/avoirs/${a.id}`} className="font-mono underline">
                 {a.numero}
@@ -77,7 +80,7 @@ export default async function FactureDetailPage({
               type="submit"
               className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
             >
-              Dupliquer
+              {ta("dupliquer")}
             </button>
           </form>
           {facture.statut === "brouillon" && (
@@ -86,12 +89,12 @@ export default async function FactureDetailPage({
                 href={`/factures/${facture.id}/modifier`}
                 className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
               >
-                Modifier
+                {ta("modifier")}
               </Link>
               <EnvoyerActions
                 envoyerAction={envoyerFacture.bind(null, facture.id)}
                 numero={facture.numero}
-                titre="Facture"
+                titre={t("titreSingulier")}
                 montantTtc={Number(facture.montantTtc)}
                 clientEmail={client.email}
                 clientTelephone={client.telephone}
@@ -105,7 +108,7 @@ export default async function FactureDetailPage({
                 type="submit"
                 className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
               >
-                Marquer payée
+                {ta("marquerPayee")}
               </button>
             </form>
           )}
@@ -115,7 +118,7 @@ export default async function FactureDetailPage({
                 type="submit"
                 className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
               >
-                Créer un avoir
+                {ta("creerAvoir")}
               </button>
             </form>
           )}

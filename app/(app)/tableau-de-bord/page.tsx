@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { calculerSoldeEtVueMensuelle } from "@/lib/comptabilite/agregats";
@@ -11,16 +12,14 @@ import { OnboardingChecklist } from "@/components/app/onboarding-checklist";
 import { GraphiqueMensuel } from "@/components/dashboard/graphique-mensuel";
 import { MiniBarres, MiniLigne, MiniDonut, BarreProgression } from "@/components/dashboard/mini-charts";
 import { PLANS } from "@/lib/plans";
+import { formatEuros } from "@/lib/format";
+import { obtenirLocale } from "@/i18n/request";
 
 const COULEUR_DOCUMENTS = "#2a78d6";
 const COULEUR_CLIENTS = "#1baf7a";
 const COULEUR_CATALOGUE = "#4a3aa7";
 const COULEUR_SOLDE_POSITIF = "#0ca30c";
 const COULEUR_SOLDE_NEGATIF = "#d03b3b";
-
-function formatEuros(n: number) {
-  return new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(n);
-}
 
 export default async function TableauDeBordPage({
   searchParams,
@@ -29,6 +28,9 @@ export default async function TableauDeBordPage({
 }) {
   const session = await requireSession();
   const { erreurPaiement } = await searchParams;
+  const locale = await obtenirLocale();
+  const t = await getTranslations("app.dashboard");
+  const tOnboarding = await getTranslations("app.onboarding");
 
   const [
     tenant,
@@ -51,7 +53,7 @@ export default async function TableauDeBordPage({
     prisma.article.count({ where: { tenantId: session.tenantId } }),
     prisma.document.count({ where: { tenantId: session.tenantId } }),
     compterDocumentsMoisCourant(session.tenantId),
-    calculerSoldeEtVueMensuelle(session.tenantId),
+    calculerSoldeEtVueMensuelle(session.tenantId, 6, locale),
     documentsParMoisRecents(session.tenantId),
     croissanceClientsRecente(session.tenantId),
     prisma.document.count({
@@ -78,12 +80,10 @@ export default async function TableauDeBordPage({
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="font-titre text-2xl text-encre">Tableau de bord</h1>
+        <h1 className="font-titre text-2xl text-encre">{t("titre")}</h1>
         <p className="mt-1 font-sans text-sm text-encre/70">
-          {tenant.raisonSociale} — régime{" "}
-          {tenant.regimeTva === "franchise"
-            ? "franchise en base (art. 293 B du CGI)"
-            : "normal"}
+          {tenant.raisonSociale} — {t("regimeLabel")}{" "}
+          {tenant.regimeTva === "franchise" ? t("regimeFranchise") : t("regimeNormal")}
         </p>
       </div>
 
@@ -91,19 +91,22 @@ export default async function TableauDeBordPage({
         <p className="rounded-sm bg-red-50 px-3 py-2 font-sans text-sm text-red-700">
           {nbFacturesEnRetard > 0 && (
             <>
-              {nbFacturesEnRetard} facture{nbFacturesEnRetard > 1 ? "s" : ""} en retard de paiement.{" "}
+              {nbFacturesEnRetard}{" "}
+              {nbFacturesEnRetard > 1 ? t("facturesEnRetard") : t("factureEnRetard")}{" "}
               <Link href="/factures?enRetard=1" className="underline">
-                Voir
+                {t("voir")}
               </Link>
               {nbFacturesAcompteEnRetard > 0 && " · "}
             </>
           )}
           {nbFacturesAcompteEnRetard > 0 && (
             <>
-              {nbFacturesAcompteEnRetard} facture{nbFacturesAcompteEnRetard > 1 ? "s" : ""} d&apos;acompte en
-              retard.{" "}
+              {nbFacturesAcompteEnRetard}{" "}
+              {nbFacturesAcompteEnRetard > 1
+                ? t("facturesAcompteEnRetard")
+                : t("factureAcompteEnRetard")}{" "}
               <Link href="/factures-acompte?enRetard=1" className="underline">
-                Voir
+                {t("voir")}
               </Link>
             </>
           )}
@@ -112,11 +115,9 @@ export default async function TableauDeBordPage({
 
       {erreurPaiement === "1" && (
         <p className="rounded-sm bg-red-50 px-3 py-2 font-sans text-sm text-red-700">
-          Votre compte a bien été créé, mais le paiement du plan choisi n&apos;a pas pu être
-          initié. Vous êtes sur le plan gratuit — vous pouvez réessayer de passer à un plan
-          payant depuis la page{" "}
+          {t("erreurPaiement")}{" "}
           <Link href="/abonnement" className="underline">
-            Abonnement
+            {t("abonnement")}
           </Link>
           .
         </p>
@@ -126,17 +127,17 @@ export default async function TableauDeBordPage({
         <OnboardingChecklist
           etapes={[
             {
-              label: "Renseigner l'IBAN de l'entreprise",
+              label: tOnboarding("etapeIban"),
               fait: Boolean(tenant.iban),
               href: "/entreprise",
             },
-            { label: "Ajouter un client", fait: nbClients > 0, href: "/clients/nouveau" },
+            { label: tOnboarding("etapeClient"), fait: nbClients > 0, href: "/clients/nouveau" },
             {
-              label: "Ajouter un article au catalogue",
+              label: tOnboarding("etapeArticle"),
               fait: nbArticles > 0,
               href: "/catalogue/nouveau",
             },
-            { label: "Créer votre premier devis", fait: nbDocuments > 0, href: "/devis/nouveau" },
+            { label: tOnboarding("etapeDevis"), fait: nbDocuments > 0, href: "/devis/nouveau" },
           ]}
         />
       )}
@@ -145,12 +146,12 @@ export default async function TableauDeBordPage({
         <div className="rounded-sm border border-encre/20 bg-white/40 p-5">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <p className="font-sans text-sm text-encre/60">Solde global</p>
+              <p className="font-sans text-sm text-encre/60">{t("soldeGlobal")}</p>
               <p
                 className="mt-1 font-mono text-2xl"
                 style={{ color: couleurSolde }}
               >
-                {formatEuros(compta.solde)}
+                {formatEuros(compta.solde, locale)}
               </p>
             </div>
             <MiniLigne valeurs={soldeMensuel} couleur={couleurSolde} />
@@ -160,7 +161,7 @@ export default async function TableauDeBordPage({
         <div className="rounded-sm border border-encre/20 bg-white/40 p-5">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <p className="font-sans text-sm text-encre/60">Documents ce mois-ci</p>
+              <p className="font-sans text-sm text-encre/60">{t("documentsCeMois")}</p>
               <p className="mt-1 font-mono text-2xl text-encre">
                 {nbDocumentsCeMois}
                 {plan.limiteDocumentsParMois !== null && (
@@ -183,7 +184,7 @@ export default async function TableauDeBordPage({
         <div className="rounded-sm border border-encre/20 bg-white/40 p-5">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <p className="font-sans text-sm text-encre/60">Clients actifs</p>
+              <p className="font-sans text-sm text-encre/60">{t("clientsActifs")}</p>
               <p className="mt-1 font-mono text-2xl text-encre">
                 {nbClients}
                 {plan.limiteClients !== null && (
@@ -206,10 +207,10 @@ export default async function TableauDeBordPage({
         <div className="rounded-sm border border-encre/20 bg-white/40 p-5">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <p className="font-sans text-sm text-encre/60">Catalogue</p>
+              <p className="font-sans text-sm text-encre/60">{t("catalogue")}</p>
               <p className="mt-1 font-mono text-2xl text-encre">{nbArticles}</p>
               <p className="mt-0.5 font-sans text-xs text-encre/50">
-                sur {nbArticlesTotal} au total
+                {t("surTotal", { total: nbArticlesTotal })}
               </p>
             </div>
             <MiniDonut valeur={nbArticles} total={Math.max(nbArticlesTotal, 1)} couleur={COULEUR_CATALOGUE} />
@@ -219,16 +220,16 @@ export default async function TableauDeBordPage({
 
       <div>
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="font-titre text-lg text-encre">Vue mensuelle</h2>
+          <h2 className="font-titre text-lg text-encre">{t("vueMensuelle")}</h2>
           <div className="flex flex-wrap gap-4 font-sans text-sm">
             <Link href="/recettes" className="text-encre underline">
-              Recettes
+              {t("recettes")}
             </Link>
             <Link href="/depenses" className="text-encre underline">
-              Dépenses
+              {t("depenses")}
             </Link>
             <Link href="/rapport" className="text-encre underline">
-              Rapport complet
+              {t("rapportComplet")}
             </Link>
           </div>
         </div>
@@ -241,10 +242,10 @@ export default async function TableauDeBordPage({
           <table className="w-full min-w-[480px] border-collapse font-sans text-sm">
             <thead>
               <tr className="border-b border-encre/20 text-left text-encre/60">
-                <th className="py-2 font-medium">Mois</th>
-                <th className="py-2 text-right font-medium">Recettes</th>
-                <th className="py-2 text-right font-medium">Dépenses</th>
-                <th className="py-2 text-right font-medium">Solde</th>
+                <th className="py-2 font-medium">{t("colMois")}</th>
+                <th className="py-2 text-right font-medium">{t("colRecettes")}</th>
+                <th className="py-2 text-right font-medium">{t("colDepenses")}</th>
+                <th className="py-2 text-right font-medium">{t("colSolde")}</th>
               </tr>
             </thead>
             <tbody>
@@ -252,15 +253,15 @@ export default async function TableauDeBordPage({
                 <tr key={m.mois} className="border-b border-encre/10">
                   <td className="py-2 capitalize text-encre">{m.label}</td>
                   <td className="py-2 text-right font-mono text-encre/80">
-                    {formatEuros(m.recettes)}
+                    {formatEuros(m.recettes, locale)}
                   </td>
                   <td className="py-2 text-right font-mono text-encre/80">
-                    {formatEuros(m.depenses)}
+                    {formatEuros(m.depenses, locale)}
                   </td>
                   <td
                     className={`py-2 text-right font-mono ${m.solde >= 0 ? "text-encre" : "text-red-700"}`}
                   >
-                    {formatEuros(m.solde)}
+                    {formatEuros(m.solde, locale)}
                   </td>
                 </tr>
               ))}

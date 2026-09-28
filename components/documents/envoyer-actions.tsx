@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState, useTransition } from "react";
-
-function formatEuros(n: number): string {
-  return new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(n);
-}
+import { useTranslations, useLocale } from "next-intl";
+import { formatEuros as formatEurosLocale } from "@/lib/format";
+import type { Locale } from "@/i18n/config";
 
 export function EnvoyerActions({
   envoyerAction,
@@ -25,6 +24,8 @@ export function EnvoyerActions({
   raisonSociale: string;
   masquerMontant?: boolean;
 }) {
+  const t = useTranslations("app.envoyerActions");
+  const locale = useLocale() as Locale;
   const [ouvert, setOuvert] = useState(false);
   const [isPending, startTransition] = useTransition();
   const conteneurRef = useRef<HTMLDivElement>(null);
@@ -40,9 +41,16 @@ export function EnvoyerActions({
     return () => document.removeEventListener("mousedown", surClicExterieur);
   }, [ouvert]);
 
-  const sujet = `${titre} ${numero} — ${raisonSociale}`;
-  const mentionMontant = masquerMontant ? "" : ` d'un montant de ${formatEuros(montantTtc)}`;
-  const corps = `Bonjour,\n\nVeuillez trouver ci-joint ${titre.toLowerCase()} n° ${numero}${mentionMontant}.\nPensez à joindre le PDF téléchargé avant l'envoi.\n\nCordialement,\n${raisonSociale}`;
+  const sujet = t("emailSujet", { titre, numero, raisonSociale });
+  const mentionMontant = masquerMontant
+    ? ""
+    : t("emailMontant", { montant: formatEurosLocale(montantTtc, locale) });
+  const corps = t("emailCorps", {
+    titre: titre.toLowerCase(),
+    numero,
+    mentionMontant,
+    raisonSociale,
+  });
 
   function marquerEnvoye() {
     startTransition(() => {
@@ -79,26 +87,26 @@ export function EnvoyerActions({
         disabled={isPending}
         className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light disabled:opacity-60"
       >
-        Envoyer
+        {t("envoyer")}
       </button>
       {ouvert && (
         <div className="absolute right-0 z-10 mt-1 w-56 rounded-sm border border-encre/20 bg-ivoire shadow-lg">
           <p className="border-b border-encre/10 px-4 py-2 font-sans text-xs text-encre/60">
-            Téléchargez d&apos;abord le PDF pour le joindre.
+            {t("telechargezDabord")}
           </p>
           <button
             type="button"
             onClick={envoyerParGmail}
             className="block w-full px-4 py-2 text-left font-sans text-sm text-encre hover:bg-encre/5"
           >
-            Par Gmail
+            {t("parGmail")}
           </button>
           <button
             type="button"
             onClick={envoyerParWhatsapp}
             className="block w-full px-4 py-2 text-left font-sans text-sm text-encre hover:bg-encre/5"
           >
-            Par WhatsApp
+            {t("parWhatsapp")}
           </button>
         </div>
       )}

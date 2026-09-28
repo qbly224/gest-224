@@ -1,15 +1,10 @@
+import { getTranslations } from "next-intl/server";
 import type { MoisAgregat } from "@/lib/comptabilite/agregats";
+import { formatEuros as formatEurosLocale } from "@/lib/format";
+import { obtenirLocale } from "@/i18n/request";
 
 const COULEUR_RECETTES = "#2a78d6";
 const COULEUR_DEPENSES = "#eb6834";
-
-function formatEuros(n: number): string {
-  return new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(n);
-}
-
-function formatCompact(n: number): string {
-  return new Intl.NumberFormat("fr-FR", { notation: "compact", compactDisplay: "short" }).format(n);
-}
 
 /**
  * Graphique en barres groupées (recettes / dépenses par mois), en SVG
@@ -17,7 +12,16 @@ function formatCompact(n: number): string {
  * L'info-bulle native (<title>) porte le détail exact ; le tableau qui suit
  * ce graphique sur le tableau de bord reste la vue exhaustive.
  */
-export function GraphiqueMensuel({ mois }: { mois: MoisAgregat[] }) {
+export async function GraphiqueMensuel({ mois }: { mois: MoisAgregat[] }) {
+  const locale = await obtenirLocale();
+  const t = await getTranslations("app.dashboard");
+  const formatEuros = (n: number) => formatEurosLocale(n, locale);
+  const formatCompact = (n: number) =>
+    new Intl.NumberFormat(locale === "en" ? "en-US" : "fr-FR", {
+      notation: "compact",
+      compactDisplay: "short",
+    }).format(n);
+
   const largeurGroupe = 56;
   const largeurBarre = 20;
   const espaceEntreBarres = 2;
@@ -37,14 +41,14 @@ export function GraphiqueMensuel({ mois }: { mois: MoisAgregat[] }) {
             className="inline-block h-2.5 w-2.5 rounded-sm"
             style={{ backgroundColor: COULEUR_RECETTES }}
           />
-          Recettes
+          {t("recettes")}
         </span>
         <span className="flex items-center gap-1.5">
           <span
             className="inline-block h-2.5 w-2.5 rounded-sm"
             style={{ backgroundColor: COULEUR_DEPENSES }}
           />
-          Dépenses
+          {t("depenses")}
         </span>
       </div>
 
@@ -54,7 +58,7 @@ export function GraphiqueMensuel({ mois }: { mois: MoisAgregat[] }) {
         height={hauteur}
         className="mt-3 overflow-visible"
         role="img"
-        aria-label="Recettes et dépenses par mois"
+        aria-label={`${t("recettes")} / ${t("depenses")}`}
       >
         <line
           x1={0}
@@ -79,7 +83,7 @@ export function GraphiqueMensuel({ mois }: { mois: MoisAgregat[] }) {
                 rx={4}
                 fill={COULEUR_RECETTES}
               >
-                <title>{`${m.label} — Recettes : ${formatEuros(m.recettes)}`}</title>
+                <title>{`${m.label} — ${t("recettes")} : ${formatEuros(m.recettes)}`}</title>
               </rect>
               <rect
                 x={xGroupe + largeurBarre + espaceEntreBarres}
@@ -89,7 +93,7 @@ export function GraphiqueMensuel({ mois }: { mois: MoisAgregat[] }) {
                 rx={4}
                 fill={COULEUR_DEPENSES}
               >
-                <title>{`${m.label} — Dépenses : ${formatEuros(m.depenses)}`}</title>
+                <title>{`${m.label} — ${t("depenses")} : ${formatEuros(m.depenses)}`}</title>
               </rect>
               <text
                 x={i * largeurGroupe + largeurGroupe / 2}

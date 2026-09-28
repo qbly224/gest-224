@@ -1,12 +1,15 @@
 "use client";
 
 import { useActionState, useId, useMemo, useState } from "react";
+import { useTranslations, useLocale } from "next-intl";
 import type { TypeDocument } from "@prisma/client";
 import { initialActionState, type ActionState } from "@/lib/actions/types";
 import { FieldError } from "@/components/forms/field-error";
 import { SubmitButton } from "@/components/forms/submit-button";
 import { TAUX_TVA_AUTORISES } from "@/lib/validation/article";
 import { calculerTotaux } from "@/lib/documents/calc";
+import { formatEuros as formatEurosLocale } from "@/lib/format";
+import type { Locale } from "@/i18n/config";
 import { inputClass, labelClass, selectClass } from "@/lib/ui";
 
 type DocumentFormAction = (
@@ -60,10 +63,6 @@ function nouvelleLigne(regimeTvaNormal: boolean): LigneState {
   };
 }
 
-function formatEuros(n: number): string {
-  return new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(n);
-}
-
 export function DocumentForm({
   type,
   clients,
@@ -79,6 +78,9 @@ export function DocumentForm({
   action: DocumentFormAction;
   initial?: DocumentFormInitialData;
 }) {
+  const t = useTranslations("app.documentForm");
+  const locale = useLocale() as Locale;
+  const formatEuros = (n: number) => formatEurosLocale(n, locale);
   const [state, formAction] = useActionState(action, initialActionState);
   const idPrefix = useId();
 
@@ -175,7 +177,7 @@ export function DocumentForm({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className={labelClass} htmlFor={`${idPrefix}-clientId`}>
-            Client
+            {t("client")}
           </label>
           <select
             id={`${idPrefix}-clientId`}
@@ -186,7 +188,7 @@ export function DocumentForm({
             className={selectClass}
           >
             <option value="" disabled>
-              Sélectionner un client
+              {t("selectionnerClient")}
             </option>
             {clients.map((c) => (
               <option key={c.id} value={c.id}>
@@ -199,7 +201,7 @@ export function DocumentForm({
 
         <div>
           <label className={labelClass} htmlFor={`${idPrefix}-dateEmission`}>
-            Date d&apos;émission
+            {t("dateEmission")}
           </label>
           <input
             id={`${idPrefix}-dateEmission`}
@@ -217,7 +219,7 @@ export function DocumentForm({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className={labelClass} htmlFor={`${idPrefix}-dateEcheance`}>
-              Date d&apos;échéance
+              {t("dateEcheance")}
             </label>
             <input
               id={`${idPrefix}-dateEcheance`}
@@ -230,7 +232,7 @@ export function DocumentForm({
           </div>
           <div>
             <label className={labelClass} htmlFor={`${idPrefix}-tauxPenaliteRetard`}>
-              Taux de pénalité de retard (% / an)
+              {t("tauxPenalite")}
             </label>
             <input
               id={`${idPrefix}-tauxPenaliteRetard`}
@@ -248,27 +250,27 @@ export function DocumentForm({
 
       <div>
         <label className={labelClass} htmlFor={`${idPrefix}-conditionsPaiement`}>
-          Conditions de paiement
+          {t("conditionsPaiement")}
         </label>
         <input
           id={`${idPrefix}-conditionsPaiement`}
           name="conditionsPaiement"
           value={conditionsPaiement}
           onChange={(e) => setConditionsPaiement(e.target.value)}
-          placeholder="Ex. Paiement à réception"
+          placeholder={t("conditionsPaiementPlaceholder")}
           className={inputClass}
         />
       </div>
 
       <div className="border-t border-encre/10 pt-4">
         <div className="flex items-center justify-between">
-          <h2 className="font-titre text-lg text-encre">Lignes</h2>
+          <h2 className="font-titre text-lg text-encre">{t("lignes")}</h2>
           <button
             type="button"
             onClick={ajouterLigne}
             className="font-sans text-sm text-encre underline hover:text-encre-light"
           >
-            + Ajouter une ligne
+            {t("ajouterLigne")}
           </button>
         </div>
 
@@ -281,7 +283,7 @@ export function DocumentForm({
             >
               <div className="flex items-center justify-between">
                 <span className="font-mono text-xs text-encre/50">
-                  Ligne {index + 1}
+                  {t("ligneNumero", { n: index + 1 })}
                 </span>
                 <button
                   type="button"
@@ -289,19 +291,19 @@ export function DocumentForm({
                   disabled={lignes.length === 1}
                   className="font-sans text-xs text-encre/60 hover:text-encre hover:underline disabled:cursor-not-allowed disabled:opacity-40"
                 >
-                  Supprimer
+                  {t("supprimer")}
                 </button>
               </div>
 
               {articles.length > 0 && (
                 <div className="mt-2">
-                  <label className={labelClass}>Depuis le catalogue (optionnel)</label>
+                  <label className={labelClass}>{t("depuisCatalogue")}</label>
                   <select
                     value={ligne.articleId ?? ""}
                     onChange={(e) => appliquerArticle(ligne.key, e.target.value)}
                     className={selectClass}
                   >
-                    <option value="">— Ligne libre —</option>
+                    <option value="">{t("ligneLibre")}</option>
                     {articles.map((a) => (
                       <option key={a.id} value={a.id}>
                         {a.designation}
@@ -312,7 +314,7 @@ export function DocumentForm({
               )}
 
               <div className="mt-2">
-                <label className={labelClass}>Désignation</label>
+                <label className={labelClass}>{t("designation")}</label>
                 <input
                   data-testid="ligne-designation"
                   required
@@ -323,7 +325,7 @@ export function DocumentForm({
               </div>
 
               <div className="mt-2">
-                <label className={labelClass}>Description (optionnel)</label>
+                <label className={labelClass}>{t("description")}</label>
                 <input
                   value={ligne.description}
                   onChange={(e) => updateLigne(ligne.key, { description: e.target.value })}
@@ -336,7 +338,7 @@ export function DocumentForm({
               >
                 <div>
                   <label className={labelClass}>
-                    {quantiteLibre ? "Quantité (négative = à déduire)" : "Quantité"}
+                    {quantiteLibre ? t("quantiteNegative") : t("quantite")}
                   </label>
                   <input
                     data-testid="ligne-quantite"
@@ -350,7 +352,7 @@ export function DocumentForm({
                   />
                 </div>
                 <div>
-                  <label className={labelClass}>Unité</label>
+                  <label className={labelClass}>{t("unite")}</label>
                   <input
                     value={ligne.uniteMesure}
                     onChange={(e) => updateLigne(ligne.key, { uniteMesure: e.target.value })}
@@ -358,7 +360,7 @@ export function DocumentForm({
                   />
                 </div>
                 <div>
-                  <label className={labelClass}>PU HT (€)</label>
+                  <label className={labelClass}>{t("puHt")}</label>
                   <input
                     data-testid="ligne-prix"
                     type="number"
@@ -372,7 +374,7 @@ export function DocumentForm({
                 </div>
                 {regimeTvaNormal && (
                   <div>
-                    <label className={labelClass}>TVA</label>
+                    <label className={labelClass}>{t("tva")}</label>
                     <select
                       data-testid="ligne-tva"
                       value={ligne.tauxTva ?? ""}
@@ -381,16 +383,16 @@ export function DocumentForm({
                       }
                       className={selectClass}
                     >
-                      {TAUX_TVA_AUTORISES.map((t) => (
-                        <option key={t} value={t}>
-                          {t} %
+                      {TAUX_TVA_AUTORISES.map((tx) => (
+                        <option key={tx} value={tx}>
+                          {tx} %
                         </option>
                       ))}
                     </select>
                   </div>
                 )}
                 <div>
-                  <label className={labelClass}>Remise (%)</label>
+                  <label className={labelClass}>{t("remise")}</label>
                   <input
                     type="number"
                     step="0.01"
@@ -411,30 +413,28 @@ export function DocumentForm({
 
       <div className="ml-auto w-full max-w-xs space-y-1 font-sans text-sm">
         <div className="flex justify-between text-encre/80">
-          <span>Total HT</span>
+          <span>{t("totalHt")}</span>
           <span className="font-mono">{formatEuros(totaux.montantHt)}</span>
         </div>
         {regimeTvaNormal ? (
-          totaux.tvaParTaux.map((t) => (
-            <div key={t.taux} className="flex justify-between text-encre/80">
-              <span>TVA {t.taux} %</span>
-              <span className="font-mono">{formatEuros(t.montantTva)}</span>
+          totaux.tvaParTaux.map((tx) => (
+            <div key={tx.taux} className="flex justify-between text-encre/80">
+              <span>{t("tva")} {tx.taux} %</span>
+              <span className="font-mono">{formatEuros(tx.montantTva)}</span>
             </div>
           ))
         ) : (
-          <p className="text-xs italic text-encre/60">
-            TVA non applicable, art. 293 B du CGI
-          </p>
+          <p className="text-xs italic text-encre/60">{t("tvaNonApplicable")}</p>
         )}
         <div className="flex justify-between border-t border-encre/20 pt-1 text-base font-medium text-encre">
-          <span>Total TTC</span>
+          <span>{t("totalTtc")}</span>
           <span className="font-mono">{formatEuros(totaux.montantTtc)}</span>
         </div>
       </div>
 
       <div>
         <label className={labelClass} htmlFor={`${idPrefix}-notes`}>
-          Notes
+          {t("notes")}
         </label>
         <textarea
           id={`${idPrefix}-notes`}
@@ -446,7 +446,7 @@ export function DocumentForm({
         />
       </div>
 
-      <SubmitButton>Enregistrer</SubmitButton>
+      <SubmitButton>{t("enregistrer")}</SubmitButton>
     </form>
   );
 }

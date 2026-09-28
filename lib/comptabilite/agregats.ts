@@ -1,5 +1,7 @@
 import "server-only";
 import { prisma } from "@/lib/prisma";
+import { formatMoisAnnee } from "@/lib/format";
+import type { Locale } from "@/i18n/config";
 
 export type RapportComplet = {
   soldeEtVueMensuelle: SoldeEtVueMensuelle;
@@ -9,9 +11,12 @@ export type RapportComplet = {
 };
 
 /** Rapport agrégé complet, réservé aux plans avec `rapportComplet` (cf. lib/plans.ts). */
-export async function calculerRapportComplet(tenantId: string): Promise<RapportComplet> {
+export async function calculerRapportComplet(
+  tenantId: string,
+  locale: Locale = "fr"
+): Promise<RapportComplet> {
   const [soldeEtVueMensuelle, depenses, documents, recettesAvecClient] = await Promise.all([
-    calculerSoldeEtVueMensuelle(tenantId, 12),
+    calculerSoldeEtVueMensuelle(tenantId, 12, locale),
     prisma.depense.findMany({ where: { tenantId }, select: { montant: true, categorie: true } }),
     prisma.document.groupBy({
       by: ["type"],
@@ -81,7 +86,8 @@ export type SoldeEtVueMensuelle = {
 /** Solde global (toutes dates) + agrégation par mois sur les `nbMois` derniers mois. */
 export async function calculerSoldeEtVueMensuelle(
   tenantId: string,
-  nbMois = 6
+  nbMois = 6,
+  locale: Locale = "fr"
 ): Promise<SoldeEtVueMensuelle> {
   const [recettes, depenses] = await Promise.all([
     prisma.recette.findMany({
@@ -104,7 +110,7 @@ export async function calculerSoldeEtVueMensuelle(
     const cle = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
     mois.push({
       mois: cle,
-      label: new Intl.DateTimeFormat("fr-FR", { month: "long", year: "numeric" }).format(d),
+      label: formatMoisAnnee(d, locale),
       recettes: 0,
       depenses: 0,
       solde: 0,

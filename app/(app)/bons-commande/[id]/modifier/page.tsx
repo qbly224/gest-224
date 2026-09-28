@@ -1,4 +1,5 @@
 import { notFound, redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { updateBonCommande } from "@/lib/actions/documents";
@@ -12,6 +13,7 @@ export default async function ModifierBonCommandePage({
 }) {
   const { id } = await params;
   const session = await requireSession();
+  const t = await getTranslations("app.bonsCommande");
 
   const bonCommande = await prisma.document.findFirst({
     where: { id, tenantId: session.tenantId, type: "bon_commande" },
@@ -34,7 +36,7 @@ export default async function ModifierBonCommandePage({
   return (
     <div>
       <h1 className="font-titre text-2xl text-encre">
-        Modifier le bon de commande {bonCommande.numero}
+        {t("titreModifier", { numero: bonCommande.numero })}
       </h1>
       <DocumentForm
         type="bon_commande"

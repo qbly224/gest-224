@@ -1,7 +1,7 @@
-import { STATUT_LABELS } from "@/lib/documents/statut-labels";
+import { getTranslations } from "next-intl/server";
 import type { StatutDocument } from "@prisma/client";
 
-export function DocumentFiltres({
+export async function DocumentFiltres({
   q,
   statut,
   depuis,
@@ -14,6 +14,9 @@ export function DocumentFiltres({
   jusqua?: string;
   statutsDisponibles: StatutDocument[];
 }) {
+  const t = await getTranslations("app.documentFiltres");
+  const tStatuts = await getTranslations("app.statuts");
+
   return (
     <form className="mt-4 flex flex-wrap items-end gap-2" method="get">
       <div>
@@ -21,7 +24,7 @@ export function DocumentFiltres({
           type="search"
           name="q"
           defaultValue={q ?? ""}
-          placeholder="Rechercher un numéro ou un client…"
+          placeholder={t("rechercherPlaceholder")}
           className="w-full max-w-xs rounded-sm border border-encre/30 bg-ivoire px-3 py-2 font-sans text-sm text-encre placeholder:text-encre/40 focus:border-encre focus:outline-none"
         />
       </div>
@@ -30,16 +33,16 @@ export function DocumentFiltres({
         defaultValue={statut ?? ""}
         className="rounded-sm border border-encre/30 bg-ivoire px-3 py-2 font-sans text-sm text-encre focus:border-encre focus:outline-none"
       >
-        <option value="">Tous les statuts</option>
+        <option value="">{t("tousLesStatuts")}</option>
         {statutsDisponibles.map((s) => (
           <option key={s} value={s}>
-            {STATUT_LABELS[s]}
+            {tStatuts(s)}
           </option>
         ))}
       </select>
       <div className="flex items-center gap-1">
         <label className="font-sans text-xs text-encre/60" htmlFor="depuis">
-          Du
+          {t("du")}
         </label>
         <input
           id="depuis"
@@ -51,7 +54,7 @@ export function DocumentFiltres({
       </div>
       <div className="flex items-center gap-1">
         <label className="font-sans text-xs text-encre/60" htmlFor="jusqua">
-          au
+          {t("au")}
         </label>
         <input
           id="jusqua"
@@ -65,11 +68,11 @@ export function DocumentFiltres({
         type="submit"
         className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
       >
-        Filtrer
+        {t("filtrer")}
       </button>
       {(q || statut || depuis || jusqua) && (
         <a href="?" className="font-sans text-xs text-encre/60 underline">
-          Réinitialiser
+          {t("reinitialiser")}
         </a>
       )}
     </form>

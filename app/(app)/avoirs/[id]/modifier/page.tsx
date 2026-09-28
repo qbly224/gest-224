@@ -1,4 +1,5 @@
 import { notFound, redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { updateAvoir } from "@/lib/actions/documents";
@@ -12,6 +13,7 @@ export default async function ModifierAvoirPage({
 }) {
   const { id } = await params;
   const session = await requireSession();
+  const t = await getTranslations("app.avoirs");
 
   const avoir = await prisma.document.findFirst({
     where: { id, tenantId: session.tenantId, type: "facture_avoir" },
@@ -33,11 +35,10 @@ export default async function ModifierAvoirPage({
 
   return (
     <div>
-      <h1 className="font-titre text-2xl text-encre">Modifier l&apos;avoir {avoir.numero}</h1>
-      <p className="mt-1 font-sans text-sm text-encre/70">
-        Une quantité négative représente le montant à déduire. Supprimez ou
-        ajustez les lignes pour un avoir partiel.
-      </p>
+      <h1 className="font-titre text-2xl text-encre">
+        {t("titreModifier", { numero: avoir.numero })}
+      </h1>
+      <p className="mt-1 font-sans text-sm text-encre/70">{t("modifierHint")}</p>
       <DocumentForm
         type="facture_avoir"
         clients={clients}

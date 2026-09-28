@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import {
@@ -22,6 +23,8 @@ export default async function DevisDetailPage({
 }) {
   const { id } = await params;
   const session = await requireSession();
+  const t = await getTranslations("app.devis");
+  const ta = await getTranslations("app.documentActions");
 
   const devis = await prisma.document.findFirst({
     where: { id, tenantId: session.tenantId, type: "devis" },
@@ -40,7 +43,7 @@ export default async function DevisDetailPage({
 
   return (
     <DocumentDetail
-      titre="Devis"
+      titre={t("titreSingulier")}
       document={devis}
       actions={
         <>
@@ -50,7 +53,7 @@ export default async function DevisDetailPage({
               type="submit"
               className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
             >
-              Dupliquer
+              {ta("dupliquer")}
             </button>
           </form>
           {devis.statut === "brouillon" && (
@@ -59,12 +62,12 @@ export default async function DevisDetailPage({
                 href={`/devis/${devis.id}/modifier`}
                 className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
               >
-                Modifier
+                {ta("modifier")}
               </Link>
               <EnvoyerActions
                 envoyerAction={envoyerDevis.bind(null, devis.id)}
                 numero={devis.numero}
-                titre="Devis"
+                titre={t("titreSingulier")}
                 montantTtc={Number(devis.montantTtc)}
                 clientEmail={client.email}
                 clientTelephone={client.telephone}
@@ -79,7 +82,7 @@ export default async function DevisDetailPage({
                   type="submit"
                   className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
                 >
-                  Marquer refusé
+                  {ta("marquerRefuse")}
                 </button>
               </form>
               <form action={accepterDevis.bind(null, devis.id)}>
@@ -87,7 +90,7 @@ export default async function DevisDetailPage({
                   type="submit"
                   className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
                 >
-                  Marquer accepté
+                  {ta("marquerAccepte")}
                 </button>
               </form>
             </>
@@ -99,7 +102,7 @@ export default async function DevisDetailPage({
                   type="submit"
                   className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
                 >
-                  Convertir en bon de commande
+                  {ta("convertirBonCommande")}
                 </button>
               </form>
               <form action={convertirDevisEnFacture.bind(null, devis.id)}>
@@ -107,7 +110,7 @@ export default async function DevisDetailPage({
                   type="submit"
                   className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
                 >
-                  Convertir en facture
+                  {ta("convertirFacture")}
                 </button>
               </form>
             </>
@@ -117,7 +120,7 @@ export default async function DevisDetailPage({
       aval={
         devis.documentsAval.length > 0 ? (
           <p className="mt-4 font-sans text-sm text-encre/70">
-            Converti en{" "}
+            {t("convertiEn")}{" "}
             {devis.documentsAval.map((d) => (
               <Link
                 key={d.id}

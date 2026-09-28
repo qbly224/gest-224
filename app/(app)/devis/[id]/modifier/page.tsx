@@ -1,4 +1,5 @@
 import { notFound, redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { updateDevis } from "@/lib/actions/documents";
@@ -12,6 +13,7 @@ export default async function ModifierDevisPage({
 }) {
   const { id } = await params;
   const session = await requireSession();
+  const t = await getTranslations("app.devis");
 
   const devis = await prisma.document.findFirst({
     where: { id, tenantId: session.tenantId, type: "devis" },
@@ -33,7 +35,9 @@ export default async function ModifierDevisPage({
 
   return (
     <div>
-      <h1 className="font-titre text-2xl text-encre">Modifier le devis {devis.numero}</h1>
+      <h1 className="font-titre text-2xl text-encre">
+        {t("titreModifier", { numero: devis.numero })}
+      </h1>
       <DocumentForm
         type="devis"
         clients={clients}
