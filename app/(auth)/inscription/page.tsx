@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { SignUpForm } from "@/components/auth/signup-form";
 import { estPlanValide } from "@/lib/plans";
 
@@ -8,13 +9,12 @@ export default async function InscriptionPage({
 }) {
   const { plan } = await searchParams;
   const planInitial = plan && estPlanValide(plan) ? plan : "gratuit";
+  const t = await getTranslations("auth.inscription");
 
   return (
     <>
-      <h1 className="font-titre text-3xl text-encre">Créer votre espace</h1>
-      <p className="mt-2 font-sans text-sm text-encre/70">
-        Quelques informations sur votre entreprise pour commencer.
-      </p>
+      <h1 className="font-titre text-3xl text-encre">{t("titre")}</h1>
+      <p className="mt-2 font-sans text-sm text-encre/70">{t("sousTitre")}</p>
       <SignUpForm planInitial={planInitial} />
     </>
   );

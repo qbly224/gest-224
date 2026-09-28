@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
 const NOISE =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E";
@@ -23,11 +24,13 @@ const GLYPHES = [
   { char: "✓", top: "12%", left: "50%", size: "1.4rem", delay: "2.6s", duration: "7.8s" },
 ];
 
-export default function AuthLayout({
+export default async function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const t = await getTranslations("auth");
+
   return (
     <div className="relative flex min-h-screen items-start justify-center bg-[#141b13] px-4 py-12 sm:items-center sm:py-20">
       {/* Le bureau, en fond fixe : halo, grain, papiers et petits repères
@@ -149,7 +152,7 @@ export default function AuthLayout({
             href="/"
             className="underline decoration-ivoire/30 underline-offset-4 hover:text-ivoire/80"
           >
-            ← Retour au site
+            ← {t("retourAuSite")}
           </Link>
         </p>
       </div>

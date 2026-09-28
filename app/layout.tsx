@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Lora, Inter, IBM_Plex_Mono } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 import { CookieConsent } from "@/components/app/cookie-consent";
 import "./globals.css";
 
@@ -25,16 +27,21 @@ export const viewport: Viewport = {
   themeColor: "#1f3d2c",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="fr">
+    <html lang={locale}>
       <body
         className={`${lora.variable} ${inter.variable} ${ibmPlexMono.variable} font-sans`}
       >
-        {children}
-        <CookieConsent />
+        <NextIntlClientProvider messages={messages}>
+          {children}
+          <CookieConsent />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

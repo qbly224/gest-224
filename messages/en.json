@@ -1,0 +1,189 @@
+{
+  "commun": {
+    "enregistrement": "Saving…"
+  },
+  "public": {
+    "header": {
+      "tarifs": "Pricing",
+      "aPropos": "About",
+      "connexion": "Log in",
+      "essayerGratuitement": "Try for free"
+    },
+    "footer": {
+      "tagline": "Quotes, invoices and simplified accounting for small businesses.",
+      "produit": "Product",
+      "creerCompte": "Create an account",
+      "legal": "Legal",
+      "cgu": "Terms of use",
+      "cgv": "Terms of sale",
+      "confidentialite": "Privacy policy",
+      "mentionsLegales": "Legal notice",
+      "cookies": "Cookies",
+      "droitsReserves": "All rights reserved."
+    },
+    "accueil": {
+      "surtitre": "Business management for small companies",
+      "titre": "Quotes, invoices and accounting,",
+      "titreSuite": "without losing your evenings to it.",
+      "description": "Gest-224 handles your whole document chain — from quote to invoice — with documents that comply with French and European standards, plus built-in simplified accounting. Built for freelancers and small businesses.",
+      "creerCompteGratuit": "Create my free account",
+      "voirTarifs": "See pricing",
+      "aucuneCarteBancaire": "No credit card required for the free plan.",
+      "fonctionnalitesTitre": "Everything you need, nothing you don't",
+      "fonctionnalites": {
+        "devisFactures": { "titre": "Compliant quotes and invoices", "description": "Gapless sequential numbering, mandatory legal notices, PDFs ready to send." },
+        "chaine": { "titre": "Full document chain", "description": "Quote → purchase order → delivery note → invoice → credit note, each document references the previous one." },
+        "comptabilite": { "titre": "Simplified accounting", "description": "Income recorded automatically when an invoice is paid, expenses entered by hand, balance and monthly view at a glance." },
+        "franchise": { "titre": "VAT exemption handled", "description": "Standard VAT or basic exemption scheme (art. 293 B of the French tax code) — the right notice appears automatically." },
+        "envoi": { "titre": "One-click sending", "description": "Download the PDF and open a pre-filled Gmail or WhatsApp draft for your client, instantly." },
+        "multiEntreprise": { "titre": "Multi-company, isolated", "description": "Each account is fully separated: your data is never mixed with another company's." }
+      },
+      "tarifsTitre": "A plan for every stage",
+      "tarifsDescription": "Start for free, upgrade as your business grows.",
+      "choisir": "Choose {plan}",
+      "comparerPlans": "Compare plan details",
+      "ctaTitre": "Ready to start?",
+      "ctaDescription": "Create your account in under two minutes.",
+      "creerCompte": "Create my account"
+    },
+    "aPropos": {
+      "surtitre": "About",
+      "titre": "Why Gest-224",
+      "p1": "Gest-224 was born from a simple observation: running the commercial side of a small business — quotes, invoices, purchase and delivery orders, basic accounting — still often relies on makeshift spreadsheets or tools built for large organizations, too heavy for a freelancer or a very small business.",
+      "p2": "We're building a platform that handles the full document chain — from quote to invoice, through purchase order, delivery note, deposit invoice and credit note — following French and European invoicing rules: gapless sequential numbering, mandatory legal notices, VAT exemption handling (art. 293 B of the French tax code), late-payment penalties.",
+      "p3": "On top of that, simplified accounting: income is generated automatically when an invoice is marked as paid, expenses are entered in a few clicks, and a dashboard gives a clear view of the balance and monthly activity — without turning the user into an accountant.",
+      "p4": "Gest-224 is still a young product, continuously developed and improved. Structured e-invoicing (Factur-X, PDP) is on our roadmap, in anticipation of upcoming French regulatory deadlines."
+    },
+    "tarifs": {
+      "surtitre": "Gest-224",
+      "titre": "Simple pricing, no commitment",
+      "dejaInscrit": "Already have an account?",
+      "seConnecter": "Log in",
+      "parMois": "/ month",
+      "choisir": "Choose {plan}",
+      "changementLibre": "You can change plans at any time from your account."
+    }
+  },
+  "cookies": {
+    "message": "Gest-224 only uses a strictly necessary session cookie to keep you signed in — no advertising or analytics cookies.",
+    "enSavoirPlus": "Learn more",
+    "jaiCompris": "Got it"
+  },
+  "auth": {
+    "retourAuSite": "Back to site",
+    "connexion": {
+      "titre": "Log in",
+      "sousTitre": "Access your workspace.",
+      "email": "Email",
+      "motDePasse": "Password",
+      "motDePasseOublie": "Forgot your password?",
+      "seConnecter": "Log in",
+      "pasDeCompte": "Don't have an account yet?",
+      "creerEntreprise": "Create a company",
+      "reinitialiseMessage": "Password reset. You can now log in.",
+      "compteSupprimeMessage": "Your account has been deleted."
+    },
+    "inscription": {
+      "titre": "Create your workspace",
+      "sousTitre": "A few details about your company to get started.",
+      "plan": "Plan",
+      "comparerPlans": "Compare plans",
+      "modifiablePlus": "changeable at any time from your account.",
+      "parMois": "/month",
+      "entreprise": "Company",
+      "raisonSociale": "Company name",
+      "siret": "SIRET",
+      "siretPlaceholder": "14 digits",
+      "siretAide": "No spaces, found on your Kbis extract or at annuaire-entreprises.data.gouv.fr.",
+      "regimeTva": "VAT scheme",
+      "regimeFranchise": "Basic exemption scheme (freelancer)",
+      "regimeNormal": "Standard scheme",
+      "regimeAide": "Not sure? Most freelancers are on the basic exemption scheme (no VAT charged). Your accountant can confirm if needed.",
+      "adresse": "Address",
+      "codePostal": "Postal code",
+      "ville": "City",
+      "votreCompte": "Your account",
+      "prenom": "First name",
+      "nom": "Last name",
+      "email": "Email",
+      "motDePasse": "Password",
+      "accepte": "I accept the",
+      "les": "the",
+      "cgu": "terms of use",
+      "cgv": "terms of sale",
+      "et": "and the",
+      "confidentialite": "privacy policy",
+      "creerMonEspace": "Create my workspace",
+      "dejaInscrit": "Already have an account?",
+      "seConnecter": "Log in"
+    },
+    "motDePasseOublie": {
+      "titre": "Forgot password",
+      "sousTitre": "Enter your email and we'll send you a reset link.",
+      "email": "Email",
+      "envoyerLeLien": "Send the link",
+      "confirmationMessage": "If an account exists with this address, an email with a reset link has just been sent (valid for one hour).",
+      "retourConnexion": "Back to log in"
+    },
+    "reinitialiser": {
+      "titre": "New password",
+      "sousTitre": "Choose a new password for your account.",
+      "nouveauMotDePasse": "New password",
+      "reinitialiserLeMotDePasse": "Reset password"
+    }
+  },
+  "plans": {
+    "gratuit": {
+      "label": "Free",
+      "fonctionnalites": [
+        "5 documents per month (quotes, invoices, etc.)",
+        "5 clients",
+        "Unlimited PDF generation",
+        "Simplified accounting (5 expenses/month)"
+      ]
+    },
+    "starter": {
+      "label": "Starter",
+      "fonctionnalites": [
+        "50 documents per month",
+        "100 clients",
+        "Full document chain (quote to credit note)",
+        "Unlimited simplified accounting",
+        "Full report (accounting + activity)"
+      ]
+    },
+    "pro": {
+      "label": "Pro",
+      "fonctionnalites": [
+        "Unlimited documents",
+        "Unlimited clients",
+        "Full document chain (quote to credit note)",
+        "Unlimited simplified accounting",
+        "Full report (accounting + activity)"
+      ]
+    }
+  },
+  "shell": {
+    "ouvrirMenu": "Open menu",
+    "fermerMenu": "Close menu",
+    "rechercher": "Search…",
+    "rechercherAria": "Search",
+    "deconnexion": "Log out",
+    "admin": "Admin",
+    "nav": {
+      "tableauDeBord": "Dashboard",
+      "devis": "Quotes",
+      "bonsCommande": "Purchase orders",
+      "bonsLivraison": "Delivery notes",
+      "factures": "Invoices",
+      "acomptes": "Deposits",
+      "avoirs": "Credit notes",
+      "depenses": "Expenses",
+      "rapport": "Report",
+      "clients": "Clients",
+      "catalogue": "Catalog",
+      "entreprise": "Company",
+      "abonnement": "Subscription"
+    }
+  }
+}

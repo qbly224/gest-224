@@ -3,6 +3,7 @@
 import { Suspense, useState } from "react";
 import Link from "next/link";
 import { Menu, Search, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { SidebarNav } from "@/components/app/sidebar-nav";
 import { Toast } from "@/components/app/toast";
 
@@ -15,6 +16,7 @@ export function AppShell({
   estAdminPlateforme: boolean;
   children: React.ReactNode;
 }) {
+  const t = useTranslations("shell");
   const [ouvert, setOuvert] = useState(false);
 
   return (
@@ -41,7 +43,7 @@ export function AppShell({
               <button
                 type="button"
                 onClick={() => setOuvert(false)}
-                aria-label="Fermer le menu"
+                aria-label={t("fermerMenu")}
                 className="rounded-sm p-1.5 text-encre hover:bg-encre/10"
               >
                 <X size={20} />
@@ -63,7 +65,7 @@ export function AppShell({
           <button
             type="button"
             onClick={() => setOuvert(true)}
-            aria-label="Ouvrir le menu"
+            aria-label={t("ouvrirMenu")}
             className="rounded-sm p-1.5 text-encre hover:bg-encre/10"
           >
             <Menu size={22} />
@@ -71,7 +73,7 @@ export function AppShell({
           <span className="flex-1 font-titre text-base text-encre">Gest-224</span>
           <Link
             href="/recherche"
-            aria-label="Rechercher"
+            aria-label={t("rechercherAria")}
             className="rounded-sm p-1.5 text-encre hover:bg-encre/10"
           >
             <Search size={20} />

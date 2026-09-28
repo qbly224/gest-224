@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { signUp } from "@/lib/actions/auth";
 import { initialActionState } from "@/lib/actions/types";
 import { FieldError } from "@/components/forms/field-error";
@@ -11,6 +12,8 @@ import { LISTE_PLANS } from "@/lib/plans";
 import type { PlanAbonnement } from "@prisma/client";
 
 export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
+  const t = useTranslations("auth.inscription");
+  const tPlans = useTranslations("plans");
   const [state, formAction] = useActionState(signUp, initialActionState);
   const [plan, setPlan] = useState<PlanAbonnement>(planInitial);
 
@@ -19,7 +22,7 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
       {state.error && <p className={ledgerErrorClass}>{state.error}</p>}
 
       <fieldset className="space-y-2">
-        <legend className="font-titre text-lg text-encre">Plan</legend>
+        <legend className="font-titre text-lg text-encre">{t("plan")}</legend>
         <input type="hidden" name="plan" value={plan} />
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
           {LISTE_PLANS.map((p) => (
@@ -33,27 +36,27 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
                   : "border-encre/30 text-encre hover:bg-encre/5"
               }`}
             >
-              <div className="font-medium">{p.label}</div>
+              <div className="font-medium">{tPlans(`${p.id}.label`)}</div>
               <div className="font-mono">
-                {p.prixMensuel === 0 ? "0 €" : `${p.prixMensuel} €/mois`}
+                {p.prixMensuel === 0 ? "0 €" : `${p.prixMensuel} €${t("parMois")}`}
               </div>
             </button>
           ))}
         </div>
         <p className="font-sans text-xs text-encre/60">
           <Link href="/tarifs" className="underline">
-            Comparer les plans
+            {t("comparerPlans")}
           </Link>{" "}
-          — modifiable à tout moment depuis votre espace.
+          — {t("modifiablePlus")}
         </p>
       </fieldset>
 
       <fieldset className="space-y-4 border-t border-encre/10 pt-5">
-        <legend className="font-titre text-lg text-encre">Entreprise</legend>
+        <legend className="font-titre text-lg text-encre">{t("entreprise")}</legend>
 
         <div>
           <label className={ledgerLabelClass} htmlFor="raisonSociale">
-            Raison sociale
+            {t("raisonSociale")}
           </label>
           <input
             id="raisonSociale"
@@ -67,26 +70,23 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className={ledgerLabelClass} htmlFor="siret">
-              SIRET
+              {t("siret")}
             </label>
             <input
               id="siret"
               name="siret"
               required
               maxLength={14}
-              placeholder="14 chiffres"
+              placeholder={t("siretPlaceholder")}
               className={ledgerInputClass}
             />
-            <p className="mt-1 font-sans text-xs text-encre/50">
-              Sans espaces, sur votre extrait Kbis ou sur{" "}
-              <span className="italic">annuaire-entreprises.data.gouv.fr</span>.
-            </p>
+            <p className="mt-1 font-sans text-xs text-encre/50">{t("siretAide")}</p>
             <FieldError messages={state.fieldErrors?.siret} />
           </div>
 
           <div>
             <label className={ledgerLabelClass} htmlFor="regimeTva">
-              Régime de TVA
+              {t("regimeTva")}
             </label>
             <select
               id="regimeTva"
@@ -95,22 +95,17 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
               defaultValue="franchise"
               className={ledgerSelectClass}
             >
-              <option value="franchise">
-                Franchise en base (auto-entrepreneur)
-              </option>
-              <option value="normal">Régime normal</option>
+              <option value="franchise">{t("regimeFranchise")}</option>
+              <option value="normal">{t("regimeNormal")}</option>
             </select>
-            <p className="mt-1 font-sans text-xs text-encre/50">
-              En doute ? La plupart des auto-entrepreneurs sont en franchise en
-              base (pas de TVA facturée). Votre expert-comptable confirme si besoin.
-            </p>
+            <p className="mt-1 font-sans text-xs text-encre/50">{t("regimeAide")}</p>
             <FieldError messages={state.fieldErrors?.regimeTva} />
           </div>
         </div>
 
         <div>
           <label className={ledgerLabelClass} htmlFor="adresseLigne1">
-            Adresse
+            {t("adresse")}
           </label>
           <input
             id="adresseLigne1"
@@ -124,7 +119,7 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <label className={ledgerLabelClass} htmlFor="codePostal">
-              Code postal
+              {t("codePostal")}
             </label>
             <input
               id="codePostal"
@@ -136,7 +131,7 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
           </div>
           <div className="col-span-2">
             <label className={ledgerLabelClass} htmlFor="ville">
-              Ville
+              {t("ville")}
             </label>
             <input id="ville" name="ville" required className={ledgerInputClass} />
             <FieldError messages={state.fieldErrors?.ville} />
@@ -146,14 +141,12 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
       </fieldset>
 
       <fieldset className="space-y-4 border-t border-encre/10 pt-5">
-        <legend className="font-titre text-lg text-encre">
-          Votre compte
-        </legend>
+        <legend className="font-titre text-lg text-encre">{t("votreCompte")}</legend>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className={ledgerLabelClass} htmlFor="prenom">
-              Prénom
+              {t("prenom")}
             </label>
             <input
               id="prenom"
@@ -165,7 +158,7 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
           </div>
           <div>
             <label className={ledgerLabelClass} htmlFor="nom">
-              Nom
+              {t("nom")}
             </label>
             <input id="nom" name="nom" required className={ledgerInputClass} />
             <FieldError messages={state.fieldErrors?.nom} />
@@ -174,7 +167,7 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
 
         <div>
           <label className={ledgerLabelClass} htmlFor="email">
-            Email
+            {t("email")}
           </label>
           <input
             id="email"
@@ -188,7 +181,7 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
 
         <div>
           <label className={ledgerLabelClass} htmlFor="password">
-            Mot de passe
+            {t("motDePasse")}
           </label>
           <input
             id="password"
@@ -205,30 +198,30 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
       <label className="flex items-start gap-2 font-sans text-sm text-encre/80">
         <input type="checkbox" name="accepteCgu" required className="mt-0.5" />
         <span>
-          J&apos;accepte les{" "}
+          {t("accepte")}{" "}
           <Link href="/cgu" target="_blank" className="underline">
-            conditions générales d&apos;utilisation
+            {t("cgu")}
           </Link>
-          , les{" "}
+          , {t("les")}{" "}
           <Link href="/cgv" target="_blank" className="underline">
-            conditions générales de vente
+            {t("cgv")}
           </Link>{" "}
-          et la{" "}
+          {t("et")}{" "}
           <Link href="/confidentialite" target="_blank" className="underline">
-            politique de confidentialité
+            {t("confidentialite")}
           </Link>
           .
         </span>
       </label>
 
       <SubmitButton fullWidth variant="stamp">
-        Créer mon espace
+        {t("creerMonEspace")}
       </SubmitButton>
 
       <p className="font-sans text-sm text-encre/70">
-        Déjà inscrit ?{" "}
+        {t("dejaInscrit")}{" "}
         <Link href="/connexion" className="underline">
-          Se connecter
+          {t("seConnecter")}
         </Link>
       </p>
     </form>

@@ -1,0 +1,189 @@
+{
+  "commun": {
+    "enregistrement": "Enregistrement…"
+  },
+  "public": {
+    "header": {
+      "tarifs": "Tarifs",
+      "aPropos": "À propos",
+      "connexion": "Connexion",
+      "essayerGratuitement": "Essayer gratuitement"
+    },
+    "footer": {
+      "tagline": "Devis, factures et comptabilité simplifiée pour les petites entreprises.",
+      "produit": "Produit",
+      "creerCompte": "Créer un compte",
+      "legal": "Légal",
+      "cgu": "Conditions générales d'utilisation",
+      "cgv": "Conditions générales de vente",
+      "confidentialite": "Politique de confidentialité",
+      "mentionsLegales": "Mentions légales",
+      "cookies": "Cookies",
+      "droitsReserves": "Tous droits réservés."
+    },
+    "accueil": {
+      "surtitre": "Gestion commerciale pour petites entreprises",
+      "titre": "Devis, factures et comptabilité,",
+      "titreSuite": "sans y passer vos soirées.",
+      "description": "Gest-224 gère toute votre chaîne documentaire — du devis à la facture — avec des documents conformes aux normes françaises et européennes, et une comptabilité simplifiée intégrée. Pensé pour les auto-entrepreneurs et petites entreprises.",
+      "creerCompteGratuit": "Créer mon compte gratuitement",
+      "voirTarifs": "Voir les tarifs",
+      "aucuneCarteBancaire": "Aucune carte bancaire requise pour le plan gratuit.",
+      "fonctionnalitesTitre": "Tout ce qu'il faut, rien de superflu",
+      "fonctionnalites": {
+        "devisFactures": { "titre": "Devis et factures conformes", "description": "Numérotation séquentielle sans trou, mentions légales obligatoires, PDF prêts à envoyer." },
+        "chaine": { "titre": "Chaîne documentaire complète", "description": "Devis → bon de commande → bon de livraison → facture → avoir, chaque document référence le précédent." },
+        "comptabilite": { "titre": "Comptabilité simplifiée", "description": "Recettes générées automatiquement à l'encaissement, dépenses saisies à la main, solde et vue mensuelle en un coup d'œil." },
+        "franchise": { "titre": "Franchise en base gérée", "description": "Régime de TVA normal ou franchise en base (art. 293 B du CGI) — la mention adaptée s'affiche automatiquement." },
+        "envoi": { "titre": "Envoi en un clic", "description": "Téléchargez le PDF et ouvrez directement un brouillon Gmail ou WhatsApp pré-rempli pour votre client." },
+        "multiEntreprise": { "titre": "Multi-entreprise, isolé", "description": "Chaque compte est cloisonné : vos données ne sont jamais mélangées avec celles d'une autre entreprise." }
+      },
+      "tarifsTitre": "Un tarif pour chaque étape",
+      "tarifsDescription": "Commencez gratuitement, passez à un plan supérieur quand votre activité grandit.",
+      "choisir": "Choisir {plan}",
+      "comparerPlans": "Comparer le détail des plans",
+      "ctaTitre": "Prêt à démarrer ?",
+      "ctaDescription": "Créez votre compte en moins de deux minutes.",
+      "creerCompte": "Créer mon compte"
+    },
+    "aPropos": {
+      "surtitre": "À propos",
+      "titre": "Pourquoi Gest-224",
+      "p1": "Gest-224 est né d'un constat simple : la gestion commerciale d'une petite entreprise — devis, factures, bons de commande et de livraison, comptabilité de base — repose encore souvent sur des tableurs bricolés ou des outils pensés pour de grandes structures, trop lourds pour un auto-entrepreneur ou une TPE.",
+      "p2": "Nous construisons une plateforme qui prend en charge la chaîne documentaire complète — du devis à la facture, en passant par le bon de commande, le bon de livraison, la facture d'acompte et l'avoir — dans le respect des règles françaises et européennes de facturation : numérotation séquentielle sans trou, mentions légales obligatoires, gestion de la franchise en base de TVA (art. 293 B du CGI), pénalités de retard.",
+      "p3": "À cela s'ajoute une comptabilité simplifiée : les recettes se génèrent automatiquement lorsqu'une facture est marquée payée, les dépenses se saisissent en quelques clics, et un tableau de bord donne une vue claire du solde et de l'activité mensuelle — sans transformer l'utilisateur en comptable.",
+      "p4": "Gest-224 est encore un jeune produit, développé et amélioré en continu. La facturation électronique structurée (Factur-X, PDP) fait partie de notre feuille de route, en anticipation des échéances réglementaires françaises à venir."
+    },
+    "tarifs": {
+      "surtitre": "Gest-224",
+      "titre": "Des tarifs simples, sans engagement",
+      "dejaInscrit": "Déjà inscrit ?",
+      "seConnecter": "Se connecter",
+      "parMois": "/ mois",
+      "choisir": "Choisir {plan}",
+      "changementLibre": "Vous pourrez changer de plan à tout moment depuis votre espace."
+    }
+  },
+  "cookies": {
+    "message": "Gest-224 utilise uniquement un cookie de session strictement nécessaire à la connexion à votre espace — aucun cookie publicitaire ni de mesure d'audience.",
+    "enSavoirPlus": "En savoir plus",
+    "jaiCompris": "J'ai compris"
+  },
+  "auth": {
+    "retourAuSite": "Retour au site",
+    "connexion": {
+      "titre": "Connexion",
+      "sousTitre": "Accédez à votre espace de gestion.",
+      "email": "Email",
+      "motDePasse": "Mot de passe",
+      "motDePasseOublie": "Mot de passe oublié ?",
+      "seConnecter": "Se connecter",
+      "pasDeCompte": "Pas encore de compte ?",
+      "creerEntreprise": "Créer une entreprise",
+      "reinitialiseMessage": "Mot de passe réinitialisé. Vous pouvez vous connecter.",
+      "compteSupprimeMessage": "Votre compte a été supprimé."
+    },
+    "inscription": {
+      "titre": "Créer votre espace",
+      "sousTitre": "Quelques informations sur votre entreprise pour commencer.",
+      "plan": "Plan",
+      "comparerPlans": "Comparer les plans",
+      "modifiablePlus": "modifiable à tout moment depuis votre espace.",
+      "parMois": "/mois",
+      "entreprise": "Entreprise",
+      "raisonSociale": "Raison sociale",
+      "siret": "SIRET",
+      "siretPlaceholder": "14 chiffres",
+      "siretAide": "Sans espaces, sur votre extrait Kbis ou sur annuaire-entreprises.data.gouv.fr.",
+      "regimeTva": "Régime de TVA",
+      "regimeFranchise": "Franchise en base (auto-entrepreneur)",
+      "regimeNormal": "Régime normal",
+      "regimeAide": "En doute ? La plupart des auto-entrepreneurs sont en franchise en base (pas de TVA facturée). Votre expert-comptable confirme si besoin.",
+      "adresse": "Adresse",
+      "codePostal": "Code postal",
+      "ville": "Ville",
+      "votreCompte": "Votre compte",
+      "prenom": "Prénom",
+      "nom": "Nom",
+      "email": "Email",
+      "motDePasse": "Mot de passe",
+      "accepte": "J'accepte les",
+      "les": "les",
+      "cgu": "conditions générales d'utilisation",
+      "cgv": "conditions générales de vente",
+      "et": "et la",
+      "confidentialite": "politique de confidentialité",
+      "creerMonEspace": "Créer mon espace",
+      "dejaInscrit": "Déjà inscrit ?",
+      "seConnecter": "Se connecter"
+    },
+    "motDePasseOublie": {
+      "titre": "Mot de passe oublié",
+      "sousTitre": "Indiquez votre email, nous vous enverrons un lien de réinitialisation.",
+      "email": "Email",
+      "envoyerLeLien": "Envoyer le lien",
+      "confirmationMessage": "Si un compte existe avec cette adresse, un email contenant un lien de réinitialisation vient d'être envoyé (valable une heure).",
+      "retourConnexion": "Retour à la connexion"
+    },
+    "reinitialiser": {
+      "titre": "Nouveau mot de passe",
+      "sousTitre": "Choisissez un nouveau mot de passe pour votre compte.",
+      "nouveauMotDePasse": "Nouveau mot de passe",
+      "reinitialiserLeMotDePasse": "Réinitialiser le mot de passe"
+    }
+  },
+  "plans": {
+    "gratuit": {
+      "label": "Gratuit",
+      "fonctionnalites": [
+        "5 documents par mois (devis, factures, etc.)",
+        "5 clients",
+        "Génération PDF illimitée",
+        "Comptabilité simplifiée (5 dépenses/mois)"
+      ]
+    },
+    "starter": {
+      "label": "Starter",
+      "fonctionnalites": [
+        "50 documents par mois",
+        "100 clients",
+        "Toute la chaîne documentaire (devis à avoir)",
+        "Comptabilité simplifiée illimitée",
+        "Rapport complet (comptabilité + activité)"
+      ]
+    },
+    "pro": {
+      "label": "Pro",
+      "fonctionnalites": [
+        "Documents illimités",
+        "Clients illimités",
+        "Toute la chaîne documentaire (devis à avoir)",
+        "Comptabilité simplifiée illimitée",
+        "Rapport complet (comptabilité + activité)"
+      ]
+    }
+  },
+  "shell": {
+    "ouvrirMenu": "Ouvrir le menu",
+    "fermerMenu": "Fermer le menu",
+    "rechercher": "Rechercher…",
+    "rechercherAria": "Rechercher",
+    "deconnexion": "Déconnexion",
+    "admin": "Admin",
+    "nav": {
+      "tableauDeBord": "Tableau de bord",
+      "devis": "Devis",
+      "bonsCommande": "Bons de commande",
+      "bonsLivraison": "Bons de livraison",
+      "factures": "Factures",
+      "acomptes": "Acomptes",
+      "avoirs": "Avoirs",
+      "depenses": "Dépenses",
+      "rapport": "Rapport",
+      "clients": "Clients",
+      "catalogue": "Catalogue",
+      "entreprise": "Entreprise",
+      "abonnement": "Abonnement"
+    }
+  }
+}

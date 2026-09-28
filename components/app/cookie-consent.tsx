@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 const STORAGE_KEY = "gest224-cookies-ack";
 export const OUVRIR_COOKIES_EVENT = "gest224:open-cookie-prefs";
 
 export function CookieConsent() {
+  const t = useTranslations("cookies");
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -41,11 +43,9 @@ export function CookieConsent() {
     >
       <div className="mx-auto flex max-w-3xl flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
         <p className="font-sans text-sm text-encre/80">
-          Gest-224 utilise uniquement un cookie de session strictement
-          nécessaire à la connexion à votre espace — aucun cookie publicitaire
-          ni de mesure d&apos;audience.{" "}
+          {t("message")}{" "}
           <Link href="/confidentialite" className="underline">
-            En savoir plus
+            {t("enSavoirPlus")}
           </Link>
           .
         </p>
@@ -54,7 +54,7 @@ export function CookieConsent() {
           onClick={fermer}
           className="shrink-0 border-2 border-encre bg-encre px-5 py-2 font-sans text-sm font-medium text-ivoire transition-colors hover:bg-encre-light"
         >
-          J&apos;ai compris
+          {t("jaiCompris")}
         </button>
       </div>
     </div>

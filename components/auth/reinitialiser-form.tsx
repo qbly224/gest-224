@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { useTranslations } from "next-intl";
 import { reinitialiserMotDePasse } from "@/lib/actions/auth";
 import { initialActionState } from "@/lib/actions/types";
 import { FieldError } from "@/components/forms/field-error";
@@ -8,6 +9,7 @@ import { SubmitButton } from "@/components/forms/submit-button";
 import { ledgerInputClass, ledgerLabelClass, ledgerErrorClass } from "@/lib/auth-ui";
 
 export function ReinitialiserForm({ token }: { token: string }) {
+  const t = useTranslations("auth.reinitialiser");
   const [state, formAction] = useActionState(reinitialiserMotDePasse, initialActionState);
 
   return (
@@ -18,7 +20,7 @@ export function ReinitialiserForm({ token }: { token: string }) {
 
       <div>
         <label className={ledgerLabelClass} htmlFor="password">
-          Nouveau mot de passe
+          {t("nouveauMotDePasse")}
         </label>
         <input
           id="password"
@@ -33,7 +35,7 @@ export function ReinitialiserForm({ token }: { token: string }) {
 
       <div className="pt-2">
         <SubmitButton fullWidth variant="stamp">
-          Réinitialiser le mot de passe
+          {t("reinitialiserLeMotDePasse")}
         </SubmitButton>
       </div>
     </form>
