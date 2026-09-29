@@ -169,7 +169,8 @@
       "s6Part2": ".",
       "s6Corps2": "Vous disposez également du droit d'introduire une réclamation auprès de la Commission nationale de l'informatique et des libertés (CNIL), www.cnil.fr.",
       "s7Titre": "7. Sécurité",
-      "s7Corps": "Les mots de passe sont hachés (bcrypt), les connexions au Service sont chiffrées (HTTPS), et l'accès aux données de chaque entreprise est strictement isolé au niveau applicatif. Les tentatives de connexion sont limitées pour prévenir les attaques par force brute."
+      "s7Corps": "Les mots de passe sont hachés (bcrypt), les connexions au Service sont chiffrées (HTTPS), et l'accès aux données de chaque entreprise est strictement isolé au niveau applicatif. Les tentatives de connexion sont limitées pour prévenir les attaques par force brute.",
+      "s2CorpsAudience": "Les pages du site public (accueil, à propos, tarifs, pages légales) font l'objet d'une mesure d'audience strictement anonyme, réalisée par nos soins sans prestataire tiers : seuls le chemin visité et le domaine du site référent sont enregistrés, sans cookie, sans adresse IP et sans aucun identifiant permettant de relier deux visites entre elles."
     },
     "legalMentions": {
       "titre": "Mentions légales",
@@ -709,7 +710,11 @@
       "valide": "Validé",
       "enAttenteValider": "En attente — valider",
       "active": "Active",
-      "desactivee": "Désactivée"
+      "desactivee": "Désactivée",
+      "audienceTitre": "Fréquentation du site public",
+      "audienceDescription": "Mesure anonyme, sans cookie ni adresse IP : accueil, à propos, tarifs et pages légales.",
+      "audience7Jours": "Vues — 7 derniers jours",
+      "audience30Jours": "Vues — 30 derniers jours"
     },
     "recherche": {
       "titre": "Recherche",

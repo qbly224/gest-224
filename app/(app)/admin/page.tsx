@@ -8,6 +8,7 @@ import {
   basculerPaiementValideTenant,
 } from "@/lib/actions/admin";
 import { formatDate } from "@/lib/format";
+import { calculerStatistiquesAudience } from "@/lib/analytics";
 import type { Locale } from "@/i18n/config";
 
 export default async function AdminPage() {
@@ -22,10 +23,11 @@ export default async function AdminPage() {
     },
   });
 
-  const [nbTenantsActifs, nbUsersTotal, nbDocumentsTotal] = await Promise.all([
+  const [nbTenantsActifs, nbUsersTotal, nbDocumentsTotal, audience] = await Promise.all([
     prisma.tenant.count({ where: { actif: true } }),
     prisma.user.count(),
     prisma.document.count(),
+    calculerStatistiquesAudience(),
   ]);
 
   return (
@@ -136,6 +138,35 @@ export default async function AdminPage() {
           ))}
         </tbody>
       </table>
+      </div>
+
+      <div>
+        <h2 className="font-titre text-lg text-encre">{t("audienceTitre")}</h2>
+        <p className="mt-1 font-sans text-sm text-encre/70">{t("audienceDescription")}</p>
+
+        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="rounded-sm border border-encre/20 bg-white/40 p-6">
+            <p className="font-mono text-3xl text-encre">{audience.vues7Jours}</p>
+            <p className="mt-1 font-sans text-sm text-encre/70">{t("audience7Jours")}</p>
+          </div>
+          <div className="rounded-sm border border-encre/20 bg-white/40 p-6">
+            <p className="font-mono text-3xl text-encre">{audience.vues30Jours}</p>
+            <p className="mt-1 font-sans text-sm text-encre/70">{t("audience30Jours")}</p>
+          </div>
+        </div>
+
+        {audience.pagesPopulaires.length > 0 && (
+          <table className="mt-4 w-full max-w-md border-collapse font-sans text-sm">
+            <tbody>
+              {audience.pagesPopulaires.map((p) => (
+                <tr key={p.path} className="border-b border-encre/10">
+                  <td className="py-2 font-mono text-xs text-encre/70">{p.path}</td>
+                  <td className="py-2 text-right font-mono text-encre/80">{p.vues}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );

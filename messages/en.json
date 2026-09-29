@@ -169,7 +169,8 @@
       "s6Part2": ".",
       "s6Corps2": "You also have the right to lodge a complaint with the French data protection authority (Commission nationale de l'informatique et des libertés, CNIL), www.cnil.fr.",
       "s7Titre": "7. Security",
-      "s7Corps": "Passwords are hashed (bcrypt), connections to the Service are encrypted (HTTPS), and each company's data access is strictly isolated at the application level. Login attempts are rate-limited to prevent brute-force attacks."
+      "s7Corps": "Passwords are hashed (bcrypt), connections to the Service are encrypted (HTTPS), and each company's data access is strictly isolated at the application level. Login attempts are rate-limited to prevent brute-force attacks.",
+      "s2CorpsAudience": "Pages on the public site (home, about, pricing, legal pages) are measured with a strictly anonymous, self-hosted analytics system with no third-party provider: only the path visited and the referring site's domain are recorded, with no cookie, no IP address, and no identifier that could link two visits together."
     },
     "legalMentions": {
       "titre": "Legal Notice",
@@ -709,7 +710,11 @@
       "valide": "Validated",
       "enAttenteValider": "Pending — validate",
       "active": "Active",
-      "desactivee": "Disabled"
+      "desactivee": "Disabled",
+      "audienceTitre": "Public site traffic",
+      "audienceDescription": "Anonymous measurement, with no cookie or IP address: home, about, pricing and legal pages.",
+      "audience7Jours": "Views — last 7 days",
+      "audience30Jours": "Views — last 30 days"
     },
     "recherche": {
       "titre": "Search",

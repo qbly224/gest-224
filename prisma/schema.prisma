@@ -499,3 +499,20 @@ model ResetMotDePasse {
   @@index([userId])
   @@map("resets_mot_de_passe")
 }
+
+// ---------------------------------------------------------------------------
+// Mesure d'audience (site public uniquement)
+// ---------------------------------------------------------------------------
+
+// Vue de page strictement anonyme, sans cookie ni adresse IP : aucun champ
+// ne permet de relier deux visites entre elles ni de remonter à un
+// visiteur (cf. middleware.ts et politique de confidentialité).
+model PageView {
+  id           String   @id @default(uuid())
+  path         String
+  referrerHost String?  @map("referrer_host")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@index([createdAt])
+  @@map("page_views")
+}

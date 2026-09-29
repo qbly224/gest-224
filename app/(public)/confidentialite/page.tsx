@@ -40,6 +40,7 @@ export default async function ConfidentialitePage() {
           </li>
         </ul>
         <p>{t("s2Corps")}</p>
+        <p>{t("s2CorpsAudience")}</p>
       </Section>
 
       <Section titre={t("s3Titre")}>
