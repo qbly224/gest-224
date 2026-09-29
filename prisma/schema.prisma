@@ -73,6 +73,12 @@ enum StatutDocument {
   annule
 }
 
+enum FrequenceRecurrence {
+  mensuelle
+  trimestrielle
+  annuelle
+}
+
 // ---------------------------------------------------------------------------
 // Tenant (Entreprise) & Utilisateurs
 // ---------------------------------------------------------------------------
@@ -127,6 +133,11 @@ model Tenant {
   // l'historique toujours possible).
   paiementValide         Boolean   @default(true) @map("paiement_valide")
 
+  // Désactive l'envoi des emails de relance automatique pour les factures
+  // en retard (cf. app/api/cron/relances/route.ts) sans toucher au reste du
+  // compte.
+  relancesActivees       Boolean   @default(true) @map("relances_activees")
+
   plan                   PlanAbonnement @default(gratuit)
   // Masque le guide de démarrage sur le tableau de bord une fois que
   // l'entreprise n'en a plus besoin (indépendamment de son avancement réel).
@@ -143,6 +154,7 @@ model Tenant {
   numberingSequences     NumberingSequence[]
   recettes               Recette[]
   depenses               Depense[]
+  facturesRecurrentes    FactureRecurrente[]
 
   @@map("tenants")
 }
@@ -216,6 +228,7 @@ model Client {
   updatedAt             DateTime   @updatedAt @map("updated_at")
 
   documents             Document[]
+  facturesRecurrentes   FactureRecurrente[]
 
   @@index([tenantId])
   @@map("clients")
@@ -331,6 +344,10 @@ model Document {
 
   envoyeAt       DateTime?       @map("envoye_at")
   payeAt         DateTime?       @map("paye_at")
+  // Date du dernier email de relance de retard envoyé au client pour cette
+  // facture (cf. app/api/cron/relances/route.ts) — évite de relancer plus
+  // d'une fois par jour tant que la facture reste en retard.
+  dernierRappelEnvoyeAt DateTime? @map("dernier_rappel_envoye_at")
 
   createdAt      DateTime        @default(now()) @map("created_at")
   updatedAt      DateTime        @updatedAt @map("updated_at")
@@ -418,6 +435,46 @@ model Depense {
 
   @@index([tenantId])
   @@map("depenses")
+}
+
+// ---------------------------------------------------------------------------
+// Facturation récurrente
+// ---------------------------------------------------------------------------
+
+// Modèle de facture générée automatiquement à intervalle régulier (ex.
+// prestation mensuelle). Ligne unique volontairement (couvre le cas
+// d'usage principal — abonnement / forfait récurrent) : une facturation
+// récurrente à plusieurs lignes reste à créer manuellement pour l'instant.
+// La génération elle-même (cf. app/api/cron/factures-recurrentes/route.ts)
+// crée la facture en brouillon, jamais envoyée automatiquement au client.
+model FactureRecurrente {
+  id                      String              @id @default(uuid())
+
+  tenantId                String              @map("tenant_id")
+  tenant                  Tenant              @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  clientId                String              @map("client_id")
+  client                  Client              @relation(fields: [clientId], references: [id], onDelete: Restrict)
+
+  designation             String
+  description             String?
+  quantite                Decimal             @default(1) @db.Decimal(10, 2)
+  prixUnitaireHt          Decimal             @map("prix_unitaire_ht") @db.Decimal(10, 2)
+  // Nul si le tenant est en franchise en base.
+  tauxTva                 Decimal?            @map("taux_tva") @db.Decimal(4, 2)
+  conditionsPaiement      String?             @map("conditions_paiement")
+
+  frequence               FrequenceRecurrence
+  prochaineGenerationDate DateTime            @map("prochaine_generation_date")
+  active                  Boolean             @default(true)
+
+  dernierDocumentGenereId String?             @map("dernier_document_genere_id")
+
+  createdAt               DateTime            @default(now()) @map("created_at")
+  updatedAt               DateTime            @updatedAt @map("updated_at")
+
+  @@index([tenantId])
+  @@map("factures_recurrentes")
 }
 
 // ---------------------------------------------------------------------------

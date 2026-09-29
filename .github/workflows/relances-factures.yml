@@ -1,0 +1,20 @@
+name: Relances factures en retard
+
+# Envoie un email de relance pour chaque facture en retard de paiement,
+# au plus une fois par 24h et par facture (cf. lib/relances.ts). Nécessite
+# un secret de dépôt CRON_SECRET, dont la valeur doit être identique à la
+# variable d'environnement CRON_SECRET configurée sur Render.
+on:
+  schedule:
+    - cron: "0 7 * * *"
+  workflow_dispatch:
+
+jobs:
+  relancer:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Déclencher les relances
+        run: |
+          curl -fsS --max-time 60 \
+            -H "x-cron-secret: ${{ secrets.CRON_SECRET }}" \
+            https://gest-224.onrender.com/api/cron/relances

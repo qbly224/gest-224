@@ -1,0 +1,20 @@
+name: Génération des factures récurrentes
+
+# Génère en brouillon les factures dont un modèle récurrent (cf.
+# app/(app)/factures-recurrentes) arrive à échéance, une fois par jour.
+# Nécessite le même secret de dépôt CRON_SECRET que le workflow de relances,
+# à faire correspondre à la variable d'environnement CRON_SECRET sur Render.
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+jobs:
+  generer:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Déclencher la génération
+        run: |
+          curl -fsS --max-time 60 \
+            -H "x-cron-secret: ${{ secrets.CRON_SECRET }}" \
+            https://gest-224.onrender.com/api/cron/factures-recurrentes

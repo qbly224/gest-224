@@ -1,10 +1,12 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { requireSession } from "@/lib/auth";
 import { entrepriseSchema } from "@/lib/validation/entreprise";
+import { withToast } from "@/lib/toast";
 import type { ActionState } from "@/lib/actions/types";
 
 const TYPES_LOGO_AUTORISES = new Set([
@@ -112,4 +114,28 @@ export async function updateEntreprise(
 
   revalidatePath("/entreprise");
   return { success: true };
+}
+
+export async function basculerRelancesActivees(): Promise<void> {
+  const session = await requireSession();
+
+  const tenant = await prisma.tenant.findUniqueOrThrow({
+    where: { id: session.tenantId },
+    select: { relancesActivees: true },
+  });
+
+  await prisma.tenant.update({
+    where: { id: session.tenantId },
+    data: { relancesActivees: !tenant.relancesActivees },
+  });
+
+  revalidatePath("/entreprise");
+  redirect(
+    withToast(
+      "/entreprise",
+      tenant.relancesActivees
+        ? "Relances automatiques désactivées."
+        : "Relances automatiques activées."
+    )
+  );
 }

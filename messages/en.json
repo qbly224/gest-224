@@ -662,7 +662,11 @@
       "enregistrer": "Save",
       "suppressionConfirmLabel": "I understand this action is permanent and will immediately delete the entire company: clients, catalog, quotes, invoices, accounting — with no way to recover it.",
       "suppressionMotDePasse": "Confirm with your password",
-      "suppressionBouton": "Permanently delete my account"
+      "suppressionBouton": "Permanently delete my account",
+      "relancesTitre": "Automatic payment reminders",
+      "relancesDescription": "When enabled, a reminder email is automatically sent to your clients for any overdue invoice (at most once a day per invoice).",
+      "relancesActiver": "Enable automatic reminders",
+      "relancesDesactiver": "Disable automatic reminders"
     },
     "abonnement": {
       "titre": "Subscription",
@@ -715,6 +719,47 @@
       "aucunClient": "No client found.",
       "documentsTitre": "Documents ({count})",
       "aucunDocument": "No document found."
+    },
+    "facturesRecurrentes": {
+      "titre": "Recurring invoices",
+      "description": "Description (optional)",
+      "nouveauBouton": "New recurring invoice",
+      "nouveauTitre": "New recurring invoice",
+      "modifierTitre": "Edit recurring invoice",
+      "emptyDefault": "No recurring invoice set up yet.",
+      "pasDeClient": "Add a client first before creating a recurring invoice.",
+      "colDesignation": "Description",
+      "colClient": "Client",
+      "colFrequence": "Frequency",
+      "colProchaine": "Next generation",
+      "colMontant": "Amount (excl. VAT)",
+      "colStatut": "Status",
+      "active": "Active",
+      "enPause": "Paused",
+      "mettreEnPause": "Pause",
+      "reactiver": "Resume",
+      "confirmSuppression": "Delete the recurring invoice \"{designation}\"? This action is permanent.",
+      "client": "Client",
+      "selectionnerClient": "Select a client",
+      "designation": "Description",
+      "quantite": "Quantity",
+      "prixUnitaireHt": "Unit price (excl. VAT)",
+      "tauxTva": "VAT rate",
+      "tva": "VAT",
+      "tvaNonApplicable": "Not applicable (VAT exemption)",
+      "frequence": "Frequency",
+      "mensuelle": "Monthly",
+      "trimestrielle": "Quarterly",
+      "annuelle": "Yearly",
+      "prochaineGenerationDate": "Next generation date",
+      "conditionsPaiement": "Payment terms (optional)",
+      "noteBrouillon": "The generated invoice stays as a draft: it is never sent to the client automatically.",
+      "enregistrer": "Save",
+      "frequenceLabel": {
+        "mensuelle": "Monthly",
+        "trimestrielle": "Quarterly",
+        "annuelle": "Yearly"
+      }
     }
   },
   "shell": {
@@ -737,7 +782,8 @@
       "clients": "Clients",
       "catalogue": "Catalog",
       "entreprise": "Company",
-      "abonnement": "Subscription"
+      "abonnement": "Subscription",
+      "facturesRecurrentes": "Recurring invoices"
     }
   }
 }

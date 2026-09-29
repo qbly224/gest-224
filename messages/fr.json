@@ -662,7 +662,11 @@
       "enregistrer": "Enregistrer",
       "suppressionConfirmLabel": "Je comprends que cette action est définitive et supprimera immédiatement toute l'entreprise : clients, catalogue, devis, factures, comptabilité — sans possibilité de récupération.",
       "suppressionMotDePasse": "Confirmer avec votre mot de passe",
-      "suppressionBouton": "Supprimer définitivement mon compte"
+      "suppressionBouton": "Supprimer définitivement mon compte",
+      "relancesTitre": "Relances automatiques",
+      "relancesDescription": "Quand cette option est activée, un email de rappel est envoyé automatiquement à vos clients pour toute facture en retard de paiement (au plus une fois par jour et par facture).",
+      "relancesActiver": "Activer les relances automatiques",
+      "relancesDesactiver": "Désactiver les relances automatiques"
     },
     "abonnement": {
       "titre": "Abonnement",
@@ -715,6 +719,47 @@
       "aucunClient": "Aucun client trouvé.",
       "documentsTitre": "Documents ({count})",
       "aucunDocument": "Aucun document trouvé."
+    },
+    "facturesRecurrentes": {
+      "titre": "Factures récurrentes",
+      "description": "Description (optionnelle)",
+      "nouveauBouton": "Nouvelle facture récurrente",
+      "nouveauTitre": "Nouvelle facture récurrente",
+      "modifierTitre": "Modifier la facture récurrente",
+      "emptyDefault": "Aucune facture récurrente configurée pour l'instant.",
+      "pasDeClient": "Ajoutez d'abord un client avant de créer une facture récurrente.",
+      "colDesignation": "Désignation",
+      "colClient": "Client",
+      "colFrequence": "Fréquence",
+      "colProchaine": "Prochaine génération",
+      "colMontant": "Montant HT",
+      "colStatut": "Statut",
+      "active": "Active",
+      "enPause": "En pause",
+      "mettreEnPause": "Mettre en pause",
+      "reactiver": "Réactiver",
+      "confirmSuppression": "Supprimer la facture récurrente « {designation} » ? Cette action est définitive.",
+      "client": "Client",
+      "selectionnerClient": "Sélectionner un client",
+      "designation": "Désignation",
+      "quantite": "Quantité",
+      "prixUnitaireHt": "Prix unitaire HT",
+      "tauxTva": "Taux de TVA",
+      "tva": "TVA",
+      "tvaNonApplicable": "Non applicable (franchise en base)",
+      "frequence": "Fréquence",
+      "mensuelle": "Mensuelle",
+      "trimestrielle": "Trimestrielle",
+      "annuelle": "Annuelle",
+      "prochaineGenerationDate": "Prochaine date de génération",
+      "conditionsPaiement": "Conditions de paiement (optionnel)",
+      "noteBrouillon": "La facture générée reste en brouillon : elle n'est jamais envoyée automatiquement au client.",
+      "enregistrer": "Enregistrer",
+      "frequenceLabel": {
+        "mensuelle": "Mensuelle",
+        "trimestrielle": "Trimestrielle",
+        "annuelle": "Annuelle"
+      }
     }
   },
   "shell": {
@@ -737,7 +782,8 @@
       "clients": "Clients",
       "catalogue": "Catalogue",
       "entreprise": "Entreprise",
-      "abonnement": "Abonnement"
+      "abonnement": "Abonnement",
+      "facturesRecurrentes": "Factures récurrentes"
     }
   }
 }

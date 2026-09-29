@@ -19,6 +19,7 @@ import {
   Star,
   ShieldCheck,
   LogOut,
+  Repeat,
 } from "lucide-react";
 import { signOut } from "@/lib/actions/auth";
 import { LocaleSwitcher } from "@/components/app/locale-switcher";
@@ -31,6 +32,7 @@ const links = [
   { href: "/factures", cle: "factures", Icon: Receipt },
   { href: "/factures-acompte", cle: "acomptes", Icon: CreditCard },
   { href: "/avoirs", cle: "avoirs", Icon: Undo2 },
+  { href: "/factures-recurrentes", cle: "facturesRecurrentes", Icon: Repeat },
   { href: "/depenses", cle: "depenses", Icon: Wallet },
   { href: "/rapport", cle: "rapport", Icon: BarChart3 },
   { href: "/clients", cle: "clients", Icon: Users },
