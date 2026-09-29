@@ -63,7 +63,8 @@
       "comparerPlans": "Compare plan details",
       "ctaTitre": "Ready to start?",
       "ctaDescription": "Create your account in under two minutes.",
-      "creerCompte": "Create my account"
+      "creerCompte": "Create my account",
+      "statDocuments": "Documents generated on the platform"
     },
     "aPropos": {
       "surtitre": "About",
@@ -190,6 +191,12 @@
       "proprieteCorps": "All elements making up the Service (structure, text, logo, graphic design) are protected by copyright. Any unauthorized reproduction is prohibited.",
       "contactTitre": "Contact",
       "contactCorps": "To be completed: contact email address for any question relating to the Service or to exercising your rights."
+    },
+    "confiance": {
+      "rgpd": "GDPR compliant",
+      "hebergementUe": "Hosted in France / EU",
+      "sansCookiePub": "No advertising cookies",
+      "sansCarte": "No credit card required"
     }
   },
   "cookies": {

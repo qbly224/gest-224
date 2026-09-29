@@ -2,9 +2,87 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Triplets RGB (pas de hex) : requis par la syntaxe rgb(var(...) / <alpha-value>)
+     de Tailwind pour que les classes d'opacité (bg-ivoire/40, border-encre/20...)
+     continuent de fonctionner une fois la couleur pilotée par une variable CSS. */
+  --color-ivoire: 246 241 231;
+  --color-encre: 31 61 44;
+  --color-encre-light: 45 87 65;
+  /* Ton de carte, volontairement distinct du fond de page : sans lui, une
+     carte "bg-ivoire" posée sur un fond "bg-ivoire" devient invisible
+     (constaté sur le mockup de facture et les cartes tarifs du site public). */
+  --color-surface: 255 255 255;
+}
+
+/* Mode sombre du site public uniquement (cf. components/public/theme-toggle.tsx) :
+   l'attribut n'est jamais posé dans l'application authentifiée, qui garde donc
+   toujours la palette claire ci-dessus. Les deux tokens sont inversés plutôt que
+   simplement assombris : ivoire (fond) devient le fond sombre, encre (texte/accent)
+   devient le ton clair — tous les composants existants (bg-ivoire, text-encre,
+   bg-encre hover:bg-encre-light...) s'adaptent donc sans modification. */
+[data-theme="dark"] {
+  --color-ivoire: 20 27 19;
+  --color-encre: 246 241 231;
+  --color-encre-light: 224 216 194;
+  --color-surface: 30 38 28;
+}
+
 body {
-  background-color: #f6f1e7;
-  color: #1f3d2c;
+  background-color: rgb(var(--color-ivoire));
+  color: rgb(var(--color-encre));
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Transition douce entre pages du site public dans les navigateurs qui la
+   supportent (Chrome/Edge) ; ignoré silencieusement ailleurs — amélioration
+   progressive, aucun JS requis. */
+@view-transition {
+  navigation: auto;
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  opacity: 0;
+}
+
+.reveal-visible {
+  animation: reveal-up 0.6s ease-out forwards;
+}
+
+@keyframes badge-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.badge-pulse-dot {
+  animation: badge-pulse 2.4s ease-in-out infinite;
 }
 
 @keyframes auth-drift {

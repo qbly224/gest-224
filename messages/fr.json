@@ -63,7 +63,8 @@
       "comparerPlans": "Comparer le détail des plans",
       "ctaTitre": "Prêt à démarrer ?",
       "ctaDescription": "Créez votre compte en moins de deux minutes.",
-      "creerCompte": "Créer mon compte"
+      "creerCompte": "Créer mon compte",
+      "statDocuments": "Documents générés sur la plateforme"
     },
     "aPropos": {
       "surtitre": "À propos",
@@ -190,6 +191,12 @@
       "proprieteCorps": "L'ensemble des éléments composant le Service (structure, textes, logo, charte graphique) est protégé au titre du droit d'auteur. Toute reproduction non autorisée est interdite.",
       "contactTitre": "Contact",
       "contactCorps": "À compléter : adresse email de contact pour toute question relative au Service ou à l'exercice de vos droits."
+    },
+    "confiance": {
+      "rgpd": "Conforme RGPD",
+      "hebergementUe": "Hébergement France / UE",
+      "sansCookiePub": "Aucun cookie publicitaire",
+      "sansCarte": "Aucune carte bancaire requise"
     }
   },
   "cookies": {

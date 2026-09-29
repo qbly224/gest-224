@@ -4,14 +4,23 @@ import type { Config } from "tailwindcss";
 // quand il sera fourni) : registre papier, encre verte foncée sur fond ivoire.
 const config: Config = {
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
+  // Sélecteur plutôt que media query : suit le bouton de bascule du site
+  // public (components/public/theme-toggle.tsx), jamais la préférence
+  // système seule — et n'affecte jamais l'application authentifiée, qui ne
+  // pose jamais cet attribut.
+  darkMode: ["selector", '[data-theme="dark"]'],
   theme: {
     extend: {
       colors: {
-        ivoire: "#f6f1e7",
+        // Pilotées par des variables CSS (cf. app/globals.css) plutôt que des
+        // hex fixes : permet au site public de basculer en sombre (attribut
+        // data-theme="dark") sans toucher aux classes utilitaires existantes.
+        ivoire: "rgb(var(--color-ivoire) / <alpha-value>)",
         encre: {
-          DEFAULT: "#1f3d2c",
-          light: "#2d5741",
+          DEFAULT: "rgb(var(--color-encre) / <alpha-value>)",
+          light: "rgb(var(--color-encre-light) / <alpha-value>)",
         },
+        surface: "rgb(var(--color-surface) / <alpha-value>)",
       },
       fontFamily: {
         titre: ["var(--font-lora)", "serif"],
