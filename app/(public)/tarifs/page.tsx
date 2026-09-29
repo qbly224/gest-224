@@ -1,6 +1,15 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { LISTE_PLANS } from "@/lib/plans";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("public.tarifs");
+  return {
+    title: t("titre"),
+    description: t("metaDescription"),
+  };
+}
 
 export default async function TarifsPage() {
   const t = await getTranslations("public.tarifs");

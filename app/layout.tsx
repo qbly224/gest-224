@@ -14,8 +14,16 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Gest-224",
+  metadataBase: new URL("https://gest-224.onrender.com"),
+  title: {
+    default: "Gest-224",
+    template: "%s | Gest-224",
+  },
   description: "Gestion commerciale multi-entreprises",
+  openGraph: {
+    siteName: "Gest-224",
+    type: "website",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",

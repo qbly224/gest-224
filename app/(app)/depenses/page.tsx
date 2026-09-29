@@ -10,6 +10,7 @@ import type { Locale } from "@/i18n/config";
 export default async function DepensesPage() {
   const session = await requireSession();
   const t = await getTranslations("app.depenses");
+  const tCommun = await getTranslations("commun");
   const locale = (await getLocale()) as Locale;
   const depenses = await prisma.depense.findMany({
     where: { tenantId: session.tenantId },
@@ -20,12 +21,20 @@ export default async function DepensesPage() {
     <div>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="font-titre text-2xl text-encre">{t("titre")}</h1>
-        <Link
-          href="/depenses/nouveau"
-          className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
-        >
-          {t("nouveauBouton")}
-        </Link>
+        <div className="flex items-center gap-2">
+          <a
+            href="/api/export/depenses"
+            className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
+          >
+            {tCommun("exporterCsv")}
+          </a>
+          <Link
+            href="/depenses/nouveau"
+            className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
+          >
+            {t("nouveauBouton")}
+          </Link>
+        </div>
       </div>
 
       {depenses.length === 0 ? (

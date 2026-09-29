@@ -1,8 +1,17 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { getSession } from "@/lib/session";
 import { LISTE_PLANS } from "@/lib/plans";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("public.accueil");
+  return {
+    title: `${t("titre")} ${t("titreSuite")}`,
+    description: t("description"),
+  };
+}
 
 const CLES_FONCTIONNALITES = [
   "devisFactures",

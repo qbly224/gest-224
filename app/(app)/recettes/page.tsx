@@ -9,6 +9,7 @@ export default async function RecettesPage() {
   const session = await requireSession();
   const t = await getTranslations("app.recettes");
   const tTypes = await getTranslations("app.typesDocument");
+  const tCommun = await getTranslations("commun");
   const locale = (await getLocale()) as Locale;
   const recettes = await prisma.recette.findMany({
     where: { tenantId: session.tenantId },
@@ -18,7 +19,15 @@ export default async function RecettesPage() {
 
   return (
     <div>
-      <h1 className="font-titre text-2xl text-encre">{t("titre")}</h1>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h1 className="font-titre text-2xl text-encre">{t("titre")}</h1>
+        <a
+          href="/api/export/recettes"
+          className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
+        >
+          {tCommun("exporterCsv")}
+        </a>
+      </div>
       <p className="mt-1 font-sans text-sm text-encre/70">{t("description")}</p>
 
       {recettes.length === 0 ? (

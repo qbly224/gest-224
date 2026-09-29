@@ -1,4 +1,13 @@
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("public.aPropos");
+  return {
+    title: t("titre"),
+    description: t("p1"),
+  };
+}
 
 export default async function AProposPage() {
   const t = await getTranslations("public.aPropos");

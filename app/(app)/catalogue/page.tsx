@@ -7,6 +7,7 @@ import { toggleArticleActif } from "@/lib/actions/articles";
 export default async function CataloguePage() {
   const session = await requireSession();
   const t = await getTranslations("app.catalogue");
+  const tCommun = await getTranslations("commun");
   const [tenant, articles] = await Promise.all([
     prisma.tenant.findUniqueOrThrow({
       where: { id: session.tenantId },
@@ -22,12 +23,20 @@ export default async function CataloguePage() {
     <div>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="font-titre text-2xl text-encre">{t("titre")}</h1>
-        <Link
-          href="/catalogue/nouveau"
-          className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
-        >
-          {t("nouveauBouton")}
-        </Link>
+        <div className="flex items-center gap-2">
+          <a
+            href="/api/export/catalogue"
+            className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
+          >
+            {tCommun("exporterCsv")}
+          </a>
+          <Link
+            href="/catalogue/nouveau"
+            className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
+          >
+            {t("nouveauBouton")}
+          </Link>
+        </div>
       </div>
 
       {articles.length === 0 ? (

@@ -1,140 +1,84 @@
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { LegalPage, Section } from "@/components/public/legal-page";
 
-export default function ConfidentialitePage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const [t, tLegal] = await Promise.all([
+    getTranslations("public.legalConfidentialite"),
+    getTranslations("public.legal"),
+  ]);
+  return { title: t("titre"), description: tLegal("metaDescription") };
+}
+
+export default async function ConfidentialitePage() {
+  const t = await getTranslations("public.legalConfidentialite");
   return (
-    <LegalPage titre="Politique de confidentialité" misAJour="23 septembre 2026">
-      <p>
-        Cette politique décrit comment Gest-224 collecte, utilise et protège
-        les données à caractère personnel traitées dans le cadre du Service,
-        conformément au Règlement général sur la protection des données
-        (RGPD) et à la loi Informatique et Libertés.
-      </p>
+    <LegalPage titre={t("titre")} misAJour={new Date("2026-09-23")}>
+      <p>{t("intro")}</p>
 
-      <Section titre="1. Responsable du traitement">
-        <p className="rounded-sm bg-encre/5 px-3 py-2 text-encre/70">
-          À compléter avant lancement commercial : raison sociale, forme
-          juridique, adresse et email de contact de l&apos;éditeur de
-          Gest-224, responsable du traitement au sens du RGPD.
-        </p>
+      <Section titre={t("s1Titre")}>
+        <p className="rounded-sm bg-encre/5 px-3 py-2 text-encre/70">{t("s1Corps")}</p>
       </Section>
 
-      <Section titre="2. Données collectées">
+      <Section titre={t("s2Titre")}>
         <ul className="list-disc space-y-1 pl-5">
           <li>
-            <strong>Données de compte</strong> : nom, prénom, email, mot de
-            passe (haché, jamais stocké en clair).
+            <strong>{t("s2Item1Gras")}</strong>
+            {t("s2Item1Reste")}
           </li>
           <li>
-            <strong>Données d&apos;entreprise</strong> : raison sociale,
-            SIRET, adresse, régime de TVA, coordonnées bancaires (IBAN/BIC)
-            si renseignées, logo.
+            <strong>{t("s2Item2Gras")}</strong>
+            {t("s2Item2Reste")}
           </li>
           <li>
-            <strong>Données saisies par l&apos;Utilisateur</strong> :
-            informations sur ses propres clients (nom, adresse, email,
-            téléphone, SIRET le cas échéant) et sur les documents commerciaux
-            qu&apos;il émet.
+            <strong>{t("s2Item3Gras")}</strong>
+            {t("s2Item3Reste")}
           </li>
           <li>
-            <strong>Données techniques</strong> : adresse IP (utilisée
-            uniquement pour la limitation de tentatives de connexion), et
-            journaux techniques nécessaires au fonctionnement et à la
-            sécurité du Service.
+            <strong>{t("s2Item4Gras")}</strong>
+            {t("s2Item4Reste")}
           </li>
         </ul>
-        <p>
-          Gest-224 n&apos;installe aucun cookie publicitaire ou de suivi.
-          Seul un cookie de session strictement nécessaire à
-          l&apos;authentification est utilisé.
-        </p>
+        <p>{t("s2Corps")}</p>
       </Section>
 
-      <Section titre="3. Finalités et base légale">
+      <Section titre={t("s3Titre")}>
         <ul className="list-disc space-y-1 pl-5">
-          <li>Fourniture du Service (exécution du contrat) ;</li>
-          <li>
-            Émission de documents commerciaux conformes à la réglementation
-            française (obligation légale) ;
-          </li>
-          <li>Sécurité du Service et prévention de la fraude (intérêt légitime) ;</li>
-          <li>
-            Facturation de l&apos;abonnement pour les plans payants
-            (exécution du contrat).
-          </li>
+          <li>{t("s3Item1")}</li>
+          <li>{t("s3Item2")}</li>
+          <li>{t("s3Item3")}</li>
+          <li>{t("s3Item4")}</li>
         </ul>
       </Section>
 
-      <Section titre="4. Durée de conservation">
-        <p>
-          Les données de compte sont conservées tant que le compte est
-          actif. Les documents commerciaux (devis, factures, avoirs) sont
-          conservés conformément aux obligations légales de conservation des
-          pièces comptables et commerciales en droit français (en principe 10
-          ans à compter de la clôture de l&apos;exercice, article L123-22 du
-          Code de commerce), même après suppression du compte si la loi
-          l&apos;impose.
-        </p>
+      <Section titre={t("s4Titre")}>
+        <p>{t("s4Corps")}</p>
       </Section>
 
-      <Section titre="5. Destinataires et sous-traitants">
-        <p>
-          Les données sont hébergées et traitées par les prestataires
-          suivants, dans le cadre de leur mission :
-        </p>
+      <Section titre={t("s5Titre")}>
+        <p>{t("s5Intro")}</p>
         <ul className="list-disc space-y-1 pl-5">
-          <li>Hébergement de l&apos;application : Render (États-Unis) ;</li>
-          <li>
-            Base de données : Supabase, infrastructure AWS région Europe
-            (Paris, eu-west-3) ;
-          </li>
-          <li>
-            Paiement des abonnements : Stripe, lorsque le paiement par carte
-            est utilisé ;
-          </li>
-          <li>
-            Envoi d&apos;emails transactionnels (réinitialisation de mot de
-            passe) : Resend, lorsque configuré.
-          </li>
+          <li>{t("s5Item1")}</li>
+          <li>{t("s5Item2")}</li>
+          <li>{t("s5Item3")}</li>
+          <li>{t("s5Item4")}</li>
         </ul>
-        <p>
-          Aucune donnée n&apos;est vendue à des tiers ni utilisée à des fins
-          publicitaires.
-        </p>
+        <p>{t("s5Corps")}</p>
       </Section>
 
-      <Section titre="6. Vos droits">
+      <Section titre={t("s6Titre")}>
         <p>
-          Conformément au RGPD, vous disposez d&apos;un droit d&apos;accès,
-          de rectification, d&apos;effacement, de limitation, de portabilité
-          et d&apos;opposition sur vos données. Le droit de rectification et
-          l&apos;accès à vos données s&apos;exercent directement depuis votre
-          espace (pages Entreprise, Clients). Le droit à l&apos;effacement
-          peut être exercé immédiatement et sans démarche depuis la « zone
-          dangereuse » de la page Entreprise, qui supprime définitivement
-          votre compte et l&apos;ensemble de vos données (sous réserve des
-          obligations légales de conservation mentionnées à la section 4).
-          Pour toute autre demande, contactez-nous à l&apos;adresse indiquée
-          dans les{" "}
+          {t("s6Part1")}
           <a href="/mentions-legales" className="underline">
-            mentions légales
+            {t("s6Lien")}
           </a>
-          .
+          {t("s6Part2")}
         </p>
-        <p>
-          Vous disposez également du droit d&apos;introduire une réclamation
-          auprès de la Commission nationale de l&apos;informatique et des
-          libertés (CNIL), www.cnil.fr.
-        </p>
+        <p>{t("s6Corps2")}</p>
       </Section>
 
-      <Section titre="7. Sécurité">
-        <p>
-          Les mots de passe sont hachés (bcrypt), les connexions au Service
-          sont chiffrées (HTTPS), et l&apos;accès aux données de chaque
-          entreprise est strictement isolé au niveau applicatif. Les
-          tentatives de connexion sont limitées pour prévenir les attaques
-          par force brute.
-        </p>
+      <Section titre={t("s7Titre")}>
+        <p>{t("s7Corps")}</p>
       </Section>
     </LegalPage>
   );

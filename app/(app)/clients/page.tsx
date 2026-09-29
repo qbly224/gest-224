@@ -36,6 +36,7 @@ export default async function ClientsPage({
   const { q, statut, tri, ordre } = await searchParams;
   const session = await requireSession();
   const t = await getTranslations("app.clients");
+  const tCommun = await getTranslations("commun");
   const terme = q?.trim();
   const direction = ordre === "asc" ? "asc" : "desc";
 
@@ -71,12 +72,20 @@ export default async function ClientsPage({
     <div>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="font-titre text-2xl text-encre">{t("titre")}</h1>
-        <Link
-          href="/clients/nouveau"
-          className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
-        >
-          {t("nouveauBouton")}
-        </Link>
+        <div className="flex items-center gap-2">
+          <a
+            href="/api/export/clients"
+            className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
+          >
+            {tCommun("exporterCsv")}
+          </a>
+          <Link
+            href="/clients/nouveau"
+            className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
+          >
+            {t("nouveauBouton")}
+          </Link>
+        </div>
       </div>
 
       <form className="mt-4 flex flex-wrap items-center gap-2" method="get">
