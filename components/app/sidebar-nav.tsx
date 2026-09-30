@@ -20,12 +20,14 @@ import {
   ShieldCheck,
   LogOut,
   Repeat,
+  HardHat,
 } from "lucide-react";
 import { signOut } from "@/lib/actions/auth";
 import { LocaleSwitcher } from "@/components/app/locale-switcher";
 
 const links = [
   { href: "/tableau-de-bord", cle: "tableauDeBord", Icon: LayoutDashboard },
+  { href: "/chantiers", cle: "chantiers", Icon: HardHat },
   { href: "/devis", cle: "devis", Icon: FileText },
   { href: "/bons-commande", cle: "bonsCommande", Icon: ShoppingCart },
   { href: "/bons-livraison", cle: "bonsLivraison", Icon: Truck },

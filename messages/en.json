@@ -772,6 +772,40 @@
         "trimestrielle": "Quarterly",
         "annuelle": "Yearly"
       }
+    },
+    "chantiers": {
+      "titre": "Jobs",
+      "nouveauBouton": "New job",
+      "nouveauTitre": "New job",
+      "modifierTitre": "Edit job",
+      "emptyDefault": "No job yet.",
+      "emptyFiltre": "No job matches these criteria.",
+      "rechercherPlaceholder": "Title or client name…",
+      "tous": "All",
+      "filtrer": "Filter",
+      "reinitialiser": "Reset",
+      "colTitre": "Title",
+      "colClient": "Client",
+      "colDateDebut": "Start",
+      "colDateEcheance": "Due date",
+      "colMontant": "Amount",
+      "colStatut": "Status",
+      "aFaire": "To do",
+      "enCours": "In progress",
+      "fait": "Done",
+      "annule": "Cancelled",
+      "ok": "OK",
+      "confirmSuppression": "Delete the job \"{titre}\"? This action is permanent.",
+      "champTitre": "Title",
+      "champClient": "Client",
+      "aucunClient": "No client",
+      "champDescription": "Description (optional)",
+      "champAdresse": "Address (optional)",
+      "champMontant": "Amount (€, optional)",
+      "champStatut": "Status",
+      "champDateDebut": "Start date (optional)",
+      "champDateEcheance": "Due date (optional)",
+      "enregistrer": "Save"
     }
   },
   "shell": {
@@ -795,7 +829,8 @@
       "catalogue": "Catalog",
       "entreprise": "Company",
       "abonnement": "Subscription",
-      "facturesRecurrentes": "Recurring invoices"
+      "facturesRecurrentes": "Recurring invoices",
+      "chantiers": "Jobs"
     }
   }
 }

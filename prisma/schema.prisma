@@ -155,6 +155,7 @@ model Tenant {
   recettes               Recette[]
   depenses               Depense[]
   facturesRecurrentes    FactureRecurrente[]
+  chantiers              Chantier[]
 
   @@map("tenants")
 }
@@ -229,6 +230,7 @@ model Client {
 
   documents             Document[]
   facturesRecurrentes   FactureRecurrente[]
+  chantiers             Chantier[]
 
   @@index([tenantId])
   @@map("clients")
@@ -515,4 +517,48 @@ model PageView {
 
   @@index([createdAt])
   @@map("page_views")
+}
+
+// ---------------------------------------------------------------------------
+// Suivi des chantiers / interventions
+// ---------------------------------------------------------------------------
+
+enum StatutChantier {
+  a_faire
+  en_cours
+  fait
+  annule
+}
+
+// Suivi libre d'un chantier ou d'une intervention (BTP, prestation de
+// service...), indépendant de la chaîne documentaire (devis/factures) :
+// un chantier peut exister sans aucun document, et inversement. Le lien
+// client est volontairement optionnel (cf. décision produit) pour couvrir
+// aussi un travail interne sans client identifié.
+model Chantier {
+  id             String         @id @default(uuid())
+
+  tenantId       String         @map("tenant_id")
+  tenant         Tenant         @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  clientId       String?        @map("client_id")
+  client         Client?        @relation(fields: [clientId], references: [id], onDelete: SetNull)
+
+  titre          String
+  description    String?
+  adresse        String?
+  montant        Decimal?       @db.Decimal(12, 2)
+
+  statut         StatutChantier @default(a_faire)
+  dateDebut      DateTime?      @map("date_debut")
+  dateEcheance   DateTime?      @map("date_echeance")
+  // Renseignée automatiquement au passage au statut "fait" (cf.
+  // lib/actions/chantiers.ts), jamais saisie directement.
+  dateRealisation DateTime?     @map("date_realisation")
+
+  createdAt      DateTime       @default(now()) @map("created_at")
+  updatedAt      DateTime       @updatedAt @map("updated_at")
+
+  @@index([tenantId])
+  @@map("chantiers")
 }

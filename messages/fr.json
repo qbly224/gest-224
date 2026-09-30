@@ -772,6 +772,40 @@
         "trimestrielle": "Trimestrielle",
         "annuelle": "Annuelle"
       }
+    },
+    "chantiers": {
+      "titre": "Chantiers",
+      "nouveauBouton": "Nouveau chantier",
+      "nouveauTitre": "Nouveau chantier",
+      "modifierTitre": "Modifier le chantier",
+      "emptyDefault": "Aucun chantier pour l'instant.",
+      "emptyFiltre": "Aucun chantier ne correspond à ces critères.",
+      "rechercherPlaceholder": "Titre ou nom de client…",
+      "tous": "Tous",
+      "filtrer": "Filtrer",
+      "reinitialiser": "Réinitialiser",
+      "colTitre": "Titre",
+      "colClient": "Client",
+      "colDateDebut": "Début",
+      "colDateEcheance": "Échéance",
+      "colMontant": "Montant",
+      "colStatut": "Statut",
+      "aFaire": "À faire",
+      "enCours": "En cours",
+      "fait": "Fait",
+      "annule": "Annulé",
+      "ok": "OK",
+      "confirmSuppression": "Supprimer le chantier « {titre} » ? Cette action est définitive.",
+      "champTitre": "Titre",
+      "champClient": "Client",
+      "aucunClient": "Aucun client",
+      "champDescription": "Description (optionnelle)",
+      "champAdresse": "Adresse (optionnelle)",
+      "champMontant": "Montant (€, optionnel)",
+      "champStatut": "Statut",
+      "champDateDebut": "Date de début (optionnelle)",
+      "champDateEcheance": "Date d'échéance (optionnelle)",
+      "enregistrer": "Enregistrer"
     }
   },
   "shell": {
@@ -795,7 +829,8 @@
       "catalogue": "Catalogue",
       "entreprise": "Entreprise",
       "abonnement": "Abonnement",
-      "facturesRecurrentes": "Factures récurrentes"
+      "facturesRecurrentes": "Factures récurrentes",
+      "chantiers": "Chantiers"
     }
   }
 }
