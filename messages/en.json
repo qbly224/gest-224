@@ -429,7 +429,7 @@
       "enregistrer": "Save"
     },
     "catalogue": {
-      "titre": "Products / services catalog",
+      "titre": "Products",
       "nouveauBouton": "New item",
       "nouveauTitre": "New item",
       "modifierTitre": "Edit item",
@@ -824,13 +824,14 @@
       "acomptes": "Deposits",
       "avoirs": "Credit notes",
       "depenses": "Expenses",
-      "rapport": "Report",
+      "rapport": "Reports",
       "clients": "Clients",
-      "catalogue": "Catalog",
+      "catalogue": "Products",
       "entreprise": "Company",
-      "abonnement": "Subscription",
+      "abonnement": "Subscriptions",
       "facturesRecurrentes": "Recurring invoices",
-      "chantiers": "Jobs"
+      "chantiers": "Jobs",
+      "documents": "Documents"
     }
   }
 }

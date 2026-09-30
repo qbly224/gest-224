@@ -429,7 +429,7 @@
       "enregistrer": "Enregistrer"
     },
     "catalogue": {
-      "titre": "Catalogue produits / services",
+      "titre": "Produits",
       "nouveauBouton": "Nouvel article",
       "nouveauTitre": "Nouvel article",
       "modifierTitre": "Modifier l'article",
@@ -824,13 +824,14 @@
       "acomptes": "Acomptes",
       "avoirs": "Avoirs",
       "depenses": "Dépenses",
-      "rapport": "Rapport",
+      "rapport": "Rapports",
       "clients": "Clients",
-      "catalogue": "Catalogue",
+      "catalogue": "Produits",
       "entreprise": "Entreprise",
-      "abonnement": "Abonnement",
+      "abonnement": "Abonnements",
       "facturesRecurrentes": "Factures récurrentes",
-      "chantiers": "Chantiers"
+      "chantiers": "Chantiers",
+      "documents": "Documents"
     }
   }
 }
