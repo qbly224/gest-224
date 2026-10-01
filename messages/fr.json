@@ -635,7 +635,12 @@
       "aucuneDepense": "Aucune dépense enregistrée.",
       "meilleursClients": "Meilleurs clients (par recettes)",
       "aucuneRecette": "Aucune recette enregistrée.",
-      "documentsParType": "Documents par type"
+      "documentsParType": "Documents par type",
+      "fecTitre": "Export FEC (Fichier des Écritures Comptables)",
+      "fecDescription": "Génère le fichier normalisé exigé en cas de contrôle fiscal (art. L47 A du LPF). Important : Gest-224 ne tient pas une comptabilité d'engagement complète — les comptes utilisés (ventes, TVA, achats) sont des valeurs par défaut raisonnables mais génériques. Faites vérifier et, si besoin, corriger ce fichier par votre expert-comptable avant de le transmettre à l'administration.",
+      "fecDateDebut": "Date de début",
+      "fecDateFin": "Date de fin",
+      "fecTelecharger": "Télécharger le FEC"
     },
     "entreprise": {
       "titre": "Fiche entreprise",
@@ -729,6 +734,9 @@
           "2fa_desactive": "Double authentification désactivée",
           "codes_secours_regeneres": "Codes de secours régénérés",
           "code_secours_utilise": "Connexion via un code de secours"
+        },
+        "fec": {
+          "exporte": "Export FEC généré"
         }
       },
       "totpTitre": "Double authentification (2FA)",

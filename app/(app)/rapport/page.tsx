@@ -152,6 +152,49 @@ export default async function RapportPage() {
           </tbody>
         </table>
       </div>
+
+      <div className="rounded-sm border border-encre/20 bg-white/40 p-6">
+        <h2 className="font-titre text-lg text-encre">{t("fecTitre")}</h2>
+        <p className="mt-1 max-w-2xl font-sans text-sm text-encre/70">{t("fecDescription")}</p>
+        <form
+          action="/api/export/fec"
+          method="get"
+          className="mt-4 flex flex-wrap items-end gap-3"
+        >
+          <div>
+            <label className="mb-1 block font-sans text-xs font-medium uppercase tracking-wide text-encre/70" htmlFor="dateDebut">
+              {t("fecDateDebut")}
+            </label>
+            <input
+              id="dateDebut"
+              name="dateDebut"
+              type="date"
+              required
+              defaultValue={`${new Date().getFullYear()}-01-01`}
+              className="rounded-sm border border-encre/30 bg-ivoire px-3 py-2 font-sans text-sm text-encre focus:border-encre focus:outline-none"
+            />
+          </div>
+          <div>
+            <label className="mb-1 block font-sans text-xs font-medium uppercase tracking-wide text-encre/70" htmlFor="dateFin">
+              {t("fecDateFin")}
+            </label>
+            <input
+              id="dateFin"
+              name="dateFin"
+              type="date"
+              required
+              defaultValue={new Date().toISOString().slice(0, 10)}
+              className="rounded-sm border border-encre/30 bg-ivoire px-3 py-2 font-sans text-sm text-encre focus:border-encre focus:outline-none"
+            />
+          </div>
+          <button
+            type="submit"
+            className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
+          >
+            {t("fecTelecharger")}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

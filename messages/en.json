@@ -635,7 +635,12 @@
       "aucuneDepense": "No expenses recorded.",
       "meilleursClients": "Top clients (by revenue)",
       "aucuneRecette": "No revenue recorded.",
-      "documentsParType": "Documents by type"
+      "documentsParType": "Documents by type",
+      "fecTitre": "FEC export (Fichier des Écritures Comptables)",
+      "fecDescription": "Generates the standardized file required in case of a French tax audit (art. L47 A of the LPF). Important: Gest-224 does not keep a full accrual-accounting ledger — the accounts used (sales, VAT, purchases) are reasonable but generic defaults. Have this file checked, and corrected if needed, by your accountant before submitting it to the tax authorities.",
+      "fecDateDebut": "Start date",
+      "fecDateFin": "End date",
+      "fecTelecharger": "Download FEC"
     },
     "entreprise": {
       "titre": "Company profile",
@@ -729,6 +734,9 @@
           "2fa_desactive": "Two-factor authentication disabled",
           "codes_secours_regeneres": "Backup codes regenerated",
           "code_secours_utilise": "Signed in using a backup code"
+        },
+        "fec": {
+          "exporte": "FEC export generated"
         }
       },
       "totpTitre": "Two-factor authentication (2FA)",
