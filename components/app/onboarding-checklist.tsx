@@ -20,7 +20,7 @@ export async function OnboardingChecklist({ etapes }: { etapes: EtapeOnboarding[
         <form action={masquerOnboarding}>
           <button
             type="submit"
-            className="font-sans text-xs text-encre/50 hover:text-encre hover:underline"
+            className="font-sans text-xs text-encre/70 hover:text-encre hover:underline"
           >
             {t("masquer")}
           </button>
@@ -33,13 +33,13 @@ export async function OnboardingChecklist({ etapes }: { etapes: EtapeOnboarding[
               className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border font-mono text-xs ${
                 etape.fait
                   ? "border-encre bg-encre text-ivoire"
-                  : "border-encre/30 text-encre/40"
+                  : "border-encre/30 text-encre/70"
               }`}
             >
               {etape.fait ? "✓" : ""}
             </span>
             {etape.fait ? (
-              <span className="text-encre/50 line-through">{etape.label}</span>
+              <span className="text-encre/70 line-through">{etape.label}</span>
             ) : (
               <Link href={etape.href} className="text-encre underline">
                 {etape.label}

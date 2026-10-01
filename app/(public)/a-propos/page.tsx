@@ -14,7 +14,7 @@ export default async function AProposPage() {
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-16">
-      <p className="font-mono text-xs uppercase tracking-widest text-encre/60">
+      <p className="font-mono text-xs uppercase tracking-widest text-encre/75">
         {t("surtitre")}
       </p>
       <h1 className="mt-2 font-titre text-3xl text-encre">{t("titre")}</h1>

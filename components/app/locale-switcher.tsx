@@ -20,7 +20,7 @@ export function LocaleSwitcher({ className = "" }: { className?: string }) {
 
   return (
     <div
-      className={`flex items-center gap-1 font-mono text-xs text-encre/60 ${className}`}
+      className={`flex items-center gap-1 font-mono text-xs text-encre/75 ${className}`}
       aria-label="Langue"
     >
       <button

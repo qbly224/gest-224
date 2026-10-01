@@ -151,7 +151,7 @@ export function ArticleForm({
         ) : (
           <div>
             <p className={labelClass}>{t("tva")}</p>
-            <p className="mt-2 font-mono text-sm text-encre/60">{t("tvaNonApplicable")}</p>
+            <p className="mt-2 font-mono text-sm text-encre/75">{t("tvaNonApplicable")}</p>
           </div>
         )}
       </div>

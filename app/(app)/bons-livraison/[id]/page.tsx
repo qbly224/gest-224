@@ -44,7 +44,7 @@ export default async function BonLivraisonDetailPage({
       masquerPrix
       reference={
         bonLivraison.refDocument && (
-          <p className="mt-1 font-sans text-xs italic text-encre/60">
+          <p className="mt-1 font-sans text-xs italic text-encre/75">
             {t("etablieSuiteBonCommande")}{" "}
             <Link
               href={`/bons-commande/${bonLivraison.refDocument.id}`}

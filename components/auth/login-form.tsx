@@ -56,7 +56,7 @@ export function LoginForm({
       <div className="flex items-center justify-end">
         <Link
           href="/mot-de-passe-oublie"
-          className="font-sans text-xs text-encre/60 underline underline-offset-2"
+          className="font-sans text-xs text-encre/75 underline underline-offset-2"
         >
           {t("motDePasseOublie")}
         </Link>

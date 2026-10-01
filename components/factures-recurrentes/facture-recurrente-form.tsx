@@ -147,7 +147,7 @@ export function FactureRecurrenteForm({
         ) : (
           <div>
             <p className={labelClass}>{t("tva")}</p>
-            <p className="mt-2 font-mono text-sm text-encre/60">{t("tvaNonApplicable")}</p>
+            <p className="mt-2 font-mono text-sm text-encre/75">{t("tvaNonApplicable")}</p>
           </div>
         )}
       </div>
@@ -199,7 +199,7 @@ export function FactureRecurrenteForm({
         />
       </div>
 
-      <p className="font-sans text-xs text-encre/50">{t("noteBrouillon")}</p>
+      <p className="font-sans text-xs text-encre/70">{t("noteBrouillon")}</p>
 
       <SubmitButton>{t("enregistrer")}</SubmitButton>
     </form>

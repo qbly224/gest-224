@@ -69,12 +69,12 @@ export default async function RecherchePage({
           autoFocus
           defaultValue={q ?? ""}
           placeholder={t("placeholder")}
-          className="w-full max-w-md rounded-sm border border-encre/30 bg-ivoire px-3 py-2 font-sans text-sm text-encre placeholder:text-encre/40 focus:border-encre focus:outline-none"
+          className="w-full max-w-md rounded-sm border border-encre/30 bg-ivoire px-3 py-2 font-sans text-sm text-encre placeholder:text-encre/70 focus:border-encre focus:outline-none"
         />
       </form>
 
       {!terme ? (
-        <p className="mt-6 font-sans text-sm text-encre/60">{t("invite")}</p>
+        <p className="mt-6 font-sans text-sm text-encre/75">{t("invite")}</p>
       ) : (
         <div className="mt-8 space-y-8">
           <div>
@@ -82,7 +82,7 @@ export default async function RecherchePage({
               {t("clientsTitre", { count: clients.length })}
             </h2>
             {clients.length === 0 ? (
-              <p className="mt-2 font-sans text-sm text-encre/60">{t("aucunClient")}</p>
+              <p className="mt-2 font-sans text-sm text-encre/75">{t("aucunClient")}</p>
             ) : (
               <ul className="mt-2 space-y-1.5 font-sans text-sm">
                 {clients.map((c) => (
@@ -92,7 +92,7 @@ export default async function RecherchePage({
                         ? c.raisonSociale
                         : `${c.prenom ?? ""} ${c.nom ?? ""}`.trim()}
                     </Link>
-                    <span className="text-encre/50"> — {c.ville}</span>
+                    <span className="text-encre/70"> — {c.ville}</span>
                   </li>
                 ))}
               </ul>
@@ -104,7 +104,7 @@ export default async function RecherchePage({
               {t("documentsTitre", { count: documents.length })}
             </h2>
             {documents.length === 0 ? (
-              <p className="mt-2 font-sans text-sm text-encre/60">{t("aucunDocument")}</p>
+              <p className="mt-2 font-sans text-sm text-encre/75">{t("aucunDocument")}</p>
             ) : (
               <ul className="mt-2 space-y-1.5 font-sans text-sm">
                 {documents.map((d) => (
@@ -115,7 +115,7 @@ export default async function RecherchePage({
                     >
                       {d.numero}
                     </Link>
-                    <span className="text-encre/50">
+                    <span className="text-encre/70">
                       {" "}
                       — {tTypes(d.type)} —{" "}
                       {nomAffichageClientSnapshot(d.clientSnapshot as unknown as ClientSnapshot)} —{" "}

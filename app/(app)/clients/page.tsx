@@ -94,10 +94,11 @@ export default async function ClientsPage({
           name="q"
           defaultValue={q ?? ""}
           placeholder={t("rechercherPlaceholder")}
-          className="w-full max-w-xs rounded-sm border border-encre/30 bg-ivoire px-3 py-2 font-sans text-sm text-encre placeholder:text-encre/40 focus:border-encre focus:outline-none"
+          className="w-full max-w-xs rounded-sm border border-encre/30 bg-ivoire px-3 py-2 font-sans text-sm text-encre placeholder:text-encre/70 focus:border-encre focus:outline-none"
         />
         <select
           name="statut"
+          aria-label={t("colStatut")}
           defaultValue={statut ?? ""}
           className="rounded-sm border border-encre/30 bg-ivoire px-3 py-2 font-sans text-sm text-encre focus:border-encre focus:outline-none"
         >
@@ -112,21 +113,21 @@ export default async function ClientsPage({
           {t("filtrer")}
         </button>
         {(q || statut) && (
-          <a href="?" className="font-sans text-xs text-encre/60 underline">
+          <a href="?" className="font-sans text-xs text-encre/75 underline">
             {t("reinitialiser")}
           </a>
         )}
       </form>
 
       {clients.length === 0 ? (
-        <p className="mt-8 font-sans text-sm text-encre/60">
+        <p className="mt-8 font-sans text-sm text-encre/75">
           {q || statut ? t("emptyFiltre") : t("emptyDefault")}
         </p>
       ) : (
         <div className="mt-6 overflow-x-auto">
         <table className="w-full min-w-[620px] border-collapse font-sans text-sm">
           <thead>
-            <tr className="border-b border-encre/20 text-left text-encre/60">
+            <tr className="border-b border-encre/20 text-left text-encre/75">
               <th className="py-2 font-medium hover:text-encre cursor-pointer select-none">
                 <Link href={lienTri({ q, statut }, "nom", tri, ordre)}>
                   {t("colNom")}{flecheTri("nom", tri, ordre)}
@@ -183,7 +184,7 @@ export default async function ClientsPage({
                       className={
                         client.actif
                           ? "font-mono text-xs text-encre"
-                          : "font-mono text-xs text-encre/40"
+                          : "font-mono text-xs text-encre/70"
                       }
                     >
                       {client.actif ? t("actif") : t("desactive")}
@@ -193,7 +194,7 @@ export default async function ClientsPage({
                     <form action={toggleClientActif.bind(null, client.id)}>
                       <button
                         type="submit"
-                        className="font-sans text-xs text-encre/60 hover:text-encre hover:underline"
+                        className="font-sans text-xs text-encre/75 hover:text-encre hover:underline"
                       >
                         {client.actif ? t("desactiver") : t("reactiver")}
                       </button>

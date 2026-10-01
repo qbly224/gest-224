@@ -42,7 +42,7 @@ export default async function BonCommandeDetailPage({
       document={bonCommande}
       reference={
         bonCommande.refDocument && (
-          <p className="mt-1 font-sans text-xs italic text-encre/60">
+          <p className="mt-1 font-sans text-xs italic text-encre/75">
             {t("etablieSuiteDevis")}{" "}
             <Link href={`/devis/${bonCommande.refDocument.id}`} className="font-mono underline">
               {bonCommande.refDocument.numero}

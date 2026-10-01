@@ -72,7 +72,7 @@ export default async function RapportPage() {
         <div className="mt-4 overflow-x-auto">
         <table className="w-full min-w-[420px] border-collapse font-sans text-sm">
           <thead>
-            <tr className="border-b border-encre/20 text-left text-encre/60">
+            <tr className="border-b border-encre/20 text-left text-encre/75">
               <th className="py-2 font-medium">{t("colMois")}</th>
               <th className="py-2 text-right font-medium">{t("colRecettes")}</th>
               <th className="py-2 text-right font-medium">{t("colDepenses")}</th>
@@ -101,7 +101,7 @@ export default async function RapportPage() {
         <div>
           <h2 className="font-titre text-lg text-encre">{t("depensesParCategorie")}</h2>
           {rapport.depensesParCategorie.length === 0 ? (
-            <p className="mt-4 font-sans text-sm text-encre/60">{t("aucuneDepense")}</p>
+            <p className="mt-4 font-sans text-sm text-encre/75">{t("aucuneDepense")}</p>
           ) : (
             <table className="mt-4 w-full border-collapse font-sans text-sm">
               <tbody>
@@ -121,7 +121,7 @@ export default async function RapportPage() {
         <div>
           <h2 className="font-titre text-lg text-encre">{t("meilleursClients")}</h2>
           {rapport.topClients.length === 0 ? (
-            <p className="mt-4 font-sans text-sm text-encre/60">{t("aucuneRecette")}</p>
+            <p className="mt-4 font-sans text-sm text-encre/75">{t("aucuneRecette")}</p>
           ) : (
             <table className="mt-4 w-full border-collapse font-sans text-sm">
               <tbody>

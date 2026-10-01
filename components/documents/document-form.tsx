@@ -282,14 +282,14 @@ export function DocumentForm({
               className="rounded-sm border border-encre/15 bg-white/40 p-4"
             >
               <div className="flex items-center justify-between">
-                <span className="font-mono text-xs text-encre/50">
+                <span className="font-mono text-xs text-encre/70">
                   {t("ligneNumero", { n: index + 1 })}
                 </span>
                 <button
                   type="button"
                   onClick={() => supprimerLigne(ligne.key)}
                   disabled={lignes.length === 1}
-                  className="font-sans text-xs text-encre/60 hover:text-encre hover:underline disabled:cursor-not-allowed disabled:opacity-40"
+                  className="font-sans text-xs text-encre/75 hover:text-encre hover:underline disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   {t("supprimer")}
                 </button>
@@ -297,8 +297,11 @@ export function DocumentForm({
 
               {articles.length > 0 && (
                 <div className="mt-2">
-                  <label className={labelClass}>{t("depuisCatalogue")}</label>
+                  <label className={labelClass} htmlFor={`${idPrefix}-${ligne.key}-catalogue`}>
+                    {t("depuisCatalogue")}
+                  </label>
                   <select
+                    id={`${idPrefix}-${ligne.key}-catalogue`}
                     value={ligne.articleId ?? ""}
                     onChange={(e) => appliquerArticle(ligne.key, e.target.value)}
                     className={selectClass}
@@ -314,8 +317,11 @@ export function DocumentForm({
               )}
 
               <div className="mt-2">
-                <label className={labelClass}>{t("designation")}</label>
+                <label className={labelClass} htmlFor={`${idPrefix}-${ligne.key}-designation`}>
+                  {t("designation")}
+                </label>
                 <input
+                  id={`${idPrefix}-${ligne.key}-designation`}
                   data-testid="ligne-designation"
                   required
                   value={ligne.designation}
@@ -325,8 +331,11 @@ export function DocumentForm({
               </div>
 
               <div className="mt-2">
-                <label className={labelClass}>{t("description")}</label>
+                <label className={labelClass} htmlFor={`${idPrefix}-${ligne.key}-description`}>
+                  {t("description")}
+                </label>
                 <input
+                  id={`${idPrefix}-${ligne.key}-description`}
                   value={ligne.description}
                   onChange={(e) => updateLigne(ligne.key, { description: e.target.value })}
                   className={inputClass}
@@ -337,10 +346,11 @@ export function DocumentForm({
                 className={`mt-2 grid grid-cols-2 gap-3 sm:grid-cols-3 ${regimeTvaNormal ? "md:grid-cols-5" : "md:grid-cols-4"}`}
               >
                 <div>
-                  <label className={labelClass}>
+                  <label className={labelClass} htmlFor={`${idPrefix}-${ligne.key}-quantite`}>
                     {quantiteLibre ? t("quantiteNegative") : t("quantite")}
                   </label>
                   <input
+                    id={`${idPrefix}-${ligne.key}-quantite`}
                     data-testid="ligne-quantite"
                     type="number"
                     step="0.01"
@@ -352,16 +362,22 @@ export function DocumentForm({
                   />
                 </div>
                 <div>
-                  <label className={labelClass}>{t("unite")}</label>
+                  <label className={labelClass} htmlFor={`${idPrefix}-${ligne.key}-unite`}>
+                    {t("unite")}
+                  </label>
                   <input
+                    id={`${idPrefix}-${ligne.key}-unite`}
                     value={ligne.uniteMesure}
                     onChange={(e) => updateLigne(ligne.key, { uniteMesure: e.target.value })}
                     className={inputClass}
                   />
                 </div>
                 <div>
-                  <label className={labelClass}>{t("puHt")}</label>
+                  <label className={labelClass} htmlFor={`${idPrefix}-${ligne.key}-prix`}>
+                    {t("puHt")}
+                  </label>
                   <input
+                    id={`${idPrefix}-${ligne.key}-prix`}
                     data-testid="ligne-prix"
                     type="number"
                     step="0.01"
@@ -374,8 +390,11 @@ export function DocumentForm({
                 </div>
                 {regimeTvaNormal && (
                   <div>
-                    <label className={labelClass}>{t("tva")}</label>
+                    <label className={labelClass} htmlFor={`${idPrefix}-${ligne.key}-tva`}>
+                      {t("tva")}
+                    </label>
                     <select
+                      id={`${idPrefix}-${ligne.key}-tva`}
                       data-testid="ligne-tva"
                       value={ligne.tauxTva ?? ""}
                       onChange={(e) =>
@@ -392,8 +411,11 @@ export function DocumentForm({
                   </div>
                 )}
                 <div>
-                  <label className={labelClass}>{t("remise")}</label>
+                  <label className={labelClass} htmlFor={`${idPrefix}-${ligne.key}-remise`}>
+                    {t("remise")}
+                  </label>
                   <input
+                    id={`${idPrefix}-${ligne.key}-remise`}
                     type="number"
                     step="0.01"
                     min="0"
@@ -424,7 +446,7 @@ export function DocumentForm({
             </div>
           ))
         ) : (
-          <p className="text-xs italic text-encre/60">{t("tvaNonApplicable")}</p>
+          <p className="text-xs italic text-encre/75">{t("tvaNonApplicable")}</p>
         )}
         <div className="flex justify-between border-t border-encre/20 pt-1 text-base font-medium text-encre">
           <span>{t("totalTtc")}</span>

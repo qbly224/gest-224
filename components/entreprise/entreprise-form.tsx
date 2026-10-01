@@ -76,7 +76,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
               defaultValue={tenant.siret}
               className={`${inputClass} font-mono`}
             />
-            <p className="mt-1 font-sans text-xs text-encre/50">
+            <p className="mt-1 font-sans text-xs text-encre/70">
               {t.rich("siretHint", {
                 italic: (chunks) => <span className="italic">{chunks}</span>,
               })}
@@ -125,7 +125,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
               <option value="franchise">{t("regimeFranchise")}</option>
               <option value="normal">{t("regimeNormal")}</option>
             </select>
-            <p className="mt-1 font-sans text-xs text-encre/50">{t("regimeTvaHint")}</p>
+            <p className="mt-1 font-sans text-xs text-encre/70">{t("regimeTvaHint")}</p>
           </div>
           <div>
             <label className={labelClass} htmlFor="capitalSocial">
@@ -146,7 +146,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
 
       <fieldset className="space-y-4 border-t border-encre/10 pt-4">
         <legend className="font-titre text-lg text-encre">{t("sectionLogo")}</legend>
-        <p className="font-sans text-xs text-encre/60">{t("logoDescription")}</p>
+        <p className="font-sans text-xs text-encre/75">{t("logoDescription")}</p>
         <div className="flex flex-wrap items-center gap-4">
           {(apercu ?? (!supprimer ? tenant.logoDataUrl : null)) ? (
             // eslint-disable-next-line @next/next/no-img-element
@@ -156,11 +156,14 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
               className="h-16 w-auto max-w-[160px] rounded-sm border border-encre/20 object-contain p-1"
             />
           ) : (
-            <div className="flex h-16 w-40 items-center justify-center rounded-sm border border-dashed border-encre/20 font-sans text-xs text-encre/40">
+            <div className="flex h-16 w-40 items-center justify-center rounded-sm border border-dashed border-encre/20 font-sans text-xs text-encre/70">
               {t("aucunLogo")}
             </div>
           )}
           <div className="space-y-2">
+            <label htmlFor="logo" className="sr-only">
+              {t("sectionLogo")}
+            </label>
             <input
               id="logo"
               name="logo"

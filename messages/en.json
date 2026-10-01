@@ -388,7 +388,8 @@
       "du": "From",
       "au": "to",
       "filtrer": "Filter",
-      "reinitialiser": "Reset"
+      "reinitialiser": "Reset",
+      "filtrerParStatutAria": "Filter by status"
     },
     "clients": {
       "titre": "Clients",

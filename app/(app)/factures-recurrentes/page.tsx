@@ -33,12 +33,12 @@ export default async function FacturesRecurrentesPage() {
       <p className="mt-1 font-sans text-sm text-encre/70">{t("description")}</p>
 
       {modeles.length === 0 ? (
-        <p className="mt-8 font-sans text-sm text-encre/60">{t("emptyDefault")}</p>
+        <p className="mt-8 font-sans text-sm text-encre/75">{t("emptyDefault")}</p>
       ) : (
         <div className="mt-6 overflow-x-auto">
         <table className="w-full min-w-[620px] border-collapse font-sans text-sm">
           <thead>
-            <tr className="border-b border-encre/20 text-left text-encre/60">
+            <tr className="border-b border-encre/20 text-left text-encre/75">
               <th className="py-2 font-medium">{t("colDesignation")}</th>
               <th className="py-2 font-medium">{t("colClient")}</th>
               <th className="py-2 font-medium">{t("colFrequence")}</th>
@@ -71,7 +71,7 @@ export default async function FacturesRecurrentesPage() {
                 <td className="py-3">
                   <span
                     className={
-                      m.active ? "font-mono text-xs text-encre" : "font-mono text-xs text-encre/40"
+                      m.active ? "font-mono text-xs text-encre" : "font-mono text-xs text-encre/70"
                     }
                   >
                     {m.active ? t("active") : t("enPause")}
@@ -82,7 +82,7 @@ export default async function FacturesRecurrentesPage() {
                     <form action={toggleFactureRecurrenteActive.bind(null, m.id)}>
                       <button
                         type="submit"
-                        className="font-sans text-xs text-encre/60 hover:text-encre hover:underline"
+                        className="font-sans text-xs text-encre/75 hover:text-encre hover:underline"
                       >
                         {m.active ? t("mettreEnPause") : t("reactiver")}
                       </button>

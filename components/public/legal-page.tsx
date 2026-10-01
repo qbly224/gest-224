@@ -17,10 +17,10 @@ export async function LegalPage({
   return (
     <main className="mx-auto max-w-3xl px-6 py-16">
       <h1 className="font-titre text-3xl text-encre">{titre}</h1>
-      <p className="mt-2 font-mono text-xs text-encre/50">
+      <p className="mt-2 font-mono text-xs text-encre/70">
         {t("misAJourLabel")} {formatDate(misAJour, locale, { day: "numeric", month: "long", year: "numeric" })}
       </p>
-      <p className="mt-4 rounded-sm bg-encre/5 px-3 py-2 font-sans text-xs text-encre/60">
+      <p className="mt-4 rounded-sm bg-encre/5 px-3 py-2 font-sans text-xs text-encre/75">
         {t("avisTraduction")}
       </p>
       <div className="prose-legal mt-8 space-y-6 font-sans text-sm leading-relaxed text-encre/80">

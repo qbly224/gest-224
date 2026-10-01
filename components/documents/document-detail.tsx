@@ -65,7 +65,7 @@ export async function DocumentDetail({
               className="mb-3 h-12 w-auto max-w-[160px] object-contain"
             />
           )}
-          <p className="font-mono text-xs uppercase tracking-wide text-encre/50">{titre}</p>
+          <p className="font-mono text-xs uppercase tracking-wide text-encre/70">{titre}</p>
           <h1 className="font-mono text-2xl text-encre">{document.numero}</h1>
           <p className="mt-1 font-sans text-sm text-encre/70">
             {tStatuts(document.statut)} — {t("emisLe")}{" "}
@@ -80,14 +80,14 @@ export async function DocumentDetail({
 
       <div className="mt-8 grid grid-cols-1 gap-6 font-sans text-sm sm:grid-cols-2 sm:gap-8">
         <div>
-          <h2 className="text-xs uppercase tracking-wide text-encre/50">{t("emetteur")}</h2>
+          <h2 className="text-xs uppercase tracking-wide text-encre/70">{t("emetteur")}</h2>
           <p className="mt-1 font-medium text-encre">{emetteur.raisonSociale}</p>
           <p className="text-encre/70">
             {emetteur.adresseLigne1}, {emetteur.codePostal} {emetteur.ville}
           </p>
         </div>
         <div>
-          <h2 className="text-xs uppercase tracking-wide text-encre/50">{t("client")}</h2>
+          <h2 className="text-xs uppercase tracking-wide text-encre/70">{t("client")}</h2>
           <p className="mt-1 font-medium text-encre">{nomAffichageClientSnapshot(client)}</p>
           <p className="text-encre/70">
             {client.adresseLigne1}, {client.codePostal} {client.ville}
@@ -115,7 +115,7 @@ export async function DocumentDetail({
       <div className="mt-8 overflow-x-auto">
       <table className="w-full min-w-[420px] border-collapse font-sans text-sm">
         <thead>
-          <tr className="border-b border-encre/20 text-left text-encre/60">
+          <tr className="border-b border-encre/20 text-left text-encre/75">
             <th className="py-2 font-medium">{t("designation")}</th>
             <th className="py-2 text-right font-medium">{t("quantite")}</th>
             {!masquerPrix && (
@@ -169,7 +169,7 @@ export async function DocumentDetail({
               </div>
             ))
           ) : (
-            <p className="text-xs italic text-encre/60">{t("tvaNonApplicable")}</p>
+            <p className="text-xs italic text-encre/75">{t("tvaNonApplicable")}</p>
           )}
           <div className="flex justify-between border-t border-encre/20 pt-1 text-base font-medium text-encre">
             <span>{libelleMontant}</span>

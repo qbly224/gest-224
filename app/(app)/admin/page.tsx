@@ -41,7 +41,7 @@ export default async function AdminPage() {
         <div className="rounded-sm border border-encre/20 bg-white/40 p-6">
           <p className="font-mono text-3xl text-encre">
             {tenants.length}
-            <span className="text-encre/50"> / {nbTenantsActifs} {t("actives")}</span>
+            <span className="text-encre/70"> / {nbTenantsActifs} {t("actives")}</span>
           </p>
           <p className="mt-1 font-sans text-sm text-encre/70">{t("entreprisesInscrites")}</p>
         </div>
@@ -58,7 +58,7 @@ export default async function AdminPage() {
       <div className="overflow-x-auto">
       <table className="w-full min-w-[720px] border-collapse font-sans text-sm">
         <thead>
-          <tr className="border-b border-encre/20 text-left text-encre/60">
+          <tr className="border-b border-encre/20 text-left text-encre/75">
             <th className="py-2 font-medium">{t("colEntreprise")}</th>
             <th className="py-2 font-medium">{t("colSiret")}</th>
             <th className="py-2 text-right font-medium">{t("colUsers")}</th>
@@ -85,6 +85,7 @@ export default async function AdminPage() {
                 <form action={changerPlanTenant.bind(null, t2.id)} className="flex items-center gap-1">
                   <select
                     name="plan"
+                    aria-label={`Plan — ${t2.raisonSociale}`}
                     defaultValue={t2.plan}
                     className="rounded-sm border border-encre/30 bg-transparent px-1 py-0.5 font-sans text-xs text-encre"
                   >
@@ -104,7 +105,7 @@ export default async function AdminPage() {
               </td>
               <td className="py-2">
                 {t2.plan === "gratuit" ? (
-                  <span className="font-mono text-xs text-encre/40">—</span>
+                  <span className="font-mono text-xs text-encre/70">—</span>
                 ) : (
                   <form action={basculerPaiementValideTenant.bind(null, t2.id)}>
                     <button

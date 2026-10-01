@@ -34,11 +34,11 @@ export async function PublicFooter() {
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
           <div>
             <p className="font-titre text-lg text-encre">Gest-224</p>
-            <p className="mt-2 font-sans text-sm text-encre/60">{t("tagline")}</p>
+            <p className="mt-2 font-sans text-sm text-encre/75">{t("tagline")}</p>
           </div>
           {colonnes.map((colonne) => (
             <div key={colonne.titre}>
-              <p className="font-sans text-xs font-medium uppercase tracking-wide text-encre/50">
+              <p className="font-sans text-xs font-medium uppercase tracking-wide text-encre/70">
                 {colonne.titre}
               </p>
               <ul className="mt-3 space-y-2 font-sans text-sm text-encre/70">
@@ -57,7 +57,7 @@ export async function PublicFooter() {
             </div>
           ))}
         </div>
-        <p className="mt-10 border-t border-encre/10 pt-6 font-sans text-xs text-encre/50">
+        <p className="mt-10 border-t border-encre/10 pt-6 font-sans text-xs text-encre/70">
           © {new Date().getFullYear()} Gest-224. {t("droitsReserves")}
         </p>
       </div>

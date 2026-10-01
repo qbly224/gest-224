@@ -12,9 +12,9 @@ export function MockupFacture() {
         <div className="flex items-start justify-between">
           <div>
             <p className="font-titre text-sm text-encre">Gest-224</p>
-            <p className="mt-0.5 font-mono text-[10px] text-encre/50">FACTURE N° FA-2026-0142</p>
+            <p className="mt-0.5 font-mono text-[10px] text-encre/70">FACTURE N° FA-2026-0142</p>
           </div>
-          <div className="rounded-full border border-encre/30 px-2 py-1 font-mono text-[9px] uppercase tracking-wide text-encre/60">
+          <div className="rounded-full border border-encre/30 px-2 py-1 font-mono text-[9px] uppercase tracking-wide text-encre/75">
             Payée
           </div>
         </div>

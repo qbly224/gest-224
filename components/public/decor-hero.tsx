@@ -39,7 +39,7 @@ export function DecorHero() {
             transform: `rotate(${p.rotate}deg)`,
           }}
         >
-          <span className="whitespace-pre-line font-mono text-[8px] uppercase leading-tight tracking-[0.15em] text-encre/40">
+          <span className="whitespace-pre-line font-mono text-[8px] uppercase leading-tight tracking-[0.15em] text-encre/70">
             {p.label}
           </span>
         </div>

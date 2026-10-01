@@ -44,7 +44,7 @@ export default async function AccueilPage() {
         <DecorHero />
         <div className="relative mx-auto grid max-w-5xl grid-cols-1 items-center gap-12 px-6 pb-16 pt-20 lg:grid-cols-2 lg:gap-8 lg:pb-24 lg:pt-28">
           <div className="text-center lg:text-left">
-            <p className="font-mono text-xs uppercase tracking-widest text-encre/60">
+            <p className="font-mono text-xs uppercase tracking-widest text-encre/75">
               {t("surtitre")}
             </p>
             <h1 className="mt-4 font-titre text-4xl text-encre sm:text-5xl">
@@ -68,7 +68,7 @@ export default async function AccueilPage() {
                 {t("voirTarifs")}
               </Link>
             </div>
-            <p className="mt-4 font-sans text-xs text-encre/50">{t("aucuneCarteBancaire")}</p>
+            <p className="mt-4 font-sans text-xs text-encre/70">{t("aucuneCarteBancaire")}</p>
           </div>
 
           <Reveal className="hidden lg:block" delayMs={150}>
@@ -109,7 +109,7 @@ export default async function AccueilPage() {
             <p className="font-mono text-4xl text-encre">
               <CompteurAnime valeur={nbDocuments} suffixe="+" />
             </p>
-            <p className="mt-2 font-sans text-sm text-encre/60">{t("statDocuments")}</p>
+            <p className="mt-2 font-sans text-sm text-encre/75">{t("statDocuments")}</p>
           </Reveal>
         </div>
       </section>
@@ -127,7 +127,7 @@ export default async function AccueilPage() {
                   <h3 className="font-titre text-xl text-encre">{tPlans(`${plan.id}.label`)}</h3>
                   <p className="mt-2 font-mono text-2xl text-encre">
                     {plan.prixMensuel === 0 ? "0 €" : `${plan.prixMensuel} €`}
-                    <span className="font-sans text-sm text-encre/60"> / mois</span>
+                    <span className="font-sans text-sm text-encre/75"> / mois</span>
                   </p>
                   <Link
                     href={`/inscription?plan=${plan.id}`}

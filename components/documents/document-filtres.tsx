@@ -25,11 +25,12 @@ export async function DocumentFiltres({
           name="q"
           defaultValue={q ?? ""}
           placeholder={t("rechercherPlaceholder")}
-          className="w-full max-w-xs rounded-sm border border-encre/30 bg-ivoire px-3 py-2 font-sans text-sm text-encre placeholder:text-encre/40 focus:border-encre focus:outline-none"
+          className="w-full max-w-xs rounded-sm border border-encre/30 bg-ivoire px-3 py-2 font-sans text-sm text-encre placeholder:text-encre/70 focus:border-encre focus:outline-none"
         />
       </div>
       <select
         name="statut"
+        aria-label={t("filtrerParStatutAria")}
         defaultValue={statut ?? ""}
         className="rounded-sm border border-encre/30 bg-ivoire px-3 py-2 font-sans text-sm text-encre focus:border-encre focus:outline-none"
       >
@@ -41,7 +42,7 @@ export async function DocumentFiltres({
         ))}
       </select>
       <div className="flex items-center gap-1">
-        <label className="font-sans text-xs text-encre/60" htmlFor="depuis">
+        <label className="font-sans text-xs text-encre/75" htmlFor="depuis">
           {t("du")}
         </label>
         <input
@@ -53,7 +54,7 @@ export async function DocumentFiltres({
         />
       </div>
       <div className="flex items-center gap-1">
-        <label className="font-sans text-xs text-encre/60" htmlFor="jusqua">
+        <label className="font-sans text-xs text-encre/75" htmlFor="jusqua">
           {t("au")}
         </label>
         <input
@@ -71,7 +72,7 @@ export async function DocumentFiltres({
         {t("filtrer")}
       </button>
       {(q || statut || depuis || jusqua) && (
-        <a href="?" className="font-sans text-xs text-encre/60 underline">
+        <a href="?" className="font-sans text-xs text-encre/75 underline">
           {t("reinitialiser")}
         </a>
       )}

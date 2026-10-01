@@ -38,12 +38,12 @@ export default async function DepensesPage() {
       </div>
 
       {depenses.length === 0 ? (
-        <p className="mt-8 font-sans text-sm text-encre/60">{t("emptyDefault")}</p>
+        <p className="mt-8 font-sans text-sm text-encre/75">{t("emptyDefault")}</p>
       ) : (
         <div className="mt-6 overflow-x-auto">
         <table className="w-full min-w-[520px] border-collapse font-sans text-sm">
           <thead>
-            <tr className="border-b border-encre/20 text-left text-encre/60">
+            <tr className="border-b border-encre/20 text-left text-encre/75">
               <th className="py-2 font-medium">{t("colDate")}</th>
               <th className="py-2 font-medium">{t("colLibelle")}</th>
               <th className="py-2 font-medium">{t("colCategorie")}</th>

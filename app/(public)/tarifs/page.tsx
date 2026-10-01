@@ -20,7 +20,7 @@ export default async function TarifsPage() {
     <main className="min-h-screen px-6 py-16">
       <div className="mx-auto max-w-4xl">
         <div className="text-center">
-          <p className="font-mono text-xs uppercase tracking-widest text-encre/60">
+          <p className="font-mono text-xs uppercase tracking-widest text-encre/75">
             {t("surtitre")}
           </p>
           <h1 className="mt-2 font-titre text-3xl text-encre">{t("titre")}</h1>
@@ -39,13 +39,13 @@ export default async function TarifsPage() {
                 <h2 className="font-titre text-xl text-encre">{tPlans(`${plan.id}.label`)}</h2>
                 <p className="mt-2 font-mono text-3xl text-encre">
                   {plan.prixMensuel === 0 ? "0 €" : `${plan.prixMensuel} €`}
-                  <span className="font-sans text-sm text-encre/60"> {t("parMois")}</span>
+                  <span className="font-sans text-sm text-encre/75"> {t("parMois")}</span>
                 </p>
 
                 <ul className="mt-6 flex-1 space-y-2 font-sans text-sm text-encre/80">
                   {tPlans.raw(`${plan.id}.fonctionnalites`).map((f: string) => (
                     <li key={f} className="flex gap-2">
-                      <span className="text-encre/40">—</span>
+                      <span className="text-encre/70">—</span>
                       <span>{f}</span>
                     </li>
                   ))}
@@ -62,7 +62,7 @@ export default async function TarifsPage() {
           ))}
         </div>
 
-        <p className="mt-10 text-center font-sans text-xs text-encre/50">
+        <p className="mt-10 text-center font-sans text-xs text-encre/70">
           {t("changementLibre")}
         </p>
       </div>

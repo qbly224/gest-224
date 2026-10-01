@@ -65,10 +65,11 @@ export default async function ChantiersPage({
           name="q"
           defaultValue={q ?? ""}
           placeholder={t("rechercherPlaceholder")}
-          className="w-full max-w-xs rounded-sm border border-encre/30 bg-ivoire px-3 py-2 font-sans text-sm text-encre placeholder:text-encre/40 focus:border-encre focus:outline-none"
+          className="w-full max-w-xs rounded-sm border border-encre/30 bg-ivoire px-3 py-2 font-sans text-sm text-encre placeholder:text-encre/70 focus:border-encre focus:outline-none"
         />
         <select
           name="statut"
+          aria-label={t("colStatut")}
           defaultValue={statut ?? ""}
           className="rounded-sm border border-encre/30 bg-ivoire px-3 py-2 font-sans text-sm text-encre focus:border-encre focus:outline-none"
         >
@@ -85,21 +86,21 @@ export default async function ChantiersPage({
           {t("filtrer")}
         </button>
         {(q || statut) && (
-          <a href="?" className="font-sans text-xs text-encre/60 underline">
+          <a href="?" className="font-sans text-xs text-encre/75 underline">
             {t("reinitialiser")}
           </a>
         )}
       </form>
 
       {chantiers.length === 0 ? (
-        <p className="mt-8 font-sans text-sm text-encre/60">
+        <p className="mt-8 font-sans text-sm text-encre/75">
           {q || statut ? t("emptyFiltre") : t("emptyDefault")}
         </p>
       ) : (
         <div className="mt-6 overflow-x-auto">
         <table className="w-full min-w-[760px] border-collapse font-sans text-sm">
           <thead>
-            <tr className="border-b border-encre/20 text-left text-encre/60">
+            <tr className="border-b border-encre/20 text-left text-encre/75">
               <th className="py-2 font-medium">{t("colTitre")}</th>
               <th className="py-2 font-medium">{t("colClient")}</th>
               <th className="py-2 font-medium">{t("colDateDebut")}</th>
@@ -140,6 +141,7 @@ export default async function ChantiersPage({
                   >
                     <select
                       name="statut"
+                      aria-label={`${t("colStatut")} — ${c.titre}`}
                       defaultValue={c.statut}
                       className="rounded-sm border border-encre/30 bg-transparent px-1 py-0.5 font-sans text-xs text-encre"
                     >

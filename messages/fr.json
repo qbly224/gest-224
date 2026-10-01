@@ -388,7 +388,8 @@
       "du": "Du",
       "au": "au",
       "filtrer": "Filtrer",
-      "reinitialiser": "Réinitialiser"
+      "reinitialiser": "Réinitialiser",
+      "filtrerParStatutAria": "Filtrer par statut"
     },
     "clients": {
       "titre": "Clients",

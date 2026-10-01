@@ -63,7 +63,7 @@ export default async function AbonnementPage({
           <p className="font-mono text-2xl text-encre">
             {nbDocumentsCeMois}
             {planActuel.limiteDocumentsParMois !== null && (
-              <span className="text-encre/50"> / {planActuel.limiteDocumentsParMois}</span>
+              <span className="text-encre/70"> / {planActuel.limiteDocumentsParMois}</span>
             )}
           </p>
           <p className="mt-1 font-sans text-sm text-encre/70">{t("documentsCeMois")}</p>
@@ -72,7 +72,7 @@ export default async function AbonnementPage({
           <p className="font-mono text-2xl text-encre">
             {nbClients}
             {planActuel.limiteClients !== null && (
-              <span className="text-encre/50"> / {planActuel.limiteClients}</span>
+              <span className="text-encre/70"> / {planActuel.limiteClients}</span>
             )}
           </p>
           <p className="mt-1 font-sans text-sm text-encre/70">{t("clientsEnregistres")}</p>
@@ -81,7 +81,7 @@ export default async function AbonnementPage({
           <p className="font-mono text-2xl text-encre">
             {nbDepensesCeMois}
             {planActuel.limiteDepensesParMois !== null && (
-              <span className="text-encre/50"> / {planActuel.limiteDepensesParMois}</span>
+              <span className="text-encre/70"> / {planActuel.limiteDepensesParMois}</span>
             )}
           </p>
           <p className="mt-1 font-sans text-sm text-encre/70">{t("depensesCeMois")}</p>
@@ -120,19 +120,19 @@ export default async function AbonnementPage({
               <div className="flex items-center justify-between">
                 <h2 className="font-titre text-xl text-encre">{plan.label}</h2>
                 {estActuel && (
-                  <span className="font-mono text-xs uppercase text-encre/60">
+                  <span className="font-mono text-xs uppercase text-encre/75">
                     {t("planActuelBadge")}
                   </span>
                 )}
               </div>
               <p className="mt-2 font-mono text-2xl text-encre">
                 {plan.prixMensuel === 0 ? "0 €" : `${plan.prixMensuel} €`}
-                <span className="font-sans text-sm text-encre/60"> {t("parMois")}</span>
+                <span className="font-sans text-sm text-encre/75"> {t("parMois")}</span>
               </p>
               <ul className="mt-4 flex-1 space-y-2 font-sans text-sm text-encre/80">
                 {plan.fonctionnalites.map((f) => (
                   <li key={f} className="flex gap-2">
-                    <span className="text-encre/40">—</span>
+                    <span className="text-encre/70">—</span>
                     <span>{f}</span>
                   </li>
                 ))}

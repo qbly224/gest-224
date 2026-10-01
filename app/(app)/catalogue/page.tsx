@@ -40,12 +40,12 @@ export default async function CataloguePage() {
       </div>
 
       {articles.length === 0 ? (
-        <p className="mt-8 font-sans text-sm text-encre/60">{t("emptyDefault")}</p>
+        <p className="mt-8 font-sans text-sm text-encre/75">{t("emptyDefault")}</p>
       ) : (
         <div className="mt-6 overflow-x-auto">
         <table className="w-full min-w-[520px] border-collapse font-sans text-sm">
           <thead>
-            <tr className="border-b border-encre/20 text-left text-encre/60">
+            <tr className="border-b border-encre/20 text-left text-encre/75">
               <th className="py-2 font-medium">{t("colDesignation")}</th>
               <th className="py-2 font-medium">{t("colPrixHt")}</th>
               {tenant.regimeTva === "normal" && (
@@ -79,7 +79,7 @@ export default async function CataloguePage() {
                     className={
                       article.actif
                         ? "font-mono text-xs text-encre"
-                        : "font-mono text-xs text-encre/40"
+                        : "font-mono text-xs text-encre/70"
                     }
                   >
                     {article.actif ? t("actif") : t("desactive")}
@@ -89,7 +89,7 @@ export default async function CataloguePage() {
                   <form action={toggleArticleActif.bind(null, article.id)}>
                     <button
                       type="submit"
-                      className="font-sans text-xs text-encre/60 hover:text-encre hover:underline"
+                      className="font-sans text-xs text-encre/75 hover:text-encre hover:underline"
                     >
                       {article.actif ? t("desactiver") : t("reactiver")}
                     </button>

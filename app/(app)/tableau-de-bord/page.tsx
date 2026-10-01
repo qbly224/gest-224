@@ -146,7 +146,7 @@ export default async function TableauDeBordPage({
         <div className="rounded-sm border border-encre/20 bg-white/40 p-5">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <p className="font-sans text-sm text-encre/60">{t("soldeGlobal")}</p>
+              <p className="font-sans text-sm text-encre/75">{t("soldeGlobal")}</p>
               <p
                 className="mt-1 font-mono text-2xl"
                 style={{ color: couleurSolde }}
@@ -161,11 +161,11 @@ export default async function TableauDeBordPage({
         <div className="rounded-sm border border-encre/20 bg-white/40 p-5">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <p className="font-sans text-sm text-encre/60">{t("documentsCeMois")}</p>
+              <p className="font-sans text-sm text-encre/75">{t("documentsCeMois")}</p>
               <p className="mt-1 font-mono text-2xl text-encre">
                 {nbDocumentsCeMois}
                 {plan.limiteDocumentsParMois !== null && (
-                  <span className="text-encre/40"> / {plan.limiteDocumentsParMois}</span>
+                  <span className="text-encre/70"> / {plan.limiteDocumentsParMois}</span>
                 )}
               </p>
             </div>
@@ -184,11 +184,11 @@ export default async function TableauDeBordPage({
         <div className="rounded-sm border border-encre/20 bg-white/40 p-5">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <p className="font-sans text-sm text-encre/60">{t("clientsActifs")}</p>
+              <p className="font-sans text-sm text-encre/75">{t("clientsActifs")}</p>
               <p className="mt-1 font-mono text-2xl text-encre">
                 {nbClients}
                 {plan.limiteClients !== null && (
-                  <span className="text-encre/40"> / {plan.limiteClients}</span>
+                  <span className="text-encre/70"> / {plan.limiteClients}</span>
                 )}
               </p>
             </div>
@@ -207,9 +207,9 @@ export default async function TableauDeBordPage({
         <div className="rounded-sm border border-encre/20 bg-white/40 p-5">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <p className="font-sans text-sm text-encre/60">{t("catalogue")}</p>
+              <p className="font-sans text-sm text-encre/75">{t("catalogue")}</p>
               <p className="mt-1 font-mono text-2xl text-encre">{nbArticles}</p>
-              <p className="mt-0.5 font-sans text-xs text-encre/50">
+              <p className="mt-0.5 font-sans text-xs text-encre/70">
                 {t("surTotal", { total: nbArticlesTotal })}
               </p>
             </div>
@@ -241,7 +241,7 @@ export default async function TableauDeBordPage({
         <div className="mt-6 overflow-x-auto">
           <table className="w-full min-w-[480px] border-collapse font-sans text-sm">
             <thead>
-              <tr className="border-b border-encre/20 text-left text-encre/60">
+              <tr className="border-b border-encre/20 text-left text-encre/75">
                 <th className="py-2 font-medium">{t("colMois")}</th>
                 <th className="py-2 text-right font-medium">{t("colRecettes")}</th>
                 <th className="py-2 text-right font-medium">{t("colDepenses")}</th>

@@ -29,7 +29,7 @@ export function VerificationTotpForm() {
           required
           className={`${ledgerInputClass} text-center font-mono text-lg tracking-widest`}
         />
-        <p className="mt-1 font-sans text-xs text-encre/50">{t("aide")}</p>
+        <p className="mt-1 font-sans text-xs text-encre/70">{t("aide")}</p>
       </div>
 
       <div className="pt-2">

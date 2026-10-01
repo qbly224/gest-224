@@ -64,12 +64,12 @@ export default async function EntreprisePage() {
         <h2 className="font-titre text-lg text-encre">{t("journalAuditTitre")}</h2>
         <p className="mt-1 font-sans text-sm text-encre/70">{t("journalAuditDescription")}</p>
         {journalAudit.length === 0 ? (
-          <p className="mt-4 font-sans text-sm text-encre/60">{t("journalAuditVide")}</p>
+          <p className="mt-4 font-sans text-sm text-encre/75">{t("journalAuditVide")}</p>
         ) : (
           <div className="mt-4 overflow-x-auto">
             <table className="w-full min-w-[640px] border-collapse font-sans text-sm">
               <thead>
-                <tr className="border-b border-encre/20 text-left text-encre/60">
+                <tr className="border-b border-encre/20 text-left text-encre/75">
                   <th className="py-2 font-medium">{t("journalAuditColDate")}</th>
                   <th className="py-2 font-medium">{t("journalAuditColAction")}</th>
                   <th className="py-2 font-medium">{t("journalAuditColUtilisateur")}</th>
@@ -104,7 +104,7 @@ export default async function EntreprisePage() {
 
       <div className="mt-8 rounded-sm border border-red-200 bg-red-50/40 p-6">
         <h2 className="font-titre text-lg text-red-800">{t("zoneDangereuse")}</h2>
-        <p className="mt-1 font-sans text-sm text-red-700/80">
+        <p className="mt-1 font-sans text-sm text-red-700">
           {t("zoneDangereuseDescription")}
         </p>
         <SupprimerCompteForm />

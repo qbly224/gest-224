@@ -48,7 +48,7 @@ export default async function FactureDetailPage({
       afficherPaiement
       reference={
         facture.refDocument && (
-          <p className="mt-1 font-sans text-xs italic text-encre/60">
+          <p className="mt-1 font-sans text-xs italic text-encre/75">
             {t("etablieSuite")}{" "}
             {tTypes(facture.refDocument.type).toLowerCase()}{" "}
             <Link

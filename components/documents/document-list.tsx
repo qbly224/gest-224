@@ -45,7 +45,7 @@ export async function DocumentList({
   const libelleMontant = montantLabel ?? t("totalTtc");
 
   if (rows.length === 0) {
-    return <p className="mt-8 font-sans text-sm text-encre/60">{emptyLabel}</p>;
+    return <p className="mt-8 font-sans text-sm text-encre/75">{emptyLabel}</p>;
   }
 
   const params = { q, statut, depuis, jusqua };
@@ -56,7 +56,7 @@ export async function DocumentList({
     <div className="mt-6 overflow-x-auto">
     <table className="w-full min-w-[560px] border-collapse font-sans text-sm">
       <thead>
-        <tr className="border-b border-encre/20 text-left text-encre/60">
+        <tr className="border-b border-encre/20 text-left text-encre/75">
           <th className={enTeteClass}>
             <Link href={lienTri(params, "numero", tri, ordre)}>
               {t("numero")}{flecheTri("numero", tri, ordre)}

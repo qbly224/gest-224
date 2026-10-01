@@ -43,7 +43,7 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
             </button>
           ))}
         </div>
-        <p className="font-sans text-xs text-encre/60">
+        <p className="font-sans text-xs text-encre/75">
           <Link href="/tarifs" className="underline">
             {t("comparerPlans")}
           </Link>{" "}
@@ -80,7 +80,7 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
               placeholder={t("siretPlaceholder")}
               className={ledgerInputClass}
             />
-            <p className="mt-1 font-sans text-xs text-encre/50">{t("siretAide")}</p>
+            <p className="mt-1 font-sans text-xs text-encre/70">{t("siretAide")}</p>
             <FieldError messages={state.fieldErrors?.siret} />
           </div>
 
@@ -98,7 +98,7 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
               <option value="franchise">{t("regimeFranchise")}</option>
               <option value="normal">{t("regimeNormal")}</option>
             </select>
-            <p className="mt-1 font-sans text-xs text-encre/50">{t("regimeAide")}</p>
+            <p className="mt-1 font-sans text-xs text-encre/70">{t("regimeAide")}</p>
             <FieldError messages={state.fieldErrors?.regimeTva} />
           </div>
         </div>

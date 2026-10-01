@@ -64,7 +64,7 @@ function TotpInactif({ t }: { t: ReturnType<typeof useTranslations> }) {
           />
         )}
         {etat.secret && (
-          <p className="font-mono text-xs text-encre/60">
+          <p className="font-mono text-xs text-encre/75">
             {t("totpCleManuelle")} <span className="select-all">{etat.secret}</span>
           </p>
         )}

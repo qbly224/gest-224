@@ -31,12 +31,12 @@ export default async function RecettesPage() {
       <p className="mt-1 font-sans text-sm text-encre/70">{t("description")}</p>
 
       {recettes.length === 0 ? (
-        <p className="mt-8 font-sans text-sm text-encre/60">{t("emptyDefault")}</p>
+        <p className="mt-8 font-sans text-sm text-encre/75">{t("emptyDefault")}</p>
       ) : (
         <div className="mt-6 overflow-x-auto">
         <table className="w-full min-w-[420px] border-collapse font-sans text-sm">
           <thead>
-            <tr className="border-b border-encre/20 text-left text-encre/60">
+            <tr className="border-b border-encre/20 text-left text-encre/75">
               <th className="py-2 font-medium">{t("colDate")}</th>
               <th className="py-2 font-medium">{t("colDocument")}</th>
               <th className="py-2 text-right font-medium">{t("colMontant")}</th>
@@ -55,7 +55,7 @@ export default async function RecettesPage() {
                   >
                     {r.document.numero}
                   </Link>
-                  <span className="ml-2 text-xs text-encre/50">
+                  <span className="ml-2 text-xs text-encre/70">
                     {tTypes(r.document.type)}
                   </span>
                 </td>

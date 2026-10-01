@@ -15,7 +15,7 @@ export function BoutonSupprimer({
           e.preventDefault();
         }
       }}
-      className="font-sans text-xs text-encre/60 hover:text-encre hover:underline"
+      className="font-sans text-xs text-encre/75 hover:text-encre hover:underline"
     >
       {label}
     </button>

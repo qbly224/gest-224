@@ -38,7 +38,7 @@ export default async function AvoirDetailPage({
       montantLabel={t("montantTtcADeduire")}
       reference={
         avoir.refDocument && (
-          <p className="mt-1 font-sans text-xs italic text-encre/60">
+          <p className="mt-1 font-sans text-xs italic text-encre/75">
             {t("emisSuiteFacture")}{" "}
             <Link href={`/factures/${avoir.refDocument.id}`} className="font-mono underline">
               {avoir.refDocument.numero}

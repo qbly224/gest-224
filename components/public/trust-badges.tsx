@@ -14,11 +14,11 @@ export async function TrustBadges() {
   return (
     <ul className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
       {BADGES.map(({ cle, Icon }, i) => (
-        <li key={cle} className="flex items-center gap-2 font-sans text-xs text-encre/60">
+        <li key={cle} className="flex items-center gap-2 font-sans text-xs text-encre/75">
           <Icon
             size={14}
             strokeWidth={1.75}
-            className={i === 0 ? "badge-pulse-dot text-encre/70" : "text-encre/50"}
+            className={i === 0 ? "badge-pulse-dot text-encre/70" : "text-encre/70"}
           />
           {t(cle)}
         </li>

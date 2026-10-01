@@ -91,7 +91,7 @@ export function EnvoyerActions({
       </button>
       {ouvert && (
         <div className="absolute right-0 z-10 mt-1 w-56 rounded-sm border border-encre/20 bg-ivoire shadow-lg">
-          <p className="border-b border-encre/10 px-4 py-2 font-sans text-xs text-encre/60">
+          <p className="border-b border-encre/10 px-4 py-2 font-sans text-xs text-encre/75">
             {t("telechargezDabord")}
           </p>
           <button

@@ -72,7 +72,7 @@ export function SidebarNav({
     <div className="flex h-full flex-col">
       <div className="border-b border-encre/15 px-5 py-5">
         <span className="font-titre text-lg text-encre">Gest-224</span>
-        <p className="mt-0.5 truncate font-mono text-xs text-encre/60">{raisonSociale}</p>
+        <p className="mt-0.5 truncate font-mono text-xs text-encre/75">{raisonSociale}</p>
       </div>
 
       <form action="/recherche" className="border-b border-encre/15 px-3 py-3">
@@ -80,13 +80,13 @@ export function SidebarNav({
           <Search
             size={15}
             strokeWidth={1.75}
-            className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-encre/40"
+            className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-encre/70"
           />
           <input
             type="search"
             name="q"
             placeholder={t("rechercher")}
-            className="w-full rounded-sm border border-encre/20 bg-white/60 py-1.5 pl-8 pr-2 font-sans text-sm text-encre placeholder:text-encre/40 focus:border-encre focus:outline-none"
+            className="w-full rounded-sm border border-encre/20 bg-white/60 py-1.5 pl-8 pr-2 font-sans text-sm text-encre placeholder:text-encre/70 focus:border-encre focus:outline-none"
           />
         </label>
       </form>
@@ -99,7 +99,7 @@ export function SidebarNav({
             onClick={onNavigate}
             className="flex items-center gap-3 rounded-sm px-3 py-2 font-sans text-sm text-encre/80 hover:bg-encre/10 hover:text-encre"
           >
-            <Icon size={17} strokeWidth={1.75} className="shrink-0 text-encre/60" />
+            <Icon size={17} strokeWidth={1.75} className="shrink-0 text-encre/75" />
             {t(`nav.${cle}`)}
           </Link>
         ))}
@@ -112,12 +112,12 @@ export function SidebarNav({
             surUnDocument ? "font-medium text-encre" : "text-encre/80 hover:text-encre"
           }`}
         >
-          <FolderOpen size={17} strokeWidth={1.75} className="shrink-0 text-encre/60" />
+          <FolderOpen size={17} strokeWidth={1.75} className="shrink-0 text-encre/75" />
           <span className="flex-1 text-left">{t("nav.documents")}</span>
           <ChevronDown
             size={15}
             strokeWidth={1.75}
-            className={`shrink-0 text-encre/50 transition-transform ${documentsOuvert ? "rotate-180" : ""}`}
+            className={`shrink-0 text-encre/70 transition-transform ${documentsOuvert ? "rotate-180" : ""}`}
           />
         </button>
         {documentsOuvert && (
@@ -129,7 +129,7 @@ export function SidebarNav({
                 onClick={onNavigate}
                 className="flex items-center gap-3 rounded-sm px-3 py-1.5 font-sans text-sm text-encre/80 hover:bg-encre/10 hover:text-encre"
               >
-                <Icon size={16} strokeWidth={1.75} className="shrink-0 text-encre/60" />
+                <Icon size={16} strokeWidth={1.75} className="shrink-0 text-encre/75" />
                 {t(`nav.${cle}`)}
               </Link>
             ))}
@@ -143,7 +143,7 @@ export function SidebarNav({
             onClick={onNavigate}
             className="flex items-center gap-3 rounded-sm px-3 py-2 font-sans text-sm text-encre/80 hover:bg-encre/10 hover:text-encre"
           >
-            <Icon size={17} strokeWidth={1.75} className="shrink-0 text-encre/60" />
+            <Icon size={17} strokeWidth={1.75} className="shrink-0 text-encre/75" />
             {t(`nav.${cle}`)}
           </Link>
         ))}
@@ -169,7 +169,7 @@ export function SidebarNav({
           type="submit"
           className="flex w-full items-center gap-3 rounded-sm px-3 py-2 font-sans text-sm text-encre/80 hover:bg-encre/10 hover:text-encre"
         >
-          <LogOut size={17} strokeWidth={1.75} className="shrink-0 text-encre/60" />
+          <LogOut size={17} strokeWidth={1.75} className="shrink-0 text-encre/75" />
           {t("deconnexion")}
         </button>
       </form>
