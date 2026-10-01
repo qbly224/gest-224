@@ -1,0 +1,49 @@
+name: Sauvegarde quotidienne de la base
+
+# Le projet Supabase est sur le plan gratuit, qui ne propose aucune
+# sauvegarde automatique (ni quotidienne, ni PITR) — contrairement aux
+# plans payants. Ce workflow comble ce manque : un pg_dump complet chaque
+# jour, conservé 14 jours en artefact GitHub Actions (gratuit, pas
+# d'infrastructure supplémentaire). Nécessite un secret de dépôt
+# DATABASE_URL, dont la valeur doit être identique à la variable
+# d'environnement DATABASE_URL configurée sur Render pour le service
+# gest-224 (Settings > Environment sur le dashboard Render).
+#
+# Pour restaurer une sauvegarde : télécharger l'artefact depuis l'onglet
+# Actions de ce run, puis `pg_restore --clean --if-exists -d <url> <fichier>`.
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+jobs:
+  sauvegarder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Installer pg_dump 17 (aligné sur la version du serveur Supabase)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl ca-certificates gnupg
+          curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo gpg --dearmor -o /usr/share/keyrings/postgresql.gpg
+          echo "deb [signed-by=/usr/share/keyrings/postgresql.gpg] http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client-17
+
+      - name: Générer le dump
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "::error::Le secret DATABASE_URL n'est pas configuré sur ce dépôt."
+            exit 1
+          fi
+          nom="gest224-$(date -u +%Y%m%d-%H%M%S).dump"
+          pg_dump "$DATABASE_URL" --format=custom --no-owner --no-privileges --file="$nom"
+          echo "NOM_FICHIER=$nom" >> "$GITHUB_ENV"
+
+      - name: Publier la sauvegarde en artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.NOM_FICHIER }}
+          path: ${{ env.NOM_FICHIER }}
+          retention-days: 14
