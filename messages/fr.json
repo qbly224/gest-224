@@ -553,7 +553,9 @@
     },
     "pdfActions": {
       "voirPdf": "Voir le PDF",
-      "telecharger": "Télécharger"
+      "telecharger": "Télécharger",
+      "telechargerFacturX": "Télécharger en Factur-X (bêta)",
+      "facturXAide": "PDF avec les données de facturation intégrées au format XML (Factur-X). Fondation technique : à faire valider par votre prestataire de dématérialisation avant tout envoi officiel."
     },
     "envoyerActions": {
       "envoyer": "Envoyer",

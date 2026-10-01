@@ -1,6 +1,14 @@
 import { getTranslations } from "next-intl/server";
 
-export async function PdfActions({ documentId, numero }: { documentId: string; numero: string }) {
+export async function PdfActions({
+  documentId,
+  numero,
+  avecFacturX = false,
+}: {
+  documentId: string;
+  numero: string;
+  avecFacturX?: boolean;
+}) {
   const t = await getTranslations("app.pdfActions");
   return (
     <>
@@ -19,6 +27,16 @@ export async function PdfActions({ documentId, numero }: { documentId: string; n
       >
         {t("telecharger")}
       </a>
+      {avecFacturX && (
+        <a
+          href={`/api/documents/${documentId}/facturx`}
+          download={`${numero}-facturx.pdf`}
+          title={t("facturXAide")}
+          className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
+        >
+          {t("telechargerFacturX")}
+        </a>
+      )}
     </>
   );
 }

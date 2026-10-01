@@ -36,7 +36,7 @@ export default async function FactureAcompteDetailPage({
       afficherPaiement
       actions={
         <>
-          <PdfActions documentId={facture.id} numero={facture.numero} />
+          <PdfActions documentId={facture.id} numero={facture.numero} avecFacturX />
           <form action={dupliquerDocument.bind(null, facture.id)}>
             <button
               type="submit"

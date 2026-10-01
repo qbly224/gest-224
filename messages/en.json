@@ -553,7 +553,9 @@
     },
     "pdfActions": {
       "voirPdf": "View PDF",
-      "telecharger": "Download"
+      "telecharger": "Download",
+      "telechargerFacturX": "Download as Factur-X (beta)",
+      "facturXAide": "PDF with invoice data embedded as XML (Factur-X). Technical foundation only: have your e-invoicing provider validate it before any official submission."
     },
     "envoyerActions": {
       "envoyer": "Send",

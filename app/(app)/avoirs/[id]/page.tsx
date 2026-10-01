@@ -48,7 +48,7 @@ export default async function AvoirDetailPage({
       }
       actions={
         <>
-          <PdfActions documentId={avoir.id} numero={avoir.numero} />
+          <PdfActions documentId={avoir.id} numero={avoir.numero} avecFacturX />
           <form action={dupliquerDocument.bind(null, avoir.id)}>
             <button
               type="submit"
