@@ -16,6 +16,7 @@ import { paiementBloque, MESSAGE_PAIEMENT_BLOQUE } from "@/lib/paiement-guard";
 import { withToast } from "@/lib/toast";
 import { TITRES_DOCUMENT } from "@/lib/documents/statut-labels";
 import type { ActionState } from "@/lib/actions/types";
+import { enregistrerAudit } from "@/lib/audit";
 
 // Types créés/modifiés via le formulaire générique (lignes à quantité
 // positive). L'avoir a son propre schéma/actions (quantités négatives).
@@ -357,6 +358,14 @@ async function marquerEnvoye(type: TypeDocument, documentId: string): Promise<vo
     where: { id: documentId },
     data: { statut: "envoye", envoyeAt: new Date() },
   });
+  await enregistrerAudit({
+    tenantId: session.tenantId,
+    userId: session.userId,
+    action: "document.envoye",
+    entite: type,
+    entiteId: documentId,
+    details: { numero: doc.numero },
+  });
   revalidatePath(BASE_PATH[type]);
   revalidatePath(`${BASE_PATH[type]}/${documentId}`);
   redirect(withToast(`${BASE_PATH[type]}/${documentId}`, `${TITRES_DOCUMENT[type]} marqué envoyé.`));
@@ -387,6 +396,14 @@ export async function accepterDevis(documentId: string): Promise<void> {
   if (!doc || doc.type !== "devis" || doc.statut !== "envoye") return;
 
   await prisma.document.update({ where: { id: documentId }, data: { statut: "accepte" } });
+  await enregistrerAudit({
+    tenantId: session.tenantId,
+    userId: session.userId,
+    action: "devis.accepte",
+    entite: "devis",
+    entiteId: documentId,
+    details: { numero: doc.numero },
+  });
   revalidatePath("/devis");
   revalidatePath(`/devis/${documentId}`);
   redirect(withToast(`/devis/${documentId}`, "Devis marqué accepté."));
@@ -398,6 +415,14 @@ export async function refuserDevis(documentId: string): Promise<void> {
   if (!doc || doc.type !== "devis" || doc.statut !== "envoye") return;
 
   await prisma.document.update({ where: { id: documentId }, data: { statut: "refuse" } });
+  await enregistrerAudit({
+    tenantId: session.tenantId,
+    userId: session.userId,
+    action: "devis.refuse",
+    entite: "devis",
+    entiteId: documentId,
+    details: { numero: doc.numero },
+  });
   revalidatePath("/devis");
   revalidatePath(`/devis/${documentId}`);
   redirect(withToast(`/devis/${documentId}`, "Devis marqué refusé."));
@@ -409,6 +434,14 @@ export async function marquerBonLivraisonLivre(documentId: string): Promise<void
   if (!doc || doc.type !== "bon_livraison" || doc.statut !== "envoye") return;
 
   await prisma.document.update({ where: { id: documentId }, data: { statut: "livre" } });
+  await enregistrerAudit({
+    tenantId: session.tenantId,
+    userId: session.userId,
+    action: "bon_livraison.livre",
+    entite: "bon_livraison",
+    entiteId: documentId,
+    details: { numero: doc.numero },
+  });
   revalidatePath("/bons-livraison");
   revalidatePath(`/bons-livraison/${documentId}`);
   redirect(withToast(`/bons-livraison/${documentId}`, "Bon de livraison marqué livré."));
@@ -448,7 +481,7 @@ async function clonerVersNouveauType(
     ? new Date(dateEmission.getTime() + options.dateEcheanceJours * 86_400_000)
     : null;
 
-  return prisma.$transaction(async (tx) => {
+  const document = await prisma.$transaction(async (tx) => {
     const numero = await getNextNumero(tx, session.tenantId, nouveauType);
     const nouveauDocument = await tx.document.create({
       data: {
@@ -490,6 +523,17 @@ async function clonerVersNouveauType(
 
     return nouveauDocument;
   });
+
+  await enregistrerAudit({
+    tenantId: session.tenantId,
+    userId: session.userId,
+    action: "document.converti",
+    entite: nouveauType,
+    entiteId: document.id,
+    details: { depuisType: source.type, depuisId: source.id, numero: document.numero },
+  });
+
+  return document;
 }
 
 /** Devis accepté -> facture (raccourci direct, sans passer par BC/BL). */
@@ -633,6 +677,15 @@ export async function creerAvoirDepuisFacture(factureId: string): Promise<void> 
         },
       },
     });
+  });
+
+  await enregistrerAudit({
+    tenantId: session.tenantId,
+    userId: session.userId,
+    action: "avoir.cree",
+    entite: "facture_avoir",
+    entiteId: avoir.id,
+    details: { depuisFactureId: facture.id, numero: avoir.numero },
   });
 
   revalidatePath("/factures");

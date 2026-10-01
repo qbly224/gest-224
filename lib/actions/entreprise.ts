@@ -8,6 +8,7 @@ import { requireSession } from "@/lib/auth";
 import { entrepriseSchema } from "@/lib/validation/entreprise";
 import { withToast } from "@/lib/toast";
 import type { ActionState } from "@/lib/actions/types";
+import { enregistrerAudit } from "@/lib/audit";
 
 const TYPES_LOGO_AUTORISES = new Set([
   "image/png",
@@ -111,6 +112,14 @@ export async function updateEntreprise(
     }
     throw err;
   }
+
+  await enregistrerAudit({
+    tenantId: session.tenantId,
+    userId: session.userId,
+    action: "entreprise.modifiee",
+    entite: "tenant",
+    entiteId: session.tenantId,
+  });
 
   revalidatePath("/entreprise");
   return { success: true };

@@ -10,6 +10,7 @@ import { PLANS } from "@/lib/plans";
 import { paiementBloque, MESSAGE_PAIEMENT_BLOQUE } from "@/lib/paiement-guard";
 import { withToast } from "@/lib/toast";
 import type { ActionState } from "@/lib/actions/types";
+import { enregistrerAudit } from "@/lib/audit";
 
 function parseDepenseForm(formData: FormData) {
   return depenseSchema.safeParse({
@@ -48,7 +49,7 @@ export async function createDepense(
     }
   }
 
-  await prisma.depense.create({
+  const depense = await prisma.depense.create({
     data: {
       tenantId: session.tenantId,
       date: new Date(data.date),
@@ -56,6 +57,14 @@ export async function createDepense(
       montant: data.montant,
       categorie: data.categorie || null,
     },
+  });
+  await enregistrerAudit({
+    tenantId: session.tenantId,
+    userId: session.userId,
+    action: "depense.creee",
+    entite: "depense",
+    entiteId: depense.id,
+    details: { libelle: depense.libelle, montant: Number(depense.montant) },
   });
 
   revalidatePath("/depenses");
@@ -91,6 +100,14 @@ export async function updateDepense(
       categorie: data.categorie || null,
     },
   });
+  await enregistrerAudit({
+    tenantId: session.tenantId,
+    userId: session.userId,
+    action: "depense.modifiee",
+    entite: "depense",
+    entiteId: depenseId,
+    details: { avant: { libelle: existing.libelle, montant: Number(existing.montant) }, apres: { libelle: data.libelle, montant: data.montant } },
+  });
 
   revalidatePath("/depenses");
   revalidatePath("/tableau-de-bord");
@@ -105,6 +122,14 @@ export async function supprimerDepense(depenseId: string): Promise<void> {
   if (!existing) return;
 
   await prisma.depense.delete({ where: { id: depenseId } });
+  await enregistrerAudit({
+    tenantId: session.tenantId,
+    userId: session.userId,
+    action: "depense.supprimee",
+    entite: "depense",
+    entiteId: depenseId,
+    details: { libelle: existing.libelle, montant: Number(existing.montant) },
+  });
 
   revalidatePath("/depenses");
   revalidatePath("/tableau-de-bord");
@@ -149,6 +174,15 @@ export async function marquerDocumentPaye(documentId: string): Promise<void> {
         datePaiement: new Date(),
       },
     });
+  });
+
+  await enregistrerAudit({
+    tenantId: session.tenantId,
+    userId: session.userId,
+    action: "document.paye",
+    entite: document.type,
+    entiteId: documentId,
+    details: { numero: document.numero, montantTtc: Number(document.montantTtc) },
   });
 
   revalidatePath(basePath);

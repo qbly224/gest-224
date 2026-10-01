@@ -4,9 +4,10 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { requirePlatformAdmin } from "@/lib/auth-admin";
 import { estPlanValide } from "@/lib/plans";
+import { enregistrerAudit } from "@/lib/audit";
 
 export async function basculerActifTenant(tenantId: string): Promise<void> {
-  await requirePlatformAdmin();
+  const admin = await requirePlatformAdmin();
 
   const tenant = await prisma.tenant.findUnique({
     where: { id: tenantId },
@@ -18,12 +19,20 @@ export async function basculerActifTenant(tenantId: string): Promise<void> {
     where: { id: tenantId },
     data: { actif: !tenant.actif },
   });
+  await enregistrerAudit({
+    tenantId,
+    userId: admin.userId,
+    action: "admin.tenant.actif_bascule",
+    entite: "tenant",
+    entiteId: tenantId,
+    details: { nouvelEtat: !tenant.actif },
+  });
 
   revalidatePath("/admin");
 }
 
 export async function changerPlanTenant(tenantId: string, formData: FormData): Promise<void> {
-  await requirePlatformAdmin();
+  const admin = await requirePlatformAdmin();
 
   const plan = formData.get("plan");
   if (typeof plan !== "string" || !estPlanValide(plan)) return;
@@ -35,13 +44,21 @@ export async function changerPlanTenant(tenantId: string, formData: FormData): P
     where: { id: tenantId },
     data: { plan, paiementValide: true },
   });
+  await enregistrerAudit({
+    tenantId,
+    userId: admin.userId,
+    action: "admin.tenant.plan_change",
+    entite: "tenant",
+    entiteId: tenantId,
+    details: { nouveauPlan: plan },
+  });
 
   revalidatePath("/admin");
 }
 
 /** Valide ou suspend le paiement d'un tenant sur un plan payant, sans en changer le plan. */
 export async function basculerPaiementValideTenant(tenantId: string): Promise<void> {
-  await requirePlatformAdmin();
+  const admin = await requirePlatformAdmin();
 
   const tenant = await prisma.tenant.findUnique({
     where: { id: tenantId },
@@ -52,6 +69,14 @@ export async function basculerPaiementValideTenant(tenantId: string): Promise<vo
   await prisma.tenant.update({
     where: { id: tenantId },
     data: { paiementValide: !tenant.paiementValide },
+  });
+  await enregistrerAudit({
+    tenantId,
+    userId: admin.userId,
+    action: "admin.tenant.paiement_valide_bascule",
+    entite: "tenant",
+    entiteId: tenantId,
+    details: { nouvelEtat: !tenant.paiementValide },
   });
 
   revalidatePath("/admin");

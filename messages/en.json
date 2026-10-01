@@ -674,7 +674,50 @@
       "relancesTitre": "Automatic payment reminders",
       "relancesDescription": "When enabled, a reminder email is automatically sent to your clients for any overdue invoice (at most once a day per invoice).",
       "relancesActiver": "Enable automatic reminders",
-      "relancesDesactiver": "Disable automatic reminders"
+      "relancesDesactiver": "Disable automatic reminders",
+      "journalAuditTitre": "Audit log",
+      "journalAuditDescription": "Read-only history of significant actions on your documents and accounting (anti-fraud traceability). The last 50 entries are shown.",
+      "journalAuditVide": "No action recorded yet.",
+      "journalAuditColDate": "Date",
+      "journalAuditColAction": "Action",
+      "journalAuditColUtilisateur": "User",
+      "journalAuditUtilisateurSysteme": "System",
+      "journalAuditActions": {
+        "document": {
+          "envoye": "Document sent",
+          "converti": "Document converted",
+          "paye": "Document marked paid"
+        },
+        "devis": {
+          "accepte": "Quote accepted",
+          "refuse": "Quote refused"
+        },
+        "bon_livraison": {
+          "livre": "Delivery note marked delivered"
+        },
+        "avoir": {
+          "cree": "Credit note created"
+        },
+        "depense": {
+          "creee": "Expense created",
+          "modifiee": "Expense updated",
+          "supprimee": "Expense deleted"
+        },
+        "chantier": {
+          "statut_change": "Job status changed",
+          "supprime": "Job deleted"
+        },
+        "entreprise": {
+          "modifiee": "Company profile updated"
+        },
+        "admin": {
+          "tenant": {
+            "actif_bascule": "Account enabled/disabled (admin)",
+            "plan_change": "Plan changed (admin)",
+            "paiement_valide_bascule": "Payment validated/suspended (admin)"
+          }
+        }
+      }
     },
     "abonnement": {
       "titre": "Subscription",

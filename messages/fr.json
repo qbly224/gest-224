@@ -674,7 +674,50 @@
       "relancesTitre": "Relances automatiques",
       "relancesDescription": "Quand cette option est activée, un email de rappel est envoyé automatiquement à vos clients pour toute facture en retard de paiement (au plus une fois par jour et par facture).",
       "relancesActiver": "Activer les relances automatiques",
-      "relancesDesactiver": "Désactiver les relances automatiques"
+      "relancesDesactiver": "Désactiver les relances automatiques",
+      "journalAuditTitre": "Journal d'audit",
+      "journalAuditDescription": "Historique en lecture seule des actions significatives sur vos documents et votre comptabilité (traçabilité anti-fraude). Les 50 dernières entrées sont affichées.",
+      "journalAuditVide": "Aucune action enregistrée pour le moment.",
+      "journalAuditColDate": "Date",
+      "journalAuditColAction": "Action",
+      "journalAuditColUtilisateur": "Utilisateur",
+      "journalAuditUtilisateurSysteme": "Système",
+      "journalAuditActions": {
+        "document": {
+          "envoye": "Document envoyé",
+          "converti": "Document converti",
+          "paye": "Document marqué payé"
+        },
+        "devis": {
+          "accepte": "Devis accepté",
+          "refuse": "Devis refusé"
+        },
+        "bon_livraison": {
+          "livre": "Bon de livraison marqué livré"
+        },
+        "avoir": {
+          "cree": "Avoir créé"
+        },
+        "depense": {
+          "creee": "Dépense créée",
+          "modifiee": "Dépense modifiée",
+          "supprimee": "Dépense supprimée"
+        },
+        "chantier": {
+          "statut_change": "Statut de chantier modifié",
+          "supprime": "Chantier supprimé"
+        },
+        "entreprise": {
+          "modifiee": "Fiche entreprise modifiée"
+        },
+        "admin": {
+          "tenant": {
+            "actif_bascule": "Compte activé/désactivé (admin)",
+            "plan_change": "Plan modifié (admin)",
+            "paiement_valide_bascule": "Paiement validé/suspendu (admin)"
+          }
+        }
+      }
     },
     "abonnement": {
       "titre": "Abonnement",

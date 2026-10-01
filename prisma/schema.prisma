@@ -156,6 +156,7 @@ model Tenant {
   depenses               Depense[]
   facturesRecurrentes    FactureRecurrente[]
   chantiers              Chantier[]
+  auditLogs              AuditLog[]
 
   @@map("tenants")
 }
@@ -187,6 +188,7 @@ model User {
 
   documentsCrees Document[]     @relation("DocumentCreePar")
   resetsMotDePasse ResetMotDePasse[]
+  auditLogs      AuditLog[]
 
   @@index([tenantId])
   @@map("users")
@@ -561,4 +563,36 @@ model Chantier {
 
   @@index([tenantId])
   @@map("chantiers")
+}
+
+// ---------------------------------------------------------------------------
+// Journal d'audit (socle technique de l'auto-certification anti-fraude
+// TVA — critères ISCA : Inaltérabilité, Sécurisation, Conservation,
+// Archivage, art. 88 loi de finances 2016 / art. 286-I-3° bis du CGI)
+// ---------------------------------------------------------------------------
+
+// Trace immuable des actions significatives sur les documents commerciaux
+// et la comptabilité : jamais modifiée ni supprimée après écriture (aucune
+// action update/delete n'est exposée dessus dans le code applicatif).
+// `userId` est nul pour les actions système (jobs planifiés).
+model AuditLog {
+  id        String   @id @default(uuid())
+
+  tenantId  String   @map("tenant_id")
+  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  userId    String?  @map("user_id")
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  // Identifiant d'action stable, ex. "document.envoye", "document.paye",
+  // "depense.supprimee", "admin.plan_modifie" — voir lib/audit.ts.
+  action    String
+  entite    String?
+  entiteId  String?  @map("entite_id")
+  details   Json?
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([tenantId, createdAt])
+  @@map("audit_logs")
 }

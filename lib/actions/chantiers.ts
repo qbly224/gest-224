@@ -8,6 +8,7 @@ import { chantierSchema } from "@/lib/validation/chantier";
 import { withToast } from "@/lib/toast";
 import type { ActionState } from "@/lib/actions/types";
 import type { StatutChantier } from "@prisma/client";
+import { enregistrerAudit } from "@/lib/audit";
 
 function parseForm(formData: FormData) {
   return chantierSchema.safeParse({
@@ -129,6 +130,14 @@ export async function changerStatutChantier(
       dateRealisation: statut === "fait" ? existing.dateRealisation ?? new Date() : null,
     },
   });
+  await enregistrerAudit({
+    tenantId: session.tenantId,
+    userId: session.userId,
+    action: "chantier.statut_change",
+    entite: "chantier",
+    entiteId: chantierId,
+    details: { avant: existing.statut, apres: statut },
+  });
 
   revalidatePath("/chantiers");
   redirect(withToast("/chantiers", "Statut mis à jour."));
@@ -142,6 +151,14 @@ export async function supprimerChantier(chantierId: string): Promise<void> {
   if (!existing) return;
 
   await prisma.chantier.delete({ where: { id: chantierId } });
+  await enregistrerAudit({
+    tenantId: session.tenantId,
+    userId: session.userId,
+    action: "chantier.supprime",
+    entite: "chantier",
+    entiteId: chantierId,
+    details: { titre: existing.titre },
+  });
 
   revalidatePath("/chantiers");
   redirect(withToast("/chantiers", "Chantier supprimé."));
