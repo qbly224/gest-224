@@ -6,6 +6,9 @@ import type { RoleUtilisateur } from "@prisma/client";
 const COOKIE_NAME = "gest224_session";
 const SESSION_DURATION_SECONDS = 60 * 60 * 24 * 7; // 7 jours
 
+const COOKIE_2FA_PENDING = "gest224_2fa_pending";
+const DUREE_2FA_PENDING_SECONDES = 5 * 60; // 5 minutes
+
 const SECRET_DEV_PAR_DEFAUT =
   "dev-secret-change-me-in-production-please-use-a-long-random-string";
 
@@ -84,4 +87,49 @@ export async function getSession(): Promise<SessionPayload | null> {
 export async function destroySession() {
   const cookieStore = await cookies();
   cookieStore.delete(COOKIE_NAME);
+}
+
+/**
+ * Jeton intermédiaire, de très courte durée, posé une fois le mot de passe
+ * vérifié pour un compte avec la double authentification activée : il ne
+ * donne accès à rien tant que le code TOTP (ou un code de secours) n'a pas
+ * été validé à son tour. Cookie distinct de la session complète pour qu'il
+ * ne puisse jamais être confondu avec elle par le reste de l'application.
+ */
+export async function createPending2faSession(userId: string) {
+  const token = await new SignJWT({ userId, type: "2fa_pending" })
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .setExpirationTime(`${DUREE_2FA_PENDING_SECONDES}s`)
+    .sign(getSecretKey());
+
+  const cookieStore = await cookies();
+  cookieStore.set(COOKIE_2FA_PENDING, token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: DUREE_2FA_PENDING_SECONDES,
+  });
+}
+
+export async function getPending2faSession(): Promise<{ userId: string } | null> {
+  const cookieStore = await cookies();
+  const token = cookieStore.get(COOKIE_2FA_PENDING)?.value;
+  if (!token) return null;
+
+  try {
+    const { payload } = await jwtVerify(token, getSecretKey());
+    if (payload.type !== "2fa_pending" || typeof payload.userId !== "string") {
+      return null;
+    }
+    return { userId: payload.userId };
+  } catch {
+    return null;
+  }
+}
+
+export async function destroyPending2faSession() {
+  const cookieStore = await cookies();
+  cookieStore.delete(COOKIE_2FA_PENDING);
 }

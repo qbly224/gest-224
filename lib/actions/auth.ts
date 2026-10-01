@@ -5,7 +5,13 @@ import { redirect } from "next/navigation";
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { hashPassword, verifyPassword } from "@/lib/auth";
-import { createSession, destroySession } from "@/lib/session";
+import {
+  createSession,
+  destroySession,
+  createPending2faSession,
+  getPending2faSession,
+  destroyPending2faSession,
+} from "@/lib/session";
 import {
   signUpSchema,
   loginSchema,
@@ -16,6 +22,8 @@ import { verifierLimite } from "@/lib/rate-limit";
 import { getClientIp } from "@/lib/client-ip";
 import { envoyerEmail } from "@/lib/email";
 import { creerUrlCheckout } from "@/lib/actions/paiement";
+import { verifierCodeTotp } from "@/lib/totp";
+import { enregistrerAudit } from "@/lib/audit";
 import type { ActionState } from "@/lib/actions/types";
 
 const DUREE_TOKEN_RESET_MS = 60 * 60 * 1000; // 1 heure
@@ -224,6 +232,13 @@ export async function signIn(
     return { error: "Email ou mot de passe incorrect." };
   }
 
+  if (user.totpEnabled) {
+    // Le mot de passe est correct mais la session complète n'est pas encore
+    // ouverte : un second facteur est requis avant tout accès.
+    await createPending2faSession(user.id);
+    redirect("/connexion/verification");
+  }
+
   await prisma.user.update({
     where: { id: user.id },
     data: { lastLoginAt: new Date() },
@@ -241,6 +256,83 @@ export async function signIn(
 export async function signOut(): Promise<void> {
   await destroySession();
   redirect("/connexion");
+}
+
+/**
+ * Seconde étape de connexion pour un compte avec la double authentification
+ * activée : valide le code TOTP (ou, à défaut, un code de secours à usage
+ * unique) contre le compte identifié par le jeton temporaire posé par
+ * signIn(), puis ouvre la session complète.
+ */
+export async function verifierTotpConnexion(
+  _prevState: ActionState,
+  formData: FormData
+): Promise<ActionState> {
+  const pending = await getPending2faSession();
+  if (!pending) {
+    redirect("/connexion");
+  }
+
+  const code = String(formData.get("code") ?? "").trim();
+  const ip = await getClientIp();
+
+  // Fenêtre stricte : un code TOTP à 6 chiffres n'offre qu'un million de
+  // combinaisons, bien moins qu'un mot de passe — la limite doit être plus
+  // sévère que pour signIn().
+  if (
+    !verifierLimite(`totp-ip:${ip}`, 10, 15 * 60 * 1000) ||
+    !verifierLimite(`totp-user:${pending.userId}`, 6, 15 * 60 * 1000)
+  ) {
+    return { error: "Trop de tentatives. Réessayez dans quelques minutes." };
+  }
+
+  const user = await prisma.user.findUnique({ where: { id: pending.userId } });
+  if (!user || !user.actif || !user.totpEnabled || !user.totpSecret) {
+    await destroyPending2faSession();
+    redirect("/connexion");
+  }
+
+  let valide = verifierCodeTotp(user.totpSecret, code);
+  let hashCodeSecoursUtilise: string | null = null;
+
+  if (!valide) {
+    const codeNormalise = code.toUpperCase();
+    for (const hash of user.totpBackupCodes) {
+      if (await verifyPassword(codeNormalise, hash)) {
+        valide = true;
+        hashCodeSecoursUtilise = hash;
+        break;
+      }
+    }
+  }
+
+  if (!valide) {
+    return { error: "Code invalide." };
+  }
+
+  await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      lastLoginAt: new Date(),
+      ...(hashCodeSecoursUtilise
+        ? { totpBackupCodes: user.totpBackupCodes.filter((h) => h !== hashCodeSecoursUtilise) }
+        : {}),
+    },
+  });
+
+  if (hashCodeSecoursUtilise) {
+    await enregistrerAudit({
+      tenantId: user.tenantId,
+      userId: user.id,
+      action: "securite.code_secours_utilise",
+      entite: "user",
+      entiteId: user.id,
+    });
+  }
+
+  await destroyPending2faSession();
+  await createSession({ userId: user.id, tenantId: user.tenantId, role: user.role });
+  redirect("/tableau-de-bord");
 }
 
 /**

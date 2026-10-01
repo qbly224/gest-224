@@ -5,19 +5,24 @@ import { EntrepriseForm } from "@/components/entreprise/entreprise-form";
 import { SupprimerCompteForm } from "@/components/entreprise/supprimer-compte-form";
 import { basculerRelancesActivees } from "@/lib/actions/entreprise";
 import { formatDate } from "@/lib/format";
+import { TotpSection } from "@/components/securite/totp-section";
 import type { Locale } from "@/i18n/config";
 
 export default async function EntreprisePage() {
   const session = await requireSession();
   const t = await getTranslations("app.entreprise");
   const locale = (await getLocale()) as Locale;
-  const [tenant, journalAudit] = await Promise.all([
+  const [tenant, journalAudit, utilisateur] = await Promise.all([
     prisma.tenant.findUniqueOrThrow({ where: { id: session.tenantId } }),
     prisma.auditLog.findMany({
       where: { tenantId: session.tenantId },
       include: { user: { select: { prenom: true, nom: true } } },
       orderBy: { createdAt: "desc" },
       take: 50,
+    }),
+    prisma.user.findUniqueOrThrow({
+      where: { id: session.userId },
+      select: { totpEnabled: true },
     }),
   ]);
 
@@ -47,6 +52,12 @@ export default async function EntreprisePage() {
             {tenant.relancesActivees ? t("relancesDesactiver") : t("relancesActiver")}
           </button>
         </form>
+      </div>
+
+      <div className="mt-8 rounded-sm border border-encre/20 bg-white/40 p-6">
+        <h2 className="font-titre text-lg text-encre">{t("totpTitre")}</h2>
+        <p className="mt-1 font-sans text-sm text-encre/70">{t("totpDescription")}</p>
+        <TotpSection totpEnabled={utilisateur.totpEnabled} />
       </div>
 
       <div className="mt-8 rounded-sm border border-encre/20 bg-white/40 p-6">

@@ -265,6 +265,13 @@
       "sousTitre": "Choisissez un nouveau mot de passe pour votre compte.",
       "nouveauMotDePasse": "Nouveau mot de passe",
       "reinitialiserLeMotDePasse": "Réinitialiser le mot de passe"
+    },
+    "verificationTotp": {
+      "titre": "Vérification en deux étapes",
+      "sousTitre": "Saisissez le code généré par votre application d'authentification, ou l'un de vos codes de secours.",
+      "champCode": "Code",
+      "aide": "Code à 6 chiffres, ou un code de secours au format XXXXX-XXXXX.",
+      "valider": "Valider"
     }
   },
   "plans": {
@@ -716,8 +723,28 @@
             "plan_change": "Plan modifié (admin)",
             "paiement_valide_bascule": "Paiement validé/suspendu (admin)"
           }
+        },
+        "securite": {
+          "2fa_active": "Double authentification activée",
+          "2fa_desactive": "Double authentification désactivée",
+          "codes_secours_regeneres": "Codes de secours régénérés",
+          "code_secours_utilise": "Connexion via un code de secours"
         }
-      }
+      },
+      "totpTitre": "Double authentification (2FA)",
+      "totpDescription": "Protège votre compte avec un code à usage unique généré par une application d'authentification (Google Authenticator, Authy, 1Password...), en plus de votre mot de passe.",
+      "totpActiver": "Activer la double authentification",
+      "totpActivee": "La double authentification est activée sur votre compte.",
+      "totpScanDescription": "Scannez ce QR code avec votre application d'authentification, puis saisissez le code à 6 chiffres qu'elle affiche pour confirmer.",
+      "totpCleManuelle": "Ou saisissez cette clé manuellement :",
+      "totpChampCode": "Code à 6 chiffres",
+      "totpConfirmer": "Confirmer et activer",
+      "totpCodesSecoursTitre": "Vos codes de secours",
+      "totpCodesSecoursDescription": "Notez-les et conservez-les en lieu sûr : chacun ne peut être utilisé qu'une seule fois pour vous connecter si vous perdez l'accès à votre application d'authentification. Ils ne seront plus jamais affichés.",
+      "totpCodesNotes": "J'ai noté mes codes de secours en lieu sûr.",
+      "totpRegenererCodes": "Régénérer les codes de secours",
+      "totpDesactiver": "Désactiver la double authentification",
+      "totpConfirmerMotDePasse": "Confirmer avec votre mot de passe"
     },
     "abonnement": {
       "titre": "Abonnement",

@@ -183,6 +183,15 @@ model User {
   // avant cette date est refusée par requireSession(), ce qui invalide tous
   // les jetons en circulation dès qu'un mot de passe est réinitialisé.
   passwordChangedAt DateTime?   @map("password_changed_at")
+
+  // Double authentification (TOTP, RFC 6238). Le secret n'est présent et
+  // significatif que si totpEnabled vaut true ; sinon il peut rester d'un
+  // enrôlement abandonné sans donner accès à rien. Codes de secours stockés
+  // hachés (bcrypt) — retirés du tableau à l'usage (usage unique chacun).
+  totpSecret        String?     @map("totp_secret")
+  totpEnabled       Boolean     @default(false) @map("totp_enabled")
+  totpBackupCodes   String[]    @map("totp_backup_codes")
+
   createdAt     DateTime        @default(now()) @map("created_at")
   updatedAt     DateTime        @updatedAt @map("updated_at")
 
