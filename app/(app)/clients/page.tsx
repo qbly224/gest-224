@@ -159,12 +159,12 @@ export default async function ClientsPage({
                       href={`/clients/${client.id}`}
                       className="text-encre hover:underline"
                     >
-                      {label || "—"}
+                      {label || "-"}
                     </Link>
                   </td>
                   <td className="py-3 text-encre/70">{client.ville}</td>
                   <td className="py-3 text-encre/70">
-                    {client.email ?? "—"}
+                    {client.email ?? "-"}
                   </td>
                   <td className="py-3 text-encre/70">
                     {client.telephone ? (
@@ -176,7 +176,7 @@ export default async function ClientsPage({
                         {client.telephone}
                       </a>
                     ) : (
-                      "—"
+                      "-"
                     )}
                   </td>
                   <td className="py-3">

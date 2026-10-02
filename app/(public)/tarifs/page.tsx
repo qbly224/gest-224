@@ -45,7 +45,7 @@ export default async function TarifsPage() {
                 <ul className="mt-6 flex-1 space-y-2 font-sans text-sm text-encre/80">
                   {tPlans.raw(`${plan.id}.fonctionnalites`).map((f: string) => (
                     <li key={f} className="flex gap-2">
-                      <span className="text-encre/70">—</span>
+                      <span className="text-encre/70">-</span>
                       <span>{f}</span>
                     </li>
                   ))}

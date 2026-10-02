@@ -47,7 +47,7 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
           <Link href="/tarifs" className="underline">
             {t("comparerPlans")}
           </Link>{" "}
-          — {t("modifiablePlus")}
+          - {t("modifiablePlus")}
         </p>
       </fieldset>
 

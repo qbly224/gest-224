@@ -1,6 +1,6 @@
 import "server-only";
 
-// Limiteur en mémoire, par processus — suffisant pour le déploiement à une
+// Limiteur en mémoire, par processus - suffisant pour le déploiement à une
 // seule instance documenté dans le README. À remplacer par un store partagé
 // (Redis ou équivalent) si l'application est scalée horizontalement, sinon
 // chaque instance aurait son propre compteur et la limite globale ne serait

@@ -615,7 +615,7 @@ export async function convertirBonLivraisonEnFacture(bonLivraisonId: string): Pr
 /**
  * Facture (déjà émise) -> avoir : clone les lignes avec les quantités
  * inversées (le prix unitaire reste positif, comme au catalogue), pour que
- * les totaux de l'avoir ressortent négatifs — le montant à déduire. La
+ * les totaux de l'avoir ressortent négatifs - le montant à déduire. La
  * facture d'origine n'est pas marquée "convertie" : plusieurs avoirs
  * peuvent être émis contre une même facture (avoirs partiels successifs).
  */

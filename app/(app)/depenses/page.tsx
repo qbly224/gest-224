@@ -60,7 +60,7 @@ export default async function DepensesPage() {
                     {d.libelle}
                   </Link>
                 </td>
-                <td className="py-3 text-encre/70">{d.categorie ?? "—"}</td>
+                <td className="py-3 text-encre/70">{d.categorie ?? "-"}</td>
                 <td className="py-3 text-right font-mono text-encre">
                   {formatEuros(Number(d.montant), locale)}
                 </td>

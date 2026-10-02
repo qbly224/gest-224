@@ -123,16 +123,16 @@ export default async function ChantiersPage({
                     ? c.client.type === "professionnel"
                       ? c.client.raisonSociale
                       : `${c.client.prenom ?? ""} ${c.client.nom ?? ""}`.trim()
-                    : "—"}
+                    : "-"}
                 </td>
                 <td className="py-3 font-mono text-xs text-encre/70">
-                  {c.dateDebut ? formatDate(c.dateDebut, locale) : "—"}
+                  {c.dateDebut ? formatDate(c.dateDebut, locale) : "-"}
                 </td>
                 <td className="py-3 font-mono text-xs text-encre/70">
-                  {c.dateEcheance ? formatDate(c.dateEcheance, locale) : "—"}
+                  {c.dateEcheance ? formatDate(c.dateEcheance, locale) : "-"}
                 </td>
                 <td className="py-3 text-right font-mono text-encre/80">
-                  {c.montant ? formatEuros(Number(c.montant), locale) : "—"}
+                  {c.montant ? formatEuros(Number(c.montant), locale) : "-"}
                 </td>
                 <td className="py-3">
                   <form
@@ -141,7 +141,7 @@ export default async function ChantiersPage({
                   >
                     <select
                       name="statut"
-                      aria-label={`${t("colStatut")} — ${c.titre}`}
+                      aria-label={`${t("colStatut")} - ${c.titre}`}
                       defaultValue={c.statut}
                       className="rounded-sm border border-encre/30 bg-transparent px-1 py-0.5 font-sans text-xs text-encre"
                     >

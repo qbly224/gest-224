@@ -55,7 +55,7 @@ export async function envoyerRelancesFacturesEnRetard(): Promise<{
     try {
       await envoyerEmail(
         facture.client.email,
-        `Rappel — facture ${facture.numero} en retard de paiement`,
+        `Rappel - facture ${facture.numero} en retard de paiement`,
         `Bonjour,\n\n` +
           `Sauf erreur de notre part, la facture n° ${facture.numero} d'un montant de ` +
           `${formatEuros(Number(facture.montantTtc), "fr")} TTC, émise par ${facture.tenant.raisonSociale}, ` +

@@ -1,7 +1,7 @@
 name: Sauvegarde quotidienne de la base
 
 # Le projet Supabase est sur le plan gratuit, qui ne propose aucune
-# sauvegarde automatique (ni quotidienne, ni PITR) — contrairement aux
+# sauvegarde automatique (ni quotidienne, ni PITR) - contrairement aux
 # plans payants. Ce workflow comble ce manque : un pg_dump complet chaque
 # jour, conservé 14 jours en artefact GitHub Actions (gratuit, pas
 # d'infrastructure supplémentaire). Nécessite un secret de dépôt

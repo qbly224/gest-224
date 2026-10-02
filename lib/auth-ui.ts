@@ -1,4 +1,4 @@
-// Styles du registre — variante distincte des champs de formulaire standards
+// Styles du registre - variante distincte des champs de formulaire standards
 // (lib/ui.ts), réservée aux pages d'authentification : champs "à écrire sur
 // la ligne" plutôt qu'encadrés, pour prolonger le cachet + filet de marge du
 // layout (app/(auth)/layout.tsx).

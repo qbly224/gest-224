@@ -39,7 +39,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # pour $HOME "/nonexistent" (déjà visible dans nos logs sur des erreurs npm
 # sans rapport). Chromium en hérite pour la base de données de son
 # gestionnaire de crash (chrome_crashpad_handler) et échoue au lancement
-# avec "chrome_crashpad_handler: --database is required" — confirmé en
+# avec "chrome_crashpad_handler: --database is required" - confirmé en
 # lisant les logs d'erreur de production.
 RUN addgroup --system --gid 1001 nodejs \
     && adduser --system --uid 1001 --ingroup nodejs --home /home/nextjs nextjs \

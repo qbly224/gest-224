@@ -8,7 +8,7 @@ const COULEUR_DEPENSES = "#eb6834";
 
 /**
  * Graphique en barres groupées (recettes / dépenses par mois), en SVG
- * statique — pas de bibliothèque de graphiques, pas de JS côté client.
+ * statique - pas de bibliothèque de graphiques, pas de JS côté client.
  * L'info-bulle native (<title>) porte le détail exact ; le tableau qui suit
  * ce graphique sur le tableau de bord reste la vue exhaustive.
  */
@@ -83,7 +83,7 @@ export async function GraphiqueMensuel({ mois }: { mois: MoisAgregat[] }) {
                 rx={4}
                 fill={COULEUR_RECETTES}
               >
-                <title>{`${m.label} — ${t("recettes")} : ${formatEuros(m.recettes)}`}</title>
+                <title>{`${m.label} - ${t("recettes")} : ${formatEuros(m.recettes)}`}</title>
               </rect>
               <rect
                 x={xGroupe + largeurBarre + espaceEntreBarres}
@@ -93,7 +93,7 @@ export async function GraphiqueMensuel({ mois }: { mois: MoisAgregat[] }) {
                 rx={4}
                 fill={COULEUR_DEPENSES}
               >
-                <title>{`${m.label} — ${t("depenses")} : ${formatEuros(m.depenses)}`}</title>
+                <title>{`${m.label} - ${t("depenses")} : ${formatEuros(m.depenses)}`}</title>
               </rect>
               <text
                 x={i * largeurGroupe + largeurGroupe / 2}

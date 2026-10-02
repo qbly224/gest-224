@@ -7,7 +7,7 @@ import type { SessionPayload } from "@/lib/session";
 /**
  * Garde d'accès aux pages/actions de gestion de la plateforme (tous tenants
  * confondus). Le drapeau `estAdminPlateforme` n'est volontairement pas
- * porté par le jeton JWT — il est relu en base à chaque appel, comme
+ * porté par le jeton JWT - il est relu en base à chaque appel, comme
  * `actif`/`passwordChangedAt` dans requireSession(), pour qu'une révocation
  * prenne effet immédiatement sans attendre l'expiration de la session.
  */

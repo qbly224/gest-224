@@ -86,7 +86,7 @@ export function buildClientSnapshot(client: Client): ClientSnapshot {
 
 export function nomAffichageClientSnapshot(client: ClientSnapshot): string {
   if (client.type === "professionnel") {
-    return client.raisonSociale ?? "—";
+    return client.raisonSociale ?? "-";
   }
-  return [client.civilite, client.prenom, client.nom].filter(Boolean).join(" ") || "—";
+  return [client.civilite, client.prenom, client.nom].filter(Boolean).join(" ") || "-";
 }

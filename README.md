@@ -38,7 +38,7 @@ Page d'accueil (`/`, redirige vers `/tableau-de-bord` si déjà connecté),
 communs (`components/public/`). **`/mentions-legales` contient un espace
 réservé clairement signalé** : l'identité légale de l'éditeur (raison
 sociale, SIRET, adresse) n'a pas été fournie et doit être complétée avant
-toute ouverture commerciale — de même pour la section « Responsable du
+toute ouverture commerciale - de même pour la section « Responsable du
 traitement » de `/confidentialite`. Le reste de ces pages (hébergeurs,
 description du Service, conditions de vente/résiliation, droits RGPD) est
 rédigé mais **n'a pas été relu par un professionnel du droit** ; à faire
@@ -52,12 +52,12 @@ lien à usage unique valable 1h → `/reinitialiser-mot-de-passe/[token]`), qui
 invalide automatiquement toutes les sessions ouvertes avant le changement
 (le jeton JWT est comparé à `passwordChangedAt` à chaque page protégée).
 Sans `RESEND_API_KEY` configurée, le lien est journalisé dans les logs
-serveur au lieu d'être envoyé par email — pratique en développement, à
+serveur au lieu d'être envoyé par email - pratique en développement, à
 brancher sur un vrai fournisseur avant d'accueillir de vrais clients (voir
 `lib/email.ts`).
 
 Aussi en place : limitation de tentatives sur connexion/inscription/demande
-de réinitialisation (en mémoire, par processus — donc par instance ; à
+de réinitialisation (en mémoire, par processus - donc par instance ; à
 remplacer par un store partagé type Redis si l'app est un jour scalée
 horizontalement), revérification de `actif` (utilisateur et entreprise) à
 chaque page protégée, en-têtes de sécurité HTTP, limites de taille sur tous
@@ -75,7 +75,7 @@ client, un article et un premier devis ne sont pas créés.
 **Paiement (Stripe).** Un compte est toujours créé en plan gratuit ; choisir
 un plan payant (à l'inscription ou depuis `/abonnement`) redirige vers une
 session Stripe Checkout hébergée. `Tenant.plan` n'est jamais mis à jour
-directement par une action utilisateur pour un plan payant — seul le
+directement par une action utilisateur pour un plan payant - seul le
 webhook `app/api/stripe/webhook/route.ts` (événements
 `checkout.session.completed` et `customer.subscription.deleted`) ou
 `lib/actions/paiement.ts` (changement d'abonnement existant, résiliation)
@@ -87,7 +87,7 @@ factures, résiliation en libre-service) est accessible depuis
 Variables requises (voir `.env.example`) : `STRIPE_SECRET_KEY`,
 `STRIPE_WEBHOOK_SECRET`, `STRIPE_PRICE_STARTER`, `STRIPE_PRICE_PRO`. Sans
 `STRIPE_SECRET_KEY`, le passage à un plan payant échoue proprement (message
-d'erreur) — le plan gratuit et le reste de l'application fonctionnent
+d'erreur) - le plan gratuit et le reste de l'application fonctionnent
 normalement.
 
 ### Panneau d'administration
@@ -106,7 +106,7 @@ Chaque entreprise peut ajouter un logo (`/entreprise`, PNG/JPEG/WebP/SVG,
 l'affichage à l'écran, figé dans le snapshot de chaque document comme le
 reste de l'identité émetteur. Sur la fiche de chaque document : un vrai
 téléchargement PDF (en plus de l'aperçu) et un bouton « Envoyer » qui
-ouvre Gmail ou WhatsApp pré-rempli avec les infos du document — ni l'un ni
+ouvre Gmail ou WhatsApp pré-rempli avec les infos du document - ni l'un ni
 l'autre ne permettant de joindre un fichier via un simple lien, le message
 rappelle de joindre le PDF déjà téléchargé.
 
@@ -155,7 +155,7 @@ npm run dev
 ## Déploiement (Docker)
 
 L'image (`Dockerfile`, multi-stage) embarque Chromium pour la génération
-PDF — aucune dépendance externe à installer sur la plateforme cible tant
+PDF - aucune dépendance externe à installer sur la plateforme cible tant
 qu'elle exécute des conteneurs Docker (Railway, Render, Fly.io, VPS...).
 
 **Variables d'environnement requises en production :**
@@ -163,9 +163,9 @@ qu'elle exécute des conteneurs Docker (Railway, Render, Fly.io, VPS...).
 | Variable | Description |
 |---|---|
 | `DATABASE_URL` | URL de connexion à votre PostgreSQL de production |
-| `SESSION_SECRET` | Chaîne aléatoire longue — générer avec `openssl rand -base64 32` |
-| `APP_URL` | URL publique de l'app (ex. `https://app.gest224.fr`) — utilisée dans les liens envoyés par email |
-| `RESEND_API_KEY` / `RESEND_FROM_EMAIL` | Optionnelles mais nécessaires pour que la réinitialisation de mot de passe envoie un vrai email (sinon le lien est seulement journalisé — inutilisable par un vrai client) |
+| `SESSION_SECRET` | Chaîne aléatoire longue - générer avec `openssl rand -base64 32` |
+| `APP_URL` | URL publique de l'app (ex. `https://app.gest224.fr`) - utilisée dans les liens envoyés par email |
+| `RESEND_API_KEY` / `RESEND_FROM_EMAIL` | Optionnelles mais nécessaires pour que la réinitialisation de mot de passe envoie un vrai email (sinon le lien est seulement journalisé - inutilisable par un vrai client) |
 
 `CHROMIUM_EXECUTABLE_PATH` et `PORT` sont déjà définis dans l'image, pas
 besoin de les régler sur la plateforme.
@@ -177,7 +177,7 @@ besoin de les régler sur la plateforme.
 docker build -t gest-224 .
 
 # 2. Appliquer les migrations sur la base de production (une seule fois,
-#    puis à chaque nouvelle migration — jamais en parallèle sur plusieurs
+#    puis à chaque nouvelle migration - jamais en parallèle sur plusieurs
 #    instances)
 docker run --rm -e DATABASE_URL="$DATABASE_URL" gest-224 npx prisma migrate deploy
 
@@ -194,7 +194,7 @@ démarrage, plutôt que dans le `CMD` du conteneur (évite les migrations
 concurrentes si la plateforme démarre plusieurs instances).
 
 Un point de santé est exposé sur `GET /api/health` (vérifie aussi la
-connexion à la base) — à utiliser comme healthcheck de la plateforme.
+connexion à la base) - à utiliser comme healthcheck de la plateforme.
 
 Pour tester l'image en local avant de déployer : `docker compose up --build`
 (nécessite `DATABASE_URL` et `SESSION_SECRET` dans l'environnement ou un
@@ -204,7 +204,7 @@ fichier `.env` à la racine, lu automatiquement par Docker Compose).
 n'ont pas pu être exécutés ici faute de démon Docker disponible (seul le
 client Docker est installé). Le Dockerfile a été relu attentivement et
 `npm ci`/`npm run build` valident individuellement en dehors de Docker,
-mais la première construction réelle de l'image reste à faire par vous —
+mais la première construction réelle de l'image reste à faire par vous -
 signalez toute erreur rencontrée pour que je corrige.
 
 ## Direction visuelle

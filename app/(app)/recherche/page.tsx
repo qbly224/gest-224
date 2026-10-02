@@ -92,7 +92,7 @@ export default async function RecherchePage({
                         ? c.raisonSociale
                         : `${c.prenom ?? ""} ${c.nom ?? ""}`.trim()}
                     </Link>
-                    <span className="text-encre/70"> — {c.ville}</span>
+                    <span className="text-encre/70"> - {c.ville}</span>
                   </li>
                 ))}
               </ul>
@@ -117,8 +117,8 @@ export default async function RecherchePage({
                     </Link>
                     <span className="text-encre/70">
                       {" "}
-                      — {tTypes(d.type)} —{" "}
-                      {nomAffichageClientSnapshot(d.clientSnapshot as unknown as ClientSnapshot)} —{" "}
+                      - {tTypes(d.type)} -{" "}
+                      {nomAffichageClientSnapshot(d.clientSnapshot as unknown as ClientSnapshot)} -{" "}
                       {tStatuts(d.statut)}
                     </span>
                   </li>

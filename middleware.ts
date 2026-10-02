@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest, type NextFetchEvent } from "next/server";
 
 // Mesure d'audience du site public, strictement anonyme : ni cookie, ni
-// adresse IP, ni identifiant ne sont envoyés ou conservés — seuls le
+// adresse IP, ni identifiant ne sont envoyés ou conservés - seuls le
 // chemin visité et le domaine du site référent (le cas échéant) sont
 // transmis à /api/analytics/pageview, en tâche de fond (event.waitUntil),
 // sans jamais retarder la réponse au visiteur.

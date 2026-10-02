@@ -34,7 +34,7 @@ function hasherToken(token: string): string {
 
 // Hash bcrypt fixe (mot de passe arbitraire, non secret) utilisé pour que la
 // comparaison prenne le même temps que pour un compte existant, même quand
-// l'email n'existe pas — sans ça, l'absence de comparaison bcrypt sur un
+// l'email n'existe pas - sans ça, l'absence de comparaison bcrypt sur un
 // email inconnu rend le temps de réponse distinguable et permet d'énumérer
 // les comptes enregistrés.
 const HASH_FACTICE = "$2b$12$/fqFA9DHUx7uqv4XnoBCa.IvB52eq4/Tem7TTORGVqOkUe6nr3BuC";
@@ -95,7 +95,7 @@ export async function signUp(
           // Toujours créé en gratuit : un plan payant choisi sur la page
           // tarifs n'est appliqué qu'après paiement réel (redirection vers
           // Stripe Checkout juste après la création de session ci-dessous),
-          // jamais directement ici — sans quoi n'importe qui pourrait
+          // jamais directement ici - sans quoi n'importe qui pourrait
           // s'inscrire directement sur Pro sans jamais payer.
           plan: "gratuit",
           siret: data.siret,
@@ -124,7 +124,7 @@ export async function signUp(
       // suite à quoi ressemble l'app sans avoir à d'abord tout créer à la
       // main. Pas de devis de démo : les documents ne sont jamais
       // supprimables (traçabilité comptable) et compteraient dans le quota
-      // mensuel du plan gratuit — un cadeau empoisonné pour qui débute.
+      // mensuel du plan gratuit - un cadeau empoisonné pour qui débute.
       await tx.client.create({
         data: {
           tenantId: tenant.id,
@@ -277,7 +277,7 @@ export async function verifierTotpConnexion(
   const ip = await getClientIp();
 
   // Fenêtre stricte : un code TOTP à 6 chiffres n'offre qu'un million de
-  // combinaisons, bien moins qu'un mot de passe — la limite doit être plus
+  // combinaisons, bien moins qu'un mot de passe - la limite doit être plus
   // sévère que pour signIn().
   if (
     !verifierLimite(`totp-ip:${ip}`, 10, 15 * 60 * 1000) ||

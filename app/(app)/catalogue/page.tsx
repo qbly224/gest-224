@@ -71,7 +71,7 @@ export default async function CataloguePage() {
                 </td>
                 {tenant.regimeTva === "normal" && (
                   <td className="py-3 font-mono text-encre/70">
-                    {article.tauxTva ? `${article.tauxTva.toString()} %` : "—"}
+                    {article.tauxTva ? `${article.tauxTva.toString()} %` : "-"}
                   </td>
                 )}
                 <td className="py-3">

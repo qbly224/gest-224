@@ -10,7 +10,7 @@ import { paiementBloque } from "@/lib/paiement-guard";
 import { envoyerEmail } from "@/lib/email";
 
 // Délai de paiement par défaut appliqué aux factures générées automatiquement
-// (norme B2B française usuelle). Pas encore configurable par modèle — à
+// (norme B2B française usuelle). Pas encore configurable par modèle - à
 // ouvrir si le besoin se confirme.
 const DELAI_PAIEMENT_JOURS = 30;
 
@@ -20,7 +20,7 @@ const DELAI_PAIEMENT_JOURS = 30;
  * génération. Ne facture jamais automatiquement au-delà de la limite du
  * plan ni pour un tenant au paiement bloqué : le modèle est alors
  * simplement laissé en l'état pour être retenté au prochain passage.
- * Jamais d'envoi automatique au client — la facture reste en brouillon
+ * Jamais d'envoi automatique au client - la facture reste en brouillon
  * pour relecture, un email prévient le tenant qu'elle attend sa validation.
  */
 export async function genererFacturesRecurrentesDues(): Promise<{
@@ -117,7 +117,7 @@ export async function genererFacturesRecurrentesDues(): Promise<{
       try {
         await envoyerEmail(
           tenant.email,
-          `Facture récurrente générée — ${document.numero}`,
+          `Facture récurrente générée - ${document.numero}`,
           `Bonjour,\n\n` +
             `La facture n° ${document.numero} (« ${modele.designation} », client : ` +
             `${client.raisonSociale ?? `${client.prenom ?? ""} ${client.nom ?? ""}`.trim()}) ` +

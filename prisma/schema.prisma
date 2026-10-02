@@ -1,5 +1,5 @@
-// Gest-224 — Schéma de données (Phases 1 & 2)
-// PostgreSQL — voir docs/schema-phase-1-2.md pour la note explicative complète.
+// Gest-224 - Schéma de données (Phases 1 & 2)
+// PostgreSQL - voir docs/schema-phase-1-2.md pour la note explicative complète.
 
 generator client {
   provider = "prisma-client-js"
@@ -119,7 +119,7 @@ model Tenant {
   // Paiement des abonnements (Stripe). Null tant que l'entreprise n'a
   // jamais payé (plan gratuit ou changement de plan encore en attente de
   // paiement). Synchronisés uniquement par le webhook Stripe
-  // (app/api/stripe/webhook/route.ts) et lib/actions/paiement.ts — jamais
+  // (app/api/stripe/webhook/route.ts) et lib/actions/paiement.ts - jamais
   // écrits ailleurs, pour que `plan` reste toujours le reflet de ce que
   // Stripe facture réellement.
   stripeCustomerId       String?   @unique @map("stripe_customer_id")
@@ -127,7 +127,7 @@ model Tenant {
 
   // Toujours vrai pour le plan gratuit (rien à payer). Pour un plan payant :
   // vrai dès que Stripe confirme le paiement (webhook), ou en attente
-  // (faux) le temps qu'un admin valide un paiement en espèces — cf.
+  // (faux) le temps qu'un admin valide un paiement en espèces - cf.
   // lib/paiement-guard.ts, qui bloque la création de nouveaux
   // documents/clients/articles/dépenses tant que c'est faux (lecture de
   // l'historique toujours possible).
@@ -174,7 +174,7 @@ model User {
   role          RoleUtilisateur @default(owner)
   actif         Boolean         @default(true)
   // Habilité à gérer la plateforme dans son ensemble (tous tenants
-  // confondus, cf. lib/auth-admin.ts et /admin) — jamais vrai par défaut,
+  // confondus, cf. lib/auth-admin.ts et /admin) - jamais vrai par défaut,
   // promu manuellement en base pour un compte donné.
   estAdminPlateforme Boolean    @default(false) @map("est_admin_plateforme")
 
@@ -187,7 +187,7 @@ model User {
   // Double authentification (TOTP, RFC 6238). Le secret n'est présent et
   // significatif que si totpEnabled vaut true ; sinon il peut rester d'un
   // enrôlement abandonné sans donner accès à rien. Codes de secours stockés
-  // hachés (bcrypt) — retirés du tableau à l'usage (usage unique chacun).
+  // hachés (bcrypt) - retirés du tableau à l'usage (usage unique chacun).
   totpSecret        String?     @map("totp_secret")
   totpEnabled       Boolean     @default(false) @map("totp_enabled")
   totpBackupCodes   String[]    @map("totp_backup_codes")
@@ -265,7 +265,7 @@ model Article {
 
   prixUnitaireHt   Decimal         @map("prix_unitaire_ht") @db.Decimal(10, 2)
   // Nul si le tenant est en franchise en base (aucune TVA ne s'applique).
-  // Valeurs autorisées en régime normal : 0 / 5.5 / 10 / 20 — contrôlé au
+  // Valeurs autorisées en régime normal : 0 / 5.5 / 10 / 20 - contrôlé au
   // niveau applicatif (cf. note).
   tauxTva          Decimal?        @map("taux_tva") @db.Decimal(4, 2)
 
@@ -314,7 +314,7 @@ model Document {
   tenant         Tenant          @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 
   type           TypeDocument
-  // Numéro complet, ex. "FA-2026-0001" — généré via NumberingSequence,
+  // Numéro complet, ex. "FA-2026-0001" - généré via NumberingSequence,
   // jamais modifiable une fois le document validé (sortie de "brouillon").
   numero         String
   statut         StatutDocument  @default(brouillon)
@@ -358,7 +358,7 @@ model Document {
   envoyeAt       DateTime?       @map("envoye_at")
   payeAt         DateTime?       @map("paye_at")
   // Date du dernier email de relance de retard envoyé au client pour cette
-  // facture (cf. app/api/cron/relances/route.ts) — évite de relancer plus
+  // facture (cf. app/api/cron/relances/route.ts) - évite de relancer plus
   // d'une fois par jour tant que la facture reste en retard.
   dernierRappelEnvoyeAt DateTime? @map("dernier_rappel_envoye_at")
 
@@ -411,7 +411,7 @@ model DocumentLigne {
 // ---------------------------------------------------------------------------
 
 // Une ligne de recette par document marqué "payée" (facture ou facture
-// d'acompte) — générée automatiquement, jamais saisie à la main.
+// d'acompte) - générée automatiquement, jamais saisie à la main.
 model Recette {
   id            String   @id @default(uuid())
 
@@ -456,7 +456,7 @@ model Depense {
 
 // Modèle de facture générée automatiquement à intervalle régulier (ex.
 // prestation mensuelle). Ligne unique volontairement (couvre le cas
-// d'usage principal — abonnement / forfait récurrent) : une facturation
+// d'usage principal - abonnement / forfait récurrent) : une facturation
 // récurrente à plusieurs lignes reste à créer manuellement pour l'instant.
 // La génération elle-même (cf. app/api/cron/factures-recurrentes/route.ts)
 // crée la facture en brouillon, jamais envoyée automatiquement au client.
@@ -576,7 +576,7 @@ model Chantier {
 
 // ---------------------------------------------------------------------------
 // Journal d'audit (socle technique de l'auto-certification anti-fraude
-// TVA — critères ISCA : Inaltérabilité, Sécurisation, Conservation,
+// TVA - critères ISCA : Inaltérabilité, Sécurisation, Conservation,
 // Archivage, art. 88 loi de finances 2016 / art. 286-I-3° bis du CGI)
 // ---------------------------------------------------------------------------
 
@@ -594,7 +594,7 @@ model AuditLog {
   user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   // Identifiant d'action stable, ex. "document.envoye", "document.paye",
-  // "depense.supprimee", "admin.plan_modifie" — voir lib/audit.ts.
+  // "depense.supprimee", "admin.plan_modifie" - voir lib/audit.ts.
   action    String
   entite    String?
   entiteId  String?  @map("entite_id")

@@ -19,7 +19,7 @@
    l'attribut n'est jamais posé dans l'application authentifiée, qui garde donc
    toujours la palette claire ci-dessus. Les deux tokens sont inversés plutôt que
    simplement assombris : ivoire (fond) devient le fond sombre, encre (texte/accent)
-   devient le ton clair — tous les composants existants (bg-ivoire, text-encre,
+   devient le ton clair - tous les composants existants (bg-ivoire, text-encre,
    bg-encre hover:bg-encre-light...) s'adaptent donc sans modification. */
 [data-theme="dark"] {
   --color-ivoire: 20 27 19;
@@ -46,7 +46,7 @@ body {
 }
 
 /* Transition douce entre pages du site public dans les navigateurs qui la
-   supportent (Chrome/Edge) ; ignoré silencieusement ailleurs — amélioration
+   supportent (Chrome/Edge) ; ignoré silencieusement ailleurs - amélioration
    progressive, aucun JS requis. */
 @view-transition {
   navigation: auto;

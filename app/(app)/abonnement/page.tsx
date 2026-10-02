@@ -132,7 +132,7 @@ export default async function AbonnementPage({
               <ul className="mt-4 flex-1 space-y-2 font-sans text-sm text-encre/80">
                 {plan.fonctionnalites.map((f) => (
                   <li key={f} className="flex gap-2">
-                    <span className="text-encre/70">—</span>
+                    <span className="text-encre/70">-</span>
                     <span>{f}</span>
                   </li>
                 ))}

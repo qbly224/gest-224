@@ -85,7 +85,7 @@ export default async function AdminPage() {
                 <form action={changerPlanTenant.bind(null, t2.id)} className="flex items-center gap-1">
                   <select
                     name="plan"
-                    aria-label={`Plan — ${t2.raisonSociale}`}
+                    aria-label={`Plan - ${t2.raisonSociale}`}
                     defaultValue={t2.plan}
                     className="rounded-sm border border-encre/30 bg-transparent px-1 py-0.5 font-sans text-xs text-encre"
                   >
@@ -105,7 +105,7 @@ export default async function AdminPage() {
               </td>
               <td className="py-2">
                 {t2.plan === "gratuit" ? (
-                  <span className="font-mono text-xs text-encre/70">—</span>
+                  <span className="font-mono text-xs text-encre/70">-</span>
                 ) : (
                   <form action={basculerPaiementValideTenant.bind(null, t2.id)}>
                     <button

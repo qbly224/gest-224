@@ -42,7 +42,7 @@ function formatEuros(n: number): string {
 }
 
 function formatDate(d: Date | null): string {
-  if (!d) return "—";
+  if (!d) return "-";
   return new Intl.DateTimeFormat("fr-FR", { dateStyle: "long" }).format(d);
 }
 
@@ -96,7 +96,7 @@ export function renderDocumentHtml(document: DocumentAvecLignes): string {
           masquerPrix
             ? ""
             : `<td class="num">${formatEuros(l.prixUnitaireHt)}</td>
-        ${enFranchise ? "" : `<td class="num">${l.tauxTva !== null ? `${l.tauxTva} %` : "—"}</td>`}
+        ${enFranchise ? "" : `<td class="num">${l.tauxTva !== null ? `${l.tauxTva} %` : "-"}</td>`}
         <td class="num">${formatEuros(l.montantHt)}</td>`
         }
       </tr>`
@@ -131,7 +131,7 @@ export function renderDocumentHtml(document: DocumentAvecLignes): string {
         </p>
         ${
           emetteur.iban
-            ? `<p class="iban">Paiement par virement — IBAN : ${escapeHtml(emetteur.iban)}${emetteur.bic ? ` — BIC : ${escapeHtml(emetteur.bic)}` : ""}</p>`
+            ? `<p class="iban">Paiement par virement - IBAN : ${escapeHtml(emetteur.iban)}${emetteur.bic ? ` - BIC : ${escapeHtml(emetteur.bic)}` : ""}</p>`
             : ""
         }
       </div>`
@@ -251,8 +251,8 @@ export function renderDocumentHtml(document: DocumentAvecLignes): string {
     ${document.notes ? `<div class="notes">${escapeHtml(document.notes)}</div>` : ""}
 
     <div class="pied">
-      ${escapeHtml(emetteur.raisonSociale)} — SIRET ${escapeHtml(emetteur.siret)}
-      ${emetteur.mentionsLegalesLibres ? ` — ${escapeHtml(emetteur.mentionsLegalesLibres)}` : ""}
+      ${escapeHtml(emetteur.raisonSociale)} - SIRET ${escapeHtml(emetteur.siret)}
+      ${emetteur.mentionsLegalesLibres ? ` - ${escapeHtml(emetteur.mentionsLegalesLibres)}` : ""}
     </div>
   </div>
 </body>

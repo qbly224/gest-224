@@ -30,7 +30,7 @@ async function construireEtapeQr(secret: string, email: string, error?: string):
  * (démarrer puis confirmer) : un champ caché "etape" dans le formulaire
  * indique laquelle exécuter. Deux actions séparées auraient chacune leur
  * propre état local côté client, qui ne se mettrait pas à jour en cascade
- * l'une l'autre — une seule action partagée évite ce piège.
+ * l'une l'autre - une seule action partagée évite ce piège.
  */
 export async function gererActivation2fa(
   prevState: Etat2fa,

@@ -6,7 +6,7 @@ const config: Config = {
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
   // Sélecteur plutôt que media query : suit le bouton de bascule du site
   // public (components/public/theme-toggle.tsx), jamais la préférence
-  // système seule — et n'affecte jamais l'application authentifiée, qui ne
+  // système seule - et n'affecte jamais l'application authentifiée, qui ne
   // pose jamais cet attribut.
   darkMode: ["selector", '[data-theme="dark"]'],
   theme: {

@@ -68,7 +68,7 @@ export async function DocumentDetail({
           <p className="font-mono text-xs uppercase tracking-wide text-encre/70">{titre}</p>
           <h1 className="font-mono text-2xl text-encre">{document.numero}</h1>
           <p className="mt-1 font-sans text-sm text-encre/70">
-            {tStatuts(document.statut)} — {t("emisLe")}{" "}
+            {tStatuts(document.statut)} - {t("emisLe")}{" "}
             {formatDate(document.dateEmission, locale)}
           </p>
           {reference}
@@ -100,7 +100,7 @@ export async function DocumentDetail({
           <p>
             {t("echeance")} :{" "}
             <span className="font-mono text-encre">
-              {document.dateEcheance ? formatDate(document.dateEcheance, locale) : "—"}
+              {document.dateEcheance ? formatDate(document.dateEcheance, locale) : "-"}
             </span>
           </p>
           <p>
@@ -141,7 +141,7 @@ export async function DocumentDetail({
                   </td>
                   {afficherTva && (
                     <td className="py-3 text-right font-mono text-encre/70">
-                      {l.tauxTva !== null ? `${l.tauxTva.toString()} %` : "—"}
+                      {l.tauxTva !== null ? `${l.tauxTva.toString()} %` : "-"}
                     </td>
                   )}
                   <td className="py-3 text-right font-mono text-encre">

@@ -10,7 +10,7 @@ import type { ActionState } from "@/lib/actions/types";
 /**
  * Suppression du compte par son propriétaire : supprime le tenant entier
  * (toutes ses données cascadent via les contraintes onDelete: Cascade du
- * schéma — clients, articles, documents, comptabilité, etc.), pas
+ * schéma - clients, articles, documents, comptabilité, etc.), pas
  * seulement l'utilisateur. Tous les comptes créés à ce jour sont "owner"
  * de leur propre tenant (pas de flux d'invitation de collaborateur), donc
  * les deux se confondent en pratique.

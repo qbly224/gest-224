@@ -26,7 +26,7 @@
       "surtitre": "Gestion commerciale pour petites entreprises",
       "titre": "Devis, factures et comptabilité,",
       "titreSuite": "sans y passer vos soirées.",
-      "description": "Gest-224 gère toute votre chaîne documentaire — du devis à la facture — avec des documents conformes aux normes françaises et européennes, et une comptabilité simplifiée intégrée. Pensé pour les auto-entrepreneurs et petites entreprises.",
+      "description": "Gest-224 gère toute votre chaîne documentaire - du devis à la facture - avec des documents conformes aux normes françaises et européennes, et une comptabilité simplifiée intégrée. Pensé pour les auto-entrepreneurs et petites entreprises.",
       "creerCompteGratuit": "Créer mon compte gratuitement",
       "voirTarifs": "Voir les tarifs",
       "aucuneCarteBancaire": "Aucune carte bancaire requise pour le plan gratuit.",
@@ -46,7 +46,7 @@
         },
         "franchise": {
           "titre": "Franchise en base gérée",
-          "description": "Régime de TVA normal ou franchise en base (art. 293 B du CGI) — la mention adaptée s'affiche automatiquement."
+          "description": "Régime de TVA normal ou franchise en base (art. 293 B du CGI) - la mention adaptée s'affiche automatiquement."
         },
         "envoi": {
           "titre": "Envoi en un clic",
@@ -69,9 +69,9 @@
     "aPropos": {
       "surtitre": "À propos",
       "titre": "Pourquoi Gest-224",
-      "p1": "Gest-224 est né d'un constat simple : la gestion commerciale d'une petite entreprise — devis, factures, bons de commande et de livraison, comptabilité de base — repose encore souvent sur des tableurs bricolés ou des outils pensés pour de grandes structures, trop lourds pour un auto-entrepreneur ou une TPE.",
-      "p2": "Nous construisons une plateforme qui prend en charge la chaîne documentaire complète — du devis à la facture, en passant par le bon de commande, le bon de livraison, la facture d'acompte et l'avoir — dans le respect des règles françaises et européennes de facturation : numérotation séquentielle sans trou, mentions légales obligatoires, gestion de la franchise en base de TVA (art. 293 B du CGI), pénalités de retard.",
-      "p3": "À cela s'ajoute une comptabilité simplifiée : les recettes se génèrent automatiquement lorsqu'une facture est marquée payée, les dépenses se saisissent en quelques clics, et un tableau de bord donne une vue claire du solde et de l'activité mensuelle — sans transformer l'utilisateur en comptable.",
+      "p1": "Gest-224 est né d'un constat simple : la gestion commerciale d'une petite entreprise - devis, factures, bons de commande et de livraison, comptabilité de base - repose encore souvent sur des tableurs bricolés ou des outils pensés pour de grandes structures, trop lourds pour un auto-entrepreneur ou une TPE.",
+      "p2": "Nous construisons une plateforme qui prend en charge la chaîne documentaire complète - du devis à la facture, en passant par le bon de commande, le bon de livraison, la facture d'acompte et l'avoir - dans le respect des règles françaises et européennes de facturation : numérotation séquentielle sans trou, mentions légales obligatoires, gestion de la franchise en base de TVA (art. 293 B du CGI), pénalités de retard.",
+      "p3": "À cela s'ajoute une comptabilité simplifiée : les recettes se génèrent automatiquement lorsqu'une facture est marquée payée, les dépenses se saisissent en quelques clics, et un tableau de bord donne une vue claire du solde et de l'activité mensuelle - sans transformer l'utilisateur en comptable.",
       "p4": "Gest-224 est encore un jeune produit, développé et amélioré en continu. La facturation électronique structurée (Factur-X, PDP) fait partie de notre feuille de route, en anticipation des échéances réglementaires françaises à venir."
     },
     "tarifs": {
@@ -200,7 +200,7 @@
     }
   },
   "cookies": {
-    "message": "Gest-224 utilise uniquement un cookie de session strictement nécessaire à la connexion à votre espace — aucun cookie publicitaire ni de mesure d'audience.",
+    "message": "Gest-224 utilise uniquement un cookie de session strictement nécessaire à la connexion à votre espace - aucun cookie publicitaire ni de mesure d'audience.",
     "enSavoirPlus": "En savoir plus",
     "jaiCompris": "J'ai compris"
   },
@@ -324,7 +324,7 @@
       "factureAcompteEnRetard": "facture d'acompte en retard.",
       "facturesAcompteEnRetard": "factures d'acompte en retard.",
       "voir": "Voir",
-      "erreurPaiement": "Votre compte a bien été créé, mais le paiement du plan choisi n'a pas pu être initié. Vous êtes sur le plan gratuit — vous pouvez réessayer de passer à un plan payant depuis la page",
+      "erreurPaiement": "Votre compte a bien été créé, mais le paiement du plan choisi n'a pas pu être initié. Vous êtes sur le plan gratuit - vous pouvez réessayer de passer à un plan payant depuis la page",
       "abonnement": "Abonnement",
       "soldeGlobal": "Solde global",
       "documentsCeMois": "Documents ce mois-ci",
@@ -563,7 +563,7 @@
       "telechargezDabord": "Téléchargez d'abord le PDF pour le joindre.",
       "parGmail": "Par Gmail",
       "parWhatsapp": "Par WhatsApp",
-      "emailSujet": "{titre} {numero} — {raisonSociale}",
+      "emailSujet": "{titre} {numero} - {raisonSociale}",
       "emailMontant": " d'un montant de {montant}",
       "emailCorps": "Bonjour,\n\nVeuillez trouver ci-joint {titre} n° {numero}{mentionMontant}.\nPensez à joindre le PDF téléchargé avant l'envoi.\n\nCordialement,\n{raisonSociale}"
     },
@@ -580,7 +580,7 @@
       "ligneNumero": "Ligne {n}",
       "supprimer": "Supprimer",
       "depuisCatalogue": "Depuis le catalogue (optionnel)",
-      "ligneLibre": "— Ligne libre —",
+      "ligneLibre": "- Ligne libre -",
       "designation": "Désignation",
       "description": "Description (optionnel)",
       "quantite": "Quantité",
@@ -640,7 +640,7 @@
       "aucuneRecette": "Aucune recette enregistrée.",
       "documentsParType": "Documents par type",
       "fecTitre": "Export FEC (Fichier des Écritures Comptables)",
-      "fecDescription": "Génère le fichier normalisé exigé en cas de contrôle fiscal (art. L47 A du LPF). Important : Gest-224 ne tient pas une comptabilité d'engagement complète — les comptes utilisés (ventes, TVA, achats) sont des valeurs par défaut raisonnables mais génériques. Faites vérifier et, si besoin, corriger ce fichier par votre expert-comptable avant de le transmettre à l'administration.",
+      "fecDescription": "Génère le fichier normalisé exigé en cas de contrôle fiscal (art. L47 A du LPF). Important : Gest-224 ne tient pas une comptabilité d'engagement complète - les comptes utilisés (ventes, TVA, achats) sont des valeurs par défaut raisonnables mais génériques. Faites vérifier et, si besoin, corriger ce fichier par votre expert-comptable avant de le transmettre à l'administration.",
       "fecDateDebut": "Date de début",
       "fecDateFin": "Date de fin",
       "fecTelecharger": "Télécharger le FEC"
@@ -683,7 +683,7 @@
       "sectionMentionsLegales": "Mentions légales complémentaires",
       "mentionsLegalesPlaceholder": "Assurance RC pro, agrément, etc.",
       "enregistrer": "Enregistrer",
-      "suppressionConfirmLabel": "Je comprends que cette action est définitive et supprimera immédiatement toute l'entreprise : clients, catalogue, devis, factures, comptabilité — sans possibilité de récupération.",
+      "suppressionConfirmLabel": "Je comprends que cette action est définitive et supprimera immédiatement toute l'entreprise : clients, catalogue, devis, factures, comptabilité - sans possibilité de récupération.",
       "suppressionMotDePasse": "Confirmer avec votre mot de passe",
       "suppressionBouton": "Supprimer définitivement mon compte",
       "relancesTitre": "Relances automatiques",
@@ -760,12 +760,12 @@
     "abonnement": {
       "titre": "Abonnement",
       "planActuelLabel": "Plan actuel :",
-      "gratuitSuffix": "— gratuit",
-      "prixSuffix": "— {prix} €/mois",
+      "gratuitSuffix": "- gratuit",
+      "prixSuffix": "- {prix} €/mois",
       "descriptionPaiement": "Le paiement par carte est activé immédiatement ; le paiement en espèces ou par virement applique le plan tout de suite mais reste en attente de validation par un administrateur avant de pouvoir créer de nouveaux éléments.",
-      "paiementSucces": "Paiement confirmé — votre plan a été mis à jour.",
-      "paiementAnnule": "Paiement annulé — votre plan n'a pas changé.",
-      "paiementEnAttente": "Paiement en espèces en attente de validation par un administrateur — vous pouvez consulter votre historique, mais pas créer de nouveaux éléments tant qu'il n'est pas validé.",
+      "paiementSucces": "Paiement confirmé - votre plan a été mis à jour.",
+      "paiementAnnule": "Paiement annulé - votre plan n'a pas changé.",
+      "paiementEnAttente": "Paiement en espèces en attente de validation par un administrateur - vous pouvez consulter votre historique, mais pas créer de nouveaux éléments tant qu'il n'est pas validé.",
       "documentsCeMois": "Documents créés ce mois-ci",
       "clientsEnregistres": "Clients enregistrés",
       "depensesCeMois": "Dépenses saisies ce mois-ci",
@@ -796,13 +796,13 @@
       "colStatut": "Statut",
       "ok": "OK",
       "valide": "Validé",
-      "enAttenteValider": "En attente — valider",
+      "enAttenteValider": "En attente - valider",
       "active": "Active",
       "desactivee": "Désactivée",
       "audienceTitre": "Fréquentation du site public",
       "audienceDescription": "Mesure anonyme, sans cookie ni adresse IP : accueil, à propos, tarifs et pages légales.",
-      "audience7Jours": "Vues — 7 derniers jours",
-      "audience30Jours": "Vues — 30 derniers jours"
+      "audience7Jours": "Vues - 7 derniers jours",
+      "audience30Jours": "Vues - 30 derniers jours"
     },
     "recherche": {
       "titre": "Recherche",

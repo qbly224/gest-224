@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
         headers: [
           // Bloque le chargement de l'app dans une iframe tierce
           // (clickjacking sur les boutons "Marquer payée", "Changer de
-          // plan", etc. — le cookie de session est SameSite=Lax, ce qui ne
+          // plan", etc. - le cookie de session est SameSite=Lax, ce qui ne
           // suffit pas à s'en protéger).
           { key: "X-Frame-Options", value: "DENY" },
           { key: "Content-Security-Policy", value: "frame-ancestors 'none'" },

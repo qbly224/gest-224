@@ -38,7 +38,7 @@ export type SessionPayload = {
   userId: string;
   tenantId: string;
   role: RoleUtilisateur;
-  // Date d'émission du jeton (epoch secondes) — permet à requireSession()
+  // Date d'émission du jeton (epoch secondes) - permet à requireSession()
   // d'invalider les jetons émis avant un changement de mot de passe.
   emisA: number;
 };

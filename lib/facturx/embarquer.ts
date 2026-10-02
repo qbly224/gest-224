@@ -6,7 +6,7 @@ import { PDFDocument, AFRelationship } from "pdf-lib";
  * attendu par Factur-X/ZUGFeRD (pièce jointe nommée "factur-x.xml",
  * AFRelationship "Data").
  *
- * ATTENTION — fondation technique, pas une conformité Factur-X complète :
+ * ATTENTION - fondation technique, pas une conformité Factur-X complète :
  * un fichier Factur-X valide doit être un PDF/A-3 strict (profil colorimétrique
  * ICC embarqué, police intégrées, paquet de métadonnées XMP déclarant
  * fx:ConformanceLevel et fx:DocumentType). pdf-lib ne garantit pas la

@@ -46,7 +46,7 @@ export async function creerUrlCheckout(
 /**
  * Sélection d'un plan payant depuis /abonnement : nouvel abonnement (via
  * Checkout) si le tenant n'en a pas encore, sinon mise à jour directe de
- * l'abonnement existant (changement de Price, proratisé par Stripe) — ne
+ * l'abonnement existant (changement de Price, proratisé par Stripe) - ne
  * jamais créer un second abonnement Stripe pour le même tenant.
  */
 export async function choisirPlanPaye(formData: FormData): Promise<void> {

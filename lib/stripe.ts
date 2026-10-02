@@ -5,7 +5,7 @@ let stripeClient: Stripe | null = null;
 
 /**
  * Client Stripe paresseux : évite de faire planter le boot de l'app si
- * STRIPE_SECRET_KEY est absente (paiement non encore configuré) — l'erreur
+ * STRIPE_SECRET_KEY est absente (paiement non encore configuré) - l'erreur
  * n'apparaît que si une action qui en a réellement besoin est déclenchée.
  */
 export function getStripe(): Stripe {
@@ -13,7 +13,7 @@ export function getStripe(): Stripe {
     const key = process.env.STRIPE_SECRET_KEY;
     if (!key) {
       throw new Error(
-        "STRIPE_SECRET_KEY n'est pas définie — le paiement des abonnements n'est pas configuré."
+        "STRIPE_SECRET_KEY n'est pas définie - le paiement des abonnements n'est pas configuré."
       );
     }
     stripeClient = new Stripe(key);

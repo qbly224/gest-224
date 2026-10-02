@@ -68,7 +68,7 @@ export function estPlanValide(value: string): value is PlanAbonnement {
 }
 
 /**
- * Identifiant du Price Stripe associé à un plan payant — configuré via
+ * Identifiant du Price Stripe associé à un plan payant - configuré via
  * variables d'environnement (créées dans le dashboard Stripe ou par le
  * script de provisionnement, cf. scripts/stripe-setup.ts). `null` pour
  * gratuit (rien à facturer) ou tant que la variable n'est pas encore posée.

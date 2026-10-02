@@ -26,7 +26,7 @@
       "surtitre": "Business management for small companies",
       "titre": "Quotes, invoices and accounting,",
       "titreSuite": "without losing your evenings to it.",
-      "description": "Gest-224 handles your whole document chain — from quote to invoice — with documents that comply with French and European standards, plus built-in simplified accounting. Built for freelancers and small businesses.",
+      "description": "Gest-224 handles your whole document chain - from quote to invoice - with documents that comply with French and European standards, plus built-in simplified accounting. Built for freelancers and small businesses.",
       "creerCompteGratuit": "Create my free account",
       "voirTarifs": "See pricing",
       "aucuneCarteBancaire": "No credit card required for the free plan.",
@@ -46,7 +46,7 @@
         },
         "franchise": {
           "titre": "VAT exemption handled",
-          "description": "Standard VAT or basic exemption scheme (art. 293 B of the French tax code) — the right notice appears automatically."
+          "description": "Standard VAT or basic exemption scheme (art. 293 B of the French tax code) - the right notice appears automatically."
         },
         "envoi": {
           "titre": "One-click sending",
@@ -69,9 +69,9 @@
     "aPropos": {
       "surtitre": "About",
       "titre": "Why Gest-224",
-      "p1": "Gest-224 was born from a simple observation: running the commercial side of a small business — quotes, invoices, purchase and delivery orders, basic accounting — still often relies on makeshift spreadsheets or tools built for large organizations, too heavy for a freelancer or a very small business.",
-      "p2": "We're building a platform that handles the full document chain — from quote to invoice, through purchase order, delivery note, deposit invoice and credit note — following French and European invoicing rules: gapless sequential numbering, mandatory legal notices, VAT exemption handling (art. 293 B of the French tax code), late-payment penalties.",
-      "p3": "On top of that, simplified accounting: income is generated automatically when an invoice is marked as paid, expenses are entered in a few clicks, and a dashboard gives a clear view of the balance and monthly activity — without turning the user into an accountant.",
+      "p1": "Gest-224 was born from a simple observation: running the commercial side of a small business - quotes, invoices, purchase and delivery orders, basic accounting - still often relies on makeshift spreadsheets or tools built for large organizations, too heavy for a freelancer or a very small business.",
+      "p2": "We're building a platform that handles the full document chain - from quote to invoice, through purchase order, delivery note, deposit invoice and credit note - following French and European invoicing rules: gapless sequential numbering, mandatory legal notices, VAT exemption handling (art. 293 B of the French tax code), late-payment penalties.",
+      "p3": "On top of that, simplified accounting: income is generated automatically when an invoice is marked as paid, expenses are entered in a few clicks, and a dashboard gives a clear view of the balance and monthly activity - without turning the user into an accountant.",
       "p4": "Gest-224 is still a young product, continuously developed and improved. Structured e-invoicing (Factur-X, PDP) is on our roadmap, in anticipation of upcoming French regulatory deadlines."
     },
     "tarifs": {
@@ -200,7 +200,7 @@
     }
   },
   "cookies": {
-    "message": "Gest-224 only uses a strictly necessary session cookie to keep you signed in — no advertising or analytics cookies.",
+    "message": "Gest-224 only uses a strictly necessary session cookie to keep you signed in - no advertising or analytics cookies.",
     "enSavoirPlus": "Learn more",
     "jaiCompris": "Got it"
   },
@@ -324,7 +324,7 @@
       "factureAcompteEnRetard": "overdue deposit invoice.",
       "facturesAcompteEnRetard": "overdue deposit invoices.",
       "voir": "View",
-      "erreurPaiement": "Your account was created, but payment for the selected plan could not be started. You are on the free plan — you can retry upgrading to a paid plan from the",
+      "erreurPaiement": "Your account was created, but payment for the selected plan could not be started. You are on the free plan - you can retry upgrading to a paid plan from the",
       "abonnement": "Subscription",
       "soldeGlobal": "Overall balance",
       "documentsCeMois": "Documents this month",
@@ -563,7 +563,7 @@
       "telechargezDabord": "Download the PDF first to attach it.",
       "parGmail": "Via Gmail",
       "parWhatsapp": "Via WhatsApp",
-      "emailSujet": "{titre} {numero} — {raisonSociale}",
+      "emailSujet": "{titre} {numero} - {raisonSociale}",
       "emailMontant": " for an amount of {montant}",
       "emailCorps": "Hello,\n\nPlease find attached {titre} no. {numero}{mentionMontant}.\nRemember to attach the downloaded PDF before sending.\n\nBest regards,\n{raisonSociale}"
     },
@@ -580,7 +580,7 @@
       "ligneNumero": "Line {n}",
       "supprimer": "Remove",
       "depuisCatalogue": "From the catalog (optional)",
-      "ligneLibre": "— Free-form line —",
+      "ligneLibre": "- Free-form line -",
       "designation": "Description",
       "description": "Details (optional)",
       "quantite": "Quantity",
@@ -640,7 +640,7 @@
       "aucuneRecette": "No revenue recorded.",
       "documentsParType": "Documents by type",
       "fecTitre": "FEC export (Fichier des Écritures Comptables)",
-      "fecDescription": "Generates the standardized file required in case of a French tax audit (art. L47 A of the LPF). Important: Gest-224 does not keep a full accrual-accounting ledger — the accounts used (sales, VAT, purchases) are reasonable but generic defaults. Have this file checked, and corrected if needed, by your accountant before submitting it to the tax authorities.",
+      "fecDescription": "Generates the standardized file required in case of a French tax audit (art. L47 A of the LPF). Important: Gest-224 does not keep a full accrual-accounting ledger - the accounts used (sales, VAT, purchases) are reasonable but generic defaults. Have this file checked, and corrected if needed, by your accountant before submitting it to the tax authorities.",
       "fecDateDebut": "Start date",
       "fecDateFin": "End date",
       "fecTelecharger": "Download FEC"
@@ -683,7 +683,7 @@
       "sectionMentionsLegales": "Additional legal notices",
       "mentionsLegalesPlaceholder": "Professional liability insurance, accreditation, etc.",
       "enregistrer": "Save",
-      "suppressionConfirmLabel": "I understand this action is permanent and will immediately delete the entire company: clients, catalog, quotes, invoices, accounting — with no way to recover it.",
+      "suppressionConfirmLabel": "I understand this action is permanent and will immediately delete the entire company: clients, catalog, quotes, invoices, accounting - with no way to recover it.",
       "suppressionMotDePasse": "Confirm with your password",
       "suppressionBouton": "Permanently delete my account",
       "relancesTitre": "Automatic payment reminders",
@@ -760,12 +760,12 @@
     "abonnement": {
       "titre": "Subscription",
       "planActuelLabel": "Current plan:",
-      "gratuitSuffix": "— free",
-      "prixSuffix": "— {prix} €/month",
+      "gratuitSuffix": "- free",
+      "prixSuffix": "- {prix} €/month",
       "descriptionPaiement": "Card payment is activated immediately; cash or bank transfer payment applies the plan right away but remains pending administrator validation before you can create new items.",
-      "paiementSucces": "Payment confirmed — your plan has been updated.",
-      "paiementAnnule": "Payment cancelled — your plan has not changed.",
-      "paiementEnAttente": "Cash payment pending administrator validation — you can view your history, but cannot create new items until it is validated.",
+      "paiementSucces": "Payment confirmed - your plan has been updated.",
+      "paiementAnnule": "Payment cancelled - your plan has not changed.",
+      "paiementEnAttente": "Cash payment pending administrator validation - you can view your history, but cannot create new items until it is validated.",
       "documentsCeMois": "Documents created this month",
       "clientsEnregistres": "Registered clients",
       "depensesCeMois": "Expenses entered this month",
@@ -796,13 +796,13 @@
       "colStatut": "Status",
       "ok": "OK",
       "valide": "Validated",
-      "enAttenteValider": "Pending — validate",
+      "enAttenteValider": "Pending - validate",
       "active": "Active",
       "desactivee": "Disabled",
       "audienceTitre": "Public site traffic",
       "audienceDescription": "Anonymous measurement, with no cookie or IP address: home, about, pricing and legal pages.",
-      "audience7Jours": "Views — last 7 days",
-      "audience30Jours": "Views — last 30 days"
+      "audience7Jours": "Views - last 7 days",
+      "audience30Jours": "Views - last 30 days"
     },
     "recherche": {
       "titre": "Search",

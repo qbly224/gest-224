@@ -5,7 +5,7 @@ const TIMEOUT_MS = 15_000;
 const CONCURRENCE_MAX = 3;
 
 // Une seule instance de navigateur réutilisée entre les requêtes du même
-// processus serveur (Next.js self-hosted, process Node long-vivant) — ne
+// processus serveur (Next.js self-hosted, process Node long-vivant) - ne
 // convient pas tel quel à un déploiement serverless, qui devrait relancer
 // un navigateur par invocation.
 let browserPromise: Promise<Browser> | null = null;

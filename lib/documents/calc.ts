@@ -1,4 +1,4 @@
-// Calculs HT/TVA/TTC — importé aussi bien côté serveur (actions) que côté
+// Calculs HT/TVA/TTC - importé aussi bien côté serveur (actions) que côté
 // client (aperçu en temps réel dans le formulaire), d'où l'absence de toute
 // dépendance serveur ici.
 

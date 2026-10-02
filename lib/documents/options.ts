@@ -5,7 +5,7 @@ import type { ClientOption, ArticleOption } from "@/components/documents/documen
 /**
  * Trie par usage récent (dernier document/ligne utilisant l'entrée) plutôt
  * que par date de création : c'est ce qui rend les listes déroulantes du
- * formulaire document utiles — le client ou l'article qu'on vient
+ * formulaire document utiles - le client ou l'article qu'on vient
  * d'utiliser remonte en tête au lieu d'être noyé dans la liste.
  */
 export async function listerClientsOptions(tenantId: string): Promise<ClientOption[]> {
@@ -28,8 +28,8 @@ export async function listerClientsOptions(tenantId: string): Promise<ClientOpti
     id: c.id,
     label:
       c.type === "professionnel"
-        ? c.raisonSociale ?? "—"
-        : [c.civilite, c.prenom, c.nom].filter(Boolean).join(" ") || "—",
+        ? c.raisonSociale ?? "-"
+        : [c.civilite, c.prenom, c.nom].filter(Boolean).join(" ") || "-",
   }));
 }
 

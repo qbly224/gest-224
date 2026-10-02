@@ -6,7 +6,7 @@ import { calculerTotaux } from "@/lib/documents/calc";
  * Génère le XML Cross Industry Invoice (CII, norme EN 16931 / UN/CEFACT
  * D16B) qui constitue la partie "donnée structurée" d'un fichier Factur-X.
  * Couvre les champs obligatoires du profil EN 16931 pour une facture simple
- * (vendeur, acheteur, lignes, TVA, totaux) — PAS les cas avancés (acomptes
+ * (vendeur, acheteur, lignes, TVA, totaux) - PAS les cas avancés (acomptes
  * déjà versés sur la facture, remises globales, multi-devises...). Voir
  * lib/facturx/embarquer.ts pour les limites de conformité PDF/A-3 associées.
  */

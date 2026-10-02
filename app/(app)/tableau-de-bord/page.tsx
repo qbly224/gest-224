@@ -82,7 +82,7 @@ export default async function TableauDeBordPage({
       <div>
         <h1 className="font-titre text-2xl text-encre">{t("titre")}</h1>
         <p className="mt-1 font-sans text-sm text-encre/70">
-          {tenant.raisonSociale} — {t("regimeLabel")}{" "}
+          {tenant.raisonSociale} - {t("regimeLabel")}{" "}
           {tenant.regimeTva === "franchise" ? t("regimeFranchise") : t("regimeNormal")}
         </p>
       </div>

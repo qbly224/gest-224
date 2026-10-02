@@ -7,7 +7,7 @@ const NOISE =
 const RULED_LINES =
   "repeating-linear-gradient(0deg, rgba(246,241,231,0.14) 0, rgba(246,241,231,0.14) 1px, transparent 1px, transparent 20px)";
 
-// Petits papiers du registre qui traînent sur le bureau, en fond — pour que
+// Petits papiers du registre qui traînent sur le bureau, en fond - pour que
 // le vide autour de la page active ne soit pas un simple aplat, tout en
 // restant parlant sur ce que fait Gest-224 (devis, factures, comptabilité).
 const PAPIERS = [
@@ -34,7 +34,7 @@ export default async function AuthLayout({
   return (
     <div className="relative flex min-h-screen items-start justify-center bg-[#141b13] px-4 py-12 sm:items-center sm:py-20">
       {/* Le bureau, en fond fixe : halo, grain, papiers et petits repères
-          comptables qui dérivent doucement — plus parlant qu'un aplat vide. */}
+          comptables qui dérivent doucement - plus parlant qu'un aplat vide. */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden="true">
         <div
           className="absolute inset-0"

@@ -3,7 +3,7 @@ import "server-only";
 /**
  * Envoi d'email minimal, pensé pour être remplacé facilement par un vrai
  * fournisseur. Sans RESEND_API_KEY configurée, le contenu est simplement
- * journalisé — suffisant pour du développement local ou une mise en route
+ * journalisé - suffisant pour du développement local ou une mise en route
  * manuelle, mais **pas pour une vraie mise en production** : sans email
  * réel, personne ne reçoit son lien de réinitialisation de mot de passe.
  *
@@ -20,7 +20,7 @@ export async function envoyerEmail(
 
   if (!apiKey) {
     console.log(
-      `[email] Aucun fournisseur configuré (RESEND_API_KEY absente) — contenu journalisé au lieu d'être envoyé.\n` +
+      `[email] Aucun fournisseur configuré (RESEND_API_KEY absente) - contenu journalisé au lieu d'être envoyé.\n` +
         `À: ${destinataire}\nSujet: ${sujet}\n\n${corpsTexte}`
     );
     return;

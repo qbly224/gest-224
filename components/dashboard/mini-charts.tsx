@@ -1,5 +1,5 @@
 // Petits graphiques décoratifs mais réels (données du tenant) pour les
-// tuiles du tableau de bord — SVG statique, pas de bibliothèque de
+// tuiles du tableau de bord - SVG statique, pas de bibliothèque de
 // graphiques, pas de JS côté client.
 
 export function MiniBarres({ valeurs, couleur }: { valeurs: number[]; couleur: string }) {

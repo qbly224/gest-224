@@ -22,7 +22,7 @@ export async function verifyPassword(
  * server actions) : redirige vers /connexion si aucune session valide n'est
  * présente. Revérifie aussi que l'utilisateur et l'entreprise sont toujours
  * actifs, et que le mot de passe n'a pas été changé depuis l'émission du
- * jeton, à chaque appel — un jeton JWT reste valide jusqu'à 7 jours et ne
+ * jeton, à chaque appel - un jeton JWT reste valide jusqu'à 7 jours et ne
  * doit pas continuer à donner accès après désactivation d'un compte/d'une
  * entreprise ou après une réinitialisation de mot de passe.
  *
@@ -30,7 +30,7 @@ export async function verifyPassword(
  * appelée depuis des Server Components au rendu d'une page, où Next.js
  * interdit toute écriture de cookie (seules les Server Actions et les
  * Route Handlers le peuvent). Le cookie devenu invalide reste donc présent
- * mais inerte — chaque page continuera à rediriger vers /connexion tant
+ * mais inerte - chaque page continuera à rediriger vers /connexion tant
  * qu'il n'aura pas été remplacé par une nouvelle connexion réussie.
  */
 export async function requireSession(): Promise<SessionPayload> {
