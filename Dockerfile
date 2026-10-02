@@ -52,8 +52,7 @@ COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/next.config.ts ./next.config.ts
-# Ajoutez cette ligne si le projet gagne un dossier public/ (assets statiques) :
-# COPY --from=builder /app/public ./public
+COPY --from=builder /app/public ./public
 
 USER nextjs
 EXPOSE 3000
