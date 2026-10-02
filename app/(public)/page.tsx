@@ -5,8 +5,6 @@ import { getTranslations } from "next-intl/server";
 import { getSession } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 import { LISTE_PLANS } from "@/lib/plans";
-import { DecorHero } from "@/components/public/decor-hero";
-import { MockupFacture } from "@/components/public/mockup-facture";
 import { TrustBadges } from "@/components/public/trust-badges";
 import { CompteurAnime } from "@/components/public/compteur-anime";
 import { Reveal } from "@/components/public/reveal";
@@ -41,42 +39,45 @@ export default async function AccueilPage() {
   return (
     <main>
       <section className="relative overflow-hidden">
-        <DecorHero />
-        <div className="relative mx-auto grid max-w-5xl grid-cols-1 items-center gap-12 px-6 pb-16 pt-20 lg:grid-cols-2 lg:gap-8 lg:pb-24 lg:pt-28">
-          <div className="text-center lg:text-left">
-            <p className="font-mono text-xs uppercase tracking-widest text-encre/75">
-              {t("surtitre")}
-            </p>
-            <h1 className="mt-4 font-titre text-4xl text-encre sm:text-5xl">
-              {t("titre")}
-              <br className="hidden sm:block" /> {t("titreSuite")}
-            </h1>
-            <p className="mx-auto mt-5 max-w-2xl font-sans text-base text-encre/70 lg:mx-0">
-              {t("description")}
-            </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
-              <Link
-                href="/inscription"
-                className="rounded-sm bg-encre px-6 py-3 font-sans text-sm font-medium text-ivoire transition-transform hover:-translate-y-0.5 hover:bg-encre-light"
-              >
-                {t("creerCompteGratuit")}
-              </Link>
-              <Link
-                href="/tarifs"
-                className="rounded-sm border border-encre/30 px-6 py-3 font-sans text-sm text-encre transition-colors hover:bg-encre/5"
-              >
-                {t("voirTarifs")}
-              </Link>
-            </div>
-            <p className="mt-4 font-sans text-xs text-encre/70">{t("aucuneCarteBancaire")}</p>
-          </div>
-
-          <Reveal className="hidden lg:block" delayMs={150}>
-            <MockupFacture />
-          </Reveal>
+        <div className="absolute inset-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/hero-bureau.webp"
+            alt=""
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#141b13] via-[#141b13]/80 to-[#141b13]/40" />
         </div>
 
-        <div className="relative border-t border-encre/10 px-6 py-6">
+        <div className="relative mx-auto max-w-3xl px-6 pb-20 pt-24 text-center lg:pb-28 lg:pt-32">
+          <p className="font-mono text-xs uppercase tracking-widest text-white/70">
+            {t("surtitre")}
+          </p>
+          <h1 className="mt-4 font-titre text-4xl text-white sm:text-5xl">
+            {t("titre")}
+            <br className="hidden sm:block" /> {t("titreSuite")}
+          </h1>
+          <p className="mx-auto mt-5 max-w-2xl font-sans text-base text-white/80">
+            {t("description")}
+          </p>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <Link
+              href="/inscription"
+              className="rounded-sm bg-white px-6 py-3 font-sans text-sm font-medium text-[#1f3d2c] transition-transform hover:-translate-y-0.5 hover:bg-white/90"
+            >
+              {t("creerCompteGratuit")}
+            </Link>
+            <Link
+              href="/tarifs"
+              className="rounded-sm border border-white/40 px-6 py-3 font-sans text-sm text-white transition-colors hover:bg-white/10"
+            >
+              {t("voirTarifs")}
+            </Link>
+          </div>
+          <p className="mt-4 font-sans text-xs text-white/70">{t("aucuneCarteBancaire")}</p>
+        </div>
+
+        <div className="relative border-t border-white/10 px-6 py-6">
           <TrustBadges />
         </div>
       </section>
