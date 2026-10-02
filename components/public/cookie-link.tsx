@@ -9,7 +9,7 @@ export function CookieLink() {
     <button
       type="button"
       onClick={() => window.dispatchEvent(new Event(OUVRIR_COOKIES_EVENT))}
-      className="text-left hover:text-encre hover:underline"
+      className="text-left hover:text-white hover:underline"
     >
       {t("cookies")}
     </button>

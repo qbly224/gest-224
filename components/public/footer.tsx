@@ -29,25 +29,29 @@ export async function PublicFooter() {
   ];
 
   return (
-    <footer className="border-t border-encre/15">
-      <div className="mx-auto max-w-5xl px-6 py-12">
+    <footer className="relative overflow-hidden">
+      <div className="absolute inset-0">
+        <img src="/footer-registre.webp" alt="" className="h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-[#141b13]/88" />
+      </div>
+      <div className="relative mx-auto max-w-5xl px-6 py-12">
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
           <div>
-            <p className="font-titre text-lg text-encre">Gest-224</p>
-            <p className="mt-2 font-sans text-sm text-encre/75">{t("tagline")}</p>
+            <p className="font-titre text-lg text-white">Gest-224</p>
+            <p className="mt-2 font-sans text-sm text-white/80">{t("tagline")}</p>
           </div>
           {colonnes.map((colonne) => (
             <div key={colonne.titre}>
-              <p className="font-sans text-xs font-medium uppercase tracking-wide text-encre/70">
+              <p className="font-sans text-xs font-medium uppercase tracking-wide text-white/70">
                 {colonne.titre}
               </p>
-              <ul className="mt-3 space-y-2 font-sans text-sm text-encre/70">
+              <ul className="mt-3 space-y-2 font-sans text-sm text-white/70">
                 {colonne.liens.map((l) => (
                   <li key={l.href}>
                     {l.href === "#cookies" ? (
                       <CookieLink />
                     ) : (
-                      <Link href={l.href} className="hover:text-encre hover:underline">
+                      <Link href={l.href} className="hover:text-white hover:underline">
                         {l.label}
                       </Link>
                     )}
@@ -57,7 +61,7 @@ export async function PublicFooter() {
             </div>
           ))}
         </div>
-        <p className="mt-10 border-t border-encre/10 pt-6 font-sans text-xs text-encre/70">
+        <p className="mt-10 border-t border-white/15 pt-6 font-sans text-xs text-white/70">
           © {new Date().getFullYear()} Gest-224. {t("droitsReserves")}
         </p>
       </div>
