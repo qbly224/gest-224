@@ -31,8 +31,12 @@ export async function PublicFooter() {
   return (
     <footer className="relative overflow-hidden">
       <div className="absolute inset-0">
-        <img src="/footer-registre.webp" alt="" className="h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-[#141b13]/88" />
+        <img
+          src="/footer-registre.webp"
+          alt=""
+          className="h-full w-full object-cover object-right"
+        />
+        <div className="absolute inset-0 bg-[#141b13]/80" />
       </div>
       <div className="relative mx-auto max-w-5xl px-6 py-12">
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
