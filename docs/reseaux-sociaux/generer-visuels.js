@@ -22,6 +22,43 @@ const img = (taille, extra = '') => `<img src="${symbole}" style="width:${taille
 
 const REALISATIONS = [['01', 'Gest-224'], ['02', 'Werdhe'], ['03', null]];
 
+// Fiches des réalisations : ajoutez-en une pour générer son post et sa
+// couverture TikTok. « points » : 4 lignes courtes maximum.
+const FICHES = [
+  {
+    id: 'gest-224', num: '01', nom: 'Gest-224',
+    accroche: 'La gestion commerciale complète des petites entreprises, du devis à la facture.',
+    slogan: 'Du devis à la facture<br>en quelques clics.',
+    points: ['Devis, bons de commande et de livraison', 'Factures, acomptes et avoirs conformes', 'Clients et catalogue produits/services', 'Comptabilité simplifiée et tableau de bord'],
+  },
+  {
+    id: 'werdhe', num: '02', nom: 'Werdhe',
+    accroche: 'La gestion locative simple, entre propriétaires et locataires.',
+    slogan: 'Votre loyer,<br>payé en Mobile Money.',
+    points: ['Propriétaires : vos logements et locataires réunis', 'Locataires : un espace pour suivre votre location', 'Loyers payés par Orange Money et MTN MoMo', 'Pensé pour l\'Afrique francophone'],
+  },
+];
+
+const postRealisation = f => `<div style="width:1080px;height:1350px;background:${C.ivoire};color:${C.noir};padding:90px 84px;display:flex;flex-direction:column">
+    <div style="display:flex;justify-content:space-between;align-items:center;font-size:22px">${surtitre(`Réalisation #${f.num}`, C.noir)}${logotype(30, C.noir)}</div>
+    <div style="height:3px;background:${C.noir};margin:28px 0 80px"></div>
+    <div style="font-size:140px;font-weight:700;line-height:1;letter-spacing:-.02em">${f.nom}</div>
+    <div style="font-size:40px;line-height:1.4;margin-top:30px;opacity:.8">${f.accroche}</div>
+    <div style="margin-top:64px;display:grid;gap:28px;font-size:33px">
+      ${f.points.map(t => `<div style="display:flex;gap:24px;align-items:center"><span style="width:22px;height:22px;border-radius:0 0 0 11px;background:${C.beige};flex:none"></span>${t}</div>`).join('')}</div>
+    <div style="margin-top:auto;background:${C.noir};color:${C.ivoire};border-radius:24px;padding:28px 36px;display:flex;justify-content:space-between;align-items:center;font-size:30px">
+      <span>Découvrez-le - lien dans la bio</span>${img(76, 'border-radius:12px')}</div></div>`;
+
+// 1080×1920 : texte entre 520 et 1400 px, à l'abri des boutons TikTok.
+const couvertureTiktok = f => `<div style="width:1080px;height:1920px;background:${C.noir};color:${C.ivoire};position:relative;overflow:hidden">
+    <div style="position:absolute;top:190px;left:90px;display:flex;align-items:center;gap:22px">${img(84, 'border-radius:12px')}${logotype(44, C.ivoire)}</div>
+    <div style="position:absolute;left:90px;right:90px;top:520px;bottom:520px;display:flex;flex-direction:column;justify-content:center">
+      <div style="font-size:34px">${surtitre(`Réalisation #${f.num}`, C.beige)}</div>
+      <div style="font-size:160px;font-weight:700;line-height:1;letter-spacing:-.02em;margin:30px 0">${f.nom}</div>
+      <div style="font-size:54px;line-height:1.3;opacity:.9">${f.slogan}</div>
+      <div style="margin-top:60px;height:8px;width:160px;border-radius:4px;background:${C.beige}"></div></div>
+    <div style="position:absolute;right:-260px;bottom:-200px;opacity:.08">${img(900)}</div></div>`;
+
 const designs = {
   // Symbole seul : lisible une fois rogné en rond par Facebook et TikTok.
   'photo-profil': [1080, 1080, `<div style="width:1080px;height:1080px;background:${C.noir};display:flex;align-items:center;justify-content:center">${img(700)}</div>`],
@@ -47,26 +84,11 @@ const designs = {
         <span style="font-size:52px;font-weight:${nom ? 700 : 400};${nom ? '' : 'opacity:.5'}">${nom || 'Bientôt…'}</span></div>`).join('')}</div>
     <div style="margin-top:auto;font-size:28px;opacity:.75">Abonnez-vous pour suivre chaque nouvelle réalisation.</div></div>`],
 
-  'post-realisation-gest-224': [1080, 1350, `<div style="width:1080px;height:1350px;background:${C.ivoire};color:${C.noir};padding:90px 84px;display:flex;flex-direction:column">
-    <div style="display:flex;justify-content:space-between;align-items:center;font-size:22px">${surtitre('Nouvelle réalisation', C.noir)}${logotype(30, C.noir)}</div>
-    <div style="height:3px;background:${C.noir};margin:28px 0 80px"></div>
-    <div style="font-size:140px;font-weight:700;line-height:1;letter-spacing:-.02em">Gest-224</div>
-    <div style="font-size:40px;line-height:1.4;margin-top:30px;opacity:.8">La gestion commerciale complète des petites entreprises, du devis à la facture.</div>
-    <div style="margin-top:64px;display:grid;gap:28px;font-size:33px">
-      ${['Devis, bons de commande et de livraison', 'Factures, acomptes et avoirs conformes', 'Clients et catalogue produits/services', 'Comptabilité simplifiée et tableau de bord']
-        .map(t => `<div style="display:flex;gap:24px;align-items:center"><span style="width:22px;height:22px;border-radius:0 0 0 11px;background:${C.beige};flex:none"></span>${t}</div>`).join('')}</div>
-    <div style="margin-top:auto;background:${C.noir};color:${C.ivoire};border-radius:24px;padding:28px 36px;display:flex;justify-content:space-between;align-items:center;font-size:30px">
-      <span>Découvrez-le - lien dans la bio</span>${img(76, 'border-radius:12px')}</div></div>`],
-
-  // 1080×1920 : texte entre 430 et 1400 px, à l'abri des boutons TikTok.
-  'couverture-video-tiktok': [1080, 1920, `<div style="width:1080px;height:1920px;background:${C.noir};color:${C.ivoire};position:relative;overflow:hidden">
-    <div style="position:absolute;top:190px;left:90px;display:flex;align-items:center;gap:22px">${img(84, 'border-radius:12px')}${logotype(44, C.ivoire)}</div>
-    <div style="position:absolute;left:90px;right:90px;top:520px;bottom:520px;display:flex;flex-direction:column;justify-content:center">
-      <div style="font-size:34px">${surtitre('Réalisation #01', C.beige)}</div>
-      <div style="font-size:160px;font-weight:700;line-height:1;letter-spacing:-.02em;margin:30px 0">Gest-224</div>
-      <div style="font-size:54px;line-height:1.3;opacity:.9">Du devis à la facture<br>en quelques clics.</div>
-      <div style="margin-top:60px;height:8px;width:160px;border-radius:4px;background:${C.beige}"></div></div>
-    <div style="position:absolute;right:-260px;bottom:-200px;opacity:.08">${img(900)}</div></div>`],
+  // Un post et une couverture TikTok par réalisation (voir FICHES plus haut).
+  ...Object.fromEntries(FICHES.flatMap(f => [
+    [`post-realisation-${f.id}`, [1080, 1350, postRealisation(f)]],
+    [`couverture-video-tiktok-${f.id}`, [1080, 1920, couvertureTiktok(f)]],
+  ])),
 };
 
 (async () => {

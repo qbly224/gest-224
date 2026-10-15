@@ -67,7 +67,9 @@ Nos réalisations :
 • Gest-224 - la gestion commerciale complète des petites entreprises :
   devis, bons de commande et de livraison, factures, acomptes et avoirs,
   avec une comptabilité simplifiée intégrée.
-• Werdhe - [une phrase de présentation]
+• Werdhe - la gestion locative entre propriétaires et locataires, avec
+  paiement des loyers par Mobile Money (Orange Money, MTN MoMo), pensée
+  pour l'Afrique francophone.
 • … et d'autres en préparation.
 
 Sur cette page : chaque nouvelle réalisation, les nouveautés de nos
@@ -113,7 +115,7 @@ produits et les coulisses de nos projets.
 ### 2.3 Publicité TikTok
 - **Simple** : bouton **Promouvoir** sous une vidéo (paiement depuis l'appli).
 - **Avancé** : `ads.tiktok.com` → créer un compte TikTok Ads Manager `QbelyTech`, le relier au compte TikTok, choisir objectif (Portée, Trafic, Prospects).
-- Couverture de vidéo prête : `visuels/couverture-video-tiktok.png` (1080×1920 ; texte dans la zone centrale, à l'abri des boutons TikTok).
+- Couvertures de vidéo prêtes : `visuels/couverture-video-tiktok-gest-224.png` et `visuels/couverture-video-tiktok-werdhe.png` (1080×1920 ; texte dans la zone centrale, à l'abri des boutons TikTok).
 
 ---
 
@@ -157,7 +159,7 @@ Bonjour à tous 👋 Bienvenue sur la page officielle de QbelyTech !
 QbelyTech, c'est la maison de nos réalisations numériques. Chaque projet y
 naît, grandit et vous est présenté ici :
 🧾 #01 Gest-224 - la gestion commerciale, du devis à la facture
-🧩 #02 Werdhe - [une phrase de présentation]
+🏠 #02 Werdhe - la gestion locative, loyers payés en Mobile Money
 🔜 #03 - bientôt…
 
 Ici, vous suivrez chaque nouvelle réalisation, les nouveautés et les
@@ -185,6 +187,23 @@ commerciale au même endroit :
 #Gest224 #Facturation #Gestion #AutoEntrepreneur #QbelyTech
 ```
 
+### Post 3 - Réalisation #02 : Werdhe (Facebook + TikTok)
+Visuel : `post-realisation-werdhe.png`
+```
+🏠 Réalisation #02 : Werdhe
+
+Propriétaires, locataires : la location devient simple.
+Werdhe réunit tout au même endroit :
+✅ Propriétaires : vos logements et vos locataires réunis
+✅ Locataires : un espace pour suivre votre location
+✅ Loyers payés par Orange Money et MTN MoMo
+✅ Pensé pour l'Afrique francophone
+
+👉 Découvrez Werdhe : [lien]
+
+#Werdhe #GestionLocative #Immobilier #MobileMoney #OrangeMoney #MTNMoMo #QbelyTech
+```
+
 ### Vidéo TikTok 1 - « Une facture en 30 secondes » (15-30 s)
 | Temps | Image | Texte à l'écran / voix |
 |---|---|---|
@@ -200,6 +219,20 @@ Légende : `Une facture pro en 30 secondes ⏱️ #Gest224 #Facture #Entrepreneu
 test - format 20-40 s, ton naturel. Les coulisses fonctionnent très bien
 sur TikTok.
 
+### Vidéo TikTok Werdhe - « Payer son loyer sans se déplacer » (15-30 s)
+Couverture : `couverture-video-tiktok-werdhe.png`
+| Temps | Image | Texte à l'écran / voix |
+|---|---|---|
+| 0-3 s | Quelqu'un qui traverse la ville, enveloppe à la main | « Tu te déplaces encore pour payer ton loyer ? 😮‍💨 » |
+| 3-18 s | Enregistrement d'écran : le locataire ouvre Werdhe → paie par Orange Money ou MTN MoMo | « Avec Werdhe, ton loyer se paie en Mobile Money. » |
+| 18-26 s | Écran côté propriétaire : le paiement apparaît | « Et le propriétaire le voit tout de suite. » |
+| 26-30 s | Logo QbelyTech | « Werdhe par QbelyTech - lien en bio. » |
+
+Légende : `Le loyer, payé en Mobile Money 📱🏠 #Werdhe #GestionLocative #OrangeMoney #MTNMoMo #Immobilier #QbelyTech`
+
+Autres idées Werdhe : « Propriétaire : 3 erreurs qui te font perdre des
+loyers », « Locataire : comment garder une trace de tous tes paiements ».
+
 ### Vidéo TikTok 3 - Conseil
 « 3 mentions obligatoires sur une facture » - conseil utile, puis
 « Gest-224 les ajoute automatiquement ».
@@ -210,8 +243,8 @@ sur TikTok.
 
 | Semaine | Facebook (2-3 posts/sem.) | TikTok (3-4 vidéos/sem.) |
 |---|---|---|
-| 1 | Post 1 présentation (épinglé), Post 2 Gest-224, Post Werdhe | Vidéo 1 + 2 vidéos coulisses courtes |
-| 2 | Carrousel captures d'écran Gest-224, conseil de gestion | Vidéo 3 conseil, 1 tutoriel, 1 tendance adaptée |
+| 1 | Post 1 présentation (épinglé), Post 2 Gest-224, Post 3 Werdhe | Vidéo 1 Gest-224, vidéo Werdhe, 1 coulisses |
+| 2 | Carrousel captures d'écran Gest-224, puis Werdhe | Vidéo 3 conseil, 1 tutoriel, 1 tendance adaptée |
 | 3 | Témoignage / premier utilisateur, FAQ | Réponses aux commentaires en vidéo, 1 tuto |
 | 4 | **1re pub** : booster le post le plus performant | **1re promo** : promouvoir la vidéo la plus vue |
 
@@ -245,6 +278,7 @@ fonctionne.
 node docs/reseaux-sociaux/generer-visuels.js docs/reseaux-sociaux/visuels
 ```
 
-Chaque visuel est un bloc HTML dans `generer-visuels.js` : dupliquez
-`post-realisation-gest-224`, changez le titre et la liste pour annoncer une
-nouvelle réalisation (`Réalisation #02`, etc.).
+Pour une nouvelle réalisation, ajoutez une fiche dans `FICHES` (en haut de
+`generer-visuels.js` : numéro, nom, accroche, slogan, 4 points forts) et une
+ligne dans `REALISATIONS`. Relancez : son post, sa couverture TikTok et le
+visuel « Nos réalisations » sont générés automatiquement.
