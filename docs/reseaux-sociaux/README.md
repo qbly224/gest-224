@@ -1,7 +1,11 @@
 # Kit réseaux sociaux QbelyTech - Facebook & TikTok
 
 Tout ce qu'il faut pour lancer les comptes **QbelyTech** de zéro et y publier
-les réalisations (à commencer par Gest-224) et des publicités.
+toutes les réalisations (Gest-224, Werdhe et les suivantes) et des publicités.
+
+**QbelyTech est la structure qui chapeaute tous vos projets.** Il y a donc
+**un seul compte QbelyTech par plateforme**, où chaque réalisation a sa série
+de publications (voir section 4).
 
 > **Important** : la création elle-même des comptes doit être faite par vous.
 > Facebook et TikTok exigent une vérification par SMS/email, l'acceptation des
@@ -50,20 +54,24 @@ les deux plateformes.
 
 **Bio courte (≤ 100 caractères)**
 ```
-Solutions numériques pour entrepreneurs et petites entreprises. Créateurs de Gest-224.
+La maison de nos réalisations numériques : Gest-224, Werdhe… et la suite.
 ```
 
 **Section « À propos » (longue)**
 ```
-QbelyTech conçoit des outils numériques simples, fiables et pensés pour le
-quotidien des entrepreneurs, auto-entrepreneurs et petites entreprises.
+QbelyTech est la structure qui conçoit, développe et fait grandir nos
+projets numériques. Chaque réalisation est un produit à part entière, avec
+la même exigence : simple, fiable et utile au quotidien.
 
-Notre première réalisation, Gest-224, gère toute la chaîne commerciale :
-devis, bons de commande, bons de livraison, factures, factures d'acompte et
-avoirs, avec une comptabilité simplifiée intégrée.
+Nos réalisations :
+• Gest-224 - la gestion commerciale complète des petites entreprises :
+  devis, bons de commande et de livraison, factures, acomptes et avoirs,
+  avec une comptabilité simplifiée intégrée.
+• Werdhe - [une phrase de présentation]
+• … et d'autres en préparation.
 
-Sur cette page : nos réalisations, nos nouveautés, des conseils pratiques de
-gestion et les coulisses de nos projets.
+Sur cette page : chaque nouvelle réalisation, les nouveautés de nos
+produits et les coulisses de nos projets.
 
 📩 [email]  📞 [téléphone]  🌐 [site web]
 ```
@@ -95,11 +103,11 @@ gestion et les coulisses de nos projets.
 - **Photo** : `visuels/photo-profil.png`
 - **Bio (≤ 80 caractères)** :
 ```
-💻 Logiciels pour entrepreneurs
-🧾 Gest-224 : devis → facture
+🧩 Toutes nos réalisations numériques
+🧾 Gest-224 · Werdhe · et la suite
 👇 Découvrir
 ```
-- **Lien** : `[site web de Gest-224]`
+- **Lien** : une seule adresse qui liste toutes les réalisations (page QbelyTech de votre site, ou une page de liens type Linktree / Beacons gratuite) - pas le site d'un seul produit.
 - **Email de contact** : l'email dédié.
 
 ### 2.3 Publicité TikTok
@@ -133,20 +141,31 @@ Basée sur le logo officiel : `visuels/logo-qbelytech.png` (logo complet) et
 
 ## 4. Premières publications (prêtes à poster)
 
+### Comment organiser les publications
+Un seul compte, plusieurs réalisations : chaque projet a son **numéro**
+(Réalisation #01 Gest-224, #02 Werdhe…), son **hashtag** (`#Gest224`,
+`#Werdhe`) et, sur TikTok, sa **playlist**, pour que chacun trouve vite le
+produit qui l'intéresse. Le hashtag `#QbelyTech` va sur tout.
+Ouvrez un compte séparé pour un produit seulement le jour où il a sa propre
+communauté ; d'ici là, tout regroupé sous QbelyTech, c'est plus de visibilité.
+
 ### Post 1 - Présentation (Facebook, épinglé)
-Visuel : `logo-qbelytech.png`
+Visuel : `post-nos-realisations.png`
 ```
 Bonjour à tous 👋 Bienvenue sur la page officielle de QbelyTech !
 
-Nous concevons des outils numériques simples et fiables pour les
-entrepreneurs et les petites entreprises.
+QbelyTech, c'est la maison de nos réalisations numériques. Chaque projet y
+naît, grandit et vous est présenté ici :
+🧾 #01 Gest-224 - la gestion commerciale, du devis à la facture
+🧩 #02 Werdhe - [une phrase de présentation]
+🔜 #03 - bientôt…
 
-Ici, vous découvrirez nos réalisations, nos nouveautés et des conseils
-pratiques pour mieux gérer votre activité.
+Ici, vous suivrez chaque nouvelle réalisation, les nouveautés et les
+coulisses de nos projets.
 
 Abonnez-vous pour suivre l'aventure 🚀
 
-#QbelyTech #Entrepreneuriat #Digital #PetiteEntreprise
+#QbelyTech #Gest224 #Werdhe #Digital #Innovation
 ```
 
 ### Post 2 - Réalisation #01 : Gest-224 (Facebook + TikTok)
@@ -191,7 +210,7 @@ sur TikTok.
 
 | Semaine | Facebook (2-3 posts/sem.) | TikTok (3-4 vidéos/sem.) |
 |---|---|---|
-| 1 | Post 1 présentation (épinglé), Post 2 Gest-224 | Vidéo 1 + 2 vidéos coulisses courtes |
+| 1 | Post 1 présentation (épinglé), Post 2 Gest-224, Post Werdhe | Vidéo 1 + 2 vidéos coulisses courtes |
 | 2 | Carrousel captures d'écran Gest-224, conseil de gestion | Vidéo 3 conseil, 1 tutoriel, 1 tendance adaptée |
 | 3 | Témoignage / premier utilisateur, FAQ | Réponses aux commentaires en vidéo, 1 tuto |
 | 4 | **1re pub** : booster le post le plus performant | **1re promo** : promouvoir la vidéo la plus vue |
@@ -215,7 +234,7 @@ fonctionne.
 - [ ] Post 1 publié et épinglé, Post 2 publié
 - [ ] 3 premières vidéos TikTok tournées et publiées
 - [ ] Liens croisés : lien TikTok sur la Page Facebook, et inversement
-- [ ] Liens Facebook/TikTok ajoutés au pied de page du site Gest-224
+- [ ] Liens Facebook/TikTok ajoutés sur le site de chaque réalisation (Gest-224, Werdhe…)
 
 ---
 

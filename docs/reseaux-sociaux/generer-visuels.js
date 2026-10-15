@@ -20,6 +20,8 @@ const surtitre = (s, couleur) => `<span style="font-weight:600;letter-spacing:.2
 const logotype = (taille, couleur) => `<span style="font-size:${taille}px;color:${couleur};letter-spacing:-.01em;line-height:1"><b style="font-weight:700">Qbely</b><span style="font-weight:400">Tech</span></span>`;
 const img = (taille, extra = '') => `<img src="${symbole}" style="width:${taille}px;height:${taille}px;display:block;${extra}">`;
 
+const REALISATIONS = [['01', 'Gest-224'], ['02', 'Werdhe'], ['03', null]];
+
 const designs = {
   // Symbole seul : lisible une fois rogné en rond par Facebook et TikTok.
   'photo-profil': [1080, 1080, `<div style="width:1080px;height:1080px;background:${C.noir};display:flex;align-items:center;justify-content:center">${img(700)}</div>`],
@@ -28,10 +30,22 @@ const designs = {
   'couverture-facebook': [1640, 624, `<div style="width:1640px;height:624px;background:${C.noir};position:relative;overflow:hidden">
     <div style="position:absolute;right:-300px;top:-20px;opacity:.07">${img(660)}</div>
     <div style="position:absolute;left:300px;right:300px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center">
-      <div style="font-size:22px">${surtitre('Solutions numériques', C.beige)}</div>
+      <div style="font-size:22px">${surtitre('Nos réalisations numériques', C.beige)}</div>
       <div style="margin:22px 0 26px">${logotype(124, C.ivoire)}</div>
-      <div style="font-size:30px;color:${C.ivoire};opacity:.85;line-height:1.4">Des outils simples et fiables<br>pour les entrepreneurs et les petites entreprises.</div>
+      <div style="font-size:30px;color:${C.ivoire};opacity:.85;line-height:1.4">Une maison, toutes nos réalisations.<br><span style="color:${C.beige}">Gest-224 · Werdhe · et la suite</span></div>
       <div style="margin-top:34px;height:5px;width:120px;border-radius:3px;background:${C.beige}"></div></div></div>`],
+
+  // Présente QbelyTech comme la structure qui regroupe toutes les réalisations.
+  // Ajoutez une ligne à REALISATIONS à chaque nouveau projet.
+  'post-nos-realisations': [1080, 1350, `<div style="width:1080px;height:1350px;background:${C.noir};color:${C.ivoire};padding:90px 84px;display:flex;flex-direction:column">
+    <div style="display:flex;align-items:center;gap:22px">${img(84, 'border-radius:12px')}${logotype(44, C.ivoire)}</div>
+    <div style="font-size:24px;margin-top:80px">${surtitre('Une maison, plusieurs réalisations', C.beige)}</div>
+    <div style="font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-.01em;margin-top:22px">Tout ce que nous<br>construisons, au même endroit.</div>
+    <div style="margin-top:64px;display:grid;gap:22px">
+      ${REALISATIONS.map(([num, nom]) => `<div style="display:flex;align-items:center;gap:30px;padding:30px 36px;border-radius:24px;background:${nom ? C.gris : 'transparent'};border:2px ${nom ? 'solid' : 'dashed'} ${nom ? C.gris : 'rgba(243,236,224,.25)'}">
+        <span style="font-size:30px;font-weight:600;color:${C.beige};width:64px;flex:none">#${num}</span>
+        <span style="font-size:52px;font-weight:${nom ? 700 : 400};${nom ? '' : 'opacity:.5'}">${nom || 'Bientôt…'}</span></div>`).join('')}</div>
+    <div style="margin-top:auto;font-size:28px;opacity:.75">Abonnez-vous pour suivre chaque nouvelle réalisation.</div></div>`],
 
   'post-realisation-gest-224': [1080, 1350, `<div style="width:1080px;height:1350px;background:${C.ivoire};color:${C.noir};padding:90px 84px;display:flex;flex-direction:column">
     <div style="display:flex;justify-content:space-between;align-items:center;font-size:22px">${surtitre('Nouvelle réalisation', C.noir)}${logotype(30, C.noir)}</div>
