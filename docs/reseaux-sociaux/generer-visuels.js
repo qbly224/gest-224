@@ -1,47 +1,67 @@
-// Génère les visuels réseaux sociaux QbelyTech (PNG) à partir de blocs HTML.
-// Usage : node docs/reseaux-sociaux/generer-visuels.js <dossier-de-sortie>
+// Génère les visuels réseaux sociaux QbelyTech (PNG) à partir de blocs HTML,
+// avec le logo officiel (visuels/logo-symbole.png) et la police Poppins.
+// Usage : node docs/reseaux-sociaux/generer-visuels.js [dossier-de-sortie]
+const fs = require('fs');
+const path = require('path');
 const { chromium } = require('playwright');
-const out = process.argv[2] || 'docs/reseaux-sociaux/visuels';
-const C = { encre:'#1F3D2C', light:'#2D5741', ivoire:'#F6F1E7', ocre:'#C8963E' };
-const base = `*{margin:0;padding:0;box-sizing:border-box}body{font-family:Inter,sans-serif}
-.serif{font-family:Caladea,'DejaVu Serif',serif}
-.grain{background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 2px,transparent 2px 4px)}`;
-const mono = (s)=>`<span style="font-family:Inter;font-weight:600;letter-spacing:.28em;text-transform:uppercase">${s}</span>`;
-const logoQ = (size, fg, accent)=>`<div class="serif" style="position:relative;font-size:${size}px;font-weight:700;line-height:1;color:${fg}">Q<span style="position:absolute;right:-${size*.12}px;bottom:${size*.08}px;width:${size*.14}px;height:${size*.14}px;border-radius:50%;background:${accent}"></span></div>`;
+
+const ici = __dirname;
+const out = process.argv[2] || path.join(ici, 'visuels');
+const dataUri = (f, type) => `data:${type};base64,${fs.readFileSync(path.join(ici, f)).toString('base64')}`;
+const symbole = dataUri('visuels/logo-symbole.png', 'image/png');
+
+// Couleurs relevées sur le logo officiel.
+const C = { noir: '#111111', gris: '#1C1C1C', ivoire: '#F3ECE0', beige: '#C8B08A' };
+
+const polices = [400, 600, 700].map(w => `@font-face{font-family:Poppins;font-weight:${w};src:url(${dataUri(`polices/poppins-latin-${w}-normal.woff2`, 'font/woff2')})}`).join('');
+const base = `${polices}*{margin:0;padding:0;box-sizing:border-box}body{font-family:Poppins,sans-serif}`;
+const surtitre = (s, couleur) => `<span style="font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:${couleur}">${s}</span>`;
+// Reproduit le logotype : « Qbely » en gras, « Tech » en régulier.
+const logotype = (taille, couleur) => `<span style="font-size:${taille}px;color:${couleur};letter-spacing:-.01em;line-height:1"><b style="font-weight:700">Qbely</b><span style="font-weight:400">Tech</span></span>`;
+const img = (taille, extra = '') => `<img src="${symbole}" style="width:${taille}px;height:${taille}px;display:block;${extra}">`;
+
 const designs = {
- 'photo-profil': [1080,1080, `<div class="grain" style="width:1080px;height:1080px;background:radial-gradient(circle at 50% 40%,${C.light},${C.encre} 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px">
-   ${logoQ(560,C.ivoire,C.ocre)}
-   <div style="color:${C.ivoire};font-size:62px;margin-top:-10px">${mono('QbelyTech')}</div></div>`],
- 'couverture-facebook': [1640,624, `<div class="grain" style="width:1640px;height:624px;background:linear-gradient(120deg,${C.encre} 55%,${C.light});position:relative;overflow:hidden;color:${C.ivoire}">
-   <div class="serif" style="position:absolute;right:-60px;top:-170px;font-size:900px;font-weight:700;color:rgba(246,241,231,.06)">Q</div>
-   <div style="position:absolute;left:300px;right:300px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center">
-     <div style="font-size:22px;color:${C.ocre}">${mono('Solutions numériques')}</div>
-     <div class="serif" style="font-size:118px;font-weight:700;margin:14px 0 18px">QbelyTech</div>
-     <div style="font-size:30px;opacity:.9;max-width:900px;line-height:1.35">Nous concevons des outils simples et fiables<br>pour les entrepreneurs et les petites entreprises.</div>
-     <div style="margin-top:34px;height:4px;width:120px;background:${C.ocre}"></div></div></div>`],
- 'post-realisation-gest-224': [1080,1350, `<div style="width:1080px;height:1350px;background:${C.ivoire};color:${C.encre};padding:90px 84px;display:flex;flex-direction:column">
-   <div style="display:flex;justify-content:space-between;align-items:center;font-size:22px">${mono('Nouvelle réalisation')}<span style="font-size:22px;opacity:.6">${mono('QbelyTech')}</span></div>
-   <div style="height:3px;background:${C.encre};margin:28px 0 70px"></div>
-   <div class="serif" style="font-size:150px;font-weight:700;line-height:1">Gest-224</div>
-   <div style="font-size:40px;line-height:1.35;margin-top:30px;color:${C.light}">La gestion commerciale complète des petites entreprises, du devis à la facture.</div>
-   <div style="margin-top:64px;display:grid;gap:26px;font-size:34px">
-     ${['Devis, bons de commande et de livraison','Factures, acomptes et avoirs conformes','Clients et catalogue produits/services','Comptabilité simplifiée et tableau de bord'].map(t=>`<div style="display:flex;gap:22px;align-items:center"><span style="width:18px;height:18px;background:${C.ocre};flex:none"></span>${t}</div>`).join('')}</div>
-   <div style="margin-top:auto;background:${C.encre};color:${C.ivoire};padding:34px 40px;display:flex;justify-content:space-between;align-items:center;font-size:30px">
-     <span>Découvrez-le - lien dans la bio</span><span class="serif" style="font-size:44px;font-weight:700">Q<span style="color:${C.ocre}">.</span></span></div></div>`],
- 'couverture-video-tiktok': [1080,1920, `<div class="grain" style="width:1080px;height:1920px;background:linear-gradient(180deg,${C.encre},${C.light});color:${C.ivoire};position:relative">
-   <div style="position:absolute;left:90px;right:90px;top:430px;bottom:520px;display:flex;flex-direction:column;justify-content:center">
-     <div style="font-size:34px;color:${C.ocre}">${mono('Réalisation #01')}</div>
-     <div class="serif" style="font-size:170px;font-weight:700;line-height:1;margin:30px 0">Gest-224</div>
-     <div style="font-size:54px;line-height:1.3">Du devis à la facture<br>en quelques clics.</div>
-     <div style="margin-top:60px;height:6px;width:160px;background:${C.ocre}"></div></div>
-   <div style="position:absolute;top:200px;left:90px;font-size:30px;opacity:.85">${mono('QbelyTech')}</div></div>`],
+  // Symbole seul : lisible une fois rogné en rond par Facebook et TikTok.
+  'photo-profil': [1080, 1080, `<div style="width:1080px;height:1080px;background:${C.noir};display:flex;align-items:center;justify-content:center">${img(700)}</div>`],
+
+  // 1640×624 : texte dans la zone centrale, visible aussi sur mobile.
+  'couverture-facebook': [1640, 624, `<div style="width:1640px;height:624px;background:${C.noir};position:relative;overflow:hidden">
+    <div style="position:absolute;right:-300px;top:-20px;opacity:.07">${img(660)}</div>
+    <div style="position:absolute;left:300px;right:300px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center">
+      <div style="font-size:22px">${surtitre('Solutions numériques', C.beige)}</div>
+      <div style="margin:22px 0 26px">${logotype(124, C.ivoire)}</div>
+      <div style="font-size:30px;color:${C.ivoire};opacity:.85;line-height:1.4">Des outils simples et fiables<br>pour les entrepreneurs et les petites entreprises.</div>
+      <div style="margin-top:34px;height:5px;width:120px;border-radius:3px;background:${C.beige}"></div></div></div>`],
+
+  'post-realisation-gest-224': [1080, 1350, `<div style="width:1080px;height:1350px;background:${C.ivoire};color:${C.noir};padding:90px 84px;display:flex;flex-direction:column">
+    <div style="display:flex;justify-content:space-between;align-items:center;font-size:22px">${surtitre('Nouvelle réalisation', C.noir)}${logotype(30, C.noir)}</div>
+    <div style="height:3px;background:${C.noir};margin:28px 0 80px"></div>
+    <div style="font-size:140px;font-weight:700;line-height:1;letter-spacing:-.02em">Gest-224</div>
+    <div style="font-size:40px;line-height:1.4;margin-top:30px;opacity:.8">La gestion commerciale complète des petites entreprises, du devis à la facture.</div>
+    <div style="margin-top:64px;display:grid;gap:28px;font-size:33px">
+      ${['Devis, bons de commande et de livraison', 'Factures, acomptes et avoirs conformes', 'Clients et catalogue produits/services', 'Comptabilité simplifiée et tableau de bord']
+        .map(t => `<div style="display:flex;gap:24px;align-items:center"><span style="width:22px;height:22px;border-radius:0 0 0 11px;background:${C.beige};flex:none"></span>${t}</div>`).join('')}</div>
+    <div style="margin-top:auto;background:${C.noir};color:${C.ivoire};border-radius:24px;padding:28px 36px;display:flex;justify-content:space-between;align-items:center;font-size:30px">
+      <span>Découvrez-le - lien dans la bio</span>${img(76, 'border-radius:12px')}</div></div>`],
+
+  // 1080×1920 : texte entre 430 et 1400 px, à l'abri des boutons TikTok.
+  'couverture-video-tiktok': [1080, 1920, `<div style="width:1080px;height:1920px;background:${C.noir};color:${C.ivoire};position:relative;overflow:hidden">
+    <div style="position:absolute;top:190px;left:90px;display:flex;align-items:center;gap:22px">${img(84, 'border-radius:12px')}${logotype(44, C.ivoire)}</div>
+    <div style="position:absolute;left:90px;right:90px;top:520px;bottom:520px;display:flex;flex-direction:column;justify-content:center">
+      <div style="font-size:34px">${surtitre('Réalisation #01', C.beige)}</div>
+      <div style="font-size:160px;font-weight:700;line-height:1;letter-spacing:-.02em;margin:30px 0">Gest-224</div>
+      <div style="font-size:54px;line-height:1.3;opacity:.9">Du devis à la facture<br>en quelques clics.</div>
+      <div style="margin-top:60px;height:8px;width:160px;border-radius:4px;background:${C.beige}"></div></div>
+    <div style="position:absolute;right:-260px;bottom:-200px;opacity:.08">${img(900)}</div></div>`],
 };
-(async()=>{
-  const b = await chromium.launch();
-  for (const [name,[w,h,html]] of Object.entries(designs)) {
-    const p = await b.newPage({viewport:{width:w,height:h}});
-    await p.setContent(`<html><head><style>${base}</style></head><body>${html}</body></html>`);
-    await p.screenshot({path:`${out}/${name}.png`});
+
+(async () => {
+  const navigateur = await chromium.launch();
+  for (const [nom, [w, h, html]] of Object.entries(designs)) {
+    const page = await navigateur.newPage({ viewport: { width: w, height: h } });
+    await page.setContent(`<html><head><style>${base}</style></head><body>${html}</body></html>`);
+    await page.evaluate(() => document.fonts.ready);
+    await page.screenshot({ path: path.join(out, `${nom}.png`) });
   }
-  await b.close();
+  await navigateur.close();
 })();

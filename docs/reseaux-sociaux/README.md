@@ -40,7 +40,7 @@ les deux plateformes.
 5. **Bio** (voir 1.3) → **Créer la Page**.
 
 ### 1.2 Habiller la Page
-- **Photo de profil** : `visuels/photo-profil.png` (1080×1080, lisible en rond).
+- **Photo de profil** : `visuels/photo-profil.png` (1080×1080, le symbole du logo, lisible en rond).
 - **Photo de couverture** : `visuels/couverture-facebook.png` (1640×624 - le texte est centré pour rester visible sur mobile).
 - **Nom d'utilisateur** : Paramètres de la Page → `@qbelytech` → l'adresse devient `facebook.com/qbelytech`.
 - **Bouton d'action** : « Envoyer un message » (ou « WhatsApp » si vous utilisez WhatsApp Business).
@@ -111,17 +111,21 @@ gestion et les coulisses de nos projets.
 
 ## 3. Identité visuelle
 
-Reprise de la charte de Gest-224 pour que tout soit cohérent.
+Basée sur le logo officiel : `visuels/logo-qbelytech.png` (logo complet) et
+`visuels/logo-symbole.png` (symbole seul).
 
 | Rôle | Couleur | Hex |
 |---|---|---|
-| Encre (fond principal) | Vert forêt | `#1F3D2C` |
-| Encre claire | Vert | `#2D5741` |
-| Papier (texte sur fond vert, fonds clairs) | Ivoire | `#F6F1E7` |
-| Accent (le point du logo, filets) | Ocre | `#C8963E` |
+| Fond principal | Noir | `#111111` |
+| Texte sur fond noir, fonds clairs | Ivoire | `#F3ECE0` |
+| Accent (le 4e quart du symbole, filets, puces) | Beige | `#C8B08A` |
 
-- **Titres** : serif (Lora, ou Caladea) - **Texte** : Inter.
-- **Logo** : le « Q » ivoire suivi du point ocre. Le point ocre est la signature : on le retrouve en bas de chaque visuel.
+- **Police** : Poppins - « **Qbely** » en gras, « Tech » en régulier, comme
+  sur le logo. Fichiers dans `polices/` (licence libre OFL).
+- **Photo de profil** : symbole seul, sans le nom (le nom s'affiche déjà à
+  côté, et le texte serait illisible en petit rond).
+- **Le quart beige** est la signature : on le reprend en puce et en filet
+  sur chaque visuel.
 - Format des posts : **1080×1350** (Facebook), **1080×1920** (TikTok, Reels, Stories).
 - Les visuels sont générés depuis `generer-visuels.js` : modifiez les textes et relancez pour créer de nouveaux posts dans le même style (voir en bas).
 
@@ -130,7 +134,7 @@ Reprise de la charte de Gest-224 pour que tout soit cohérent.
 ## 4. Premières publications (prêtes à poster)
 
 ### Post 1 - Présentation (Facebook, épinglé)
-Visuel : `couverture-facebook.png` ou `photo-profil.png`
+Visuel : `logo-qbelytech.png`
 ```
 Bonjour à tous 👋 Bienvenue sur la page officielle de QbelyTech !
 
