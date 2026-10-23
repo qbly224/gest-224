@@ -2,11 +2,15 @@ name: Génération des factures récurrentes
 
 # Génère en brouillon les factures dont un modèle récurrent (cf.
 # app/(app)/factures-recurrentes) arrive à échéance, une fois par jour.
-# Nécessite le même secret de dépôt CRON_SECRET que le workflow de relances,
-# à faire correspondre à la variable d'environnement CRON_SECRET sur Render.
+#
+# Désactivé en planification : le secret de dépôt CRON_SECRET n'a jamais
+# été créé, donc ce workflow échouait (401) à chaque exécution depuis sa
+# création. Le déclenchement quotidien tourne désormais depuis Supabase
+# (pg_cron + pg_net, job "gest224-factures-recurrentes"), qui appelle ce
+# même endpoint avec le CRON_SECRET déjà configuré sur Render - sans
+# dépendre d'un secret GitHub. Ce workflow reste utilisable en lancement
+# manuel (il faudrait alors ajouter le secret CRON_SECRET ici aussi).
 on:
-  schedule:
-    - cron: "0 6 * * *"
   workflow_dispatch:
 
 jobs:

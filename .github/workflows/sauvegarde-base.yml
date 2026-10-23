@@ -1,19 +1,22 @@
 name: Sauvegarde quotidienne de la base
 
-# Le projet Supabase est sur le plan gratuit, qui ne propose aucune
-# sauvegarde automatique (ni quotidienne, ni PITR) - contrairement aux
-# plans payants. Ce workflow comble ce manque : un pg_dump complet chaque
-# jour, conservé 14 jours en artefact GitHub Actions (gratuit, pas
-# d'infrastructure supplémentaire). Nécessite un secret de dépôt
-# DATABASE_URL, dont la valeur doit être identique à la variable
-# d'environnement DATABASE_URL configurée sur Render pour le service
-# gest-224 (Settings > Environment sur le dashboard Render).
+# Ce workflow a été désactivé : le secret DATABASE_URL n'a jamais été
+# configuré sur ce dépôt (il aurait fallu le créer manuellement dans
+# Settings > Secrets and variables > Actions), donc il échouait à chaque
+# exécution depuis sa création.
 #
-# Pour restaurer une sauvegarde : télécharger l'artefact depuis l'onglet
-# Actions de ce run, puis `pg_restore --clean --if-exists -d <url> <fichier>`.
+# La sauvegarde quotidienne tourne désormais entièrement côté Supabase
+# (pg_cron + pg_net + une edge function "sauvegarde-base"), sans
+# dépendre d'un secret GitHub : voir le job cron.job "gest224-sauvegarde-base"
+# dans la base, et la fonction supabase/functions/sauvegarde-base. C'est un
+# export JSON (pas un pg_dump binaire), déposé dans le bucket de stockage
+# Supabase "backups".
+#
+# Le déclenchement planifié est retiré ci-dessous ; le workflow reste
+# disponible en lancement manuel (Actions > ce workflow > Run workflow) si
+# jamais DATABASE_URL est ajouté plus tard et qu'on veut repasser à un vrai
+# pg_dump en plus.
 on:
-  schedule:
-    - cron: "0 3 * * *"
   workflow_dispatch:
 
 jobs:
