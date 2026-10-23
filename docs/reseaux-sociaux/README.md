@@ -182,7 +182,7 @@ commerciale au même endroit :
 ✅ Fichier clients et catalogue
 ✅ Comptabilité simplifiée et tableau de bord
 
-👉 Essayez-le : [lien]
+👉 Essayez-le : https://gest-224.onrender.com
 
 #Gest224 #Facturation #Gestion #AutoEntrepreneur #QbelyTech
 ```
@@ -212,7 +212,7 @@ Werdhe réunit tout au même endroit :
 | 0-3 s | Vous face caméra, ou tableur Excel en désordre | « Tu fais encore tes factures sur Excel ? 😅 » |
 | 3-20 s | Enregistrement d'écran : créer un devis → le convertir en facture → PDF | « Regarde : devis… converti en facture… PDF prêt. » |
 | 20-27 s | Tableau de bord Gest-224 | « Et ta compta se met à jour toute seule. » |
-| 27-30 s | Logo QbelyTech | « Gest-224 par QbelyTech - lien en bio. » |
+| 27-30 s | Logo QbelyTech | « Gest-224 par QbelyTech - gest-224.onrender.com. » |
 
 Légende : `Une facture pro en 30 secondes ⏱️ #Gest224 #Facture #Entrepreneur #TechAfrique #QbelyTech`
 

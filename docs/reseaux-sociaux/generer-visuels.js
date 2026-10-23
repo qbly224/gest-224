@@ -26,7 +26,7 @@ const REALISATIONS = [['01', 'Gest-224'], ['02', 'Werdhe'], ['03', null]];
 // couverture TikTok. « points » : 4 lignes courtes maximum.
 const FICHES = [
   {
-    id: 'gest-224', num: '01', nom: 'Gest-224',
+    id: 'gest-224', num: '01', nom: 'Gest-224', lien: 'gest-224.onrender.com',
     accroche: 'La gestion commerciale complète des petites entreprises, du devis à la facture.',
     slogan: 'Du devis à la facture<br>en quelques clics.',
     points: ['Devis, bons de commande et de livraison', 'Factures, acomptes et avoirs conformes', 'Clients et catalogue produits/services', 'Comptabilité simplifiée et tableau de bord'],

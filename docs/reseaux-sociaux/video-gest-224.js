@@ -101,8 +101,8 @@ body{width:1080px;height:1920px;background:${C.noir};color:${C.ivoire};font-fami
   <img class="a" id="s6l" src="${symbole}" style="width:220px;height:220px;border-radius:40px">
   <div class="a" id="s6a" style="font-size:140px;font-weight:700;letter-spacing:-.02em;line-height:1;margin-top:50px">Gest-224</div>
   <div class="a" id="s6b" style="font-size:42px;margin-top:26px;opacity:.9;line-height:1.35">Devis, factures, bons de commande,<br>acomptes, avoirs et compta :<br>tout au même endroit.</div>
-  <div class="a" id="s6c" style="margin-top:64px;font-size:44px;font-weight:600;background:${C.beige};color:${C.noir};padding:26px 54px;border-radius:999px">👉 Lien en bio</div>
-  <div class="a" id="s6d" style="margin-top:60px;font-size:30px;opacity:.6">Réalisation #01 · <b>Qbely</b>Tech</div>
+  <div class="a" id="s6c" style="margin-top:64px;font-size:44px;font-weight:600;background:${C.beige};color:${C.noir};padding:26px 54px;border-radius:999px">👉 gest-224.onrender.com</div>
+  <div class="a" id="s6d" style="margin-top:60px;font-size:30px;opacity:.6">Lien en bio · Réalisation #01 · <b>Qbely</b>Tech</div>
 </div>
 
 <script>
