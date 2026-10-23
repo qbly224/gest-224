@@ -205,6 +205,8 @@ Werdhe réunit tout au même endroit :
 ```
 
 ### Vidéo TikTok 1 - « Une facture en 30 secondes » (15-30 s)
+**Vidéo prête à publier : `videos/gest-224-presentation.mp4`** (25 s, générée par `video-gest-224.js`) : devis → facture en un clic → PDF prêt → facture payée, recette enregistrée. Le tableau ci-dessous sert si vous préférez la tourner vous-même.
+
 | Temps | Image | Texte à l'écran / voix |
 |---|---|---|
 | 0-3 s | Vous face caméra, ou tableur Excel en désordre | « Tu fais encore tes factures sur Excel ? 😅 » |
