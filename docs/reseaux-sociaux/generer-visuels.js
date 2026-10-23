@@ -32,7 +32,7 @@ const FICHES = [
     points: ['Devis, bons de commande et de livraison', 'Factures, acomptes et avoirs conformes', 'Clients et catalogue produits/services', 'Comptabilité simplifiée et tableau de bord'],
   },
   {
-    id: 'werdhe', num: '02', nom: 'Werdhe',
+    id: 'werdhe', num: '02', nom: 'Werdhe', lien: 'werdhe.com',
     accroche: 'La gestion locative simple, entre propriétaires et locataires.',
     slogan: 'Votre loyer,<br>payé en Mobile Money.',
     points: ['Propriétaires : vos logements et locataires réunis', 'Locataires : un espace pour suivre votre location', 'Loyers payés par Orange Money et MTN MoMo', 'Pensé pour l\'Afrique francophone'],
@@ -47,7 +47,7 @@ const postRealisation = f => `<div style="width:1080px;height:1350px;background:
     <div style="margin-top:64px;display:grid;gap:28px;font-size:33px">
       ${f.points.map(t => `<div style="display:flex;gap:24px;align-items:center"><span style="width:22px;height:22px;border-radius:0 0 0 11px;background:${C.beige};flex:none"></span>${t}</div>`).join('')}</div>
     <div style="margin-top:auto;background:${C.noir};color:${C.ivoire};border-radius:24px;padding:28px 36px;display:flex;justify-content:space-between;align-items:center;font-size:30px">
-      <span>Découvrez-le - lien dans la bio</span>${img(76, 'border-radius:12px')}</div></div>`;
+      <span>${f.lien ? `Découvrez-le sur <b>${f.lien}</b>` : 'Découvrez-le - lien dans la bio'}</span>${img(76, 'border-radius:12px')}</div></div>`;
 
 // 1080×1920 : texte entre 520 et 1400 px, à l'abri des boutons TikTok.
 const couvertureTiktok = f => `<div style="width:1080px;height:1920px;background:${C.noir};color:${C.ivoire};position:relative;overflow:hidden">

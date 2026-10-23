@@ -199,7 +199,7 @@ Werdhe réunit tout au même endroit :
 ✅ Loyers payés par Orange Money et MTN MoMo
 ✅ Pensé pour l'Afrique francophone
 
-👉 Découvrez Werdhe : [lien]
+👉 Découvrez Werdhe : https://werdhe.com
 
 #Werdhe #GestionLocative #Immobilier #MobileMoney #OrangeMoney #MTNMoMo #QbelyTech
 ```
@@ -220,13 +220,14 @@ test - format 20-40 s, ton naturel. Les coulisses fonctionnent très bien
 sur TikTok.
 
 ### Vidéo TikTok Werdhe - « Payer son loyer sans se déplacer » (15-30 s)
+**Vidéo prête à publier : `videos/werdhe-presentation.mp4`** (25 s, générée par `video-werdhe.js`). Le tableau ci-dessous sert si vous préférez la tourner vous-même.
 Couverture : `couverture-video-tiktok-werdhe.png`
 | Temps | Image | Texte à l'écran / voix |
 |---|---|---|
 | 0-3 s | Quelqu'un qui traverse la ville, enveloppe à la main | « Tu te déplaces encore pour payer ton loyer ? 😮‍💨 » |
 | 3-18 s | Enregistrement d'écran : le locataire ouvre Werdhe → paie par Orange Money ou MTN MoMo | « Avec Werdhe, ton loyer se paie en Mobile Money. » |
 | 18-26 s | Écran côté propriétaire : le paiement apparaît | « Et le propriétaire le voit tout de suite. » |
-| 26-30 s | Logo QbelyTech | « Werdhe par QbelyTech - lien en bio. » |
+| 26-30 s | Logo QbelyTech | « Werdhe par QbelyTech - werdhe.com. » |
 
 Légende : `Le loyer, payé en Mobile Money 📱🏠 #Werdhe #GestionLocative #OrangeMoney #MTNMoMo #Immobilier #QbelyTech`
 
