@@ -1,17 +1,22 @@
 /**
- * Provisionne les deux plans payants de Gest-224 dans Stripe (produits +
- * prix récurrents mensuels), pour éviter de le faire à la main dans le
- * dashboard. Lecture seule sur tout le reste du compte Stripe.
+ * Provisionne Stripe pour Gest-224 : les deux plans payants (produits +
+ * prix récurrents mensuels) et le webhook applicatif, pour éviter de le
+ * faire à la main dans le dashboard.
  *
- * Idempotent : si un produit "Gest-224 Starter"/"Gest-224 Pro" existe déjà
- * (recherché par nom), il est réutilisé plutôt que dupliqué - seul un prix
- * manquant est créé.
+ * Idempotent : un produit/prix/webhook déjà présent (recherché par nom ou
+ * URL) est réutilisé plutôt que dupliqué.
  *
  * Usage :
  *   STRIPE_SECRET_KEY=sk_test_... npx tsx scripts/stripe-setup.ts
  *
- * Affiche à la fin les deux Price ID à poser en variables d'environnement
- * (STRIPE_PRICE_STARTER, STRIPE_PRICE_PRO) sur Render.
+ * Affiche à la fin les 4 variables à poser sur Render (Settings >
+ * Environment) : STRIPE_SECRET_KEY (déjà en main), STRIPE_WEBHOOK_SECRET,
+ * STRIPE_PRICE_STARTER, STRIPE_PRICE_PRO.
+ *
+ * Le secret du webhook n'est renvoyé par Stripe qu'à sa création : si un
+ * webhook pour cette URL existe déjà, il faut régénérer son secret depuis
+ * le dashboard (Developers > Webhooks > sélectionner l'endpoint > Roll
+ * secret) plutôt que de pouvoir le relire ici.
  */
 import Stripe from "stripe";
 import { PLANS } from "../lib/plans";
@@ -40,6 +45,26 @@ async function trouverOuCreerPrix(
   });
 }
 
+const URL_WEBHOOK = "https://gest-224.onrender.com/api/stripe/webhook";
+const EVENEMENTS_WEBHOOK: Stripe.WebhookEndpointCreateParams.EnabledEvent[] = [
+  "checkout.session.completed",
+  "customer.subscription.deleted",
+];
+
+async function trouverOuCreerWebhook(
+  stripe: Stripe
+): Promise<{ id: string; secret: string | null }> {
+  const existants = await stripe.webhookEndpoints.list({ limit: 100 });
+  const existant = existants.data.find((w) => w.url === URL_WEBHOOK);
+  if (existant) return { id: existant.id, secret: null };
+
+  const cree = await stripe.webhookEndpoints.create({
+    url: URL_WEBHOOK,
+    enabled_events: EVENEMENTS_WEBHOOK,
+  });
+  return { id: cree.id, secret: cree.secret ?? null };
+}
+
 async function main() {
   const secretKey = process.env.STRIPE_SECRET_KEY;
   if (!secretKey) {
@@ -56,14 +81,20 @@ async function main() {
     console.log(`${plan.label} : produit ${produit.id}, prix ${prix.id} (${plan.prixMensuel} €/mois)`);
   }
 
+  const webhook = await trouverOuCreerWebhook(stripe);
+  if (webhook.secret) {
+    console.log(`Webhook ${webhook.id} créé pour ${URL_WEBHOOK}`);
+  } else {
+    console.log(
+      `Webhook ${webhook.id} existait déjà pour ${URL_WEBHOOK} - son secret n'est pas ` +
+        "re-affichable ; régénère-le depuis le dashboard (Roll secret) si besoin."
+    );
+  }
+
   console.log("\nVariables à poser sur Render (Settings > Environment) :");
   console.log(`STRIPE_PRICE_STARTER=${resultats.starter}`);
   console.log(`STRIPE_PRICE_PRO=${resultats.pro}`);
-  console.log(
-    "\nIl reste à créer le webhook (dashboard Stripe > Developers > Webhooks) pointant vers\n" +
-      "https://gest-224.onrender.com/api/stripe/webhook, événements checkout.session.completed\n" +
-      "et customer.subscription.deleted, puis poser STRIPE_WEBHOOK_SECRET et STRIPE_SECRET_KEY."
-  );
+  if (webhook.secret) console.log(`STRIPE_WEBHOOK_SECRET=${webhook.secret}`);
 }
 
 main().catch((erreur) => {
