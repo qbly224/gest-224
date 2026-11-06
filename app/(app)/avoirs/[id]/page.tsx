@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { envoyerAvoir, dupliquerDocument } from "@/lib/actions/documents";
+import { envoyerAvoir, renvoyerAvoir, dupliquerDocument } from "@/lib/actions/documents";
 import { DocumentDetail } from "@/components/documents/document-detail";
 import { PdfActions } from "@/components/documents/pdf-actions";
 import { EnvoyerActions } from "@/components/documents/envoyer-actions";
@@ -75,6 +75,18 @@ export default async function AvoirDetailPage({
                 raisonSociale={emetteur.raisonSociale}
               />
             </>
+          )}
+          {avoir.statut !== "brouillon" && (
+            <EnvoyerActions
+              envoyerAction={renvoyerAvoir.bind(null, avoir.id)}
+              numero={avoir.numero}
+              titre={t("titreSingulier")}
+              montantTtc={Math.abs(Number(avoir.montantTtc))}
+              clientEmail={client.email}
+              clientTelephone={client.telephone}
+              raisonSociale={emetteur.raisonSociale}
+              dejaEnvoye
+            />
           )}
         </>
       }

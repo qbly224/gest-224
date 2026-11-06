@@ -27,6 +27,10 @@ export async function creerUrlCheckout(
   const stripe = getStripe();
   const checkoutSession = await stripe.checkout.sessions.create({
     mode: "subscription",
+    // Explicite plutôt que laissé aux moyens de paiement activés dans le
+    // dashboard (Settings > Payment methods) : évite une Checkout Session
+    // qui échoue si aucun moyen n'y est encore activé pour la devise.
+    payment_method_types: ["card"],
     line_items: [{ price: priceId, quantity: 1 }],
     client_reference_id: tenantId,
     customer: stripeCustomerId ?? undefined,

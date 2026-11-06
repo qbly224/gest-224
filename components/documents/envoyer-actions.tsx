@@ -14,6 +14,7 @@ export function EnvoyerActions({
   clientTelephone,
   raisonSociale,
   masquerMontant = false,
+  dejaEnvoye = false,
 }: {
   envoyerAction: () => Promise<void>;
   numero: string;
@@ -23,6 +24,8 @@ export function EnvoyerActions({
   clientTelephone: string | null;
   raisonSociale: string;
   masquerMontant?: boolean;
+  /** Affiche "Renvoyer" au lieu de "Envoyer" (document déjà envoyé une fois). */
+  dejaEnvoye?: boolean;
 }) {
   const t = useTranslations("app.envoyerActions");
   const locale = useLocale() as Locale;
@@ -87,7 +90,7 @@ export function EnvoyerActions({
         disabled={isPending}
         className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light disabled:opacity-60"
       >
-        {t("envoyer")}
+        {dejaEnvoye ? t("renvoyer") : t("envoyer")}
       </button>
       {ouvert && (
         <div className="absolute right-0 z-10 mt-1 w-56 rounded-sm border border-encre/20 bg-ivoire shadow-lg">

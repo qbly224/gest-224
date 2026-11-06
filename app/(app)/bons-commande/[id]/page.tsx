@@ -5,6 +5,7 @@ import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import {
   envoyerBonCommande,
+  renvoyerBonCommande,
   convertirBonCommandeEnBonLivraison,
   dupliquerDocument,
 } from "@/lib/actions/documents";
@@ -91,6 +92,18 @@ export default async function BonCommandeDetailPage({
                 raisonSociale={emetteur.raisonSociale}
               />
             </>
+          )}
+          {bonCommande.statut !== "brouillon" && (
+            <EnvoyerActions
+              envoyerAction={renvoyerBonCommande.bind(null, bonCommande.id)}
+              numero={bonCommande.numero}
+              titre={t("titreSingulier")}
+              montantTtc={Number(bonCommande.montantTtc)}
+              clientEmail={client.email}
+              clientTelephone={client.telephone}
+              raisonSociale={emetteur.raisonSociale}
+              dejaEnvoye
+            />
           )}
           {bonCommande.statut === "envoye" && (
             <form action={convertirBonCommandeEnBonLivraison.bind(null, bonCommande.id)}>

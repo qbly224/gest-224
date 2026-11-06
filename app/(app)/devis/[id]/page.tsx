@@ -5,6 +5,7 @@ import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import {
   envoyerDevis,
+  renvoyerDevis,
   accepterDevis,
   refuserDevis,
   convertirDevisEnFacture,
@@ -74,6 +75,18 @@ export default async function DevisDetailPage({
                 raisonSociale={emetteur.raisonSociale}
               />
             </>
+          )}
+          {devis.statut !== "brouillon" && (
+            <EnvoyerActions
+              envoyerAction={renvoyerDevis.bind(null, devis.id)}
+              numero={devis.numero}
+              titre={t("titreSingulier")}
+              montantTtc={Number(devis.montantTtc)}
+              clientEmail={client.email}
+              clientTelephone={client.telephone}
+              raisonSociale={emetteur.raisonSociale}
+              dejaEnvoye
+            />
           )}
           {devis.statut === "envoye" && (
             <>

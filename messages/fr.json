@@ -565,7 +565,8 @@
       "parWhatsapp": "Par WhatsApp",
       "emailSujet": "{titre} {numero} - {raisonSociale}",
       "emailMontant": " d'un montant de {montant}",
-      "emailCorps": "Bonjour,\n\nVeuillez trouver ci-joint {titre} n° {numero}{mentionMontant}.\nPensez à joindre le PDF téléchargé avant l'envoi.\n\nCordialement,\n{raisonSociale}"
+      "emailCorps": "Bonjour,\n\nVeuillez trouver ci-joint {titre} n° {numero}{mentionMontant}.\nPensez à joindre le PDF téléchargé avant l'envoi.\n\nCordialement,\n{raisonSociale}",
+      "renvoyer": "Renvoyer"
     },
     "documentForm": {
       "client": "Client",

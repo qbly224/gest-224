@@ -5,6 +5,7 @@ import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import {
   envoyerFacture,
+  renvoyerFacture,
   creerAvoirDepuisFacture,
   dupliquerDocument,
 } from "@/lib/actions/documents";
@@ -101,6 +102,18 @@ export default async function FactureDetailPage({
                 raisonSociale={emetteur.raisonSociale}
               />
             </>
+          )}
+          {facture.statut !== "brouillon" && (
+            <EnvoyerActions
+              envoyerAction={renvoyerFacture.bind(null, facture.id)}
+              numero={facture.numero}
+              titre={t("titreSingulier")}
+              montantTtc={Number(facture.montantTtc)}
+              clientEmail={client.email}
+              clientTelephone={client.telephone}
+              raisonSociale={emetteur.raisonSociale}
+              dejaEnvoye
+            />
           )}
           {facture.statut === "envoye" && (
             <form action={marquerDocumentPaye.bind(null, facture.id)}>

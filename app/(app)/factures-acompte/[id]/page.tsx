@@ -3,7 +3,11 @@ import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { envoyerFactureAcompte, dupliquerDocument } from "@/lib/actions/documents";
+import {
+  envoyerFactureAcompte,
+  renvoyerFactureAcompte,
+  dupliquerDocument,
+} from "@/lib/actions/documents";
 import { marquerDocumentPaye } from "@/lib/actions/comptabilite";
 import { DocumentDetail } from "@/components/documents/document-detail";
 import { PdfActions } from "@/components/documents/pdf-actions";
@@ -63,6 +67,18 @@ export default async function FactureAcompteDetailPage({
                 raisonSociale={emetteur.raisonSociale}
               />
             </>
+          )}
+          {facture.statut !== "brouillon" && (
+            <EnvoyerActions
+              envoyerAction={renvoyerFactureAcompte.bind(null, facture.id)}
+              numero={facture.numero}
+              titre={t("titreSingulier")}
+              montantTtc={Number(facture.montantTtc)}
+              clientEmail={client.email}
+              clientTelephone={client.telephone}
+              raisonSociale={emetteur.raisonSociale}
+              dejaEnvoye
+            />
           )}
           {facture.statut === "envoye" && (
             <form action={marquerDocumentPaye.bind(null, facture.id)}>

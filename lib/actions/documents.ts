@@ -390,6 +390,47 @@ export async function envoyerAvoir(documentId: string): Promise<void> {
   return marquerEnvoye("facture_avoir", documentId);
 }
 
+/**
+ * Renvoi d'un document déjà envoyé (client qui a perdu l'email, erreur
+ * d'adresse, etc.) : contrairement à marquerEnvoye(), ne change pas le
+ * statut ni envoyeAt - uniquement une trace d'audit, le document reste
+ * dans l'état où il était.
+ */
+async function renvoyer(type: TypeDocument, documentId: string): Promise<void> {
+  const session = await requireSession();
+  const doc = await findOwnedDocument(session.tenantId, documentId);
+  if (!doc || doc.type !== type || doc.statut === "brouillon") return;
+
+  await enregistrerAudit({
+    tenantId: session.tenantId,
+    userId: session.userId,
+    action: "document.renvoye",
+    entite: type,
+    entiteId: documentId,
+    details: { numero: doc.numero },
+  });
+  redirect(withToast(`${BASE_PATH[type]}/${documentId}`, `${TITRES_DOCUMENT[type]} renvoyé.`));
+}
+
+export async function renvoyerDevis(documentId: string): Promise<void> {
+  return renvoyer("devis", documentId);
+}
+export async function renvoyerBonCommande(documentId: string): Promise<void> {
+  return renvoyer("bon_commande", documentId);
+}
+export async function renvoyerBonLivraison(documentId: string): Promise<void> {
+  return renvoyer("bon_livraison", documentId);
+}
+export async function renvoyerFacture(documentId: string): Promise<void> {
+  return renvoyer("facture", documentId);
+}
+export async function renvoyerFactureAcompte(documentId: string): Promise<void> {
+  return renvoyer("facture_acompte", documentId);
+}
+export async function renvoyerAvoir(documentId: string): Promise<void> {
+  return renvoyer("facture_avoir", documentId);
+}
+
 export async function accepterDevis(documentId: string): Promise<void> {
   const session = await requireSession();
   const doc = await findOwnedDocument(session.tenantId, documentId);
