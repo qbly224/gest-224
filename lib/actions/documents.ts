@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import type { TypeDocument, Document, DocumentLigne } from "@prisma/client";
+import { STATUTS_MODIFIABLES } from "@/lib/documents/statuts-modifiables";
 import { prisma } from "@/lib/prisma";
 import { requireSession } from "@/lib/auth";
 import type { SessionPayload } from "@/lib/session";
@@ -192,10 +193,12 @@ async function updateDocument(
   if (!existing) {
     return { error: "Document introuvable." };
   }
-  if (existing.statut !== "brouillon") {
+  if (!STATUTS_MODIFIABLES[type].includes(existing.statut)) {
     return {
       error:
-        "Ce document a déjà été validé : ses mentions légales et sa numérotation ne peuvent plus être modifiées.",
+        type === "facture" || type === "facture_acompte"
+          ? "Cette facture a déjà été émise : ses mentions légales et sa numérotation ne peuvent plus être modifiées. Pour corriger une erreur, créez un avoir puis une nouvelle facture."
+          : "Ce document ne peut plus être modifié dans son état actuel.",
     };
   }
 
@@ -227,8 +230,9 @@ async function updateDocument(
         montantHt: totaux.montantHt,
         montantTva: totaux.montantTva,
         montantTtc: totaux.montantTtc,
-        // Le document n'est pas encore émis : on peut réactualiser les
-        // copies figées vendeur/acheteur sur les données courantes.
+        // Toujours réactualisé : pour "brouillon" comme pour "envoyé" (devis/
+        // bons), les mentions légales vendeur/acheteur ne sont pas encore
+        // figées tant que ce n'est pas une facture.
         emetteurSnapshot: buildEmetteurSnapshot(tenant),
         clientSnapshot: buildClientSnapshot(client),
         lignes: {

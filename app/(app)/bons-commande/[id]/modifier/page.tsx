@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { updateBonCommande } from "@/lib/actions/documents";
+import { STATUTS_MODIFIABLES } from "@/lib/documents/statuts-modifiables";
 import { listerClientsOptions, listerArticlesOptions } from "@/lib/documents/options";
 import { DocumentForm } from "@/components/documents/document-form";
 
@@ -20,7 +21,7 @@ export default async function ModifierBonCommandePage({
     include: { lignes: { orderBy: { ordre: "asc" } } },
   });
   if (!bonCommande) notFound();
-  if (bonCommande.statut !== "brouillon") {
+  if (!STATUTS_MODIFIABLES.bon_commande.includes(bonCommande.statut)) {
     redirect(`/bons-commande/${bonCommande.id}`);
   }
 

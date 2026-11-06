@@ -116,14 +116,22 @@ export default async function BonLivraisonDetailPage({
             />
           )}
           {bonLivraison.statut === "envoye" && (
-            <form action={marquerBonLivraisonLivre.bind(null, bonLivraison.id)}>
-              <button
-                type="submit"
-                className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
+            <>
+              <Link
+                href={`/bons-livraison/${bonLivraison.id}/modifier`}
+                className="rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
               >
-                {ta("marquerLivre")}
-              </button>
-            </form>
+                {ta("modifier")}
+              </Link>
+              <form action={marquerBonLivraisonLivre.bind(null, bonLivraison.id)}>
+                <button
+                  type="submit"
+                  className="rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
+                >
+                  {ta("marquerLivre")}
+                </button>
+              </form>
+            </>
           )}
           {bonLivraison.statut === "livre" && (
             <form action={convertirBonLivraisonEnFacture.bind(null, bonLivraison.id)}>

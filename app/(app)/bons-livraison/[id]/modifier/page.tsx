@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { updateBonLivraison } from "@/lib/actions/documents";
+import { STATUTS_MODIFIABLES } from "@/lib/documents/statuts-modifiables";
 import { listerClientsOptions, listerArticlesOptions } from "@/lib/documents/options";
 import { DocumentForm } from "@/components/documents/document-form";
 
@@ -20,7 +21,7 @@ export default async function ModifierBonLivraisonPage({
     include: { lignes: { orderBy: { ordre: "asc" } } },
   });
   if (!bonLivraison) notFound();
-  if (bonLivraison.statut !== "brouillon") {
+  if (!STATUTS_MODIFIABLES.bon_livraison.includes(bonLivraison.statut)) {
     redirect(`/bons-livraison/${bonLivraison.id}`);
   }
 
