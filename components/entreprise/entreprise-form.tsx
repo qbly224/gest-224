@@ -8,6 +8,7 @@ import { initialActionState } from "@/lib/actions/types";
 import { FieldError } from "@/components/forms/field-error";
 import { SubmitButton } from "@/components/forms/submit-button";
 import { inputClass, labelClass, selectClass } from "@/lib/ui";
+import { MOYENS_PAIEMENT } from "@/lib/paiement-moyens";
 
 type SerializedTenant = Omit<Tenant, "capitalSocial"> & {
   capitalSocial: string | null;
@@ -299,8 +300,27 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
         </div>
       </fieldset>
 
+      <fieldset className="space-y-3 border-t border-encre/10 pt-4">
+        <legend className="font-titre text-lg text-encre">{t("sectionMoyensPaiement")}</legend>
+        <p className="font-sans text-xs text-encre/70">{t("moyensPaiementAide")}</p>
+        <div className="flex flex-wrap gap-x-6 gap-y-2">
+          {MOYENS_PAIEMENT.map((moyen) => (
+            <label key={moyen} className="flex items-center gap-2 font-sans text-sm text-encre">
+              <input
+                type="checkbox"
+                name="moyensPaiementAcceptes"
+                value={moyen}
+                defaultChecked={tenant.moyensPaiementAcceptes.includes(moyen)}
+              />
+              {t(`moyen_${moyen}`)}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
       <fieldset className="space-y-4 border-t border-encre/10 pt-4">
         <legend className="font-titre text-lg text-encre">{t("sectionBancaire")}</legend>
+        <p className="font-sans text-xs text-encre/70">{t("bancaireAide")}</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className={labelClass} htmlFor="iban">

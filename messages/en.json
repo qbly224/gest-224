@@ -760,7 +760,15 @@
       "totpCodesNotes": "I've saved my backup codes somewhere safe.",
       "totpRegenererCodes": "Regenerate backup codes",
       "totpDesactiver": "Disable two-factor authentication",
-      "totpConfirmerMotDePasse": "Confirm with your password"
+      "totpConfirmerMotDePasse": "Confirm with your password",
+      "sectionMoyensPaiement": "Accepted payment methods",
+      "moyensPaiementAide": "Shown on issued invoices, alongside the IBAN if bank transfer is checked.",
+      "moyen_virement": "Bank transfer",
+      "moyen_especes": "Cash",
+      "moyen_cheque": "Cheque",
+      "moyen_carte": "Card",
+      "moyen_prelevement": "SEPA direct debit",
+      "bancaireAide": "The IBAN only appears on invoices if \"Bank transfer\" is checked above."
     },
     "abonnement": {
       "titre": "Subscription",

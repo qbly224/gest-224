@@ -760,7 +760,15 @@
       "totpCodesNotes": "J'ai noté mes codes de secours en lieu sûr.",
       "totpRegenererCodes": "Régénérer les codes de secours",
       "totpDesactiver": "Désactiver la double authentification",
-      "totpConfirmerMotDePasse": "Confirmer avec votre mot de passe"
+      "totpConfirmerMotDePasse": "Confirmer avec votre mot de passe",
+      "sectionMoyensPaiement": "Moyens de paiement acceptés",
+      "moyensPaiementAide": "Affichés sur les factures émises, en plus de l'IBAN si le virement est coché.",
+      "moyen_virement": "Virement bancaire",
+      "moyen_especes": "Espèces",
+      "moyen_cheque": "Chèque",
+      "moyen_carte": "Carte bancaire",
+      "moyen_prelevement": "Prélèvement SEPA",
+      "bancaireAide": "L'IBAN n'apparaît sur les factures que si \"Virement bancaire\" est coché ci-dessus."
     },
     "abonnement": {
       "titre": "Abonnement",

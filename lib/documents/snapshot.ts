@@ -21,6 +21,7 @@ export type EmetteurSnapshot = {
   telephone: string | null;
   iban: string | null;
   bic: string | null;
+  moyensPaiementAcceptes: string[];
   mentionsLegalesLibres: string | null;
   logoDataUrl: string | null;
 };
@@ -60,6 +61,7 @@ export function buildEmetteurSnapshot(tenant: Tenant): EmetteurSnapshot {
     telephone: tenant.telephone,
     iban: tenant.iban,
     bic: tenant.bic,
+    moyensPaiementAcceptes: tenant.moyensPaiementAcceptes,
     mentionsLegalesLibres: tenant.mentionsLegalesLibres,
     logoDataUrl: tenant.logoDataUrl,
   };

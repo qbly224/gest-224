@@ -70,6 +70,7 @@ export async function updateEntreprise(
     telephone: formData.get("telephone") || undefined,
     iban: formData.get("iban") || undefined,
     bic: formData.get("bic") || undefined,
+    moyensPaiementAcceptes: formData.getAll("moyensPaiementAcceptes"),
     mentionsLegalesLibres: formData.get("mentionsLegalesLibres") || undefined,
   });
 
@@ -99,6 +100,7 @@ export async function updateEntreprise(
         telephone: data.telephone || null,
         iban: data.iban || null,
         bic: data.bic || null,
+        moyensPaiementAcceptes: data.moyensPaiementAcceptes,
         mentionsLegalesLibres: data.mentionsLegalesLibres || null,
         ...(logo.value !== undefined ? { logoDataUrl: logo.value } : {}),
       },

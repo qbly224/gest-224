@@ -106,6 +106,13 @@ model Tenant {
   iban                   String?
   bic                    String?
 
+  // Moyens de paiement affichés sur les factures - sous-ensemble de
+  // "virement", "especes", "cheque", "carte", "prelevement" (cf.
+  // lib/paiement-moyens.ts). Un tableau de texte plutôt qu'un enum Prisma
+  // pour rester facile à étendre sans migration. "virement" n'affiche
+  // l'IBAN/BIC que s'ils sont renseignés par ailleurs.
+  moyensPaiementAcceptes String[] @default([]) @map("moyens_paiement_acceptes")
+
   // Mentions légales additionnelles libres à faire apparaître sur les PDF
   // (assurance RC pro, numéro d'agrément, etc.)
   mentionsLegalesLibres  String?   @map("mentions_legales_libres")

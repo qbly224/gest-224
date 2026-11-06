@@ -5,6 +5,7 @@ import { nomAffichageClientSnapshot } from "@/lib/documents/snapshot";
 import { calculerTotaux } from "@/lib/documents/calc";
 import type { TypeDocument } from "@prisma/client";
 import { TITRES_DOCUMENT as TITRES } from "@/lib/documents/statut-labels";
+import { LABELS_MOYEN_PAIEMENT, estMoyenPaiementValide } from "@/lib/paiement-moyens";
 
 const GENRE_FEMININ: Partial<Record<TypeDocument, true>> = {
   facture: true,
@@ -61,6 +62,37 @@ function adresseHtml(bloc: {
   ]
     .filter(Boolean)
     .join("<br/>");
+}
+
+/**
+ * Tenants migrés avant l'ajout de moyensPaiementAcceptes : la migration
+ * backfill à ["virement"] quand un IBAN existait déjà, donc ce repli ne
+ * sert qu'aux très rares cas où le tableau serait resté vide malgré un
+ * IBAN renseigné depuis.
+ */
+function mentionMoyensPaiement(emetteur: EmetteurSnapshot): string {
+  const moyens = emetteur.moyensPaiementAcceptes.length > 0
+    ? emetteur.moyensPaiementAcceptes
+    : emetteur.iban
+      ? ["virement"]
+      : [];
+
+  const autresMoyens = moyens
+    .filter(estMoyenPaiementValide)
+    .filter((m) => m !== "virement")
+    .map((m) => LABELS_MOYEN_PAIEMENT[m]);
+  const ligneAutres =
+    autresMoyens.length > 0
+      ? `<p>Moyens de paiement acceptés : ${escapeHtml(autresMoyens.join(", "))}</p>`
+      : "";
+
+  const ligneVirement = !moyens.includes("virement")
+    ? ""
+    : emetteur.iban
+      ? `<p class="iban">Paiement par virement - IBAN : ${escapeHtml(emetteur.iban)}${emetteur.bic ? ` - BIC : ${escapeHtml(emetteur.bic)}` : ""}</p>`
+      : `<p>Paiement par virement accepté (IBAN communiqué séparément)</p>`;
+
+  return ligneAutres + ligneVirement;
 }
 
 export function renderDocumentHtml(document: DocumentAvecLignes): string {
@@ -129,11 +161,7 @@ export function renderDocumentHtml(document: DocumentAvecLignes): string {
           ${formatEuros(document.indemniteForfaitaire ? Number(document.indemniteForfaitaire) : 40)}
           (art. L441-10 du Code de commerce).
         </p>
-        ${
-          emetteur.iban
-            ? `<p class="iban">Paiement par virement - IBAN : ${escapeHtml(emetteur.iban)}${emetteur.bic ? ` - BIC : ${escapeHtml(emetteur.bic)}` : ""}</p>`
-            : ""
-        }
+        ${mentionMoyensPaiement(emetteur)}
       </div>`
     : "";
 

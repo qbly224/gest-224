@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { regimeTvaSchema } from "@/lib/validation/auth";
+import { MOYENS_PAIEMENT } from "@/lib/paiement-moyens";
 
 export const entrepriseSchema = z.object({
   raisonSociale: z.string().trim().min(1, "La raison sociale est requise.").max(200),
@@ -24,6 +25,7 @@ export const entrepriseSchema = z.object({
 
   iban: z.string().trim().max(34).optional().or(z.literal("")),
   bic: z.string().trim().max(11).optional().or(z.literal("")),
+  moyensPaiementAcceptes: z.array(z.enum(MOYENS_PAIEMENT)).default([]),
 
   mentionsLegalesLibres: z.string().trim().max(1000).optional().or(z.literal("")),
 });
