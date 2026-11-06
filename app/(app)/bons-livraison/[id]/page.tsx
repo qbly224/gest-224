@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import {
   envoyerBonLivraison,
   renvoyerBonLivraison,
+  envoyerBonLivraisonParEmail,
   marquerBonLivraisonLivre,
   convertirBonLivraisonEnFacture,
   dupliquerDocument,
@@ -89,6 +90,7 @@ export default async function BonLivraisonDetailPage({
               </Link>
               <EnvoyerActions
                 envoyerAction={envoyerBonLivraison.bind(null, bonLivraison.id)}
+                envoyerEmailAutoAction={envoyerBonLivraisonParEmail.bind(null, bonLivraison.id)}
                 numero={bonLivraison.numero}
                 titre={t("titreSingulier")}
                 montantTtc={Number(bonLivraison.montantTtc)}
@@ -102,6 +104,7 @@ export default async function BonLivraisonDetailPage({
           {bonLivraison.statut !== "brouillon" && (
             <EnvoyerActions
               envoyerAction={renvoyerBonLivraison.bind(null, bonLivraison.id)}
+              envoyerEmailAutoAction={envoyerBonLivraisonParEmail.bind(null, bonLivraison.id)}
               numero={bonLivraison.numero}
               titre={t("titreSingulier")}
               montantTtc={Number(bonLivraison.montantTtc)}

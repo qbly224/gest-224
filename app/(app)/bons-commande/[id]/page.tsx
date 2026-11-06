@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import {
   envoyerBonCommande,
   renvoyerBonCommande,
+  envoyerBonCommandeParEmail,
   convertirBonCommandeEnBonLivraison,
   dupliquerDocument,
 } from "@/lib/actions/documents";
@@ -84,6 +85,7 @@ export default async function BonCommandeDetailPage({
               </Link>
               <EnvoyerActions
                 envoyerAction={envoyerBonCommande.bind(null, bonCommande.id)}
+                envoyerEmailAutoAction={envoyerBonCommandeParEmail.bind(null, bonCommande.id)}
                 numero={bonCommande.numero}
                 titre={t("titreSingulier")}
                 montantTtc={Number(bonCommande.montantTtc)}
@@ -96,6 +98,7 @@ export default async function BonCommandeDetailPage({
           {bonCommande.statut !== "brouillon" && (
             <EnvoyerActions
               envoyerAction={renvoyerBonCommande.bind(null, bonCommande.id)}
+              envoyerEmailAutoAction={envoyerBonCommandeParEmail.bind(null, bonCommande.id)}
               numero={bonCommande.numero}
               titre={t("titreSingulier")}
               montantTtc={Number(bonCommande.montantTtc)}

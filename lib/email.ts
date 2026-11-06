@@ -11,17 +11,24 @@ import "server-only";
  * appel HTTP, pas de SMTP à configurer) ; brancher un autre fournisseur ne
  * demande de changer que ce fichier.
  */
+export type PieceJointeEmail = {
+  nomFichier: string;
+  contenu: Buffer;
+};
+
 export async function envoyerEmail(
   destinataire: string,
   sujet: string,
-  corpsTexte: string
+  corpsTexte: string,
+  piecesJointes?: PieceJointeEmail[]
 ): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
 
   if (!apiKey) {
     console.log(
       `[email] Aucun fournisseur configuré (RESEND_API_KEY absente) - contenu journalisé au lieu d'être envoyé.\n` +
-        `À: ${destinataire}\nSujet: ${sujet}\n\n${corpsTexte}`
+        `À: ${destinataire}\nSujet: ${sujet}\n\n${corpsTexte}` +
+        (piecesJointes?.length ? `\n(+ ${piecesJointes.length} pièce(s) jointe(s))` : "")
     );
     return;
   }
@@ -39,6 +46,10 @@ export async function envoyerEmail(
       to: destinataire,
       subject: sujet,
       text: corpsTexte,
+      attachments: piecesJointes?.map((p) => ({
+        filename: p.nomFichier,
+        content: p.contenu.toString("base64"),
+      })),
     }),
   });
 

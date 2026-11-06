@@ -566,7 +566,11 @@
       "emailSujet": "{titre} {numero} - {raisonSociale}",
       "emailMontant": " for an amount of {montant}",
       "emailCorps": "Hello,\n\nPlease find attached {titre} no. {numero}{mentionMontant}.\nRemember to attach the downloaded PDF before sending.\n\nBest regards,\n{raisonSociale}",
-      "renvoyer": "Resend"
+      "renvoyer": "Resend",
+      "parEmailAuto": "By email (PDF attached automatically)",
+      "envoiEnCours": "Sending...",
+      "emailAutoSucces": "Sent to {destinataire}.",
+      "emailCorpsAutoJoint": "Hello,\n\nPlease find attached {titre} no. {numero}{mentionMontant}.\n\nBest regards,\n{raisonSociale}"
     },
     "documentForm": {
       "client": "Client",

@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import {
   envoyerDevis,
   renvoyerDevis,
+  envoyerDevisParEmail,
   accepterDevis,
   refuserDevis,
   convertirDevisEnFacture,
@@ -67,6 +68,7 @@ export default async function DevisDetailPage({
               </Link>
               <EnvoyerActions
                 envoyerAction={envoyerDevis.bind(null, devis.id)}
+                envoyerEmailAutoAction={envoyerDevisParEmail.bind(null, devis.id)}
                 numero={devis.numero}
                 titre={t("titreSingulier")}
                 montantTtc={Number(devis.montantTtc)}
@@ -79,6 +81,7 @@ export default async function DevisDetailPage({
           {devis.statut !== "brouillon" && (
             <EnvoyerActions
               envoyerAction={renvoyerDevis.bind(null, devis.id)}
+              envoyerEmailAutoAction={envoyerDevisParEmail.bind(null, devis.id)}
               numero={devis.numero}
               titre={t("titreSingulier")}
               montantTtc={Number(devis.montantTtc)}

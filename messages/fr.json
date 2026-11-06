@@ -566,7 +566,11 @@
       "emailSujet": "{titre} {numero} - {raisonSociale}",
       "emailMontant": " d'un montant de {montant}",
       "emailCorps": "Bonjour,\n\nVeuillez trouver ci-joint {titre} n° {numero}{mentionMontant}.\nPensez à joindre le PDF téléchargé avant l'envoi.\n\nCordialement,\n{raisonSociale}",
-      "renvoyer": "Renvoyer"
+      "renvoyer": "Renvoyer",
+      "parEmailAuto": "Par email (PDF joint automatiquement)",
+      "envoiEnCours": "Envoi en cours...",
+      "emailAutoSucces": "Envoyé à {destinataire}.",
+      "emailCorpsAutoJoint": "Bonjour,\n\nVeuillez trouver ci-joint {titre} n° {numero}{mentionMontant}.\n\nCordialement,\n{raisonSociale}"
     },
     "documentForm": {
       "client": "Client",

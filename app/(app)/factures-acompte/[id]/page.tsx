@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import {
   envoyerFactureAcompte,
   renvoyerFactureAcompte,
+  envoyerFactureAcompteParEmail,
   dupliquerDocument,
 } from "@/lib/actions/documents";
 import { marquerDocumentPaye } from "@/lib/actions/comptabilite";
@@ -59,6 +60,7 @@ export default async function FactureAcompteDetailPage({
               </Link>
               <EnvoyerActions
                 envoyerAction={envoyerFactureAcompte.bind(null, facture.id)}
+                envoyerEmailAutoAction={envoyerFactureAcompteParEmail.bind(null, facture.id)}
                 numero={facture.numero}
                 titre={t("titreSingulier")}
                 montantTtc={Number(facture.montantTtc)}
@@ -71,6 +73,7 @@ export default async function FactureAcompteDetailPage({
           {facture.statut !== "brouillon" && (
             <EnvoyerActions
               envoyerAction={renvoyerFactureAcompte.bind(null, facture.id)}
+              envoyerEmailAutoAction={envoyerFactureAcompteParEmail.bind(null, facture.id)}
               numero={facture.numero}
               titre={t("titreSingulier")}
               montantTtc={Number(facture.montantTtc)}

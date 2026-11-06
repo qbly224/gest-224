@@ -17,6 +17,13 @@ import { withToast } from "@/lib/toast";
 import { TITRES_DOCUMENT } from "@/lib/documents/statut-labels";
 import type { ActionState } from "@/lib/actions/types";
 import { enregistrerAudit } from "@/lib/audit";
+import { getTranslations, getLocale } from "next-intl/server";
+import { renderDocumentHtml } from "@/lib/pdf/template";
+import { genererPdf } from "@/lib/pdf/generate";
+import { envoyerEmail } from "@/lib/email";
+import { formatEuros } from "@/lib/format";
+import type { Locale } from "@/i18n/config";
+import type { ClientSnapshot, EmetteurSnapshot } from "@/lib/documents/snapshot";
 
 // Types créés/modifiés via le formulaire générique (lignes à quantité
 // positive). L'avoir a son propre schéma/actions (quantités négatives).
@@ -429,6 +436,111 @@ export async function renvoyerFactureAcompte(documentId: string): Promise<void> 
 }
 export async function renvoyerAvoir(documentId: string): Promise<void> {
   return renvoyer("facture_avoir", documentId);
+}
+
+export type EtatEnvoiEmail = { success: boolean; error?: string; destinataire?: string };
+
+// Types facturables où le montant n'a pas sa place dans l'email (le bon de
+// livraison n'est pas un document de paiement) - même règle que PdfActions.
+const MASQUER_MONTANT_EMAIL: Partial<Record<TypeDocument, true>> = {
+  bon_livraison: true,
+};
+
+/**
+ * Envoi (ou renvoi) d'un document par email avec le PDF en pièce jointe,
+ * généré et envoyé directement depuis le serveur via Resend - contrairement
+ * à EnvoyerActions (Gmail/WhatsApp), qui ouvre juste un brouillon côté
+ * client sans joindre automatiquement le fichier (il faut le télécharger
+ * et le joindre à la main).
+ *
+ * Met à jour le statut/envoyeAt seulement pour un premier envoi (brouillon) ;
+ * un renvoi n'y touche pas, comme renvoyer() ci-dessus.
+ */
+async function envoyerParEmailAutomatique(
+  type: TypeDocument,
+  documentId: string
+): Promise<EtatEnvoiEmail> {
+  const session = await requireSession();
+  const doc = await prisma.document.findFirst({
+    where: { id: documentId, tenantId: session.tenantId, type },
+    include: {
+      lignes: { orderBy: { ordre: "asc" } },
+      refDocument: { select: { numero: true, type: true } },
+    },
+  });
+  if (!doc) return { success: false, error: "Document introuvable." };
+
+  const client = doc.clientSnapshot as unknown as ClientSnapshot;
+  const emetteur = doc.emetteurSnapshot as unknown as EmetteurSnapshot;
+  if (!client.email) {
+    return { success: false, error: "Ce client n'a pas d'adresse email enregistrée." };
+  }
+
+  const locale = (await getLocale()) as Locale;
+  const t = await getTranslations("app.envoyerActions");
+  const titre = TITRES_DOCUMENT[type];
+  const sujet = t("emailSujet", { titre, numero: doc.numero, raisonSociale: emetteur.raisonSociale });
+  const mentionMontant = MASQUER_MONTANT_EMAIL[type]
+    ? ""
+    : t("emailMontant", { montant: formatEuros(Math.abs(Number(doc.montantTtc)), locale) });
+  const corps = t("emailCorpsAutoJoint", {
+    titre: titre.toLowerCase(),
+    numero: doc.numero,
+    mentionMontant,
+    raisonSociale: emetteur.raisonSociale,
+  });
+
+  const pdf = await genererPdf(renderDocumentHtml(doc));
+
+  try {
+    await envoyerEmail(client.email, sujet, corps, [
+      { nomFichier: `${doc.numero}.pdf`, contenu: pdf },
+    ]);
+  } catch (erreur) {
+    return {
+      success: false,
+      error: erreur instanceof Error ? erreur.message : "Échec de l'envoi de l'email.",
+    };
+  }
+
+  const premierEnvoi = doc.statut === "brouillon";
+  if (premierEnvoi) {
+    await prisma.document.update({
+      where: { id: documentId },
+      data: { statut: "envoye", envoyeAt: new Date() },
+    });
+  }
+  await enregistrerAudit({
+    tenantId: session.tenantId,
+    userId: session.userId,
+    action: premierEnvoi ? "document.envoye" : "document.renvoye",
+    entite: type,
+    entiteId: documentId,
+    details: { numero: doc.numero, methode: "email_automatique" },
+  });
+  revalidatePath(BASE_PATH[type]);
+  revalidatePath(`${BASE_PATH[type]}/${documentId}`);
+
+  return { success: true, destinataire: client.email };
+}
+
+export async function envoyerDevisParEmail(documentId: string): Promise<EtatEnvoiEmail> {
+  return envoyerParEmailAutomatique("devis", documentId);
+}
+export async function envoyerBonCommandeParEmail(documentId: string): Promise<EtatEnvoiEmail> {
+  return envoyerParEmailAutomatique("bon_commande", documentId);
+}
+export async function envoyerBonLivraisonParEmail(documentId: string): Promise<EtatEnvoiEmail> {
+  return envoyerParEmailAutomatique("bon_livraison", documentId);
+}
+export async function envoyerFactureParEmail(documentId: string): Promise<EtatEnvoiEmail> {
+  return envoyerParEmailAutomatique("facture", documentId);
+}
+export async function envoyerFactureAcompteParEmail(documentId: string): Promise<EtatEnvoiEmail> {
+  return envoyerParEmailAutomatique("facture_acompte", documentId);
+}
+export async function envoyerAvoirParEmail(documentId: string): Promise<EtatEnvoiEmail> {
+  return envoyerParEmailAutomatique("facture_avoir", documentId);
 }
 
 export async function accepterDevis(documentId: string): Promise<void> {

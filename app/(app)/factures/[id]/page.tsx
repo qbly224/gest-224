@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import {
   envoyerFacture,
   renvoyerFacture,
+  envoyerFactureParEmail,
   creerAvoirDepuisFacture,
   dupliquerDocument,
 } from "@/lib/actions/documents";
@@ -94,6 +95,7 @@ export default async function FactureDetailPage({
               </Link>
               <EnvoyerActions
                 envoyerAction={envoyerFacture.bind(null, facture.id)}
+                envoyerEmailAutoAction={envoyerFactureParEmail.bind(null, facture.id)}
                 numero={facture.numero}
                 titre={t("titreSingulier")}
                 montantTtc={Number(facture.montantTtc)}
@@ -106,6 +108,7 @@ export default async function FactureDetailPage({
           {facture.statut !== "brouillon" && (
             <EnvoyerActions
               envoyerAction={renvoyerFacture.bind(null, facture.id)}
+              envoyerEmailAutoAction={envoyerFactureParEmail.bind(null, facture.id)}
               numero={facture.numero}
               titre={t("titreSingulier")}
               montantTtc={Number(facture.montantTtc)}

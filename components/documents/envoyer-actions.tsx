@@ -7,6 +7,7 @@ import type { Locale } from "@/i18n/config";
 
 export function EnvoyerActions({
   envoyerAction,
+  envoyerEmailAutoAction,
   numero,
   titre,
   montantTtc,
@@ -17,6 +18,8 @@ export function EnvoyerActions({
   dejaEnvoye = false,
 }: {
   envoyerAction: () => Promise<void>;
+  /** Envoi direct depuis le serveur, PDF en pièce jointe (Resend). */
+  envoyerEmailAutoAction?: () => Promise<{ success: boolean; error?: string; destinataire?: string }>;
   numero: string;
   titre: string;
   montantTtc: number;
@@ -31,6 +34,10 @@ export function EnvoyerActions({
   const locale = useLocale() as Locale;
   const [ouvert, setOuvert] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [envoiEmailEnCours, setEnvoiEmailEnCours] = useState(false);
+  const [resultatEmail, setResultatEmail] = useState<
+    { success: boolean; error?: string; destinataire?: string } | null
+  >(null);
   const conteneurRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -59,6 +66,16 @@ export function EnvoyerActions({
     startTransition(() => {
       envoyerAction();
     });
+  }
+
+  async function envoyerParEmailAuto() {
+    if (!envoyerEmailAutoAction) return;
+    setEnvoiEmailEnCours(true);
+    setResultatEmail(null);
+    const resultat = await envoyerEmailAutoAction();
+    setEnvoiEmailEnCours(false);
+    setResultatEmail(resultat);
+    if (resultat.success) setOuvert(false);
   }
 
   function envoyerParGmail() {
@@ -93,7 +110,31 @@ export function EnvoyerActions({
         {dejaEnvoye ? t("renvoyer") : t("envoyer")}
       </button>
       {ouvert && (
-        <div className="absolute right-0 z-10 mt-1 w-56 rounded-sm border border-encre/20 bg-ivoire shadow-lg">
+        <div className="absolute right-0 z-10 mt-1 w-64 rounded-sm border border-encre/20 bg-ivoire shadow-lg">
+          {envoyerEmailAutoAction && (
+            <>
+              <button
+                type="button"
+                onClick={envoyerParEmailAuto}
+                disabled={envoiEmailEnCours}
+                className="block w-full px-4 py-2 text-left font-sans text-sm font-medium text-encre hover:bg-encre/5 disabled:opacity-60"
+              >
+                {envoiEmailEnCours ? t("envoiEnCours") : t("parEmailAuto")}
+              </button>
+              {resultatEmail && (
+                <p
+                  className={`px-4 pb-2 font-sans text-xs ${
+                    resultatEmail.success ? "text-encre/75" : "text-red-700"
+                  }`}
+                >
+                  {resultatEmail.success
+                    ? t("emailAutoSucces", { destinataire: resultatEmail.destinataire ?? "" })
+                    : resultatEmail.error}
+                </p>
+              )}
+              <div className="border-b border-encre/10" />
+            </>
+          )}
           <p className="border-b border-encre/10 px-4 py-2 font-sans text-xs text-encre/75">
             {t("telechargezDabord")}
           </p>
