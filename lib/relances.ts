@@ -2,6 +2,7 @@ import "server-only";
 import { prisma } from "@/lib/prisma";
 import { envoyerEmail } from "@/lib/email";
 import { formatEuros, formatDate } from "@/lib/format";
+import { SITE_URL } from "@/lib/site-url";
 
 const DELAI_MIN_ENTRE_RELANCES_MS = 24 * 60 * 60 * 1000;
 
@@ -48,7 +49,7 @@ export async function envoyerRelancesFacturesEnRetard(): Promise<{
       continue;
     }
 
-    const lien = `${process.env.APP_URL ?? "https://gest-224.onrender.com"}${
+    const lien = `${SITE_URL}${
       BASE_PATH[facture.type as "facture" | "facture_acompte"]
     }/${facture.id}`;
 

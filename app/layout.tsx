@@ -3,6 +3,7 @@ import { Lora, Inter, IBM_Plex_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import { CookieConsent } from "@/components/app/cookie-consent";
+import { SITE_URL } from "@/lib/site-url";
 import "./globals.css";
 
 const lora = Lora({ subsets: ["latin"], variable: "--font-lora" });
@@ -14,7 +15,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://gest-224.onrender.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Gest-224",
     template: "%s | Gest-224",

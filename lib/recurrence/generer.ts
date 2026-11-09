@@ -8,6 +8,7 @@ import { prochaineDateGeneration } from "@/lib/recurrence/dates";
 import { PLANS } from "@/lib/plans";
 import { paiementBloque } from "@/lib/paiement-guard";
 import { envoyerEmail } from "@/lib/email";
+import { SITE_URL } from "@/lib/site-url";
 
 // Délai de paiement par défaut appliqué aux factures générées automatiquement
 // (norme B2B française usuelle). Pas encore configurable par modèle - à
@@ -123,7 +124,7 @@ export async function genererFacturesRecurrentesDues(): Promise<{
             `${client.raisonSociale ?? `${client.prenom ?? ""} ${client.nom ?? ""}`.trim()}) ` +
             `vient d'être générée automatiquement en brouillon à partir de votre modèle récurrent.\n\n` +
             `Merci de la relire et de l'envoyer depuis votre espace Gest-224 :\n` +
-            `${process.env.APP_URL ?? "https://gest-224.onrender.com"}/factures/${document.id}`
+            `${SITE_URL}/factures/${document.id}`
         );
       } catch (err) {
         console.error(

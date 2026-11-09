@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
-
-const BASE_URL = "https://gest-224.onrender.com";
+import { SITE_URL } from "@/lib/site-url";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages = [
@@ -16,7 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   return pages.map(({ path, priority }) => ({
-    url: `${BASE_URL}${path}`,
+    url: `${SITE_URL}${path}`,
     lastModified: new Date(),
     priority,
   }));
