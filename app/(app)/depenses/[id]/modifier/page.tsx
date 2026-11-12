@@ -4,6 +4,7 @@ import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { updateDepense } from "@/lib/actions/comptabilite";
 import { DepenseForm } from "@/components/comptabilite/depense-form";
+import { DepensePiecesJointes } from "@/components/comptabilite/depense-pieces-jointes";
 
 export default async function ModifierDepensePage({
   params,
@@ -16,6 +17,12 @@ export default async function ModifierDepensePage({
 
   const depense = await prisma.depense.findFirst({
     where: { id, tenantId: session.tenantId },
+    include: {
+      piecesJointes: {
+        select: { id: true, nomFichier: true, tailleOctets: true, createdAt: true },
+        orderBy: { createdAt: "desc" },
+      },
+    },
   });
   if (!depense) notFound();
 
@@ -26,6 +33,7 @@ export default async function ModifierDepensePage({
         depense={{ ...depense, montant: depense.montant.toString() }}
         action={updateDepense.bind(null, depense.id)}
       />
+      <DepensePiecesJointes depenseId={depense.id} pieces={depense.piecesJointes} />
     </div>
   );
 }

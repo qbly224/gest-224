@@ -11,6 +11,10 @@ import { paiementBloque, MESSAGE_PAIEMENT_BLOQUE } from "@/lib/paiement-guard";
 import { withToast } from "@/lib/toast";
 import type { ActionState } from "@/lib/actions/types";
 import { enregistrerAudit } from "@/lib/audit";
+import {
+  TYPES_PIECE_JOINTE_AUTORISES,
+  TAILLE_PIECE_JOINTE_MAX_OCTETS,
+} from "@/lib/depense-pieces-jointes";
 
 function parseDepenseForm(formData: FormData) {
   return depenseSchema.safeParse({
@@ -69,7 +73,7 @@ export async function createDepense(
 
   revalidatePath("/depenses");
   revalidatePath("/tableau-de-bord");
-  redirect(withToast("/depenses", "Dépense enregistrée."));
+  redirect(withToast(`/depenses/${depense.id}/modifier`, "Dépense enregistrée."));
 }
 
 export async function updateDepense(
@@ -134,6 +138,80 @@ export async function supprimerDepense(depenseId: string): Promise<void> {
   revalidatePath("/depenses");
   revalidatePath("/tableau-de-bord");
   redirect(withToast("/depenses", "Dépense supprimée."));
+}
+
+/**
+ * Pièce jointe (facture, reçu...) ajoutée à une dépense comme preuve et
+ * pour le suivi - cf. lib/depense-pieces-jointes.ts pour les types/taille
+ * autorisés. Ne redirige pas : reste sur la page de modification pour que
+ * l'utilisateur puisse enchaîner plusieurs pièces jointes.
+ */
+export async function ajouterPieceJointeDepense(
+  depenseId: string,
+  _prevState: ActionState,
+  formData: FormData
+): Promise<ActionState> {
+  const session = await requireSession();
+  const depense = await prisma.depense.findFirst({
+    where: { id: depenseId, tenantId: session.tenantId },
+  });
+  if (!depense) {
+    return { error: "Dépense introuvable." };
+  }
+
+  const fichier = formData.get("fichier");
+  if (!(fichier instanceof File) || fichier.size === 0) {
+    return { error: "Choisissez un fichier." };
+  }
+  if (!TYPES_PIECE_JOINTE_AUTORISES.has(fichier.type)) {
+    return { error: "Format non supporté (PDF, PNG, JPEG ou WebP uniquement)." };
+  }
+  if (fichier.size > TAILLE_PIECE_JOINTE_MAX_OCTETS) {
+    return { error: "Le fichier dépasse la taille maximale de 5 Mo." };
+  }
+
+  const contenu = Buffer.from(await fichier.arrayBuffer());
+  const piece = await prisma.depensePieceJointe.create({
+    data: {
+      depenseId,
+      nomFichier: fichier.name,
+      typeMime: fichier.type,
+      tailleOctets: fichier.size,
+      contenu,
+    },
+  });
+  await enregistrerAudit({
+    tenantId: session.tenantId,
+    userId: session.userId,
+    action: "depense.piece_jointe_ajoutee",
+    entite: "depense",
+    entiteId: depenseId,
+    details: { nomFichier: piece.nomFichier },
+  });
+
+  revalidatePath(`/depenses/${depenseId}/modifier`);
+  return { success: true };
+}
+
+export async function supprimerPieceJointeDepense(pieceId: string): Promise<void> {
+  const session = await requireSession();
+  const piece = await prisma.depensePieceJointe.findFirst({
+    where: { id: pieceId, depense: { tenantId: session.tenantId } },
+    include: { depense: { select: { id: true } } },
+  });
+  if (!piece) return;
+
+  await prisma.depensePieceJointe.delete({ where: { id: pieceId } });
+  await enregistrerAudit({
+    tenantId: session.tenantId,
+    userId: session.userId,
+    action: "depense.piece_jointe_supprimee",
+    entite: "depense",
+    entiteId: piece.depenseId,
+    details: { nomFichier: piece.nomFichier },
+  });
+
+  revalidatePath(`/depenses/${piece.depenseId}/modifier`);
 }
 
 /**

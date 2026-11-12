@@ -616,7 +616,13 @@
       "champMontant": "Amount (€)",
       "champCategorie": "Category (free text)",
       "champCategoriePlaceholder": "E.g. Supplies, Rent, Fuel...",
-      "enregistrer": "Save"
+      "enregistrer": "Save",
+      "piecesJointesTitre": "Attachments (supporting documents)",
+      "piecesJointesAide": "Invoices, receipts, or any document proving the expense - PDF, PNG, JPEG or WebP, 5 MB maximum.",
+      "piecesJointesVide": "No attachments yet.",
+      "piecesJointesTelecharger": "Download",
+      "piecesJointesAjouter": "Add",
+      "piecesJointesConfirmSuppression": "Delete this attachment? This action is permanent."
     },
     "recettes": {
       "titre": "Revenue",
@@ -721,7 +727,9 @@
         "depense": {
           "creee": "Expense created",
           "modifiee": "Expense updated",
-          "supprimee": "Expense deleted"
+          "supprimee": "Expense deleted",
+          "piece_jointe_ajoutee": "Attachment added",
+          "piece_jointe_supprimee": "Attachment removed"
         },
         "chantier": {
           "statut_change": "Job status changed",

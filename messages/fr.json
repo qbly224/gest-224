@@ -616,7 +616,13 @@
       "champMontant": "Montant (€)",
       "champCategorie": "Catégorie (libre)",
       "champCategoriePlaceholder": "Ex. Fournitures, Loyer, Carburant...",
-      "enregistrer": "Enregistrer"
+      "enregistrer": "Enregistrer",
+      "piecesJointesTitre": "Pièces jointes (justificatifs)",
+      "piecesJointesAide": "Factures, reçus ou tout document prouvant la dépense - PDF, PNG, JPEG ou WebP, 5 Mo maximum.",
+      "piecesJointesVide": "Aucune pièce jointe pour l'instant.",
+      "piecesJointesTelecharger": "Télécharger",
+      "piecesJointesAjouter": "Ajouter",
+      "piecesJointesConfirmSuppression": "Supprimer cette pièce jointe ? Cette action est définitive."
     },
     "recettes": {
       "titre": "Recettes",
@@ -721,7 +727,9 @@
         "depense": {
           "creee": "Dépense créée",
           "modifiee": "Dépense modifiée",
-          "supprimee": "Dépense supprimée"
+          "supprimee": "Dépense supprimée",
+          "piece_jointe_ajoutee": "Pièce jointe ajoutée",
+          "piece_jointe_supprimee": "Pièce jointe supprimée"
         },
         "chantier": {
           "statut_change": "Statut de chantier modifié",

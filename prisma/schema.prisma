@@ -450,11 +450,37 @@ model Depense {
   montant    Decimal  @db.Decimal(12, 2)
   categorie  String?
 
+  piecesJointes DepensePieceJointe[]
+
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")
 
   @@index([tenantId])
   @@map("depenses")
+}
+
+// Justificatifs (factures, reçus) attachés à une dépense, comme preuve et
+// pour le suivi. Contenu stocké directement en base (Bytes) plutôt que
+// dans un stockage objet séparé - cohérent avec le logo de l'entreprise
+// (lib/actions/entreprise.ts) et suffisant pour des scans/PDF de quelques
+// Mo ; limite de taille/type appliquée côté applicatif (cf.
+// lib/depense-pieces-jointes.ts). Inclus automatiquement dans la
+// sauvegarde JSON quotidienne (toutes les tables du schema public).
+model DepensePieceJointe {
+  id           String   @id @default(uuid())
+
+  depenseId    String   @map("depense_id")
+  depense      Depense  @relation(fields: [depenseId], references: [id], onDelete: Cascade)
+
+  nomFichier   String   @map("nom_fichier")
+  typeMime     String   @map("type_mime")
+  tailleOctets Int      @map("taille_octets")
+  contenu      Bytes
+
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@index([depenseId])
+  @@map("depenses_pieces_jointes")
 }
 
 // ---------------------------------------------------------------------------

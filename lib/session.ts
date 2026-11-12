@@ -3,8 +3,13 @@ import { cookies } from "next/headers";
 import { SignJWT, jwtVerify } from "jose";
 import type { RoleUtilisateur } from "@prisma/client";
 
-const COOKIE_NAME = "gest224_session";
-const SESSION_DURATION_SECONDS = 60 * 60 * 24 * 7; // 7 jours
+export const SESSION_COOKIE_NAME = "gest224_session";
+// Déconnexion automatique après 1h sans activité. Tient par glissement :
+// refreshSessionToken() (appelée depuis middleware.ts à chaque requête sur
+// une page de l'app) ré-émet un jeton avec une nouvelle expiration à chaque
+// passage, donc une session active ne se termine jamais ; seule une
+// inactivité réelle d'1h laisse le jeton expirer naturellement.
+export const SESSION_DURATION_SECONDS = 60 * 60; // 1 heure
 
 const COOKIE_2FA_PENDING = "gest224_2fa_pending";
 const DUREE_2FA_PENDING_SECONDES = 5 * 60; // 5 minutes
@@ -43,17 +48,35 @@ export type SessionPayload = {
   emisA: number;
 };
 
-export async function createSession(
-  payload: Omit<SessionPayload, "emisA">
-) {
-  const token = await new SignJWT({ ...payload })
+async function signSessionToken(payload: SessionPayload): Promise<string> {
+  return new SignJWT({ ...payload })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime(`${SESSION_DURATION_SECONDS}s`)
     .sign(getSecretKey());
+}
+
+function parseSessionPayload(payload: Record<string, unknown>): SessionPayload | null {
+  const { userId, tenantId, role, emisA } = payload;
+  if (
+    typeof userId !== "string" ||
+    typeof tenantId !== "string" ||
+    typeof role !== "string" ||
+    typeof emisA !== "number"
+  ) {
+    return null;
+  }
+  return { userId, tenantId, role: role as RoleUtilisateur, emisA };
+}
+
+export async function createSession(
+  payload: Omit<SessionPayload, "emisA">
+) {
+  const emisA = Math.floor(Date.now() / 1000);
+  const token = await signSessionToken({ ...payload, emisA });
 
   const cookieStore = await cookies();
-  cookieStore.set(COOKIE_NAME, token, {
+  cookieStore.set(SESSION_COOKIE_NAME, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
@@ -64,21 +87,30 @@ export async function createSession(
 
 export async function getSession(): Promise<SessionPayload | null> {
   const cookieStore = await cookies();
-  const token = cookieStore.get(COOKIE_NAME)?.value;
+  const token = cookieStore.get(SESSION_COOKIE_NAME)?.value;
   if (!token) return null;
 
   try {
     const { payload } = await jwtVerify(token, getSecretKey());
-    const { userId, tenantId, role, iat } = payload as Record<string, unknown>;
-    if (
-      typeof userId !== "string" ||
-      typeof tenantId !== "string" ||
-      typeof role !== "string" ||
-      typeof iat !== "number"
-    ) {
-      return null;
-    }
-    return { userId, tenantId, role: role as RoleUtilisateur, emisA: iat };
+    return parseSessionPayload(payload as Record<string, unknown>);
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Ré-émet le jeton de session avec une expiration repoussée, en conservant
+ * emisA inchangé (sans quoi le contrôle anti-rejeu de requireSession() après
+ * un changement de mot de passe serait silencieusement contourné à chaque
+ * rafraîchissement). Appelée depuis middleware.ts, qui n'a pas accès à
+ * next/headers : ne dépend que du jeton brut passé en argument.
+ */
+export async function refreshSessionToken(token: string): Promise<string | null> {
+  try {
+    const { payload } = await jwtVerify(token, getSecretKey());
+    const session = parseSessionPayload(payload as Record<string, unknown>);
+    if (!session) return null;
+    return signSessionToken(session);
   } catch {
     return null;
   }
@@ -86,7 +118,7 @@ export async function getSession(): Promise<SessionPayload | null> {
 
 export async function destroySession() {
   const cookieStore = await cookies();
-  cookieStore.delete(COOKIE_NAME);
+  cookieStore.delete(SESSION_COOKIE_NAME);
 }
 
 /**
