@@ -20,7 +20,10 @@
       "confidentialite": "Privacy policy",
       "mentionsLegales": "Legal notice",
       "cookies": "Cookies",
-      "droitsReserves": "All rights reserved."
+      "droitsReserves": "All rights reserved.",
+      "villes": "Cities",
+      "villeLyon": "Invoicing software Lyon",
+      "villeParis": "Invoicing software Paris"
     },
     "accueil": {
       "surtitre": "Business management for small companies",
@@ -193,9 +196,92 @@
     },
     "confiance": {
       "rgpd": "GDPR compliant",
+      "conformiteFiscale": "Compliant with French anti-fraud tax law",
       "hebergementUe": "Hosted in France / EU",
       "sansCookiePub": "No advertising cookies",
       "sansCarte": "No credit card required"
+    },
+    "villeLyon": {
+      "surtitre": "Business management in Lyon and the Rhône region",
+      "titre": "The invoicing and management software for businesses in Lyon",
+      "intro": "Gest-224 is published by QbelyTech, a company based in Vaulx-en-Velin, in the heart of the Lyon metropolitan area. Built with and for freelancers, tradespeople and small businesses in the Rhône-Alpes region, it brings quotes, invoices and accounting together in a single tool, with nothing to install.",
+      "p1": "Across Lyon, Villeurbanne, Vaulx-en-Velin and the wider metropolitan area, freelancers and small businesses often juggle several tools (spreadsheets, Word templates, separate accounting software) to manage quotes and invoices. Gest-224 brings this entire document chain together in a single application, accessible from any browser, with nothing to install.",
+      "p2": "Every document (quote, purchase order, delivery note, invoice) follows French and European legal requirements, with sequential numbering and an invoice that becomes unalterable as soon as it is issued - a requirement under article 286-I-3° bis of the French tax code, which applies to businesses in the region as everywhere in France.",
+      "p3": "Data is hosted in Europe (Paris region) and backed up daily. No credit card is required to get started: the free plan lets you try the tool before moving to a higher plan as your business grows.",
+      "avantagesTitre": "Built for freelancers and small businesses in the region",
+      "avantages": {
+        "devisFactures": {
+          "titre": "Compliant quotes and invoices",
+          "description": "Create quotes and turn them into invoices compliant with French standards in a few clicks, with automatic numbering."
+        },
+        "comptabilite": {
+          "titre": "Simplified accounting",
+          "description": "Track your income and expenses, attach your supporting documents, and export your FEC file in one click in case of an audit."
+        },
+        "conformite": {
+          "titre": "Built-in tax compliance",
+          "description": "Invoice immutability, daily backups and hosting in Europe: legal compliance is handled with no configuration needed."
+        }
+      },
+      "faqTitre": "Frequently asked questions",
+      "faq": {
+        "q1": {
+          "question": "Is Gest-224 suitable for sole traders in Lyon?",
+          "reponse": "Yes, the free plan is designed to get started with no commitment and no credit card, and covers the needs of a sole trader or small business: quotes, invoices and expense tracking."
+        },
+        "q2": {
+          "question": "Do I need to be based in Lyon to use Gest-224?",
+          "reponse": "No, Gest-224 is an online application usable anywhere in France. QbelyTech, the publisher, is based in Vaulx-en-Velin, but the software is aimed at all French businesses."
+        },
+        "q3": {
+          "question": "Are the generated invoices legally compliant?",
+          "reponse": "Yes: mandatory legal information, sequential numbering and immutability upon issue, in accordance with article 286-I-3° bis of the French tax code."
+        }
+      },
+      "ctaTitre": "Ready to simplify your management?",
+      "ctaDescription": "Create your account for free, no credit card required.",
+      "ctaBouton": "Create my free account"
+    },
+    "villeParis": {
+      "surtitre": "Business management in Paris and Île-de-France",
+      "titre": "Quotes, invoices and accounting for businesses in Paris",
+      "intro": "Between overheads, competition and administrative requirements, freelancers and small businesses in Île-de-France need reliable tools without wasting time on setup. Gest-224 brings quotes, invoices and accounting together in an online application, accessible from anywhere in seconds.",
+      "p1": "In Paris, as across the rest of Île-de-France, the density of freelancers and small businesses makes administrative work time-consuming: quotes that need to go out fast to avoid losing a client, invoices that must be error-free, expense tracking for VAT or tax returns. Gest-224 centralises this entire document chain in a single tool.",
+      "p2": "Every document (quote, purchase order, delivery note, invoice) follows French and European legal requirements. Once issued, an invoice becomes unalterable - in accordance with article 286-I-3° bis of the French tax code - and any correction goes through a credit note, without ever modifying the original document.",
+      "p3": "Data is hosted in Europe (Paris region) and backed up automatically every day. The free plan requires no credit card: you can try the tool before moving to a higher plan as your business grows.",
+      "avantagesTitre": "Built for freelancers, SMEs and businesses across Île-de-France",
+      "avantages": {
+        "devisFactures": {
+          "titre": "Compliant quotes and invoices",
+          "description": "Create quotes and turn them into invoices compliant with French standards in a few clicks, with automatic numbering."
+        },
+        "comptabilite": {
+          "titre": "Simplified accounting",
+          "description": "Track your income and expenses, attach your supporting documents, and export your FEC file in one click in case of an audit."
+        },
+        "conformite": {
+          "titre": "Built-in tax compliance",
+          "description": "Invoice immutability, daily backups and hosting in Europe: legal compliance is handled with no configuration needed."
+        }
+      },
+      "faqTitre": "Frequently asked questions",
+      "faq": {
+        "q1": {
+          "question": "Is Gest-224 suitable for freelancers in Paris?",
+          "reponse": "Yes, the free plan is designed to get started with no commitment and no credit card, and covers the needs of a freelancer or small business: quotes, invoices and expense tracking."
+        },
+        "q2": {
+          "question": "Is Gest-224 also suitable for SMEs and larger structures?",
+          "reponse": "Yes, beyond the plans designed to get started solo, Gest-224 offers higher plans with higher limits, suited to teams and larger invoicing volumes."
+        },
+        "q3": {
+          "question": "Are the generated invoices legally compliant?",
+          "reponse": "Yes: mandatory legal information, sequential numbering and immutability upon issue, in accordance with article 286-I-3° bis of the French tax code."
+        }
+      },
+      "ctaTitre": "Ready to simplify your management?",
+      "ctaDescription": "Create your account for free, no credit card required.",
+      "ctaBouton": "Create my free account"
     }
   },
   "cookies": {

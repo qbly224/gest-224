@@ -1,8 +1,9 @@
 import { getTranslations } from "next-intl/server";
-import { ShieldCheck, MapPin, EyeOff, CircleOff } from "lucide-react";
+import { ShieldCheck, MapPin, EyeOff, CircleOff, FileCheck2 } from "lucide-react";
 
 const BADGES = [
   { cle: "rgpd", Icon: ShieldCheck },
+  { cle: "conformiteFiscale", Icon: FileCheck2 },
   { cle: "hebergementUe", Icon: MapPin },
   { cle: "sansCookiePub", Icon: EyeOff },
   { cle: "sansCarte", Icon: CircleOff },

@@ -20,7 +20,10 @@
       "confidentialite": "Politique de confidentialité",
       "mentionsLegales": "Mentions légales",
       "cookies": "Cookies",
-      "droitsReserves": "Tous droits réservés."
+      "droitsReserves": "Tous droits réservés.",
+      "villes": "Villes",
+      "villeLyon": "Logiciel facturation Lyon",
+      "villeParis": "Logiciel facturation Paris"
     },
     "accueil": {
       "surtitre": "Gestion commerciale pour petites entreprises",
@@ -193,9 +196,92 @@
     },
     "confiance": {
       "rgpd": "Conforme RGPD",
+      "conformiteFiscale": "Conforme loi anti-fraude TVA",
       "hebergementUe": "Hébergement France / UE",
       "sansCookiePub": "Aucun cookie publicitaire",
       "sansCarte": "Aucune carte bancaire requise"
+    },
+    "villeLyon": {
+      "surtitre": "Gestion commerciale à Lyon et dans le Rhône",
+      "titre": "Le logiciel de facturation et de gestion pour les entreprises lyonnaises",
+      "intro": "Gest-224 est édité par QbelyTech, une entreprise basée à Vaulx-en-Velin, au cœur de la métropole de Lyon. Conçu avec et pour les indépendants, artisans et petites entreprises de la région Rhône-Alpes, il réunit devis, factures et comptabilité dans un seul outil, sans rien installer.",
+      "p1": "Entre Lyon, Villeurbanne, Vaulx-en-Velin et l'ensemble de la métropole, les indépendants et petites entreprises jonglent souvent entre plusieurs outils (tableurs, modèles Word, logiciels de comptabilité séparés) pour gérer leurs devis et leurs factures. Gest-224 réunit toute cette chaîne documentaire dans une seule application, accessible depuis un navigateur, sans installation.",
+      "p2": "Chaque document (devis, bon de commande, bon de livraison, facture) respecte les mentions légales françaises et européennes, avec une numérotation séquentielle et une facture devenue inaltérable dès son émission - une exigence de l'article 286-I-3° bis du Code général des impôts, à laquelle les entreprises de la région sont soumises comme partout en France.",
+      "p3": "Les données sont hébergées en Europe (région Paris) et sauvegardées quotidiennement. Pas de carte bancaire requise pour démarrer : le plan gratuit permet de tester l'outil avant de passer à un plan supérieur si l'activité grandit.",
+      "avantagesTitre": "Pensé pour les indépendants et petites entreprises de la région",
+      "avantages": {
+        "devisFactures": {
+          "titre": "Devis et factures conformes",
+          "description": "Créez des devis et transformez-les en factures conformes aux normes françaises en quelques clics, avec numérotation automatique."
+        },
+        "comptabilite": {
+          "titre": "Comptabilité simplifiée",
+          "description": "Suivez vos recettes et dépenses, joignez vos justificatifs, et exportez votre FEC en un clic en cas de contrôle."
+        },
+        "conformite": {
+          "titre": "Conformité fiscale intégrée",
+          "description": "Inaltérabilité des factures, sauvegardes quotidiennes et hébergement en Europe : la conformité légale est assurée sans configuration."
+        }
+      },
+      "faqTitre": "Questions fréquentes",
+      "faq": {
+        "q1": {
+          "question": "Gest-224 convient-il aux auto-entrepreneurs de Lyon ?",
+          "reponse": "Oui, le plan gratuit est pensé pour démarrer sans engagement ni carte bancaire, et couvre les besoins d'un auto-entrepreneur ou d'une petite entreprise : devis, factures et suivi des dépenses."
+        },
+        "q2": {
+          "question": "Faut-il être basé à Lyon pour utiliser Gest-224 ?",
+          "reponse": "Non, Gest-224 est une application en ligne utilisable partout en France. QbelyTech, l'éditeur, est basé à Vaulx-en-Velin, mais le logiciel s'adresse à toutes les entreprises françaises."
+        },
+        "q3": {
+          "question": "Les factures générées sont-elles conformes à la réglementation ?",
+          "reponse": "Oui : mentions légales obligatoires, numérotation séquentielle et inaltérabilité dès l'émission, conformément à l'article 286-I-3° bis du Code général des impôts."
+        }
+      },
+      "ctaTitre": "Prêt à simplifier votre gestion ?",
+      "ctaDescription": "Créez votre compte gratuitement, aucune carte bancaire requise.",
+      "ctaBouton": "Créer mon compte gratuitement"
+    },
+    "villeParis": {
+      "surtitre": "Gestion commerciale à Paris et en Île-de-France",
+      "titre": "Devis, factures et comptabilité pour les entreprises parisiennes",
+      "intro": "Entre charges, concurrence et exigences administratives, les indépendants et petites entreprises d'Île-de-France ont besoin d'outils fiables sans perdre de temps en configuration. Gest-224 réunit devis, factures et comptabilité dans une application en ligne, accessible depuis n'importe où en quelques secondes.",
+      "p1": "À Paris comme dans le reste de l'Île-de-France, la densité d'indépendants et de petites entreprises rend la gestion administrative chronophage : devis à envoyer rapidement pour ne pas perdre un client, factures à émettre sans erreur, suivi des dépenses pour la déclaration de TVA ou de résultat. Gest-224 centralise toute cette chaîne documentaire dans un seul outil.",
+      "p2": "Chaque document (devis, bon de commande, bon de livraison, facture) respecte les mentions légales françaises et européennes. Une fois émise, une facture devient inaltérable - conformément à l'article 286-I-3° bis du Code général des impôts - et toute correction passe par un avoir, sans jamais modifier la pièce d'origine.",
+      "p3": "Les données sont hébergées en Europe (région Paris) et sauvegardées automatiquement chaque jour. Le plan gratuit ne demande aucune carte bancaire : vous pouvez tester l'outil avant de passer à un plan supérieur si votre activité grandit.",
+      "avantagesTitre": "Pensé pour les indépendants, PME et entreprises d'Île-de-France",
+      "avantages": {
+        "devisFactures": {
+          "titre": "Devis et factures conformes",
+          "description": "Créez des devis et transformez-les en factures conformes aux normes françaises en quelques clics, avec numérotation automatique."
+        },
+        "comptabilite": {
+          "titre": "Comptabilité simplifiée",
+          "description": "Suivez vos recettes et dépenses, joignez vos justificatifs, et exportez votre FEC en un clic en cas de contrôle."
+        },
+        "conformite": {
+          "titre": "Conformité fiscale intégrée",
+          "description": "Inaltérabilité des factures, sauvegardes quotidiennes et hébergement en Europe : la conformité légale est assurée sans configuration."
+        }
+      },
+      "faqTitre": "Questions fréquentes",
+      "faq": {
+        "q1": {
+          "question": "Gest-224 convient-il aux indépendants parisiens ?",
+          "reponse": "Oui, le plan gratuit est pensé pour démarrer sans engagement ni carte bancaire, et couvre les besoins d'un indépendant ou d'une petite entreprise : devis, factures et suivi des dépenses."
+        },
+        "q2": {
+          "question": "Gest-224 convient-il aussi aux PME et plus grandes structures ?",
+          "reponse": "Oui, au-delà des plans pensés pour démarrer seul, Gest-224 propose des plans supérieurs avec des limites plus élevées, adaptés aux équipes et aux volumes de facturation plus importants."
+        },
+        "q3": {
+          "question": "Les factures générées sont-elles conformes à la réglementation ?",
+          "reponse": "Oui : mentions légales obligatoires, numérotation séquentielle et inaltérabilité dès l'émission, conformément à l'article 286-I-3° bis du Code général des impôts."
+        }
+      },
+      "ctaTitre": "Prêt à simplifier votre gestion ?",
+      "ctaDescription": "Créez votre compte gratuitement, aucune carte bancaire requise.",
+      "ctaBouton": "Créer mon compte gratuitement"
     }
   },
   "cookies": {

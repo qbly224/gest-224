@@ -13,6 +13,8 @@ const PAGES_PUBLIQUES_AVEC_MESURE_AUDIENCE = new Set([
   "/cgv",
   "/confidentialite",
   "/mentions-legales",
+  "/logiciel-facturation-lyon",
+  "/logiciel-facturation-paris",
 ]);
 
 export async function middleware(request: NextRequest, event: NextFetchEvent) {

@@ -6,6 +6,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "", priority: 1 },
     { path: "/a-propos", priority: 0.6 },
     { path: "/tarifs", priority: 0.8 },
+    { path: "/logiciel-facturation-lyon", priority: 0.7 },
+    { path: "/logiciel-facturation-paris", priority: 0.7 },
     { path: "/connexion", priority: 0.3 },
     { path: "/inscription", priority: 0.5 },
     { path: "/cgu", priority: 0.2 },

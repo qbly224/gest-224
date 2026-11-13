@@ -26,6 +26,13 @@ export async function PublicFooter() {
         { href: "#cookies", label: t("cookies") },
       ],
     },
+    {
+      titre: t("villes"),
+      liens: [
+        { href: "/logiciel-facturation-lyon", label: t("villeLyon") },
+        { href: "/logiciel-facturation-paris", label: t("villeParis") },
+      ],
+    },
   ];
 
   return (
@@ -39,7 +46,7 @@ export async function PublicFooter() {
         <div className="absolute inset-0 bg-[#141b13]/80" />
       </div>
       <div className="relative mx-auto max-w-5xl px-6 py-12">
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
           <div>
             <p className="font-titre text-lg text-white">Gest-224</p>
             <p className="mt-2 font-sans text-sm text-white/80">{t("tagline")}</p>
