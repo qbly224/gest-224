@@ -175,11 +175,10 @@
     },
     "legalMentions": {
       "titre": "Mentions légales",
-      "avertissement": "Cette page n'est pas encore conforme à l'article 6-III de la loi n° 2004-575 du 21 juin 2004 (LCEN) : l'identité de l'éditeur ci-dessous est un espace réservé à compléter avec les informations réelles (raison sociale ou nom, forme juridique, SIRET, adresse, contact) avant toute ouverture commerciale du Service.",
       "editeurTitre": "Éditeur du site",
-      "editeurCorps": "À compléter : raison sociale (ou nom et prénom si exercice en nom propre), forme juridique, adresse du siège, numéro SIRET, adresse email de contact, numéro de téléphone.",
+      "editeurCorps": "Moussa BAH, exerçant sous le nom commercial QbelyTech, entrepreneur individuel, immatriculé sous le SIRET 132 317 124 00015, dont le siège est situé 33 A route de Genas, 69120 Vaulx-en-Velin, France. Adresse email : contact@gest-224.fr.",
       "directeurTitre": "Directeur de la publication",
-      "directeurCorps": "À compléter : nom du responsable de la publication.",
+      "directeurCorps": "Moussa BAH.",
       "hebergementTitre": "Hébergement",
       "hebergementCorps1Gras": "Render Services, Inc.",
       "hebergementCorps1Reste": ", 525 Brannan St, San Francisco, CA 94107, États-Unis (render.com).",
@@ -190,7 +189,7 @@
       "proprieteTitre": "Propriété intellectuelle",
       "proprieteCorps": "L'ensemble des éléments composant le Service (structure, textes, logo, charte graphique) est protégé au titre du droit d'auteur. Toute reproduction non autorisée est interdite.",
       "contactTitre": "Contact",
-      "contactCorps": "À compléter : adresse email de contact pour toute question relative au Service ou à l'exercice de vos droits."
+      "contactCorps": "Pour toute question relative au Service ou à l'exercice de vos droits : contact@gest-224.fr."
     },
     "confiance": {
       "rgpd": "Conforme RGPD",

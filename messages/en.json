@@ -175,11 +175,10 @@
     },
     "legalMentions": {
       "titre": "Legal Notice",
-      "avertissement": "This page does not yet comply with article 6-III of French law no. 2004-575 of 21 June 2004 (LCEN): the publisher's identity below is a placeholder to be completed with real information (company or personal name, legal form, SIRET number, address, contact) before any commercial launch of the Service.",
       "editeurTitre": "Site publisher",
-      "editeurCorps": "To be completed: company name (or first and last name if operating as a sole trader), legal form, registered address, SIRET number, contact email address, phone number.",
+      "editeurCorps": "Moussa BAH, trading as QbelyTech, sole trader (entrepreneur individuel) registered under SIRET 132 317 124 00015, with registered address at 33 A route de Genas, 69120 Vaulx-en-Velin, France. Contact email: contact@gest-224.fr.",
       "directeurTitre": "Publication director",
-      "directeurCorps": "To be completed: name of the person responsible for publication.",
+      "directeurCorps": "Moussa BAH.",
       "hebergementTitre": "Hosting",
       "hebergementCorps1Debut": "The application is hosted by",
       "hebergementCorps1Gras": "Render Services, Inc.",
@@ -190,7 +189,7 @@
       "proprieteTitre": "Intellectual property",
       "proprieteCorps": "All elements making up the Service (structure, text, logo, graphic design) are protected by copyright. Any unauthorized reproduction is prohibited.",
       "contactTitre": "Contact",
-      "contactCorps": "To be completed: contact email address for any question relating to the Service or to exercising your rights."
+      "contactCorps": "For any question relating to the Service or to exercising your rights: contact@gest-224.fr."
     },
     "confiance": {
       "rgpd": "GDPR compliant",
