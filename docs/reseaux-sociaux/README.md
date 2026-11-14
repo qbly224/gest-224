@@ -182,7 +182,7 @@ commerciale au même endroit :
 ✅ Fichier clients et catalogue
 ✅ Comptabilité simplifiée et tableau de bord
 
-👉 Essayez-le : https://gest-224.onrender.com
+👉 Essayez-le : https://gest-224.fr
 
 #Gest224 #Facturation #Gestion #AutoEntrepreneur #QbelyTech
 ```
@@ -212,7 +212,7 @@ Werdhe réunit tout au même endroit :
 | 0-3 s | Vous face caméra, ou tableur Excel en désordre | « Tu fais encore tes factures sur Excel ? 😅 » |
 | 3-20 s | Enregistrement d'écran : créer un devis → le convertir en facture → PDF | « Regarde : devis… converti en facture… PDF prêt. » |
 | 20-27 s | Tableau de bord Gest-224 | « Et ta compta se met à jour toute seule. » |
-| 27-30 s | Logo QbelyTech | « Gest-224 par QbelyTech - gest-224.onrender.com. » |
+| 27-30 s | Logo QbelyTech | « Gest-224 par QbelyTech - gest-224.fr. » |
 
 Légende : `Une facture pro en 30 secondes ⏱️ #Gest224 #Facture #Entrepreneur #TechAfrique #QbelyTech`
 
@@ -255,7 +255,7 @@ loyers », « Locataire : comment garder une trace de tous tes paiements ».
 | 8-12 s | Avant (Excel, calculatrice… des heures, barré) / Avec Gest-224 (devis → facture en un clic) |
 | 12-16,5 s | « Tout est dedans 👇 » : devis, factures, bons de commande et de livraison, acomptes, avoirs, compta, PDF |
 | 16,5-19 s | « Et pour commencer ? **GRATUIT** - Sans carte bancaire » |
-| 19-23 s | Logo, « Lance-toi aujourd'hui », gest-224.onrender.com |
+| 19-23 s | Logo, « Lance-toi aujourd'hui », gest-224.fr |
 
 ### Descriptions TikTok (choisir une par publication)
 
@@ -263,7 +263,7 @@ loyers », « Locataire : comment garder une trace de tous tes paiements ».
 ```
 C'EST OFFICIEL 🚀 Gest-224 est en ligne !
 Devis, factures, bons de commande, acomptes, avoirs et compta : tout au même endroit.
-Gratuit pour commencer, sans carte bancaire 👉 gest-224.onrender.com
+Gratuit pour commencer, sans carte bancaire 👉 gest-224.fr
 #Gest224 #Lancement #Facture #Entrepreneur #PetiteEntreprise #QbelyTech
 ```
 
@@ -290,7 +290,7 @@ Gest-224 : devis, factures, bons et compta au même endroit. C'est gratuit pour 
 
 **5. Version publicité (courte, pour la promotion payante)**
 ```
-Vos devis et factures en quelques clics. Gest-224, gratuit pour commencer 👉 gest-224.onrender.com
+Vos devis et factures en quelques clics. Gest-224, gratuit pour commencer 👉 gest-224.fr
 ```
 
 **Commentaire à épingler** sous la vidéo (publiez-le vous-même, puis
@@ -310,7 +310,7 @@ Vos devis et factures en quelques clics. Gest-224, gratuit pour commencer 👉 g
 
 ### Publicité
 - Laissez tourner la vidéo **2-3 jours gratuitement**. Si elle marche (bonne durée de visionnage, commentaires), boostez-la avec **Promouvoir** (dans l'appli) ou en **Spark Ad** depuis TikTok Ads Manager : la pub garde vos likes et vos commentaires.
-- Objectif « Visites du site web » vers gest-224.onrender.com, petit budget quotidien sur 5-7 jours, ciblage : âge 22-45 ans, centres d'intérêt entrepreneuriat / petites entreprises / commerce, dans les pays visés.
+- Objectif « Visites du site web » vers gest-224.fr, petit budget quotidien sur 5-7 jours, ciblage : âge 22-45 ans, centres d'intérêt entrepreneuriat / petites entreprises / commerce, dans les pays visés.
 - Gardez la vidéo qui coûte le moins cher par clic, arrêtez les autres.
 
 ---

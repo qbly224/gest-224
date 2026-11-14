@@ -103,7 +103,7 @@ body{width:1080px;height:1920px;background:${C.noir};color:${C.ivoire};font-fami
   <img class="a" id="s7l" src="${symbole}" style="width:200px;height:200px;border-radius:36px">
   <div class="a" id="s7a" style="font-size:150px;font-weight:700;letter-spacing:-.02em;line-height:1;margin-top:46px">Gest-224</div>
   <div class="a" id="s7b" style="font-size:48px;margin-top:26px;opacity:.9">Lance-toi aujourd'hui.</div>
-  <div class="a" id="s7c" style="margin-top:60px;font-size:44px;font-weight:600;background:${C.beige};color:${C.noir};padding:26px 54px;border-radius:999px">👉 gest-224.onrender.com</div>
+  <div class="a" id="s7c" style="margin-top:60px;font-size:44px;font-weight:600;background:${C.beige};color:${C.noir};padding:26px 54px;border-radius:999px">👉 gest-224.fr</div>
   <div class="a" id="s7d" style="margin-top:56px;font-size:30px;opacity:.6">Lien en bio · Une réalisation <b>Qbely</b>Tech</div>
 </div>
 
