@@ -315,6 +315,51 @@ Vos devis et factures en quelques clics. Gest-224, gratuit pour commencer 👉 g
 
 ---
 
+## 4 ter. Tutoriel « Comment ça marche ? » (Gest-224)
+
+**Vidéo : `videos/gest-224-tutoriel.mp4`** (48 s, générée par
+`video-tutoriel-gest-224.js`). Elle montre **les vrais écrans de l'application**,
+capturés sur une entreprise de démonstration (Atelier Kanté, client
+Boulangerie Diallo - données fictives) :
+
+| Étape | Ce qu'on voit |
+|---|---|
+| 1. Crée ton espace | Inscription, plan gratuit, sans carte bancaire |
+| 2. Ajoute ton client | Formulaire client, « Client créé » |
+| 3. Crée ton devis | Choix du client, 3 lignes ajoutées |
+| 4. Les totaux se calculent seuls | Total HT, TVA 20 %, TTC (2 052 €), devis DEV-2026-0001 |
+| 5. Un PDF propre | Le PDF du devis |
+| 6. Envoie-le par WhatsApp | Menu Envoyer : Gmail ou WhatsApp, devis passé en « Envoyé » |
+| 7. Accepté ? Il devient facture | « Marquer accepté » puis « Convertir en facture » → FA-2026-0001 |
+| 8. Payée ? Ta compta suit | « Marquer payée », recette ajoutée automatiquement, solde 2 052 € |
+
+### Descriptions TikTok
+```
+Comment marche Gest-224 ? 👇 Du devis à la facture payée en moins d'une minute.
+Client ➜ devis ➜ PDF ➜ WhatsApp ➜ facture ➜ compta à jour ✅
+Gratuit pour commencer 👉 gest-224.fr
+#Gest224 #Tutoriel #Facture #Devis #Entrepreneur #PetiteEntreprise #QbelyTech
+```
+```
+Tu m'as demandé comment ça marche, voilà 😉 Un devis envoyé sur WhatsApp, converti en facture en un clic, et la compta se met à jour toute seule.
+Lien en bio 👆 #Gest224 #Astuce #Entrepreneur #WhatsApp #QbelyTech
+```
+
+Conseils : publiez-la **2-3 jours après la vidéo de lancement** (elle répond
+aux « ça marche comment ? » dans les commentaires) et utilisez-la en
+« Répondre avec une vidéo » sous ces commentaires. Épinglez-la ensuite en
+haut du profil TikTok : c'est la vidéo que regardent les curieux avant de
+s'inscrire.
+
+### Refaire les captures
+Si l'interface change : lancez Gest-224 en local sur une base vide
+(`npm run build && npm start`), puis `tutoriel/capturer-1-devis.js`,
+`capturer-2-paiement.js` et `capturer-3-tableau-de-bord.js` dans cet
+ordre (ils écrivent dans `tutoriel/captures/`), et relancez
+`video-tutoriel-gest-224.js`.
+
+---
+
 ## 5. Calendrier des 4 premières semaines
 
 | Semaine | Facebook (2-3 posts/sem.) | TikTok (3-4 vidéos/sem.) |
