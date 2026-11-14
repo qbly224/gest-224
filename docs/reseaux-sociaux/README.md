@@ -242,6 +242,79 @@ loyers », « Locataire : comment garder une trace de tous tes paiements ».
 
 ---
 
+## 4 bis. Lancement officiel de Gest-224
+
+**Vidéo : `videos/gest-224-lancement.mp4`** (23 s, générée par
+`video-lancement-gest-224.js`). Rythme rapide pour garder l'attention :
+
+| Temps | Scène |
+|---|---|
+| 0-3 s | « POV : il est 23 h et tu fais encore tes factures sur Excel 😩 » + tableur plein d'erreurs qui tremble |
+| 3-4,6 s | Coupure franche : **STOP ✋** |
+| 4,6-8 s | « C'EST OFFICIEL - Gest-224 est en ligne 🚀 » + confettis |
+| 8-12 s | Avant (Excel, calculatrice… des heures, barré) / Avec Gest-224 (devis → facture en un clic) |
+| 12-16,5 s | « Tout est dedans 👇 » : devis, factures, bons de commande et de livraison, acomptes, avoirs, compta, PDF |
+| 16,5-19 s | « Et pour commencer ? **GRATUIT** - Sans carte bancaire » |
+| 19-23 s | Logo, « Lance-toi aujourd'hui », gest-224.onrender.com |
+
+### Descriptions TikTok (choisir une par publication)
+
+**1. Annonce (le jour J)**
+```
+C'EST OFFICIEL 🚀 Gest-224 est en ligne !
+Devis, factures, bons de commande, acomptes, avoirs et compta : tout au même endroit.
+Gratuit pour commencer, sans carte bancaire 👉 gest-224.onrender.com
+#Gest224 #Lancement #Facture #Entrepreneur #PetiteEntreprise #QbelyTech
+```
+
+**2. Humour / identification**
+```
+Dis-moi que tu fais encore tes factures sur Excel sans me le dire 😅
+On a créé Gest-224 pour que ça s'arrête. Lien en bio 👆
+#Gest224 #Entrepreneur #VieDEntrepreneur #Facture #Excel #QbelyTech
+```
+
+**3. Question pour faire commenter**
+```
+Combien de temps tu passes sur tes factures chaque mois ? ⏳ Dis-le en commentaire 👇
+Avec Gest-224, un devis devient une facture en un clic. Gratuit pour commencer.
+#Gest224 #Entrepreneur #PetiteEntreprise #Gestion #QbelyTech
+```
+
+**4. Identification d'un ami**
+```
+Identifie l'entrepreneur qui a besoin de voir ça 👀
+Gest-224 : devis, factures, bons et compta au même endroit. C'est gratuit pour commencer 🚀
+#Gest224 #Entrepreneur #Business #Facture #QbelyTech
+```
+
+**5. Version publicité (courte, pour la promotion payante)**
+```
+Vos devis et factures en quelques clics. Gest-224, gratuit pour commencer 👉 gest-224.onrender.com
+```
+
+**Commentaire à épingler** sous la vidéo (publiez-le vous-même, puis
+« Épingler ») :
+```
+🎁 Le plan gratuit est disponible dès maintenant, sans carte bancaire. Des questions ? Réponse à tous les commentaires 👇
+```
+
+### Plan du jour du lancement
+1. **La veille** : une vidéo teaser de 5 s (« Demain, on arrête les factures sur Excel. 👀 ») pour créer l'attente.
+2. **Jour J, entre 18 h et 21 h** (heure où votre public est en ligne) : publiez `gest-224-lancement.mp4` avec la description 1.
+3. **Son** : ajoutez un son **tendance** depuis la bibliothèque TikTok, calé sur le « STOP » à 3 s. Pour une vidéo promue en publicité, choisissez un son de la **bibliothèque commerciale** (les sons tendance ne sont pas tous autorisés en pub).
+4. **Couverture** : `visuels/couverture-video-tiktok-gest-224.png`.
+5. **Première heure** : répondez à **tous** les commentaires, si possible en vidéo (« Répondre avec une vidéo ») - TikTok pousse les vidéos qui font parler.
+6. **Partage** : la même vidéo en Reel sur la Page Facebook, en statut WhatsApp et dans vos groupes.
+7. **J+1 à J+7** : republiez avec les descriptions 2, 3 et 4 sur les autres vidéos (présentation Gest-224, coulisses, tutoriel).
+
+### Publicité
+- Laissez tourner la vidéo **2-3 jours gratuitement**. Si elle marche (bonne durée de visionnage, commentaires), boostez-la avec **Promouvoir** (dans l'appli) ou en **Spark Ad** depuis TikTok Ads Manager : la pub garde vos likes et vos commentaires.
+- Objectif « Visites du site web » vers gest-224.onrender.com, petit budget quotidien sur 5-7 jours, ciblage : âge 22-45 ans, centres d'intérêt entrepreneuriat / petites entreprises / commerce, dans les pays visés.
+- Gardez la vidéo qui coûte le moins cher par clic, arrêtez les autres.
+
+---
+
 ## 5. Calendrier des 4 premières semaines
 
 | Semaine | Facebook (2-3 posts/sem.) | TikTok (3-4 vidéos/sem.) |
