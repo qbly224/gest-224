@@ -519,6 +519,15 @@
       "email": "Email",
       "telephone": "Phone",
       "notes": "Notes",
+      "relances": "Overdue invoice reminders",
+      "relanceFrequence": "Reminder frequency for this client",
+      "relanceAide": "This adds to the general reminders switch (Company page). A loyal client who always pays can be excluded from automatic reminders.",
+      "relanceDesactivee": "Disabled for this client",
+      "relanceQuotidienne": "Every day",
+      "relanceHebdomadaire": "Once a week",
+      "relance3xMois": "3 times a month (every 10 days)",
+      "relance2xMois": "Twice a month (every 15 days)",
+      "relanceMensuelle": "Once a month",
       "enregistrer": "Save"
     },
     "catalogue": {

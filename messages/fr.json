@@ -519,6 +519,15 @@
       "email": "Email",
       "telephone": "Téléphone",
       "notes": "Notes",
+      "relances": "Relances de factures en retard",
+      "relanceFrequence": "Fréquence de relance pour ce client",
+      "relanceAide": "S'ajoute à l'interrupteur général des relances (page Entreprise). Un client fidèle qui paie toujours peut être exclu des relances automatiques.",
+      "relanceDesactivee": "Désactivées pour ce client",
+      "relanceQuotidienne": "Tous les jours",
+      "relanceHebdomadaire": "1 fois par semaine",
+      "relance3xMois": "3 fois par mois (tous les 10 jours)",
+      "relance2xMois": "2 fois par mois (tous les 15 jours)",
+      "relanceMensuelle": "1 fois par mois",
       "enregistrer": "Enregistrer"
     },
     "catalogue": {

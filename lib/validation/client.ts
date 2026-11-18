@@ -2,6 +2,11 @@ import { z } from "zod";
 
 export const typeClientSchema = z.enum(["particulier", "professionnel"]);
 
+// Fréquence de relance par client (cf. lib/relances.ts) : "desactivee" coupe
+// les relances pour ce client précis, les autres valeurs sont un nombre de
+// jours entre deux relances.
+export const relanceFrequenceSchema = z.enum(["desactivee", "1", "7", "10", "15", "30"]);
+
 export const clientSchema = z
   .object({
     type: typeClientSchema,
@@ -23,6 +28,7 @@ export const clientSchema = z
     email: z.string().trim().email("Adresse email invalide.").max(254).optional().or(z.literal("")),
     telephone: z.string().trim().max(30).optional().or(z.literal("")),
     notes: z.string().trim().max(2000).optional().or(z.literal("")),
+    relanceFrequence: relanceFrequenceSchema,
   })
   .superRefine((data, ctx) => {
     if (data.type === "professionnel" && !data.raisonSociale) {

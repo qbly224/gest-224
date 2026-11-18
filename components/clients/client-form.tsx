@@ -242,6 +242,33 @@ export function ClientForm({
         </div>
       </fieldset>
 
+      <fieldset className="space-y-4 border-t border-encre/10 pt-4">
+        <legend className="font-titre text-lg text-encre">{t("relances")}</legend>
+        <div>
+          <label className={labelClass} htmlFor="relanceFrequence">
+            {t("relanceFrequence")}
+          </label>
+          <select
+            id="relanceFrequence"
+            name="relanceFrequence"
+            defaultValue={
+              client && !client.relancesActivees
+                ? "desactivee"
+                : String(client?.relanceIntervalleJours ?? 7)
+            }
+            className={selectClass}
+          >
+            <option value="desactivee">{t("relanceDesactivee")}</option>
+            <option value="1">{t("relanceQuotidienne")}</option>
+            <option value="7">{t("relanceHebdomadaire")}</option>
+            <option value="10">{t("relance3xMois")}</option>
+            <option value="15">{t("relance2xMois")}</option>
+            <option value="30">{t("relanceMensuelle")}</option>
+          </select>
+          <p className="mt-1 font-sans text-xs text-encre/70">{t("relanceAide")}</p>
+        </div>
+      </fieldset>
+
       <SubmitButton>{t("enregistrer")}</SubmitButton>
     </form>
   );

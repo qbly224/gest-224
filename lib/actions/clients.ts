@@ -27,7 +27,14 @@ function parseClientForm(formData: FormData) {
     email: formData.get("email") || undefined,
     telephone: formData.get("telephone") || undefined,
     notes: formData.get("notes") || undefined,
+    relanceFrequence: formData.get("relanceFrequence") || "7",
   });
+}
+
+function relanceChampsDepuisFrequence(relanceFrequence: string) {
+  return relanceFrequence === "desactivee"
+    ? { relancesActivees: false, relanceIntervalleJours: 7 }
+    : { relancesActivees: true, relanceIntervalleJours: Number(relanceFrequence) };
 }
 
 export async function createClient(
@@ -77,6 +84,7 @@ export async function createClient(
       email: data.email || null,
       telephone: data.telephone || null,
       notes: data.notes || null,
+      ...relanceChampsDepuisFrequence(data.relanceFrequence),
     },
   });
 
@@ -122,6 +130,7 @@ export async function updateClient(
       email: data.email || null,
       telephone: data.telephone || null,
       notes: data.notes || null,
+      ...relanceChampsDepuisFrequence(data.relanceFrequence),
     },
   });
 

@@ -242,6 +242,13 @@ model Client {
   telephone             String?
   notes                 String?
 
+  // Relances automatiques de factures en retard (cf. lib/relances.ts) :
+  // réglage par client, en plus de l'interrupteur général du tenant - un
+  // client fidèle qui paie toujours peut être exclu, un autre relancé plus
+  // ou moins souvent (en jours entre deux relances).
+  relancesActivees      Boolean    @default(true) @map("relances_activees")
+  relanceIntervalleJours Int       @default(7) @map("relance_intervalle_jours")
+
   actif                 Boolean    @default(true)
   createdAt             DateTime   @default(now()) @map("created_at")
   updatedAt             DateTime   @updatedAt @map("updated_at")

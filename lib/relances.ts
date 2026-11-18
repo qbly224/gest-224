@@ -4,8 +4,6 @@ import { envoyerEmail } from "@/lib/email";
 import { formatEuros, formatDate } from "@/lib/format";
 import { SITE_URL } from "@/lib/site-url";
 
-const DELAI_MIN_ENTRE_RELANCES_MS = 24 * 60 * 60 * 1000;
-
 const BASE_PATH: Record<"facture" | "facture_acompte", string> = {
   facture: "/factures",
   facture_acompte: "/factures-acompte",
@@ -13,10 +11,17 @@ const BASE_PATH: Record<"facture" | "facture_acompte", string> = {
 
 /**
  * Envoie une relance par email pour chaque facture (ou facture d'acompte) en
- * retard de paiement, au plus une fois par 24h et par facture. Destinée à
- * être appelée par un job planifié externe (cf.
+ * retard de paiement, au plus une fois par facture selon la fréquence
+ * propre à chaque client (client.relanceIntervalleJours, désactivable par
+ * client via client.relancesActivees - cf. lib/actions/clients.ts) ;
+ * l'interrupteur général du tenant (tenant.relancesActivees) reste
+ * prioritaire. Destinée à être appelée par un job planifié externe (cf.
  * app/api/cron/relances/route.ts), jamais par une action utilisateur : elle
  * parcourt tous les tenants, pas un seul.
+ *
+ * Le filtrage par seuil se fait en mémoire (pas dans le where Prisma) car
+ * le délai minimal entre deux relances dépend du client, donc varie d'une
+ * ligne à l'autre - impossible à exprimer en une seule comparaison SQL.
  */
 export async function envoyerRelancesFacturesEnRetard(): Promise<{
   examinees: number;
@@ -24,20 +29,27 @@ export async function envoyerRelancesFacturesEnRetard(): Promise<{
   ignorees: number;
 }> {
   const maintenant = new Date();
-  const seuilRelance = new Date(maintenant.getTime() - DELAI_MIN_ENTRE_RELANCES_MS);
 
-  const factures = await prisma.document.findMany({
+  const candidates = await prisma.document.findMany({
     where: {
       type: { in: ["facture", "facture_acompte"] },
       statut: "envoye",
       dateEcheance: { lt: maintenant },
       tenant: { actif: true, relancesActivees: true },
-      OR: [{ dernierRappelEnvoyeAt: null }, { dernierRappelEnvoyeAt: { lt: seuilRelance } }],
+      client: { relancesActivees: true },
     },
     include: {
       tenant: { select: { raisonSociale: true, email: true } },
-      client: { select: { email: true } },
+      client: { select: { email: true, relanceIntervalleJours: true } },
     },
+  });
+
+  const factures = candidates.filter((facture) => {
+    if (!facture.dernierRappelEnvoyeAt) return true;
+    const seuil = new Date(
+      maintenant.getTime() - facture.client.relanceIntervalleJours * 24 * 60 * 60 * 1000
+    );
+    return facture.dernierRappelEnvoyeAt < seuil;
   });
 
   let envoyees = 0;
@@ -77,5 +89,5 @@ export async function envoyerRelancesFacturesEnRetard(): Promise<{
     }
   }
 
-  return { examinees: factures.length, envoyees, ignorees };
+  return { examinees: candidates.length, envoyees, ignorees };
 }
