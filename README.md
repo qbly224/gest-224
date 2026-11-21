@@ -57,11 +57,12 @@ brancher sur un vrai fournisseur avant d'accueillir de vrais clients (voir
 `lib/email.ts`).
 
 Aussi en place : limitation de tentatives sur connexion/inscription/demande
-de réinitialisation (en mémoire, par processus - donc par instance ; à
-remplacer par un store partagé type Redis si l'app est un jour scalée
-horizontalement), revérification de `actif` (utilisateur et entreprise) à
-chaque page protégée, en-têtes de sécurité HTTP, limites de taille sur tous
-les champs de saisie. Pas encore d'email de vérification ni de MFA.
+de réinitialisation (`lib/rate-limit.ts` - partagée entre toutes les
+instances via Redis si `REDIS_URL` est définie, repli en mémoire par
+processus sinon, utile uniquement en développement local), revérification
+de `actif` (utilisateur et entreprise) à chaque page protégée, en-têtes de
+sécurité HTTP, limites de taille sur tous les champs de saisie. Pas encore
+d'email de vérification ni de MFA.
 
 ### Mise en marché SaaS (Phase 5)
 
@@ -166,6 +167,7 @@ qu'elle exécute des conteneurs Docker (Railway, Render, Fly.io, VPS...).
 | `SESSION_SECRET` | Chaîne aléatoire longue - générer avec `openssl rand -base64 32` |
 | `APP_URL` | URL publique de l'app (ex. `https://app.gest224.fr`) - utilisée dans les liens envoyés par email |
 | `RESEND_API_KEY` / `RESEND_FROM_EMAIL` | Optionnelles mais nécessaires pour que la réinitialisation de mot de passe envoie un vrai email (sinon le lien est seulement journalisé - inutilisable par un vrai client) |
+| `REDIS_URL` | Optionnelle à instance unique, requise dès qu'on scale horizontalement : partage la limitation de tentatives entre toutes les instances (`lib/rate-limit.ts`). Sans elle, chaque instance compte pour son propre compte. |
 
 `CHROMIUM_EXECUTABLE_PATH` et `PORT` sont déjà définis dans l'image, pas
 besoin de les régler sur la plateforme.

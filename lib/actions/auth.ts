@@ -46,7 +46,7 @@ export async function signUp(
   const ip = await getClientIp();
   // Limite large : freine la création massive de comptes (chaque inscription
   // coûte un hash bcrypt-12 ≈ 300 ms de CPU) sans gêner un usage normal.
-  if (!verifierLimite(`signup:${ip}`, 10, 60 * 60 * 1000)) {
+  if (!(await verifierLimite(`signup:${ip}`, 10, 60 * 60 * 1000))) {
     return { error: "Trop de tentatives d'inscription. Réessayez plus tard." };
   }
 
@@ -233,8 +233,8 @@ export async function signIn(
   // de nombreux comptes) et par email (freine le bourrage d'identifiants
   // ciblé sur un seul compte depuis plusieurs IP).
   if (
-    !verifierLimite(`login-ip:${ip}`, 20, 15 * 60 * 1000) ||
-    !verifierLimite(`login-email:${email.toLowerCase()}`, 8, 15 * 60 * 1000)
+    !(await verifierLimite(`login-ip:${ip}`, 20, 15 * 60 * 1000)) ||
+    !(await verifierLimite(`login-email:${email.toLowerCase()}`, 8, 15 * 60 * 1000))
   ) {
     return { error: "Trop de tentatives. Réessayez dans quelques minutes." };
   }
@@ -302,8 +302,8 @@ export async function verifierTotpConnexion(
   // combinaisons, bien moins qu'un mot de passe - la limite doit être plus
   // sévère que pour signIn().
   if (
-    !verifierLimite(`totp-ip:${ip}`, 10, 15 * 60 * 1000) ||
-    !verifierLimite(`totp-user:${pending.userId}`, 6, 15 * 60 * 1000)
+    !(await verifierLimite(`totp-ip:${ip}`, 10, 15 * 60 * 1000)) ||
+    !(await verifierLimite(`totp-user:${pending.userId}`, 6, 15 * 60 * 1000))
   ) {
     return { error: "Trop de tentatives. Réessayez dans quelques minutes." };
   }
@@ -375,8 +375,8 @@ export async function demanderReinitialisation(
   const succesGenerique: ActionState = { success: true };
 
   if (
-    !verifierLimite(`reset-ip:${ip}`, 10, 60 * 60 * 1000) ||
-    !verifierLimite(`reset-email:${email.toLowerCase()}`, 3, 60 * 60 * 1000)
+    !(await verifierLimite(`reset-ip:${ip}`, 10, 60 * 60 * 1000)) ||
+    !(await verifierLimite(`reset-email:${email.toLowerCase()}`, 3, 60 * 60 * 1000))
   ) {
     // On ne révèle pas la limitation : même message générique.
     return succesGenerique;
