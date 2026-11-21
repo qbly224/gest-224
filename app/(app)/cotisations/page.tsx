@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getTranslations, getLocale } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
+import { exigerAcces } from "@/lib/permissions";
 import { prisma } from "@/lib/prisma";
 import { marquerCotisationPayee } from "@/lib/actions/cotisations";
 import { formatDate } from "@/lib/format";
@@ -14,6 +15,7 @@ export default async function CotisationsPage({
 }) {
   const { statut } = await searchParams;
   const session = await requireSession();
+  exigerAcces(session.role, "cotisations");
   const t = await getTranslations("app.cotisations");
   const locale = (await getLocale()) as Locale;
 

@@ -702,6 +702,35 @@
       "enregistrer": "Save",
       "confirmSuppression": "Permanently delete this budget line?"
     },
+    "equipe": {
+      "titre": "Team",
+      "description": "Invite collaborators and manage their access rights.",
+      "inviter": "Invite a collaborator",
+      "prenom": "First name",
+      "nom": "Last name",
+      "email": "Email",
+      "role": "Role",
+      "choisirRole": "Choose a role...",
+      "envoyerInvitation": "Send invitation",
+      "colNom": "Name",
+      "colEmail": "Email",
+      "colRole": "Role",
+      "colStatut": "Status",
+      "vousMeme": "you",
+      "desactive": "Disabled",
+      "actif": "Active",
+      "invitationEnAttente": "Invitation pending",
+      "renvoyerInvitation": "Resend invitation",
+      "desactiver": "Disable",
+      "reactiver": "Re-enable",
+      "roles": {
+        "owner": "President",
+        "membre": "Collaborator",
+        "tresorier": "Treasurer",
+        "communication": "Communications",
+        "secretaire": "Secretary"
+      }
+    },
     "catalogue": {
       "titre": "Products",
       "nouveauBouton": "New item",
@@ -1037,6 +1066,12 @@
           "cree": "Donation recorded",
           "supprime": "Donation deleted"
         },
+        "equipe": {
+          "invite": "Team member invited",
+          "role_modifie": "Role changed",
+          "desactive": "Team member disabled",
+          "reactive": "Team member re-enabled"
+        },
         "admin": {
           "tenant": {
             "actif_bascule": "Account enabled/disabled (admin)",
@@ -1241,6 +1276,7 @@
       "reunions": "Meetings",
       "dons": "Donations & grants",
       "budget": "Budget forecast",
+      "equipe": "Team",
       "association": "Association"
     }
   }

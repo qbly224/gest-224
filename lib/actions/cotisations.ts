@@ -8,6 +8,7 @@ import { cotisationSchema } from "@/lib/validation/cotisation";
 import { paiementBloque, MESSAGE_PAIEMENT_BLOQUE } from "@/lib/paiement-guard";
 import { withToast } from "@/lib/toast";
 import { enregistrerAudit } from "@/lib/audit";
+import { peutAcceder, MESSAGE_ACCES_REFUSE } from "@/lib/permissions";
 import type { ActionState } from "@/lib/actions/types";
 
 function parseCotisationForm(formData: FormData) {
@@ -25,6 +26,9 @@ export async function createCotisation(
   formData: FormData
 ): Promise<ActionState> {
   const session = await requireSession();
+  if (!peutAcceder(session.role, "cotisations")) {
+    return { error: MESSAGE_ACCES_REFUSE };
+  }
   const parsed = parseCotisationForm(formData);
   if (!parsed.success) {
     return { fieldErrors: parsed.error.flatten().fieldErrors };
@@ -76,6 +80,9 @@ export async function updateCotisation(
   formData: FormData
 ): Promise<ActionState> {
   const session = await requireSession();
+  if (!peutAcceder(session.role, "cotisations")) {
+    return { error: MESSAGE_ACCES_REFUSE };
+  }
   const parsed = parseCotisationForm(formData);
   if (!parsed.success) {
     return { fieldErrors: parsed.error.flatten().fieldErrors };
@@ -121,6 +128,7 @@ export async function updateCotisation(
 
 export async function marquerCotisationPayee(cotisationId: string): Promise<void> {
   const session = await requireSession();
+  if (!peutAcceder(session.role, "cotisations")) return;
   const existing = await prisma.cotisation.findFirst({
     where: { id: cotisationId, tenantId: session.tenantId },
   });
@@ -145,6 +153,7 @@ export async function marquerCotisationPayee(cotisationId: string): Promise<void
 
 export async function supprimerCotisation(cotisationId: string): Promise<void> {
   const session = await requireSession();
+  if (!peutAcceder(session.role, "cotisations")) return;
   const existing = await prisma.cotisation.findFirst({
     where: { id: cotisationId, tenantId: session.tenantId },
   });

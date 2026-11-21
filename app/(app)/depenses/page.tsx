@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getTranslations, getLocale } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
+import { exigerAcces } from "@/lib/permissions";
 import { prisma } from "@/lib/prisma";
 import { supprimerDepense } from "@/lib/actions/comptabilite";
 import { BoutonSupprimer } from "@/components/forms/bouton-supprimer";
@@ -9,6 +10,7 @@ import type { Locale } from "@/i18n/config";
 
 export default async function DepensesPage() {
   const session = await requireSession();
+  exigerAcces(session.role, "depenses");
   const t = await getTranslations("app.depenses");
   const tCommun = await getTranslations("commun");
   const locale = (await getLocale()) as Locale;

@@ -6,16 +6,18 @@ import { Menu, Search, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { SidebarNav } from "@/components/app/sidebar-nav";
 import { Toast } from "@/components/app/toast";
-import type { TypeCompte } from "@prisma/client";
+import type { TypeCompte, RoleUtilisateur } from "@prisma/client";
 
 export function AppShell({
   raisonSociale,
   typeCompte,
+  role,
   estAdminPlateforme,
   children,
 }: {
   raisonSociale: string;
   typeCompte: TypeCompte;
+  role: RoleUtilisateur;
   estAdminPlateforme: boolean;
   children: React.ReactNode;
 }) {
@@ -32,6 +34,7 @@ export function AppShell({
           <SidebarNav
             raisonSociale={raisonSociale}
             typeCompte={typeCompte}
+            role={role}
             estAdminPlateforme={estAdminPlateforme}
           />
         </div>
@@ -60,6 +63,7 @@ export function AppShell({
               <SidebarNav
                 raisonSociale={raisonSociale}
                 typeCompte={typeCompte}
+                role={role}
                 estAdminPlateforme={estAdminPlateforme}
                 onNavigate={() => setOuvert(false)}
               />

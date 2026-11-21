@@ -702,6 +702,35 @@
       "enregistrer": "Enregistrer",
       "confirmSuppression": "Supprimer définitivement cette ligne de budget ?"
     },
+    "equipe": {
+      "titre": "Équipe",
+      "description": "Invitez des collaborateurs et gérez leurs droits d'accès.",
+      "inviter": "Inviter un collaborateur",
+      "prenom": "Prénom",
+      "nom": "Nom",
+      "email": "Email",
+      "role": "Rôle",
+      "choisirRole": "Choisir un rôle...",
+      "envoyerInvitation": "Envoyer l'invitation",
+      "colNom": "Nom",
+      "colEmail": "Email",
+      "colRole": "Rôle",
+      "colStatut": "Statut",
+      "vousMeme": "vous",
+      "desactive": "Désactivé",
+      "actif": "Actif",
+      "invitationEnAttente": "Invitation en attente",
+      "renvoyerInvitation": "Renvoyer l'invitation",
+      "desactiver": "Désactiver",
+      "reactiver": "Réactiver",
+      "roles": {
+        "owner": "Président",
+        "membre": "Collaborateur",
+        "tresorier": "Trésorier",
+        "communication": "Communication",
+        "secretaire": "Secrétaire"
+      }
+    },
     "catalogue": {
       "titre": "Produits",
       "nouveauBouton": "Nouvel article",
@@ -1037,6 +1066,12 @@
           "cree": "Don enregistré",
           "supprime": "Don supprimé"
         },
+        "equipe": {
+          "invite": "Collaborateur invité",
+          "role_modifie": "Rôle modifié",
+          "desactive": "Collaborateur désactivé",
+          "reactive": "Collaborateur réactivé"
+        },
         "admin": {
           "tenant": {
             "actif_bascule": "Compte activé/désactivé (admin)",
@@ -1241,6 +1276,7 @@
       "reunions": "Réunions",
       "dons": "Dons et subventions",
       "budget": "Budget prévisionnel",
+      "equipe": "Équipe",
       "association": "Association"
     }
   }

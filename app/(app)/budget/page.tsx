@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { getTranslations, getLocale } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
+import { exigerAcces } from "@/lib/permissions";
 import { prisma } from "@/lib/prisma";
 import { formatEuros } from "@/lib/format";
 import type { Locale } from "@/i18n/config";
@@ -13,6 +14,7 @@ export default async function BudgetPage({
 }) {
   const { annee } = await searchParams;
   const session = await requireSession();
+  exigerAcces(session.role, "budget");
   const t = await getTranslations("app.budget");
   const locale = (await getLocale()) as Locale;
 

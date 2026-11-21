@@ -11,6 +11,7 @@ import { paiementBloque, MESSAGE_PAIEMENT_BLOQUE } from "@/lib/paiement-guard";
 import { withToast } from "@/lib/toast";
 import type { ActionState } from "@/lib/actions/types";
 import { enregistrerAudit } from "@/lib/audit";
+import { peutAcceder, MESSAGE_ACCES_REFUSE } from "@/lib/permissions";
 import {
   TYPES_PIECE_JOINTE_AUTORISES,
   TAILLE_PIECE_JOINTE_MAX_OCTETS,
@@ -30,6 +31,9 @@ export async function createDepense(
   formData: FormData
 ): Promise<ActionState> {
   const session = await requireSession();
+  if (!peutAcceder(session.role, "depenses")) {
+    return { error: MESSAGE_ACCES_REFUSE };
+  }
   const parsed = parseDepenseForm(formData);
   if (!parsed.success) {
     return { fieldErrors: parsed.error.flatten().fieldErrors };
@@ -83,6 +87,9 @@ export async function updateDepense(
   formData: FormData
 ): Promise<ActionState> {
   const session = await requireSession();
+  if (!peutAcceder(session.role, "depenses")) {
+    return { error: MESSAGE_ACCES_REFUSE };
+  }
   const parsed = parseDepenseForm(formData);
   if (!parsed.success) {
     return { fieldErrors: parsed.error.flatten().fieldErrors };
@@ -121,6 +128,7 @@ export async function updateDepense(
 
 export async function supprimerDepense(depenseId: string): Promise<void> {
   const session = await requireSession();
+  if (!peutAcceder(session.role, "depenses")) return;
   const existing = await prisma.depense.findFirst({
     where: { id: depenseId, tenantId: session.tenantId },
   });
@@ -153,6 +161,9 @@ export async function ajouterPieceJointeDepense(
   formData: FormData
 ): Promise<ActionState> {
   const session = await requireSession();
+  if (!peutAcceder(session.role, "depenses")) {
+    return { error: MESSAGE_ACCES_REFUSE };
+  }
   const depense = await prisma.depense.findFirst({
     where: { id: depenseId, tenantId: session.tenantId },
   });
@@ -196,6 +207,7 @@ export async function ajouterPieceJointeDepense(
 
 export async function supprimerPieceJointeDepense(pieceId: string): Promise<void> {
   const session = await requireSession();
+  if (!peutAcceder(session.role, "depenses")) return;
   const piece = await prisma.depensePieceJointe.findFirst({
     where: { id: pieceId, depense: { tenantId: session.tenantId } },
     include: { depense: { select: { id: true } } },

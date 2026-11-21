@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getTranslations, getLocale } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
+import { exigerAcces } from "@/lib/permissions";
 import { prisma } from "@/lib/prisma";
 import { calculerRapportComplet } from "@/lib/comptabilite/agregats";
 import { limitesEffectives } from "@/lib/plans";
@@ -16,6 +17,7 @@ export default async function RapportPage({
   searchParams: Promise<{ annee?: string }>;
 }) {
   const session = await requireSession();
+  exigerAcces(session.role, "rapport");
   const t = await getTranslations("app.rapport");
   const tTypes = await getTranslations("app.typesDocument");
   const locale = (await getLocale()) as Locale;

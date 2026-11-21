@@ -8,6 +8,7 @@ import { membreSchema } from "@/lib/validation/membre";
 import { limitesEffectives } from "@/lib/plans";
 import { paiementBloque, MESSAGE_PAIEMENT_BLOQUE } from "@/lib/paiement-guard";
 import { withToast } from "@/lib/toast";
+import { peutAcceder, MESSAGE_ACCES_REFUSE } from "@/lib/permissions";
 import type { ActionState } from "@/lib/actions/types";
 
 function parseMembreForm(formData: FormData) {
@@ -34,6 +35,9 @@ export async function createMembre(
   formData: FormData
 ): Promise<ActionState> {
   const session = await requireSession();
+  if (!peutAcceder(session.role, "membres")) {
+    return { error: MESSAGE_ACCES_REFUSE };
+  }
   const parsed = parseMembreForm(formData);
   if (!parsed.success) {
     return { fieldErrors: parsed.error.flatten().fieldErrors };
@@ -88,6 +92,9 @@ export async function updateMembre(
   formData: FormData
 ): Promise<ActionState> {
   const session = await requireSession();
+  if (!peutAcceder(session.role, "membres")) {
+    return { error: MESSAGE_ACCES_REFUSE };
+  }
   const parsed = parseMembreForm(formData);
   if (!parsed.success) {
     return { fieldErrors: parsed.error.flatten().fieldErrors };
@@ -128,6 +135,7 @@ export async function updateMembre(
 
 export async function toggleMembreActif(membreId: string): Promise<void> {
   const session = await requireSession();
+  if (!peutAcceder(session.role, "membres")) return;
 
   const existing = await prisma.membre.findFirst({
     where: { id: membreId, tenantId: session.tenantId },

@@ -20,8 +20,13 @@ enum RegimeTva {
 }
 
 enum RoleUtilisateur {
-  owner   // Créateur du compte / titulaire de l'entreprise
-  membre  // Collaborateur additionnel (prévu pour une évolution future)
+  owner         // Créateur du compte / titulaire de l'entreprise, ou président pour une association
+  membre        // Collaborateur additionnel côté entreprise (accès complet, inchangé)
+  // Rôles d'équipe réservés aux comptes association (cf. lib/permissions.ts) :
+  // aucune restriction nouvelle n'est introduite pour owner/membre côté entreprise.
+  tresorier     // Cotisations, dons, budget, dépenses, rapport financier
+  communication // Annonces et diffusion aux membres
+  secretaire    // Membres et réunions (comptes-rendus)
 }
 
 // Aucun paiement réel traité en Phase 5 : le plan choisi à l'inscription

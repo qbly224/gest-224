@@ -2,12 +2,14 @@ import Link from "next/link";
 import { MapPin } from "lucide-react";
 import { getTranslations, getLocale } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
+import { exigerAcces } from "@/lib/permissions";
 import { prisma } from "@/lib/prisma";
 import { formatDate } from "@/lib/format";
 import type { Locale } from "@/i18n/config";
 
 export default async function ReunionsPage() {
   const session = await requireSession();
+  exigerAcces(session.role, "reunions");
   const t = await getTranslations("app.reunions");
   const locale = (await getLocale()) as Locale;
 

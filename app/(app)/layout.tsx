@@ -23,6 +23,7 @@ export default async function AppLayout({
     <AppShell
       raisonSociale={tenant.raisonSociale}
       typeCompte={tenant.typeCompte}
+      role={session.role}
       estAdminPlateforme={utilisateur.estAdminPlateforme}
     >
       {children}

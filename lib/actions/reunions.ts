@@ -7,6 +7,7 @@ import { requireSession } from "@/lib/auth";
 import { reunionSchema } from "@/lib/validation/reunion";
 import { paiementBloque, MESSAGE_PAIEMENT_BLOQUE } from "@/lib/paiement-guard";
 import { withToast } from "@/lib/toast";
+import { peutAcceder, MESSAGE_ACCES_REFUSE } from "@/lib/permissions";
 import type { ActionState } from "@/lib/actions/types";
 
 function parseReunionForm(formData: FormData) {
@@ -24,6 +25,9 @@ export async function createReunion(
   formData: FormData
 ): Promise<ActionState> {
   const session = await requireSession();
+  if (!peutAcceder(session.role, "reunions")) {
+    return { error: MESSAGE_ACCES_REFUSE };
+  }
   const parsed = parseReunionForm(formData);
   if (!parsed.success) {
     return { fieldErrors: parsed.error.flatten().fieldErrors };
@@ -59,6 +63,9 @@ export async function updateReunion(
   formData: FormData
 ): Promise<ActionState> {
   const session = await requireSession();
+  if (!peutAcceder(session.role, "reunions")) {
+    return { error: MESSAGE_ACCES_REFUSE };
+  }
   const parsed = parseReunionForm(formData);
   if (!parsed.success) {
     return { fieldErrors: parsed.error.flatten().fieldErrors };
@@ -90,6 +97,7 @@ export async function updateReunion(
 
 export async function supprimerReunion(reunionId: string): Promise<void> {
   const session = await requireSession();
+  if (!peutAcceder(session.role, "reunions")) return;
   const existing = await prisma.reunion.findFirst({
     where: { id: reunionId, tenantId: session.tenantId },
   });

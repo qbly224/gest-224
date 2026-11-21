@@ -8,6 +8,7 @@ import { donSchema } from "@/lib/validation/don";
 import { paiementBloque, MESSAGE_PAIEMENT_BLOQUE } from "@/lib/paiement-guard";
 import { withToast } from "@/lib/toast";
 import { enregistrerAudit } from "@/lib/audit";
+import { peutAcceder, MESSAGE_ACCES_REFUSE } from "@/lib/permissions";
 import type { ActionState } from "@/lib/actions/types";
 
 function parseDonForm(formData: FormData) {
@@ -25,6 +26,9 @@ export async function createDon(
   formData: FormData
 ): Promise<ActionState> {
   const session = await requireSession();
+  if (!peutAcceder(session.role, "dons")) {
+    return { error: MESSAGE_ACCES_REFUSE };
+  }
   const parsed = parseDonForm(formData);
   if (!parsed.success) {
     return { fieldErrors: parsed.error.flatten().fieldErrors };
@@ -68,6 +72,9 @@ export async function updateDon(
   formData: FormData
 ): Promise<ActionState> {
   const session = await requireSession();
+  if (!peutAcceder(session.role, "dons")) {
+    return { error: MESSAGE_ACCES_REFUSE };
+  }
   const parsed = parseDonForm(formData);
   if (!parsed.success) {
     return { fieldErrors: parsed.error.flatten().fieldErrors };
@@ -99,6 +106,7 @@ export async function updateDon(
 
 export async function supprimerDon(donId: string): Promise<void> {
   const session = await requireSession();
+  if (!peutAcceder(session.role, "dons")) return;
   const existing = await prisma.don.findFirst({
     where: { id: donId, tenantId: session.tenantId },
   });

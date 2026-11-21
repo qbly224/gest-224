@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Phone } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
+import { exigerAcces } from "@/lib/permissions";
 import { prisma } from "@/lib/prisma";
 import { toggleMembreActif } from "@/lib/actions/membres";
 import type { Prisma } from "@prisma/client";
@@ -13,6 +14,7 @@ export default async function MembresPage({
 }) {
   const { q, statut } = await searchParams;
   const session = await requireSession();
+  exigerAcces(session.role, "membres");
   const t = await getTranslations("app.membres");
   const terme = q?.trim();
 

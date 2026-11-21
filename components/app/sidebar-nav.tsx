@@ -29,10 +29,12 @@ import {
   CalendarDays,
   Gift,
   PiggyBank,
+  UserCog,
 } from "lucide-react";
-import type { TypeCompte } from "@prisma/client";
+import type { TypeCompte, RoleUtilisateur } from "@prisma/client";
 import { signOut } from "@/lib/actions/auth";
 import { LocaleSwitcher } from "@/components/app/locale-switcher";
+import { peutAcceder, type DomaineAcces } from "@/lib/permissions-shared";
 
 const DOCUMENT_LINKS = [
   { href: "/devis", cle: "devis", Icon: FileText },
@@ -62,27 +64,35 @@ const APRES_DOCUMENTS = [
 // à facture), ni catalogue, ni chantiers : ces concepts n'ont pas
 // d'équivalent dans le fonctionnement d'une association (cf.
 // prisma/schema.prisma, modèles Membre/Cotisation/Reunion).
-const LIENS_ASSOCIATION = [
+const LIENS_ASSOCIATION: readonly {
+  href: string;
+  cle: string;
+  Icon: typeof LayoutDashboard;
+  domaine?: DomaineAcces;
+}[] = [
   { href: "/tableau-de-bord", cle: "tableauDeBord", Icon: LayoutDashboard },
-  { href: "/membres", cle: "membres", Icon: Users },
-  { href: "/cotisations", cle: "cotisations", Icon: HandCoins },
-  { href: "/reunions", cle: "reunions", Icon: CalendarDays },
-  { href: "/depenses", cle: "depenses", Icon: Wallet },
-  { href: "/dons", cle: "dons", Icon: Gift },
-  { href: "/budget", cle: "budget", Icon: PiggyBank },
-  { href: "/rapport", cle: "rapport", Icon: BarChart3 },
-  { href: "/entreprise", cle: "association", Icon: Building2 },
-  { href: "/abonnement", cle: "abonnement", Icon: Star },
-] as const;
+  { href: "/membres", cle: "membres", Icon: Users, domaine: "membres" },
+  { href: "/cotisations", cle: "cotisations", Icon: HandCoins, domaine: "cotisations" },
+  { href: "/reunions", cle: "reunions", Icon: CalendarDays, domaine: "reunions" },
+  { href: "/depenses", cle: "depenses", Icon: Wallet, domaine: "depenses" },
+  { href: "/dons", cle: "dons", Icon: Gift, domaine: "dons" },
+  { href: "/budget", cle: "budget", Icon: PiggyBank, domaine: "budget" },
+  { href: "/rapport", cle: "rapport", Icon: BarChart3, domaine: "rapport" },
+  { href: "/entreprise", cle: "association", Icon: Building2, domaine: "entreprise" },
+  { href: "/abonnement", cle: "abonnement", Icon: Star, domaine: "abonnement" },
+  { href: "/equipe", cle: "equipe", Icon: UserCog, domaine: "equipe" },
+];
 
 export function SidebarNav({
   raisonSociale,
   typeCompte,
+  role,
   estAdminPlateforme,
   onNavigate,
 }: {
   raisonSociale: string;
   typeCompte: TypeCompte;
+  role: RoleUtilisateur;
   estAdminPlateforme: boolean;
   onNavigate?: () => void;
 }) {
@@ -117,17 +127,21 @@ export function SidebarNav({
 
       <nav className="flex-1 space-y-0.5 overflow-y-auto px-3 py-4">
         {typeCompte === "association" ? (
-          LIENS_ASSOCIATION.map(({ href, cle, Icon }) => (
-            <Link
-              key={href}
-              href={href}
-              onClick={onNavigate}
-              className="flex items-center gap-3 rounded-sm px-3 py-2 font-sans text-sm text-encre/80 hover:bg-encre/10 hover:text-encre"
-            >
-              <Icon size={17} strokeWidth={1.75} className="shrink-0 text-encre/75" />
-              {t(`nav.${cle}`)}
-            </Link>
-          ))
+          LIENS_ASSOCIATION.filter(
+            (l) => l.cle === "equipe" ? role === "owner" : !l.domaine || peutAcceder(role, l.domaine)
+          ).map(
+            ({ href, cle, Icon }) => (
+              <Link
+                key={href}
+                href={href}
+                onClick={onNavigate}
+                className="flex items-center gap-3 rounded-sm px-3 py-2 font-sans text-sm text-encre/80 hover:bg-encre/10 hover:text-encre"
+              >
+                <Icon size={17} strokeWidth={1.75} className="shrink-0 text-encre/75" />
+                {t(`nav.${cle}`)}
+              </Link>
+            )
+          )
         ) : (
           <>
             {AVANT_DOCUMENTS.map(({ href, cle, Icon }) => (
@@ -185,6 +199,16 @@ export function SidebarNav({
                 {t(`nav.${cle}`)}
               </Link>
             ))}
+            {role === "owner" && (
+              <Link
+                href="/equipe"
+                onClick={onNavigate}
+                className="flex items-center gap-3 rounded-sm px-3 py-2 font-sans text-sm text-encre/80 hover:bg-encre/10 hover:text-encre"
+              >
+                <UserCog size={17} strokeWidth={1.75} className="shrink-0 text-encre/75" />
+                {t("nav.equipe")}
+              </Link>
+            )}
           </>
         )}
 

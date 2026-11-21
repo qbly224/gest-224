@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getTranslations, getLocale } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
+import { exigerAcces } from "@/lib/permissions";
 import { prisma } from "@/lib/prisma";
 import { formatEuros, formatDate } from "@/lib/format";
 import type { Locale } from "@/i18n/config";
@@ -12,6 +13,7 @@ export default async function DonsPage({
 }) {
   const { type } = await searchParams;
   const session = await requireSession();
+  exigerAcces(session.role, "dons");
   const t = await getTranslations("app.dons");
   const locale = (await getLocale()) as Locale;
 

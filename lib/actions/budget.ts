@@ -7,6 +7,7 @@ import { requireSession } from "@/lib/auth";
 import { ligneBudgetSchema } from "@/lib/validation/budget";
 import { paiementBloque, MESSAGE_PAIEMENT_BLOQUE } from "@/lib/paiement-guard";
 import { withToast } from "@/lib/toast";
+import { peutAcceder, MESSAGE_ACCES_REFUSE } from "@/lib/permissions";
 import type { ActionState } from "@/lib/actions/types";
 
 function parseLigneBudgetForm(formData: FormData) {
@@ -24,6 +25,9 @@ export async function createLigneBudget(
   formData: FormData
 ): Promise<ActionState> {
   const session = await requireSession();
+  if (!peutAcceder(session.role, "budget")) {
+    return { error: MESSAGE_ACCES_REFUSE };
+  }
   const parsed = parseLigneBudgetForm(formData);
   if (!parsed.success) {
     return { fieldErrors: parsed.error.flatten().fieldErrors };
@@ -59,6 +63,9 @@ export async function updateLigneBudget(
   formData: FormData
 ): Promise<ActionState> {
   const session = await requireSession();
+  if (!peutAcceder(session.role, "budget")) {
+    return { error: MESSAGE_ACCES_REFUSE };
+  }
   const parsed = parseLigneBudgetForm(formData);
   if (!parsed.success) {
     return { fieldErrors: parsed.error.flatten().fieldErrors };
@@ -89,6 +96,7 @@ export async function updateLigneBudget(
 
 export async function supprimerLigneBudget(ligneId: string): Promise<void> {
   const session = await requireSession();
+  if (!peutAcceder(session.role, "budget")) return;
   const existing = await prisma.ligneBudget.findFirst({
     where: { id: ligneId, tenantId: session.tenantId },
   });
