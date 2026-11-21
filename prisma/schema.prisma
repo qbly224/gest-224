@@ -79,6 +79,31 @@ enum FrequenceRecurrence {
   annuelle
 }
 
+// Choisi une fois à l'inscription (cf. lib/actions/auth.ts), pilote la
+// navigation et le tableau de bord (cf. components/app/sidebar-nav.tsx) :
+// un compte "association" voit Membres/Cotisations/Réunions à la place de
+// Devis/Factures/Catalogue/Chantiers/Clients, qui ne correspondent pas au
+// fonctionnement d'une association. Dépenses, abonnement, authentification,
+// audit restent partagés sans distinction.
+enum TypeCompte {
+  entreprise
+  association
+}
+
+enum RoleMembre {
+  president
+  vice_president
+  tresorier
+  secretaire
+  membre
+}
+
+enum StatutMembre {
+  actif
+  suspendu
+  radie
+}
+
 // ---------------------------------------------------------------------------
 // Tenant (Entreprise) & Utilisateurs
 // ---------------------------------------------------------------------------
@@ -86,10 +111,25 @@ enum FrequenceRecurrence {
 model Tenant {
   id                     String    @id @default(uuid())
 
+  // "entreprise" (historique) ou "association" - choisi une fois à
+  // l'inscription, jamais modifié ensuite (changer de type reviendrait à
+  // changer de produit ; cf. lib/actions/auth.ts et sidebar-nav.tsx).
+  typeCompte             TypeCompte @default(entreprise) @map("type_compte")
+
+  // "Raison sociale" pour une entreprise, nom de l'association pour une
+  // association - un seul champ, le libellé affiché change selon
+  // typeCompte (cf. components/auth/signup-form.tsx).
   raisonSociale          String    @map("raison_sociale")
   formeJuridique         String?   @map("forme_juridique")
-  siret                  String    @unique @db.VarChar(14)
+  // Optionnel : une association loi 1901 n'a pas toujours de SIRET. Reste
+  // obligatoire côté applicatif pour un compte "entreprise" (cf.
+  // lib/validation/auth.ts).
+  siret                  String?   @unique @db.VarChar(14)
   siren                  String?   @db.VarChar(9)
+  // Numéro RNA (Répertoire National des Associations, format W + 9
+  // chiffres) - équivalent du SIRET pour une association sans existence
+  // commerciale.
+  numeroRna              String?   @map("numero_rna")
   numeroTvaIntracom      String?   @map("numero_tva_intracom")
   regimeTva              RegimeTva @default(franchise) @map("regime_tva")
   capitalSocial          Decimal?  @map("capital_social") @db.Decimal(12, 2)
@@ -164,6 +204,9 @@ model Tenant {
   facturesRecurrentes    FactureRecurrente[]
   chantiers              Chantier[]
   auditLogs              AuditLog[]
+  membres                Membre[]
+  cotisations            Cotisation[]
+  reunions               Reunion[]
 
   @@map("tenants")
 }
@@ -612,6 +655,90 @@ model Chantier {
 
   @@index([tenantId])
   @@map("chantiers")
+}
+
+// ---------------------------------------------------------------------------
+// Association : membres, cotisations, réunions
+// (visibles uniquement pour un tenant dont typeCompte = "association")
+// ---------------------------------------------------------------------------
+
+model Membre {
+  id             String       @id @default(uuid())
+
+  tenantId       String       @map("tenant_id")
+  tenant         Tenant       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  civilite       String?
+  prenom         String
+  nom            String
+  email          String?
+  telephone      String?
+
+  adresseLigne1  String?      @map("adresse_ligne1")
+  adresseLigne2  String?      @map("adresse_ligne2")
+  codePostal     String?      @map("code_postal") @db.VarChar(10)
+  ville          String?
+  pays           String       @default("France")
+
+  dateAdhesion   DateTime     @default(now()) @map("date_adhesion")
+  role           RoleMembre   @default(membre)
+  statut         StatutMembre @default(actif)
+  notes          String?
+
+  actif          Boolean      @default(true)
+  createdAt      DateTime     @default(now()) @map("created_at")
+  updatedAt      DateTime     @updatedAt @map("updated_at")
+
+  cotisations    Cotisation[]
+
+  @@index([tenantId])
+  @@map("membres")
+}
+
+// Une cotisation payée se reconnaît par datePaiement non nul - pas de champ
+// statut séparé qui pourrait se désynchroniser (même logique que payeAt sur
+// Document).
+model Cotisation {
+  id            String    @id @default(uuid())
+
+  tenantId      String    @map("tenant_id")
+  tenant        Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  membreId      String    @map("membre_id")
+  membre        Membre    @relation(fields: [membreId], references: [id], onDelete: Cascade)
+
+  // Libre (ex. "2026" ou "2026-2027") pour coller à l'année sociale propre
+  // à chaque association plutôt que d'imposer une année civile stricte.
+  periode       String
+  montant       Decimal   @db.Decimal(10, 2)
+  datePaiement  DateTime? @map("date_paiement")
+  moyenPaiement String?   @map("moyen_paiement")
+
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  @@index([tenantId])
+  @@index([membreId])
+  @@map("cotisations")
+}
+
+model Reunion {
+  id            String    @id @default(uuid())
+
+  tenantId      String    @map("tenant_id")
+  tenant        Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  titre         String
+  date          DateTime
+  lieu          String?
+  description   String?
+  compteRendu   String?   @map("compte_rendu")
+
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  @@index([tenantId])
+  @@map("reunions")
 }
 
 // ---------------------------------------------------------------------------

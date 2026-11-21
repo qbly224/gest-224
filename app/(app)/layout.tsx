@@ -11,7 +11,7 @@ export default async function AppLayout({
   const [tenant, utilisateur] = await Promise.all([
     prisma.tenant.findUniqueOrThrow({
       where: { id: session.tenantId },
-      select: { raisonSociale: true },
+      select: { raisonSociale: true, typeCompte: true },
     }),
     prisma.user.findUniqueOrThrow({
       where: { id: session.userId },
@@ -20,7 +20,11 @@ export default async function AppLayout({
   ]);
 
   return (
-    <AppShell raisonSociale={tenant.raisonSociale} estAdminPlateforme={utilisateur.estAdminPlateforme}>
+    <AppShell
+      raisonSociale={tenant.raisonSociale}
+      typeCompte={tenant.typeCompte}
+      estAdminPlateforme={utilisateur.estAdminPlateforme}
+    >
       {children}
     </AppShell>
   );

@@ -25,7 +25,10 @@ import {
   HardHat,
   FolderOpen,
   ChevronDown,
+  HandCoins,
+  CalendarDays,
 } from "lucide-react";
+import type { TypeCompte } from "@prisma/client";
 import { signOut } from "@/lib/actions/auth";
 import { LocaleSwitcher } from "@/components/app/locale-switcher";
 
@@ -53,12 +56,29 @@ const APRES_DOCUMENTS = [
   { href: "/abonnement", cle: "abonnement", Icon: Star },
 ] as const;
 
+// Un compte association ne gère ni chaîne documentaire commerciale (devis
+// à facture), ni catalogue, ni chantiers : ces concepts n'ont pas
+// d'équivalent dans le fonctionnement d'une association (cf.
+// prisma/schema.prisma, modèles Membre/Cotisation/Reunion).
+const LIENS_ASSOCIATION = [
+  { href: "/tableau-de-bord", cle: "tableauDeBord", Icon: LayoutDashboard },
+  { href: "/membres", cle: "membres", Icon: Users },
+  { href: "/cotisations", cle: "cotisations", Icon: HandCoins },
+  { href: "/reunions", cle: "reunions", Icon: CalendarDays },
+  { href: "/depenses", cle: "depenses", Icon: Wallet },
+  { href: "/rapport", cle: "rapport", Icon: BarChart3 },
+  { href: "/entreprise", cle: "association", Icon: Building2 },
+  { href: "/abonnement", cle: "abonnement", Icon: Star },
+] as const;
+
 export function SidebarNav({
   raisonSociale,
+  typeCompte,
   estAdminPlateforme,
   onNavigate,
 }: {
   raisonSociale: string;
+  typeCompte: TypeCompte;
   estAdminPlateforme: boolean;
   onNavigate?: () => void;
 }) {
@@ -92,61 +112,77 @@ export function SidebarNav({
       </form>
 
       <nav className="flex-1 space-y-0.5 overflow-y-auto px-3 py-4">
-        {AVANT_DOCUMENTS.map(({ href, cle, Icon }) => (
-          <Link
-            key={href}
-            href={href}
-            onClick={onNavigate}
-            className="flex items-center gap-3 rounded-sm px-3 py-2 font-sans text-sm text-encre/80 hover:bg-encre/10 hover:text-encre"
-          >
-            <Icon size={17} strokeWidth={1.75} className="shrink-0 text-encre/75" />
-            {t(`nav.${cle}`)}
-          </Link>
-        ))}
-
-        <button
-          type="button"
-          onClick={() => setDocumentsOuvert((v) => !v)}
-          aria-expanded={documentsOuvert}
-          className={`flex w-full items-center gap-3 rounded-sm px-3 py-2 font-sans text-sm hover:bg-encre/10 ${
-            surUnDocument ? "font-medium text-encre" : "text-encre/80 hover:text-encre"
-          }`}
-        >
-          <FolderOpen size={17} strokeWidth={1.75} className="shrink-0 text-encre/75" />
-          <span className="flex-1 text-left">{t("nav.documents")}</span>
-          <ChevronDown
-            size={15}
-            strokeWidth={1.75}
-            className={`shrink-0 text-encre/70 transition-transform ${documentsOuvert ? "rotate-180" : ""}`}
-          />
-        </button>
-        {documentsOuvert && (
-          <div className="ml-4 space-y-0.5 border-l border-encre/15 pl-3">
-            {DOCUMENT_LINKS.map(({ href, cle, Icon }) => (
+        {typeCompte === "association" ? (
+          LIENS_ASSOCIATION.map(({ href, cle, Icon }) => (
+            <Link
+              key={href}
+              href={href}
+              onClick={onNavigate}
+              className="flex items-center gap-3 rounded-sm px-3 py-2 font-sans text-sm text-encre/80 hover:bg-encre/10 hover:text-encre"
+            >
+              <Icon size={17} strokeWidth={1.75} className="shrink-0 text-encre/75" />
+              {t(`nav.${cle}`)}
+            </Link>
+          ))
+        ) : (
+          <>
+            {AVANT_DOCUMENTS.map(({ href, cle, Icon }) => (
               <Link
                 key={href}
                 href={href}
                 onClick={onNavigate}
-                className="flex items-center gap-3 rounded-sm px-3 py-1.5 font-sans text-sm text-encre/80 hover:bg-encre/10 hover:text-encre"
+                className="flex items-center gap-3 rounded-sm px-3 py-2 font-sans text-sm text-encre/80 hover:bg-encre/10 hover:text-encre"
               >
-                <Icon size={16} strokeWidth={1.75} className="shrink-0 text-encre/75" />
+                <Icon size={17} strokeWidth={1.75} className="shrink-0 text-encre/75" />
                 {t(`nav.${cle}`)}
               </Link>
             ))}
-          </div>
-        )}
 
-        {APRES_DOCUMENTS.map(({ href, cle, Icon }) => (
-          <Link
-            key={href}
-            href={href}
-            onClick={onNavigate}
-            className="flex items-center gap-3 rounded-sm px-3 py-2 font-sans text-sm text-encre/80 hover:bg-encre/10 hover:text-encre"
-          >
-            <Icon size={17} strokeWidth={1.75} className="shrink-0 text-encre/75" />
-            {t(`nav.${cle}`)}
-          </Link>
-        ))}
+            <button
+              type="button"
+              onClick={() => setDocumentsOuvert((v) => !v)}
+              aria-expanded={documentsOuvert}
+              className={`flex w-full items-center gap-3 rounded-sm px-3 py-2 font-sans text-sm hover:bg-encre/10 ${
+                surUnDocument ? "font-medium text-encre" : "text-encre/80 hover:text-encre"
+              }`}
+            >
+              <FolderOpen size={17} strokeWidth={1.75} className="shrink-0 text-encre/75" />
+              <span className="flex-1 text-left">{t("nav.documents")}</span>
+              <ChevronDown
+                size={15}
+                strokeWidth={1.75}
+                className={`shrink-0 text-encre/70 transition-transform ${documentsOuvert ? "rotate-180" : ""}`}
+              />
+            </button>
+            {documentsOuvert && (
+              <div className="ml-4 space-y-0.5 border-l border-encre/15 pl-3">
+                {DOCUMENT_LINKS.map(({ href, cle, Icon }) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    onClick={onNavigate}
+                    className="flex items-center gap-3 rounded-sm px-3 py-1.5 font-sans text-sm text-encre/80 hover:bg-encre/10 hover:text-encre"
+                  >
+                    <Icon size={16} strokeWidth={1.75} className="shrink-0 text-encre/75" />
+                    {t(`nav.${cle}`)}
+                  </Link>
+                ))}
+              </div>
+            )}
+
+            {APRES_DOCUMENTS.map(({ href, cle, Icon }) => (
+              <Link
+                key={href}
+                href={href}
+                onClick={onNavigate}
+                className="flex items-center gap-3 rounded-sm px-3 py-2 font-sans text-sm text-encre/80 hover:bg-encre/10 hover:text-encre"
+              >
+                <Icon size={17} strokeWidth={1.75} className="shrink-0 text-encre/75" />
+                {t(`nav.${cle}`)}
+              </Link>
+            ))}
+          </>
+        )}
 
         {estAdminPlateforme && (
           <Link

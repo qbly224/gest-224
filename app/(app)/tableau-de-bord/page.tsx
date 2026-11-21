@@ -14,6 +14,8 @@ import { MiniBarres, MiniLigne, MiniDonut, BarreProgression } from "@/components
 import { PLANS } from "@/lib/plans";
 import { formatEuros } from "@/lib/format";
 import { obtenirLocale } from "@/i18n/request";
+import { DashboardAssociation } from "@/components/dashboard/dashboard-association";
+import type { SessionPayload } from "@/lib/session";
 
 const COULEUR_DOCUMENTS = "#2a78d6";
 const COULEUR_CLIENTS = "#1baf7a";
@@ -27,6 +29,25 @@ export default async function TableauDeBordPage({
   searchParams: Promise<{ erreurPaiement?: string }>;
 }) {
   const session = await requireSession();
+  const { typeCompte } = await prisma.tenant.findUniqueOrThrow({
+    where: { id: session.tenantId },
+    select: { typeCompte: true },
+  });
+
+  if (typeCompte === "association") {
+    return <DashboardAssociation session={session} />;
+  }
+
+  return <TableauDeBordEntreprise session={session} searchParams={searchParams} />;
+}
+
+async function TableauDeBordEntreprise({
+  session,
+  searchParams,
+}: {
+  session: SessionPayload;
+  searchParams: Promise<{ erreurPaiement?: string }>;
+}) {
   const { erreurPaiement } = await searchParams;
   const locale = await obtenirLocale();
   const t = await getTranslations("app.dashboard");

@@ -51,10 +51,12 @@ export async function signUp(
   }
 
   const parsed = signUpSchema.safeParse({
+    typeCompte: formData.get("typeCompte") || undefined,
     raisonSociale: formData.get("raisonSociale"),
     plan: formData.get("plan") || undefined,
-    siret: formData.get("siret"),
-    regimeTva: formData.get("regimeTva"),
+    siret: formData.get("siret") || undefined,
+    numeroRna: formData.get("numeroRna") || undefined,
+    regimeTva: formData.get("regimeTva") || undefined,
     adresseLigne1: formData.get("adresseLigne1"),
     adresseLigne2: formData.get("adresseLigne2") || undefined,
     codePostal: formData.get("codePostal"),
@@ -74,7 +76,7 @@ export async function signUp(
 
   const [emailExists, siretExists] = await Promise.all([
     prisma.user.findUnique({ where: { email: data.email } }),
-    prisma.tenant.findUnique({ where: { siret: data.siret } }),
+    data.siret ? prisma.tenant.findUnique({ where: { siret: data.siret } }) : null,
   ]);
 
   if (emailExists) {
@@ -91,6 +93,7 @@ export async function signUp(
     created = await prisma.$transaction(async (tx) => {
       const tenant = await tx.tenant.create({
         data: {
+          typeCompte: data.typeCompte,
           raisonSociale: data.raisonSociale,
           // Toujours créé en gratuit : un plan payant choisi sur la page
           // tarifs n'est appliqué qu'après paiement réel (redirection vers
@@ -98,8 +101,9 @@ export async function signUp(
           // jamais directement ici - sans quoi n'importe qui pourrait
           // s'inscrire directement sur Pro sans jamais payer.
           plan: "gratuit",
-          siret: data.siret,
-          regimeTva: data.regimeTva,
+          siret: data.siret || null,
+          numeroRna: data.numeroRna || null,
+          regimeTva: data.regimeTva || "franchise",
           adresseLigne1: data.adresseLigne1,
           adresseLigne2: data.adresseLigne2 || null,
           codePostal: data.codePostal,
@@ -119,34 +123,45 @@ export async function signUp(
         },
       });
 
-      // Un client et un article de démonstration, désactivables comme
-      // n'importe quelle fiche, pour que le nouvel utilisateur voie tout de
+      // Une fiche de démonstration, désactivable/modifiable comme
+      // n'importe quelle autre, pour que le nouvel utilisateur voie tout de
       // suite à quoi ressemble l'app sans avoir à d'abord tout créer à la
-      // main. Pas de devis de démo : les documents ne sont jamais
-      // supprimables (traçabilité comptable) et compteraient dans le quota
-      // mensuel du plan gratuit - un cadeau empoisonné pour qui débute.
-      await tx.client.create({
-        data: {
-          tenantId: tenant.id,
-          type: "professionnel",
-          raisonSociale: "Client de démonstration (à modifier ou désactiver)",
-          adresseLigne1: "1 rue de la Démonstration",
-          codePostal: "75000",
-          ville: "Paris",
-          pays: "France",
-        },
-      });
+      // main. Pas de devis/cotisation de démo : rien qui compterait dans le
+      // quota mensuel du plan gratuit - un cadeau empoisonné pour qui
+      // débute.
+      if (data.typeCompte === "association") {
+        await tx.membre.create({
+          data: {
+            tenantId: tenant.id,
+            prenom: "Membre",
+            nom: "de démonstration (à modifier ou désactiver)",
+            role: "membre",
+          },
+        });
+      } else {
+        await tx.client.create({
+          data: {
+            tenantId: tenant.id,
+            type: "professionnel",
+            raisonSociale: "Client de démonstration (à modifier ou désactiver)",
+            adresseLigne1: "1 rue de la Démonstration",
+            codePostal: "75000",
+            ville: "Paris",
+            pays: "France",
+          },
+        });
 
-      await tx.article.create({
-        data: {
-          tenantId: tenant.id,
-          type: "service",
-          designation: "Prestation de démonstration (à modifier ou désactiver)",
-          uniteMesure: "unité",
-          prixUnitaireHt: 100,
-          tauxTva: data.regimeTva === "normal" ? 20 : null,
-        },
-      });
+        await tx.article.create({
+          data: {
+            tenantId: tenant.id,
+            type: "service",
+            designation: "Prestation de démonstration (à modifier ou désactiver)",
+            uniteMesure: "unité",
+            prixUnitaireHt: 100,
+            tauxTva: data.regimeTva === "normal" ? 20 : null,
+          },
+        });
+      }
 
       return { tenant, user };
     });

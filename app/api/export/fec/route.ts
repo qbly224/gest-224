@@ -28,7 +28,7 @@ export async function GET(request: Request) {
   });
 
   const { contenu, nbEcritures } = await genererFec(session.tenantId, dateDebut, dateFin);
-  const nomFichier = nomFichierFec(tenant.siret, tenant.siren, dateFin);
+  const nomFichier = nomFichierFec(tenant.siret ?? "", tenant.siren, dateFin);
 
   await enregistrerAudit({
     tenantId: session.tenantId,

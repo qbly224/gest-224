@@ -11,15 +11,39 @@ import { ledgerInputClass, ledgerLabelClass, ledgerSelectClass, ledgerErrorClass
 import { LISTE_PLANS } from "@/lib/plans";
 import type { PlanAbonnement } from "@prisma/client";
 
+type TypeCompte = "entreprise" | "association";
+
 export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
   const t = useTranslations("auth.inscription");
   const tPlans = useTranslations("plans");
   const [state, formAction] = useActionState(signUp, initialActionState);
   const [plan, setPlan] = useState<PlanAbonnement>(planInitial);
+  const [typeCompte, setTypeCompte] = useState<TypeCompte>("entreprise");
 
   return (
     <form action={formAction} className="mt-8 space-y-7">
       {state.error && <p className={ledgerErrorClass}>{state.error}</p>}
+
+      <fieldset className="space-y-2">
+        <legend className="font-titre text-lg text-encre">{t("typeCompte")}</legend>
+        <div className="grid grid-cols-2 gap-2">
+          {(["entreprise", "association"] as const).map((tc) => (
+            <button
+              key={tc}
+              type="button"
+              onClick={() => setTypeCompte(tc)}
+              className={`rounded-sm border px-3 py-2 text-center font-sans text-sm transition-colors ${
+                typeCompte === tc
+                  ? "border-encre bg-encre text-ivoire"
+                  : "border-encre/30 text-encre hover:bg-encre/5"
+              }`}
+            >
+              {tc === "entreprise" ? t("typeCompteEntreprise") : t("typeCompteAssociation")}
+            </button>
+          ))}
+        </div>
+        <input type="hidden" name="typeCompte" value={typeCompte} />
+      </fieldset>
 
       <fieldset className="space-y-2">
         <legend className="font-titre text-lg text-encre">{t("plan")}</legend>
@@ -52,11 +76,13 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
       </fieldset>
 
       <fieldset className="space-y-4 border-t border-encre/10 pt-5">
-        <legend className="font-titre text-lg text-encre">{t("entreprise")}</legend>
+        <legend className="font-titre text-lg text-encre">
+          {typeCompte === "entreprise" ? t("entreprise") : t("association")}
+        </legend>
 
         <div>
           <label className={ledgerLabelClass} htmlFor="raisonSociale">
-            {t("raisonSociale")}
+            {typeCompte === "entreprise" ? t("raisonSociale") : t("raisonSocialeAssociation")}
           </label>
           <input
             id="raisonSociale"
@@ -67,41 +93,58 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
           <FieldError messages={state.fieldErrors?.raisonSociale} />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {typeCompte === "entreprise" ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className={ledgerLabelClass} htmlFor="siret">
+                {t("siret")}
+              </label>
+              <input
+                id="siret"
+                name="siret"
+                required
+                maxLength={14}
+                placeholder={t("siretPlaceholder")}
+                className={ledgerInputClass}
+              />
+              <p className="mt-1 font-sans text-xs text-encre/70">{t("siretAide")}</p>
+              <FieldError messages={state.fieldErrors?.siret} />
+            </div>
+
+            <div>
+              <label className={ledgerLabelClass} htmlFor="regimeTva">
+                {t("regimeTva")}
+              </label>
+              <select
+                id="regimeTva"
+                name="regimeTva"
+                required
+                defaultValue="franchise"
+                className={ledgerSelectClass}
+              >
+                <option value="franchise">{t("regimeFranchise")}</option>
+                <option value="normal">{t("regimeNormal")}</option>
+              </select>
+              <p className="mt-1 font-sans text-xs text-encre/70">{t("regimeAide")}</p>
+              <FieldError messages={state.fieldErrors?.regimeTva} />
+            </div>
+          </div>
+        ) : (
           <div>
-            <label className={ledgerLabelClass} htmlFor="siret">
-              {t("siret")}
+            <label className={ledgerLabelClass} htmlFor="numeroRna">
+              {t("numeroRna")}
             </label>
             <input
-              id="siret"
-              name="siret"
-              required
-              maxLength={14}
-              placeholder={t("siretPlaceholder")}
+              id="numeroRna"
+              name="numeroRna"
+              maxLength={20}
+              placeholder={t("numeroRnaPlaceholder")}
               className={ledgerInputClass}
             />
-            <p className="mt-1 font-sans text-xs text-encre/70">{t("siretAide")}</p>
-            <FieldError messages={state.fieldErrors?.siret} />
+            <p className="mt-1 font-sans text-xs text-encre/70">{t("numeroRnaAide")}</p>
+            <FieldError messages={state.fieldErrors?.numeroRna} />
           </div>
-
-          <div>
-            <label className={ledgerLabelClass} htmlFor="regimeTva">
-              {t("regimeTva")}
-            </label>
-            <select
-              id="regimeTva"
-              name="regimeTva"
-              required
-              defaultValue="franchise"
-              className={ledgerSelectClass}
-            >
-              <option value="franchise">{t("regimeFranchise")}</option>
-              <option value="normal">{t("regimeNormal")}</option>
-            </select>
-            <p className="mt-1 font-sans text-xs text-encre/70">{t("regimeAide")}</p>
-            <FieldError messages={state.fieldErrors?.regimeTva} />
-          </div>
-        </div>
+        )}
 
         <div>
           <label className={ledgerLabelClass} htmlFor="adresseLigne1">

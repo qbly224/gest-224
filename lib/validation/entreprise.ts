@@ -5,10 +5,16 @@ import { MOYENS_PAIEMENT } from "@/lib/paiement-moyens";
 export const entrepriseSchema = z.object({
   raisonSociale: z.string().trim().min(1, "La raison sociale est requise.").max(200),
   formeJuridique: z.string().trim().max(100).optional().or(z.literal("")),
+  // Optionnel ici (contrairement à l'inscription) : un compte association
+  // peut ne jamais en avoir, et un compte entreprise existant en a déjà un
+  // de toute façon (saisi à l'inscription, cf. lib/validation/auth.ts).
   siret: z
     .string()
     .trim()
-    .regex(/^\d{14}$/, "Le SIRET doit contenir exactement 14 chiffres."),
+    .regex(/^\d{14}$/, "Le SIRET doit contenir exactement 14 chiffres.")
+    .optional()
+    .or(z.literal("")),
+  numeroRna: z.string().trim().max(20).optional().or(z.literal("")),
   siren: z.string().trim().max(9).optional().or(z.literal("")),
   numeroTvaIntracom: z.string().trim().max(50).optional().or(z.literal("")),
   regimeTva: regimeTvaSchema,

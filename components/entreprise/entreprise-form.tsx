@@ -41,7 +41,7 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
 
         <div>
           <label className={labelClass} htmlFor="raisonSociale">
-            {t("raisonSociale")}
+            {tenant.typeCompte === "association" ? t("raisonSocialeAssociation") : t("raisonSociale")}
           </label>
           <input
             id="raisonSociale"
@@ -72,9 +72,8 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
             <input
               id="siret"
               name="siret"
-              required
               maxLength={14}
-              defaultValue={tenant.siret}
+              defaultValue={tenant.siret ?? ""}
               className={`${inputClass} font-mono`}
             />
             <p className="mt-1 font-sans text-xs text-encre/70">
@@ -85,6 +84,22 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
             <FieldError messages={state.fieldErrors?.siret} />
           </div>
         </div>
+
+        {tenant.typeCompte === "association" && (
+          <div>
+            <label className={labelClass} htmlFor="numeroRna">
+              {t("numeroRna")}
+            </label>
+            <input
+              id="numeroRna"
+              name="numeroRna"
+              maxLength={20}
+              defaultValue={tenant.numeroRna ?? ""}
+              className={`${inputClass} font-mono`}
+            />
+            <FieldError messages={state.fieldErrors?.numeroRna} />
+          </div>
+        )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>

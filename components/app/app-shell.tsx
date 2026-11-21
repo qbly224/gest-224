@@ -6,13 +6,16 @@ import { Menu, Search, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { SidebarNav } from "@/components/app/sidebar-nav";
 import { Toast } from "@/components/app/toast";
+import type { TypeCompte } from "@prisma/client";
 
 export function AppShell({
   raisonSociale,
+  typeCompte,
   estAdminPlateforme,
   children,
 }: {
   raisonSociale: string;
+  typeCompte: TypeCompte;
   estAdminPlateforme: boolean;
   children: React.ReactNode;
 }) {
@@ -26,7 +29,11 @@ export function AppShell({
           (bouton Déconnexion) tant qu'il n'a pas été fermé. */}
       <aside className="relative z-50 hidden w-64 shrink-0 border-r border-encre/15 bg-ivoire lg:block">
         <div className="sticky top-0 h-screen">
-          <SidebarNav raisonSociale={raisonSociale} estAdminPlateforme={estAdminPlateforme} />
+          <SidebarNav
+            raisonSociale={raisonSociale}
+            typeCompte={typeCompte}
+            estAdminPlateforme={estAdminPlateforme}
+          />
         </div>
       </aside>
 
@@ -52,6 +59,7 @@ export function AppShell({
             <div className="min-h-0 flex-1">
               <SidebarNav
                 raisonSociale={raisonSociale}
+                typeCompte={typeCompte}
                 estAdminPlateforme={estAdminPlateforme}
                 onNavigate={() => setOuvert(false)}
               />

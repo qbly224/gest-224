@@ -47,7 +47,11 @@ export function buildEmetteurSnapshot(tenant: Tenant): EmetteurSnapshot {
   return {
     raisonSociale: tenant.raisonSociale,
     formeJuridique: tenant.formeJuridique,
-    siret: tenant.siret,
+    // Les documents commerciaux (devis/factures) ne concernent que les
+    // comptes "entreprise", qui ont toujours un SIRET ; le "??" ne sert
+    // qu'à satisfaire le type (siret est nullable au niveau du tenant
+    // depuis l'ajout du type de compte "association").
+    siret: tenant.siret ?? "",
     siren: tenant.siren,
     numeroTvaIntracom: tenant.numeroTvaIntracom,
     regimeTva: tenant.regimeTva,

@@ -56,7 +56,8 @@ export async function updateEntreprise(
   const parsed = entrepriseSchema.safeParse({
     raisonSociale: formData.get("raisonSociale"),
     formeJuridique: formData.get("formeJuridique") || undefined,
-    siret: formData.get("siret"),
+    siret: formData.get("siret") || undefined,
+    numeroRna: formData.get("numeroRna") || undefined,
     siren: formData.get("siren") || undefined,
     numeroTvaIntracom: formData.get("numeroTvaIntracom") || undefined,
     regimeTva: formData.get("regimeTva"),
@@ -86,7 +87,8 @@ export async function updateEntreprise(
       data: {
         raisonSociale: data.raisonSociale,
         formeJuridique: data.formeJuridique || null,
-        siret: data.siret,
+        siret: data.siret || null,
+        numeroRna: data.numeroRna || null,
         siren: data.siren || null,
         numeroTvaIntracom: data.numeroTvaIntracom || null,
         regimeTva: data.regimeTva,
