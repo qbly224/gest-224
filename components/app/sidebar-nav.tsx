@@ -31,6 +31,7 @@ import {
   PiggyBank,
   UserCog,
   Megaphone,
+  Archive,
 } from "lucide-react";
 import type { TypeCompte, RoleUtilisateur } from "@prisma/client";
 import { signOut } from "@/lib/actions/auth";
@@ -76,6 +77,7 @@ const LIENS_ASSOCIATION: readonly {
   { href: "/cotisations", cle: "cotisations", Icon: HandCoins, domaine: "cotisations" },
   { href: "/reunions", cle: "reunions", Icon: CalendarDays, domaine: "reunions" },
   { href: "/annonces", cle: "annonces", Icon: Megaphone, domaine: "annonces" },
+  { href: "/documents", cle: "documents", Icon: Archive, domaine: "documents" },
   { href: "/depenses", cle: "depenses", Icon: Wallet, domaine: "depenses" },
   { href: "/dons", cle: "dons", Icon: Gift, domaine: "dons" },
   { href: "/budget", cle: "budget", Icon: PiggyBank, domaine: "budget" },

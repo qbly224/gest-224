@@ -215,6 +215,7 @@ model Tenant {
   dons                   Don[]
   lignesBudget           LigneBudget[]
   annonces               Annonce[]
+  documentsAssociatifs   DocumentAssociatif[]
 
   @@map("tenants")
 }
@@ -846,6 +847,37 @@ model LigneBudget {
 
   @@index([tenantId])
   @@map("lignes_budget")
+}
+
+enum CategorieDocumentAssociatif {
+  statuts
+  reglement_interieur
+  proces_verbal
+  rapport_activite
+  administratif
+  autre
+}
+
+// Archive documentaire de l'association (statuts, règlement intérieur,
+// PV, rapports d'activité...) - fichier stocké en base comme pour
+// DepensePieceJointe, même principe de volume (cf. app/api/documents-association/[id]/route.ts).
+model DocumentAssociatif {
+  id           String                     @id @default(uuid())
+
+  tenantId     String                     @map("tenant_id")
+  tenant       Tenant                     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  categorie    CategorieDocumentAssociatif @default(autre)
+  titre        String
+  nomFichier   String                     @map("nom_fichier")
+  typeMime     String                     @map("type_mime")
+  tailleOctets Int                        @map("taille_octets")
+  contenu      Bytes
+
+  createdAt    DateTime                   @default(now()) @map("created_at")
+
+  @@index([tenantId])
+  @@map("documents_associatifs")
 }
 
 // ---------------------------------------------------------------------------

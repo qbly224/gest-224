@@ -672,6 +672,29 @@
       "emptyDefault": "No announcements yet.",
       "confirmSuppression": "Remove this announcement from history? Emails already sent cannot be recalled."
     },
+    "documents": {
+      "titre": "Documents",
+      "nouveauBouton": "Add a document",
+      "nouveauTitre": "Add a document",
+      "titreChamp": "Title",
+      "categorie": "Category",
+      "fichier": "File",
+      "ajouter": "Add to archive",
+      "telecharger": "Download",
+      "tousCategories": "All categories",
+      "filtrer": "Filter",
+      "reinitialiser": "Reset",
+      "emptyDefault": "No archived documents yet.",
+      "confirmSuppression": "Permanently delete this document from the archive?",
+      "categories": {
+        "statuts": "Bylaws",
+        "reglement_interieur": "Internal rules",
+        "proces_verbal": "Minutes",
+        "rapport_activite": "Activity report",
+        "administratif": "Administrative document",
+        "autre": "Other"
+      }
+    },
     "dons": {
       "titre": "Donations & grants",
       "nouveauBouton": "New donation",
@@ -1098,6 +1121,10 @@
         "annonce": {
           "diffusee": "Announcement sent",
           "supprimee": "Announcement deleted"
+        },
+        "document_associatif": {
+          "ajoute": "Document archived",
+          "supprime": "Archived document deleted"
         },
         "admin": {
           "tenant": {

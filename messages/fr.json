@@ -672,6 +672,29 @@
       "emptyDefault": "Aucune annonce pour l'instant.",
       "confirmSuppression": "Supprimer cette annonce de l'historique ? Les emails déjà envoyés ne peuvent pas être rappelés."
     },
+    "documents": {
+      "titre": "Documents",
+      "nouveauBouton": "Ajouter un document",
+      "nouveauTitre": "Ajouter un document",
+      "titreChamp": "Titre",
+      "categorie": "Catégorie",
+      "fichier": "Fichier",
+      "ajouter": "Ajouter à l'archive",
+      "telecharger": "Télécharger",
+      "tousCategories": "Toutes les catégories",
+      "filtrer": "Filtrer",
+      "reinitialiser": "Réinitialiser",
+      "emptyDefault": "Aucun document archivé pour l'instant.",
+      "confirmSuppression": "Supprimer définitivement ce document de l'archive ?",
+      "categories": {
+        "statuts": "Statuts",
+        "reglement_interieur": "Règlement intérieur",
+        "proces_verbal": "Procès-verbal",
+        "rapport_activite": "Rapport d'activité",
+        "administratif": "Document administratif",
+        "autre": "Autre"
+      }
+    },
     "dons": {
       "titre": "Dons et subventions",
       "nouveauBouton": "Nouveau don",
@@ -1098,6 +1121,10 @@
         "annonce": {
           "diffusee": "Annonce diffusée",
           "supprimee": "Annonce supprimée"
+        },
+        "document_associatif": {
+          "ajoute": "Document archivé",
+          "supprime": "Document d'archive supprimé"
         },
         "admin": {
           "tenant": {
