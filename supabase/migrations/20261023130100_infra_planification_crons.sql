@@ -42,3 +42,17 @@ select cron.schedule(
   );
   $$
 );
+
+-- Traite la file d'attente d'emails (cf. lib/jobs/email.ts) : secret dédié
+-- (CRON_SECRET_EMAILS sur Render), distinct de CRON_SECRET, pour ne jamais
+-- avoir à connaître ce dernier au moment de brancher ce job.
+select cron.schedule(
+  'gest224-traiter-file-emails',
+  '* * * * *',
+  $$
+  select net.http_get(
+    url := 'https://gest-224.onrender.com/api/cron/traiter-file-emails',
+    headers := jsonb_build_object('x-cron-secret', '<CRON_SECRET_EMAILS_RENDER>')
+  );
+  $$
+);

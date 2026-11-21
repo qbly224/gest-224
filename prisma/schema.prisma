@@ -216,6 +216,7 @@ model Tenant {
   lignesBudget           LigneBudget[]
   annonces               Annonce[]
   documentsAssociatifs   DocumentAssociatif[]
+  jobsEmail              JobEmail[]
 
   @@map("tenants")
 }
@@ -792,6 +793,40 @@ model Annonce {
 
   @@index([tenantId])
   @@map("annonces")
+}
+
+enum StatutJobEmail {
+  en_attente
+  envoye
+  echec
+}
+
+// File d'attente d'emails à envoi différé (cf. lib/jobs/email.ts) : les
+// diffusions en masse (annonce, compte-rendu) insèrent ici plutôt que
+// d'appeler envoyerEmail() dans la requête utilisateur, qui resterait
+// bloquée le temps d'envoyer à chaque destinataire. Un job planifié
+// (cf. app/api/cron/traiter-file-emails/route.ts) traite la file en
+// arrière-plan, avec un nombre de tentatives borné.
+model JobEmail {
+  id           String         @id @default(uuid())
+
+  tenantId     String         @map("tenant_id")
+  tenant       Tenant         @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  destinataire String
+  sujet        String
+  corps        String
+
+  statut       StatutJobEmail @default(en_attente)
+  tentatives   Int            @default(0)
+  erreur       String?
+
+  createdAt    DateTime       @default(now()) @map("created_at")
+  traiteA      DateTime?      @map("traite_a")
+
+  @@index([statut, createdAt])
+  @@index([tenantId])
+  @@map("jobs_email")
 }
 
 enum TypeDon {

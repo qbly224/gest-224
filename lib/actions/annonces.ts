@@ -7,7 +7,7 @@ import { requireSession } from "@/lib/auth";
 import { annonceSchema } from "@/lib/validation/annonce";
 import { paiementBloque, MESSAGE_PAIEMENT_BLOQUE } from "@/lib/paiement-guard";
 import { peutAcceder, MESSAGE_ACCES_REFUSE } from "@/lib/permissions";
-import { envoyerEmail } from "@/lib/email";
+import { enqueuerEmails } from "@/lib/jobs/email";
 import { enregistrerAudit } from "@/lib/audit";
 import { withToast } from "@/lib/toast";
 import type { ActionState } from "@/lib/actions/types";
@@ -47,14 +47,13 @@ export async function createAnnonce(
     select: { email: true },
   });
 
-  await Promise.all(
-    destinataires.map((m) =>
-      envoyerEmail(
-        m.email!,
-        `${tenant.raisonSociale} — ${data.titre}`,
-        data.contenu
-      ).catch((err) => console.error("[annonces] Échec d'envoi à un membre:", err))
-    )
+  await enqueuerEmails(
+    session.tenantId,
+    destinataires.map((m) => ({
+      destinataire: m.email!,
+      sujet: `${tenant.raisonSociale} — ${data.titre}`,
+      corps: data.contenu,
+    }))
   );
 
   await enregistrerAudit({
@@ -71,7 +70,7 @@ export async function createAnnonce(
     withToast(
       "/annonces",
       destinataires.length > 0
-        ? `Annonce diffusée à ${destinataires.length} membre(s).`
+        ? `Annonce enregistrée, diffusion en cours vers ${destinataires.length} membre(s).`
         : "Annonce enregistrée (aucun membre avec email à notifier)."
     )
   );

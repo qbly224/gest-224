@@ -651,7 +651,7 @@
       "presences": "Attendance",
       "enregistrerPresences": "Save attendance",
       "compteRenduPublication": "Publish the minutes",
-      "compteRenduDescription": "Publishing sends the minutes by email to every registered participant with an email address.",
+      "compteRenduDescription": "Publishing queues the minutes for email delivery to every registered participant with an email address (sent in the background, usually within a few minutes).",
       "compteRenduDejaPublie": "Minutes already sent to participants.",
       "compteRenduManquant": "Add minutes above before publishing.",
       "publierCompteRendu": "Send minutes",
@@ -667,7 +667,7 @@
       "nouveauTitre": "New announcement",
       "titreChamp": "Title",
       "contenu": "Content",
-      "avertissementDiffusion": "Sending is immediate and cannot be undone: the announcement is emailed to every active member with an email address.",
+      "avertissementDiffusion": "Sending cannot be undone: the announcement is queued for email delivery to every active member with an email address (sent in the background, usually within a few minutes).",
       "diffuser": "Send to members",
       "emptyDefault": "No announcements yet.",
       "confirmSuppression": "Remove this announcement from history? Emails already sent cannot be recalled."

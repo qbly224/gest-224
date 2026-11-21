@@ -8,7 +8,7 @@ import { reunionSchema } from "@/lib/validation/reunion";
 import { paiementBloque, MESSAGE_PAIEMENT_BLOQUE } from "@/lib/paiement-guard";
 import { withToast } from "@/lib/toast";
 import { peutAcceder, MESSAGE_ACCES_REFUSE } from "@/lib/permissions";
-import { envoyerEmail } from "@/lib/email";
+import { enqueuerEmails } from "@/lib/jobs/email";
 import type { ActionState } from "@/lib/actions/types";
 
 function parseReunionForm(formData: FormData) {
@@ -206,14 +206,13 @@ export async function publierCompteRendu(reunionId: string): Promise<void> {
     .map((p) => p.membre.email)
     .filter((email): email is string => Boolean(email));
 
-  await Promise.all(
-    destinataires.map((email) =>
-      envoyerEmail(
-        email,
-        `Compte-rendu : ${reunion.titre}`,
-        `Le compte-rendu de la réunion "${reunion.titre}" du ${reunion.date.toLocaleDateString("fr-FR")} est disponible :\n\n${reunion.compteRendu}`
-      ).catch((err) => console.error("[reunions] Échec d'envoi du compte-rendu:", err))
-    )
+  await enqueuerEmails(
+    session.tenantId,
+    destinataires.map((email) => ({
+      destinataire: email,
+      sujet: `Compte-rendu : ${reunion.titre}`,
+      corps: `Le compte-rendu de la réunion "${reunion.titre}" du ${reunion.date.toLocaleDateString("fr-FR")} est disponible :\n\n${reunion.compteRendu}`,
+    }))
   );
 
   revalidatePath(`/reunions/${reunionId}`);

@@ -651,7 +651,7 @@
       "presences": "Présences",
       "enregistrerPresences": "Enregistrer les présences",
       "compteRenduPublication": "Publication du compte-rendu",
-      "compteRenduDescription": "La diffusion envoie le compte-rendu par email à chaque participant inscrit ayant une adresse email.",
+      "compteRenduDescription": "La diffusion met le compte-rendu en file d'envoi par email vers chaque participant inscrit ayant une adresse email (envoi en arrière-plan, généralement en quelques minutes).",
       "compteRenduDejaPublie": "Compte-rendu déjà diffusé aux participants.",
       "compteRenduManquant": "Ajoutez un compte-rendu ci-dessus avant de le publier.",
       "publierCompteRendu": "Diffuser le compte-rendu",
@@ -667,7 +667,7 @@
       "nouveauTitre": "Nouvelle annonce",
       "titreChamp": "Titre",
       "contenu": "Contenu",
-      "avertissementDiffusion": "La diffusion est immédiate et irréversible : l'annonce est envoyée par email à tous les membres actifs ayant une adresse email.",
+      "avertissementDiffusion": "La diffusion est irréversible : l'annonce est mise en file d'envoi par email vers tous les membres actifs ayant une adresse email (envoi en arrière-plan, généralement en quelques minutes).",
       "diffuser": "Diffuser aux membres",
       "emptyDefault": "Aucune annonce pour l'instant.",
       "confirmSuppression": "Supprimer cette annonce de l'historique ? Les emails déjà envoyés ne peuvent pas être rappelés."
