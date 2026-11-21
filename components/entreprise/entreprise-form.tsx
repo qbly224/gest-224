@@ -65,24 +65,26 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
               className={inputClass}
             />
           </div>
-          <div>
-            <label className={labelClass} htmlFor="siret">
-              {t("siret")}
-            </label>
-            <input
-              id="siret"
-              name="siret"
-              maxLength={14}
-              defaultValue={tenant.siret ?? ""}
-              className={`${inputClass} font-mono`}
-            />
-            <p className="mt-1 font-sans text-xs text-encre/70">
-              {t.rich("siretHint", {
-                italic: (chunks) => <span className="italic">{chunks}</span>,
-              })}
-            </p>
-            <FieldError messages={state.fieldErrors?.siret} />
-          </div>
+          {tenant.typeCompte === "entreprise" && (
+            <div>
+              <label className={labelClass} htmlFor="siret">
+                {t("siret")}
+              </label>
+              <input
+                id="siret"
+                name="siret"
+                maxLength={14}
+                defaultValue={tenant.siret ?? ""}
+                className={`${inputClass} font-mono`}
+              />
+              <p className="mt-1 font-sans text-xs text-encre/70">
+                {t.rich("siretHint", {
+                  italic: (chunks) => <span className="italic">{chunks}</span>,
+                })}
+              </p>
+              <FieldError messages={state.fieldErrors?.siret} />
+            </div>
+          )}
         </div>
 
         {tenant.typeCompte === "association" && (
@@ -101,63 +103,67 @@ export function EntrepriseForm({ tenant }: { tenant: SerializedTenant }) {
           </div>
         )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className={labelClass} htmlFor="siren">
-              {t("siren")}
-            </label>
-            <input
-              id="siren"
-              name="siren"
-              defaultValue={tenant.siren ?? ""}
-              className={`${inputClass} font-mono`}
-            />
-          </div>
-          <div>
-            <label className={labelClass} htmlFor="numeroTvaIntracom">
-              {t("numeroTvaIntracom")}
-            </label>
-            <input
-              id="numeroTvaIntracom"
-              name="numeroTvaIntracom"
-              defaultValue={tenant.numeroTvaIntracom ?? ""}
-              className={`${inputClass} font-mono`}
-            />
-          </div>
-        </div>
+        {tenant.typeCompte === "entreprise" && (
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className={labelClass} htmlFor="siren">
+                  {t("siren")}
+                </label>
+                <input
+                  id="siren"
+                  name="siren"
+                  defaultValue={tenant.siren ?? ""}
+                  className={`${inputClass} font-mono`}
+                />
+              </div>
+              <div>
+                <label className={labelClass} htmlFor="numeroTvaIntracom">
+                  {t("numeroTvaIntracom")}
+                </label>
+                <input
+                  id="numeroTvaIntracom"
+                  name="numeroTvaIntracom"
+                  defaultValue={tenant.numeroTvaIntracom ?? ""}
+                  className={`${inputClass} font-mono`}
+                />
+              </div>
+            </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className={labelClass} htmlFor="regimeTva">
-              {t("regimeTva")}
-            </label>
-            <select
-              id="regimeTva"
-              name="regimeTva"
-              required
-              defaultValue={tenant.regimeTva}
-              className={selectClass}
-            >
-              <option value="franchise">{t("regimeFranchise")}</option>
-              <option value="normal">{t("regimeNormal")}</option>
-            </select>
-            <p className="mt-1 font-sans text-xs text-encre/70">{t("regimeTvaHint")}</p>
-          </div>
-          <div>
-            <label className={labelClass} htmlFor="capitalSocial">
-              {t("capitalSocial")}
-            </label>
-            <input
-              id="capitalSocial"
-              name="capitalSocial"
-              type="number"
-              step="0.01"
-              min="0"
-              defaultValue={tenant.capitalSocial ?? ""}
-              className={`${inputClass} font-mono`}
-            />
-          </div>
-        </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className={labelClass} htmlFor="regimeTva">
+                  {t("regimeTva")}
+                </label>
+                <select
+                  id="regimeTva"
+                  name="regimeTva"
+                  required
+                  defaultValue={tenant.regimeTva}
+                  className={selectClass}
+                >
+                  <option value="franchise">{t("regimeFranchise")}</option>
+                  <option value="normal">{t("regimeNormal")}</option>
+                </select>
+                <p className="mt-1 font-sans text-xs text-encre/70">{t("regimeTvaHint")}</p>
+              </div>
+              <div>
+                <label className={labelClass} htmlFor="capitalSocial">
+                  {t("capitalSocial")}
+                </label>
+                <input
+                  id="capitalSocial"
+                  name="capitalSocial"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  defaultValue={tenant.capitalSocial ?? ""}
+                  className={`${inputClass} font-mono`}
+                />
+              </div>
+            </div>
+          </>
+        )}
       </fieldset>
 
       <fieldset className="space-y-4 border-t border-encre/10 pt-4">

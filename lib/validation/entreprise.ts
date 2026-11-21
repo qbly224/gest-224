@@ -17,7 +17,10 @@ export const entrepriseSchema = z.object({
   numeroRna: z.string().trim().max(20).optional().or(z.literal("")),
   siren: z.string().trim().max(9).optional().or(z.literal("")),
   numeroTvaIntracom: z.string().trim().max(50).optional().or(z.literal("")),
-  regimeTva: regimeTvaSchema,
+  // Optionnel : non présenté/non pertinent pour un compte association (cf.
+  // components/entreprise/entreprise-form.tsx), qui n'a pas de régime de
+  // TVA à proprement parler.
+  regimeTva: regimeTvaSchema.optional(),
   capitalSocial: z.coerce.number().nonnegative().max(999_999_999_999).optional().nullable(),
 
   adresseLigne1: z.string().trim().min(1, "L'adresse est requise.").max(200),
