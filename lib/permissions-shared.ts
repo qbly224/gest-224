@@ -10,7 +10,8 @@ export type DomaineAcces =
   | "rapport"
   | "entreprise"
   | "abonnement"
-  | "equipe";
+  | "equipe"
+  | "annonces";
 
 // Accès par rôle, pertinent uniquement pour un compte association : un
 // compte entreprise n'utilise que owner/membre, qui valent "tout" ici, donc
@@ -20,7 +21,7 @@ const ACCES_PAR_ROLE: Record<RoleUtilisateur, DomaineAcces[] | "tout"> = {
   membre: "tout",
   tresorier: ["cotisations", "dons", "budget", "depenses", "rapport"],
   secretaire: ["membres", "reunions"],
-  communication: ["reunions"],
+  communication: ["reunions", "annonces"],
 };
 
 export function peutAcceder(role: RoleUtilisateur, domaine: DomaineAcces): boolean {

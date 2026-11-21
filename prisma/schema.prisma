@@ -214,6 +214,7 @@ model Tenant {
   reunions               Reunion[]
   dons                   Don[]
   lignesBudget           LigneBudget[]
+  annonces               Annonce[]
 
   @@map("tenants")
 }
@@ -772,6 +773,24 @@ model ParticipantReunion {
   @@unique([reunionId, membreId])
   @@index([membreId])
   @@map("participants_reunion")
+}
+
+// Annonce diffusée par email à tous les membres actifs ayant une adresse
+// email, au moment de sa création (cf. lib/actions/annonces.ts) - conservée
+// ensuite comme historique des actualités, pas éditable après diffusion.
+model Annonce {
+  id        String   @id @default(uuid())
+
+  tenantId  String   @map("tenant_id")
+  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  titre     String
+  contenu   String
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([tenantId])
+  @@map("annonces")
 }
 
 enum TypeDon {

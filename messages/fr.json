@@ -661,6 +661,17 @@
       "nbParticipants": "{count, plural, one {{count} participant} other {{count} participants}}",
       "confirmSuppression": "Supprimer définitivement cette réunion ?"
     },
+    "annonces": {
+      "titre": "Annonces",
+      "nouveauBouton": "Nouvelle annonce",
+      "nouveauTitre": "Nouvelle annonce",
+      "titreChamp": "Titre",
+      "contenu": "Contenu",
+      "avertissementDiffusion": "La diffusion est immédiate et irréversible : l'annonce est envoyée par email à tous les membres actifs ayant une adresse email.",
+      "diffuser": "Diffuser aux membres",
+      "emptyDefault": "Aucune annonce pour l'instant.",
+      "confirmSuppression": "Supprimer cette annonce de l'historique ? Les emails déjà envoyés ne peuvent pas être rappelés."
+    },
     "dons": {
       "titre": "Dons et subventions",
       "nouveauBouton": "Nouveau don",
@@ -1084,6 +1095,10 @@
           "desactive": "Collaborateur désactivé",
           "reactive": "Collaborateur réactivé"
         },
+        "annonce": {
+          "diffusee": "Annonce diffusée",
+          "supprimee": "Annonce supprimée"
+        },
         "admin": {
           "tenant": {
             "actif_bascule": "Compte activé/désactivé (admin)",
@@ -1286,6 +1301,7 @@
       "membres": "Membres",
       "cotisations": "Cotisations",
       "reunions": "Réunions",
+      "annonces": "Annonces",
       "dons": "Dons et subventions",
       "budget": "Budget prévisionnel",
       "equipe": "Équipe",

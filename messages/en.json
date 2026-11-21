@@ -661,6 +661,17 @@
       "nbParticipants": "{count, plural, one {{count} participant} other {{count} participants}}",
       "confirmSuppression": "Permanently delete this meeting?"
     },
+    "annonces": {
+      "titre": "Announcements",
+      "nouveauBouton": "New announcement",
+      "nouveauTitre": "New announcement",
+      "titreChamp": "Title",
+      "contenu": "Content",
+      "avertissementDiffusion": "Sending is immediate and cannot be undone: the announcement is emailed to every active member with an email address.",
+      "diffuser": "Send to members",
+      "emptyDefault": "No announcements yet.",
+      "confirmSuppression": "Remove this announcement from history? Emails already sent cannot be recalled."
+    },
     "dons": {
       "titre": "Donations & grants",
       "nouveauBouton": "New donation",
@@ -1084,6 +1095,10 @@
           "desactive": "Team member disabled",
           "reactive": "Team member re-enabled"
         },
+        "annonce": {
+          "diffusee": "Announcement sent",
+          "supprimee": "Announcement deleted"
+        },
         "admin": {
           "tenant": {
             "actif_bascule": "Account enabled/disabled (admin)",
@@ -1286,6 +1301,7 @@
       "membres": "Members",
       "cotisations": "Membership dues",
       "reunions": "Meetings",
+      "annonces": "Announcements",
       "dons": "Donations & grants",
       "budget": "Budget forecast",
       "equipe": "Team",
