@@ -598,16 +598,7 @@
       "cotisationsTitre": "Membership dues",
       "cotisationsVide": "No membership dues recorded for this member.",
       "payeeLe": "Paid on {date}",
-      "impayee": "Unpaid",
-      "relances": "Overdue membership dues reminders",
-      "relanceFrequence": "Reminder frequency for this member",
-      "relanceAide": "This adds to the general reminders switch (Association page). Membership dues with no due date are never reminded.",
-      "relanceDesactivee": "Disabled for this member",
-      "relanceQuotidienne": "Every day",
-      "relanceHebdomadaire": "Once a week",
-      "relance3xMois": "3 times a month (every 10 days)",
-      "relance2xMois": "Twice a month (every 15 days)",
-      "relanceMensuelle": "Once a month"
+      "impayee": "Unpaid"
     },
     "cotisations": {
       "titre": "Membership dues",
@@ -619,8 +610,6 @@
       "periode": "Period",
       "periodePlaceholder": "E.g. 2026 or 2026-2027",
       "montant": "Amount (€)",
-      "dateEcheance": "Due date",
-      "dateEcheanceAide": "Used for automatic reminders - leave blank to never remind for these membership dues.",
       "dejaPayee": "Already paid",
       "datePaiement": "Payment date",
       "moyenPaiement": "Payment method",

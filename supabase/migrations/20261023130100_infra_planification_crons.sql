@@ -32,20 +32,6 @@ select cron.schedule(
   $$
 );
 
--- Ajoutée le 2026-11-21 (relances des cotisations d'association en retard,
--- cf. lib/relances-cotisations.ts) - même secret, même mécanisme que
--- gest224-relances-factures ci-dessus.
-select cron.schedule(
-  'gest224-relances-cotisations',
-  '30 7 * * *',
-  $$
-  select net.http_get(
-    url := 'https://gest-224.onrender.com/api/cron/relances-cotisations',
-    headers := jsonb_build_object('x-cron-secret', '<CRON_SECRET_RENDER>')
-  );
-  $$
-);
-
 select cron.schedule(
   'gest224-sauvegarde-base',
   '0 3 * * *',

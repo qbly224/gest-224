@@ -26,14 +26,7 @@ function parseMembreForm(formData: FormData) {
     role: formData.get("role"),
     statut: formData.get("statut"),
     notes: formData.get("notes") || undefined,
-    relanceFrequence: formData.get("relanceFrequence") || "7",
   });
-}
-
-function relanceChampsDepuisFrequence(relanceFrequence: string) {
-  return relanceFrequence === "desactivee"
-    ? { relancesActivees: false, relanceIntervalleJours: 7 }
-    : { relancesActivees: true, relanceIntervalleJours: Number(relanceFrequence) };
 }
 
 export async function createMembre(
@@ -82,7 +75,6 @@ export async function createMembre(
       role: data.role,
       statut: data.statut,
       notes: data.notes || null,
-      ...relanceChampsDepuisFrequence(data.relanceFrequence),
     },
   });
 
@@ -126,7 +118,6 @@ export async function updateMembre(
       role: data.role,
       statut: data.statut,
       notes: data.notes || null,
-      ...relanceChampsDepuisFrequence(data.relanceFrequence),
     },
   });
 

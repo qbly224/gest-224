@@ -598,16 +598,7 @@
       "cotisationsTitre": "Cotisations",
       "cotisationsVide": "Aucune cotisation enregistrée pour ce membre.",
       "payeeLe": "Payée le {date}",
-      "impayee": "Impayée",
-      "relances": "Relances de cotisations en retard",
-      "relanceFrequence": "Fréquence de relance pour ce membre",
-      "relanceAide": "S'ajoute à l'interrupteur général des relances (page Association). Une cotisation sans date d'échéance n'est jamais relancée.",
-      "relanceDesactivee": "Désactivées pour ce membre",
-      "relanceQuotidienne": "Tous les jours",
-      "relanceHebdomadaire": "1 fois par semaine",
-      "relance3xMois": "3 fois par mois (tous les 10 jours)",
-      "relance2xMois": "2 fois par mois (tous les 15 jours)",
-      "relanceMensuelle": "1 fois par mois"
+      "impayee": "Impayée"
     },
     "cotisations": {
       "titre": "Cotisations",
@@ -619,8 +610,6 @@
       "periode": "Période",
       "periodePlaceholder": "Ex. 2026 ou 2026-2027",
       "montant": "Montant (€)",
-      "dateEcheance": "Date d'échéance",
-      "dateEcheanceAide": "Sert aux relances automatiques - laissez vide pour ne jamais relancer cette cotisation.",
       "dejaPayee": "Déjà payée",
       "datePaiement": "Date de paiement",
       "moyenPaiement": "Moyen de paiement",

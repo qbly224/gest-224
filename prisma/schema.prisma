@@ -687,13 +687,6 @@ model Membre {
   statut         StatutMembre @default(actif)
   notes          String?
 
-  // Relances automatiques de cotisations en retard (cf.
-  // lib/relances-cotisations.ts) : même principe que pour les clients et
-  // les factures (lib/relances.ts) - réglable par membre, en plus de
-  // l'interrupteur général du tenant.
-  relancesActivees       Boolean @default(true) @map("relances_activees")
-  relanceIntervalleJours Int     @default(7) @map("relance_intervalle_jours")
-
   actif          Boolean      @default(true)
   createdAt      DateTime     @default(now()) @map("created_at")
   updatedAt      DateTime     @updatedAt @map("updated_at")
@@ -720,14 +713,8 @@ model Cotisation {
   // à chaque association plutôt que d'imposer une année civile stricte.
   periode       String
   montant       Decimal   @db.Decimal(10, 2)
-  dateEcheance  DateTime? @map("date_echeance")
   datePaiement  DateTime? @map("date_paiement")
   moyenPaiement String?   @map("moyen_paiement")
-
-  // Date du dernier email de relance de retard envoyé pour cette cotisation
-  // (cf. lib/relances-cotisations.ts) - évite de relancer plus souvent que
-  // l'intervalle propre au membre (membre.relanceIntervalleJours).
-  dernierRappelEnvoyeAt DateTime? @map("dernier_rappel_envoye_at")
 
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @updatedAt @map("updated_at")
