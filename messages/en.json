@@ -72,10 +72,14 @@
     "aPropos": {
       "surtitre": "About",
       "titre": "Why Gest-224",
-      "p1": "Gest-224 was born from a simple observation: running the commercial side of a small business - quotes, invoices, purchase and delivery orders, basic accounting - still often relies on makeshift spreadsheets or tools built for large organizations, too heavy for a freelancer or a very small business.",
-      "p2": "We're building a platform that handles the full document chain - from quote to invoice, through purchase order, delivery note, deposit invoice and credit note - following French and European invoicing rules: gapless sequential numbering, mandatory legal notices, VAT exemption handling (art. 293 B of the French tax code), late-payment penalties.",
-      "p3": "On top of that, simplified accounting: income is generated automatically when an invoice is marked as paid, expenses are entered in a few clicks, and a dashboard gives a clear view of the balance and monthly activity - without turning the user into an accountant.",
-      "p4": "Gest-224 is still a young product, continuously developed and improved. Structured e-invoicing (Factur-X, PDP) is on our roadmap, in anticipation of upcoming French regulatory deadlines."
+      "p1": "Gest-224 was born from a simple observation: running a small business or an association - quotes, invoices, membership dues, basic bookkeeping - still often relies on makeshift spreadsheets or tools built for large organizations, too heavy for a sole trader, a small business or a small association.",
+      "p2": "For businesses, we're building a platform that handles the full document chain - from quote to invoice, through purchase orders, delivery notes, deposit invoices and credit notes - in line with French and European invoicing rules: gapless sequential numbering, mandatory legal notices, VAT exemption handling (art. 293 B of the French tax code), late payment penalties.",
+      "p3": "On top of that, simplified bookkeeping: revenue entries are generated automatically when an invoice is marked paid, expenses are logged in a few clicks, and a dashboard gives a clear view of the balance and monthly activity - without turning the user into an accountant.",
+      "sousTitreAssociation": "And for associations?",
+      "p4": "A French non-profit association can choose this same account at signup: member management with status tracking, membership dues with automatic receipt generation, meeting organisation with sign-ups and attendance tracking, donations and grants, a projected budget compared against actuals, and a dedicated financial report. A single plan, no tiers, giving access to every feature once the subscription is active - with a one-month free trial, just like a business account.",
+      "p5": "Several people can manage the same association account, each with a role that matches their responsibilities - president, treasurer, communications or secretary - so everyone only sees what concerns them. Announcements are emailed to every active member, and important documents (bylaws, internal rules, meeting minutes, activity reports) are kept in a dedicated archive, sorted by category.",
+      "sousTitreRoadmap": "Always moving forward",
+      "p6": "Gest-224 is still a young product, continuously developed and improved. Structured e-invoicing (Factur-X, PDP) is part of our roadmap for the business side, ahead of upcoming French regulatory deadlines."
     },
     "tarifs": {
       "surtitre": "Gest-224",
