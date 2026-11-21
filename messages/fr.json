@@ -26,14 +26,14 @@
       "villeParis": "Logiciel facturation Paris"
     },
     "accueil": {
-      "surtitre": "Gestion commerciale pour petites entreprises",
-      "titre": "Devis, factures et comptabilité,",
-      "titreSuite": "sans y passer vos soirées.",
-      "description": "Gest-224 gère toute votre chaîne documentaire - du devis à la facture - avec des documents conformes aux normes françaises et européennes, et une comptabilité simplifiée intégrée. Pensé pour les auto-entrepreneurs et petites entreprises.",
+      "surtitre": "Facturation électronique & gestion d'association",
+      "titre": "La plateforme de facturation électronique",
+      "titreSuite": "et de gestion d'association, tout-en-un.",
+      "description": "Gest-224 gère toute votre chaîne documentaire avec une facturation électronique conforme (format Factur-X) pour les entreprises, ou toute la gestion de votre association - membres, cotisations, réunions, finances - pour les associations loi 1901. Un seul compte, choisi selon votre activité à l'inscription.",
       "creerCompteGratuit": "Créer mon compte gratuitement",
       "voirTarifs": "Voir les tarifs",
       "aucuneCarteBancaire": "Aucune carte bancaire requise pour le plan gratuit.",
-      "fonctionnalitesTitre": "Tout ce qu'il faut, rien de superflu",
+      "fonctionnalitesTitre": "Gest-224 pour les entreprises",
       "fonctionnalites": {
         "devisFactures": {
           "titre": "Devis et factures conformes",
@@ -67,7 +67,28 @@
       "ctaTitre": "Prêt à démarrer ?",
       "ctaDescription": "Créez votre compte en moins de deux minutes.",
       "creerCompte": "Créer mon compte",
-      "statDocuments": "Documents générés sur la plateforme"
+      "statDocuments": "Documents générés sur la plateforme",
+      "metaDescription": "Gest-224 : plateforme de facturation électronique (Factur-X) et de gestion d'association (membres, cotisations, réunions). Essai gratuit, sans carte bancaire.",
+      "associationTitre": "Gest-224 pour la gestion d'association",
+      "associationDescription": "Une association loi 1901 choisit ce même compte à l'inscription : membres, cotisations, réunions, finances et communication, réunis dans un seul outil.",
+      "associationFonctionnalites": {
+        "membres": {
+          "titre": "Membres et cotisations",
+          "description": "Fiches membres, statuts, suivi des cotisations et génération automatique des reçus."
+        },
+        "reunions": {
+          "titre": "Réunions et présences",
+          "description": "Organisez vos réunions, gérez les inscriptions et le suivi des présences, diffusez le compte-rendu par email."
+        },
+        "finances": {
+          "titre": "Finances associatives",
+          "description": "Dons, subventions, budget prévisionnel et rapport financier dédié, sans transformer le trésorier en comptable."
+        },
+        "equipe": {
+          "titre": "Équipe et communication",
+          "description": "Président, trésorier, communication, secrétaire : chacun son rôle. Annonces diffusées par email à tous les membres."
+        }
+      }
     },
     "aPropos": {
       "surtitre": "À propos",
@@ -79,7 +100,7 @@
       "p4": "Une association loi 1901 peut choisir ce même compte dès l'inscription : gestion des membres et de leur statut, suivi des cotisations avec génération automatique de reçus, organisation des réunions avec inscriptions et suivi des présences, dons et subventions, budget prévisionnel comparé au réalisé, et un rapport financier dédié. Un seul plan, sans palier, qui donne accès à l'ensemble des fonctionnalités une fois l'abonnement actif - avec un mois d'essai gratuit, comme pour un compte entreprise.",
       "p5": "Plusieurs personnes peuvent gérer le même compte association, chacune avec un rôle adapté - président, trésorier, en charge de la communication ou secrétaire - pour que chacune n'accède qu'à ce qui la concerne. Les annonces se diffusent par email à tous les membres actifs, et les documents importants (statuts, règlement intérieur, procès-verbaux, rapports d'activité) se conservent dans une archive dédiée, classée par catégorie.",
       "sousTitreRoadmap": "Toujours en mouvement",
-      "p6": "Gest-224 est encore un jeune produit, développé et amélioré en continu. La facturation électronique structurée (Factur-X, PDP) fait partie de notre feuille de route pour la partie entreprise, en anticipation des échéances réglementaires françaises à venir."
+      "p6": "Gest-224 génère déjà des factures au format Factur-X (PDF/A-3 avec XML CII embarqué), l'un des formats de facturation électronique reconnus par l'administration fiscale française. La transmission via une Plateforme de Dématérialisation Partenaire (PDP), nécessaire à la réforme complète de la facturation électronique interentreprises, fait partie de notre feuille de route."
     },
     "tarifs": {
       "surtitre": "Gest-224",

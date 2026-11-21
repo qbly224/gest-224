@@ -26,14 +26,14 @@
       "villeParis": "Invoicing software Paris"
     },
     "accueil": {
-      "surtitre": "Business management for small companies",
-      "titre": "Quotes, invoices and accounting,",
-      "titreSuite": "without losing your evenings to it.",
-      "description": "Gest-224 handles your whole document chain - from quote to invoice - with documents that comply with French and European standards, plus built-in simplified accounting. Built for freelancers and small businesses.",
+      "surtitre": "E-invoicing & association management",
+      "titre": "The e-invoicing platform",
+      "titreSuite": "and all-in-one association management.",
+      "description": "Gest-224 handles your whole document chain with compliant e-invoicing (Factur-X format) for businesses, or your whole association's management - members, dues, meetings, finances - for French non-profits. One account, chosen for your activity at signup.",
       "creerCompteGratuit": "Create my free account",
       "voirTarifs": "See pricing",
       "aucuneCarteBancaire": "No credit card required for the free plan.",
-      "fonctionnalitesTitre": "Everything you need, nothing you don't",
+      "fonctionnalitesTitre": "Gest-224 for businesses",
       "fonctionnalites": {
         "devisFactures": {
           "titre": "Compliant quotes and invoices",
@@ -67,7 +67,28 @@
       "ctaTitre": "Ready to start?",
       "ctaDescription": "Create your account in under two minutes.",
       "creerCompte": "Create my account",
-      "statDocuments": "Documents generated on the platform"
+      "statDocuments": "Documents generated on the platform",
+      "metaDescription": "Gest-224: e-invoicing platform (Factur-X) and association management platform (members, dues, meetings). Free trial, no card required.",
+      "associationTitre": "Gest-224 for association management",
+      "associationDescription": "A French non-profit association chooses this same account at signup: members, dues, meetings, finances and communication, all in one tool.",
+      "associationFonctionnalites": {
+        "membres": {
+          "titre": "Members and dues",
+          "description": "Member records, statuses, dues tracking and automatic receipt generation."
+        },
+        "reunions": {
+          "titre": "Meetings and attendance",
+          "description": "Organise meetings, manage sign-ups and attendance tracking, and email the minutes to participants."
+        },
+        "finances": {
+          "titre": "Association finances",
+          "description": "Donations, grants, a projected budget and a dedicated financial report - without turning the treasurer into an accountant."
+        },
+        "equipe": {
+          "titre": "Team and communication",
+          "description": "President, treasurer, communications, secretary: each with their own role. Announcements emailed to every member."
+        }
+      }
     },
     "aPropos": {
       "surtitre": "About",
@@ -79,7 +100,7 @@
       "p4": "A French non-profit association can choose this same account at signup: member management with status tracking, membership dues with automatic receipt generation, meeting organisation with sign-ups and attendance tracking, donations and grants, a projected budget compared against actuals, and a dedicated financial report. A single plan, no tiers, giving access to every feature once the subscription is active - with a one-month free trial, just like a business account.",
       "p5": "Several people can manage the same association account, each with a role that matches their responsibilities - president, treasurer, communications or secretary - so everyone only sees what concerns them. Announcements are emailed to every active member, and important documents (bylaws, internal rules, meeting minutes, activity reports) are kept in a dedicated archive, sorted by category.",
       "sousTitreRoadmap": "Always moving forward",
-      "p6": "Gest-224 is still a young product, continuously developed and improved. Structured e-invoicing (Factur-X, PDP) is part of our roadmap for the business side, ahead of upcoming French regulatory deadlines."
+      "p6": "Gest-224 already generates invoices in the Factur-X format (PDF/A-3 with embedded CII XML), one of the e-invoicing formats recognised by the French tax authority. Transmission through a Partner Dematerialisation Platform (PDP), required for the full business-to-business e-invoicing reform, is part of our roadmap."
     },
     "tarifs": {
       "surtitre": "Gest-224",

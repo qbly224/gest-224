@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("public.accueil");
   return {
     title: `${t("titre")} ${t("titreSuite")}`,
-    description: t("description"),
+    description: t("metaDescription"),
   };
 }
 
@@ -25,6 +25,8 @@ const CLES_FONCTIONNALITES = [
   "envoi",
   "multiEntreprise",
 ] as const;
+
+const CLES_FONCTIONNALITES_ASSOCIATION = ["membres", "reunions", "finances", "equipe"] as const;
 
 export default async function AccueilPage() {
   const session = await getSession();
@@ -96,6 +98,31 @@ export default async function AccueilPage() {
                   </h3>
                   <p className="mt-2 font-sans text-sm text-encre/70">
                     {t(`fonctionnalites.${cle}.description`)}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-encre/10 bg-surface/60 py-16">
+        <div className="mx-auto max-w-5xl px-6">
+          <Reveal className="text-center">
+            <h2 className="font-titre text-2xl text-encre">{t("associationTitre")}</h2>
+            <p className="mx-auto mt-2 max-w-2xl font-sans text-sm text-encre/70">
+              {t("associationDescription")}
+            </p>
+          </Reveal>
+          <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {CLES_FONCTIONNALITES_ASSOCIATION.map((cle, i) => (
+              <Reveal key={cle} delayMs={i * 80}>
+                <div className="h-full rounded-sm p-5 transition-all duration-300 hover:-translate-y-1 hover:bg-surface hover:shadow-xl hover:shadow-encre/10">
+                  <h3 className="font-titre text-lg text-encre">
+                    {t(`associationFonctionnalites.${cle}.titre`)}
+                  </h3>
+                  <p className="mt-2 font-sans text-sm text-encre/70">
+                    {t(`associationFonctionnalites.${cle}.description`)}
                   </p>
                 </div>
               </Reveal>
