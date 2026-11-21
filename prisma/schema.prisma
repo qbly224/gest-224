@@ -697,6 +697,7 @@ model Membre {
   updatedAt      DateTime     @updatedAt @map("updated_at")
 
   cotisations    Cotisation[]
+  participations ParticipantReunion[]
 
   @@index([tenantId])
   @@map("membres")
@@ -740,12 +741,37 @@ model Reunion {
   lieu          String?
   description   String?
   compteRendu   String?   @map("compte_rendu")
+  // Diffusé par email aux participants inscrits lors de la publication
+  // (cf. publierCompteRendu) - évite une republication/renvoi accidentel.
+  compteRenduPublieA DateTime? @map("compte_rendu_publie_a")
 
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @updatedAt @map("updated_at")
 
+  participants  ParticipantReunion[]
+
   @@index([tenantId])
   @@map("reunions")
+}
+
+// Inscription d'un membre à une réunion, et suivi de sa présence effective
+// (cf. lib/actions/reunions.ts : synchroniserParticipants, enregistrerPresences).
+model ParticipantReunion {
+  id         String  @id @default(uuid())
+
+  reunionId  String  @map("reunion_id")
+  reunion    Reunion @relation(fields: [reunionId], references: [id], onDelete: Cascade)
+
+  membreId   String  @map("membre_id")
+  membre     Membre  @relation(fields: [membreId], references: [id], onDelete: Cascade)
+
+  present    Boolean @default(false)
+
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@unique([reunionId, membreId])
+  @@index([membreId])
+  @@map("participants_reunion")
 }
 
 enum TypeDon {

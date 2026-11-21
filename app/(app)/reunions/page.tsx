@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MapPin } from "lucide-react";
+import { MapPin, Users } from "lucide-react";
 import { getTranslations, getLocale } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { exigerAcces } from "@/lib/permissions";
@@ -16,6 +16,7 @@ export default async function ReunionsPage() {
   const reunions = await prisma.reunion.findMany({
     where: { tenantId: session.tenantId },
     orderBy: { date: "desc" },
+    include: { _count: { select: { participants: true } } },
   });
 
   return (
@@ -50,6 +51,12 @@ export default async function ReunionsPage() {
                   <span className="inline-flex items-center gap-1">
                     <MapPin size={13} strokeWidth={1.75} />
                     {reunion.lieu}
+                  </span>
+                )}
+                {reunion._count.participants > 0 && (
+                  <span className="inline-flex items-center gap-1">
+                    <Users size={13} strokeWidth={1.75} />
+                    {t("nbParticipants", { count: reunion._count.participants })}
                   </span>
                 )}
               </div>
