@@ -309,6 +309,9 @@
       "plan": "Plan",
       "comparerPlans": "Compare plans",
       "modifiablePlus": "changeable at any time from your account.",
+      "essaiGratuit": "1 month free trial before the first charge, no commitment.",
+      "planAssociationTitre": "Single plan, full access",
+      "planAssociationDescription": "One single plan for associations, no tier or limit: unlimited members, membership dues, meetings, expenses. 1 month free trial before the first charge.",
       "parMois": "/month",
       "typeCompte": "Account type",
       "typeCompteEntreprise": "Company",
@@ -595,7 +598,16 @@
       "cotisationsTitre": "Membership dues",
       "cotisationsVide": "No membership dues recorded for this member.",
       "payeeLe": "Paid on {date}",
-      "impayee": "Unpaid"
+      "impayee": "Unpaid",
+      "relances": "Overdue membership dues reminders",
+      "relanceFrequence": "Reminder frequency for this member",
+      "relanceAide": "This adds to the general reminders switch (Association page). Membership dues with no due date are never reminded.",
+      "relanceDesactivee": "Disabled for this member",
+      "relanceQuotidienne": "Every day",
+      "relanceHebdomadaire": "Once a week",
+      "relance3xMois": "3 times a month (every 10 days)",
+      "relance2xMois": "Twice a month (every 15 days)",
+      "relanceMensuelle": "Once a month"
     },
     "cotisations": {
       "titre": "Membership dues",
@@ -607,6 +619,8 @@
       "periode": "Period",
       "periodePlaceholder": "E.g. 2026 or 2026-2027",
       "montant": "Amount (€)",
+      "dateEcheance": "Due date",
+      "dateEcheanceAide": "Used for automatic reminders - leave blank to never remind for these membership dues.",
       "dejaPayee": "Already paid",
       "datePaiement": "Payment date",
       "moyenPaiement": "Payment method",
@@ -626,6 +640,7 @@
       "payeeLe": "Paid on {date}",
       "impayee": "Unpaid",
       "marquerPayee": "Mark as paid",
+      "telechargerRecu": "Download receipt",
       "confirmSuppression": "Permanently delete this membership dues entry?"
     },
     "reunions": {
@@ -644,6 +659,59 @@
       "enregistre": "Meeting saved.",
       "emptyDefault": "No meetings yet.",
       "confirmSuppression": "Permanently delete this meeting?"
+    },
+    "dons": {
+      "titre": "Donations & grants",
+      "nouveauBouton": "New donation",
+      "nouveauTitre": "New donation or grant",
+      "modifierTitre": "Edit donation",
+      "type": "Type",
+      "typeDon": "Donation",
+      "typeSubvention": "Grant",
+      "donateur": "Donor / organisation",
+      "donateurPlaceholder": "E.g. City council, John Smith, Foundation...",
+      "montant": "Amount (€)",
+      "date": "Date received",
+      "notes": "Notes",
+      "enregistrer": "Save",
+      "enregistre": "Donation saved.",
+      "tous": "All",
+      "filtrer": "Filter",
+      "reinitialiser": "Reset",
+      "emptyFiltre": "No donation matches these criteria.",
+      "emptyDefault": "No donations or grants yet.",
+      "totalLabel": "Total: {total}",
+      "colDate": "Date",
+      "colDonateur": "Donor",
+      "colType": "Type",
+      "colMontant": "Amount",
+      "telechargerRecu": "Download receipt",
+      "confirmSuppression": "Permanently delete this donation?"
+    },
+    "budget": {
+      "titre": "Budget forecast",
+      "description": "Expected amounts by category for the selected year, to compare against actuals in the financial report.",
+      "anneePrecedente": "Previous year",
+      "anneeSuivante": "Next year",
+      "recettesPrevues": "Expected income",
+      "depensesPrevues": "Expected expenses",
+      "ajouterLigne": "Add a line",
+      "emptyDefault": "No line for this year.",
+      "total": "Total",
+      "soldePrevisionnel": "Forecast balance: {solde}",
+      "voirRapport": "View financial report",
+      "nouveauTitre": "New budget line",
+      "modifierTitre": "Edit budget line",
+      "annee": "Year",
+      "type": "Type",
+      "typeRecette": "Income",
+      "typeDepense": "Expense",
+      "categorie": "Category",
+      "categoriePlaceholder": "E.g. Membership dues, Hall rental, Grants...",
+      "montantPrevu": "Expected amount (€)",
+      "notes": "Notes",
+      "enregistrer": "Save",
+      "confirmSuppression": "Permanently delete this budget line?"
     },
     "catalogue": {
       "titre": "Products",
@@ -865,6 +933,28 @@
       "fecDateFin": "End date",
       "fecTelecharger": "Download FEC"
     },
+    "rapportAssociation": {
+      "titre": "Financial report",
+      "anneePrecedente": "Previous year",
+      "anneeSuivante": "Next year",
+      "soldeAnnee": "Year balance",
+      "recettesAnnee": "Year income",
+      "depensesAnnee": "Year expenses",
+      "cotisationsTitre": "Membership dues (all years combined)",
+      "totalDues": "Total due",
+      "totalEncaissees": "Total collected",
+      "totalImpayees": "Unpaid ({nombre} membership due(s))",
+      "donsTitre": "Donations and grants this year",
+      "voirDons": "View donation details",
+      "budgetTitre": "Comparison to budget forecast",
+      "budgetVide": "No budget forecast defined for this year.",
+      "colPrevu": "Forecast",
+      "colRealise": "Actual",
+      "colEcart": "Variance",
+      "recettes": "Income",
+      "depenses": "Expenses",
+      "voirBudget": "View budget forecast"
+    },
     "entreprise": {
       "titre": "Company profile",
       "description": "This information appears on all your business documents.",
@@ -954,6 +1044,10 @@
           "marquee_payee": "Membership dues marked as paid",
           "supprimee": "Membership dues deleted"
         },
+        "don": {
+          "cree": "Donation recorded",
+          "supprime": "Donation deleted"
+        },
         "admin": {
           "tenant": {
             "actif_bascule": "Account enabled/disabled (admin)",
@@ -1005,6 +1099,7 @@
       "paiementEnAttente": "Cash payment pending administrator validation - you can view your history, but cannot create new items until it is validated.",
       "documentsCeMois": "Documents created this month",
       "clientsEnregistres": "Registered clients",
+      "membresEnregistres": "Active members",
       "depensesCeMois": "Expenses entered this month",
       "accesRapport": "Your plan gives access to the",
       "rapportComplet": "full report",
@@ -1013,7 +1108,9 @@
       "parMois": "/ month",
       "repasserGratuit": "Switch back to free",
       "payerCarte": "Pay by card",
-      "payerEspeces": "Pay by cash / bank transfer"
+      "payerEspeces": "Pay by cash / bank transfer",
+      "planAssociationTitre": "Single association plan",
+      "planAssociationDescription": "Unlimited access to all modules (members, membership dues, meetings, expenses), no tier. 1 month free trial before the first charge."
     },
     "admin": {
       "titre": "Platform administration",
@@ -1153,6 +1250,8 @@
       "membres": "Members",
       "cotisations": "Membership dues",
       "reunions": "Meetings",
+      "dons": "Donations & grants",
+      "budget": "Budget forecast",
       "association": "Association"
     }
   }

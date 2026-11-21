@@ -73,6 +73,13 @@ export async function signUp(
   }
 
   const data = parsed.data;
+  // Un compte association n'a qu'un seul plan payant, sans palier (cf.
+  // lib/plans.ts, limitesEffectives) : jamais gratuit ni Pro, quel que
+  // soit ce que le formulaire a soumis - imposé ici, pas seulement côté
+  // UI (components/auth/signup-form.tsx).
+  if (data.typeCompte === "association") {
+    data.plan = "starter";
+  }
 
   const [emailExists, siretExists] = await Promise.all([
     prisma.user.findUnique({ where: { email: data.email } }),

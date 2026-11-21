@@ -1,4 +1,4 @@
--- Planification des 3 tâches, exécutées depuis Supabase (pg_cron + pg_net)
+-- Planification des tâches, exécutées depuis Supabase (pg_cron + pg_net)
 -- au lieu de GitHub Actions. Les deux appels vers gest-224.onrender.com
 -- réutilisent le CRON_SECRET déjà configuré sur Render (même valeur que
 -- la variable d'environnement CRON_SECRET du service web) ; la sauvegarde
@@ -27,6 +27,20 @@ select cron.schedule(
   $$
   select net.http_get(
     url := 'https://gest-224.onrender.com/api/cron/relances',
+    headers := jsonb_build_object('x-cron-secret', '<CRON_SECRET_RENDER>')
+  );
+  $$
+);
+
+-- Ajoutée le 2026-11-21 (relances des cotisations d'association en retard,
+-- cf. lib/relances-cotisations.ts) - même secret, même mécanisme que
+-- gest224-relances-factures ci-dessus.
+select cron.schedule(
+  'gest224-relances-cotisations',
+  '30 7 * * *',
+  $$
+  select net.http_get(
+    url := 'https://gest-224.onrender.com/api/cron/relances-cotisations',
     headers := jsonb_build_object('x-cron-secret', '<CRON_SECRET_RENDER>')
   );
   $$

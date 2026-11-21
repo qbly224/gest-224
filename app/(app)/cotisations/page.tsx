@@ -109,7 +109,14 @@ export default async function CotisationsPage({
                     )}
                   </td>
                   <td className="py-3 text-right">
-                    {!cotisation.datePaiement && (
+                    {cotisation.datePaiement ? (
+                      <a
+                        href={`/api/cotisations/${cotisation.id}/recu?telecharger=1`}
+                        className="font-sans text-xs text-encre/75 hover:text-encre hover:underline"
+                      >
+                        {t("telechargerRecu")}
+                      </a>
+                    ) : (
                       <form action={marquerCotisationPayee.bind(null, cotisation.id)}>
                         <button
                           type="submit"

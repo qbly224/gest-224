@@ -35,7 +35,11 @@ export async function creerUrlCheckout(
     client_reference_id: tenantId,
     customer: stripeCustomerId ?? undefined,
     customer_email: stripeCustomerId ? undefined : email,
-    subscription_data: { metadata: { tenantId } },
+    // 1 mois d'essai gratuit avant le premier prélèvement, pour tout
+    // nouvel abonnement (entreprise ou association) - checkout.session.completed
+    // (webhook) met déjà paiementValide=true dès la complétion du
+    // Checkout, essai compris : rien d'autre à changer côté webhook.
+    subscription_data: { trial_period_days: 30, metadata: { tenantId } },
     metadata: { tenantId, plan },
     success_url: `${appUrl()}/abonnement?paiement=succes`,
     cancel_url: `${appUrl()}/abonnement?paiement=annule`,

@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { membreSchema } from "@/lib/validation/membre";
-import { PLANS } from "@/lib/plans";
+import { limitesEffectives } from "@/lib/plans";
 import { paiementBloque, MESSAGE_PAIEMENT_BLOQUE } from "@/lib/paiement-guard";
 import { withToast } from "@/lib/toast";
 import type { ActionState } from "@/lib/actions/types";
@@ -26,7 +26,14 @@ function parseMembreForm(formData: FormData) {
     role: formData.get("role"),
     statut: formData.get("statut"),
     notes: formData.get("notes") || undefined,
+    relanceFrequence: formData.get("relanceFrequence") || "7",
   });
+}
+
+function relanceChampsDepuisFrequence(relanceFrequence: string) {
+  return relanceFrequence === "desactivee"
+    ? { relancesActivees: false, relanceIntervalleJours: 7 }
+    : { relancesActivees: true, relanceIntervalleJours: Number(relanceFrequence) };
 }
 
 export async function createMembre(
@@ -42,17 +49,18 @@ export async function createMembre(
 
   const tenant = await prisma.tenant.findUniqueOrThrow({
     where: { id: session.tenantId },
-    select: { plan: true, paiementValide: true },
+    select: { plan: true, paiementValide: true, typeCompte: true },
   });
   if (paiementBloque(tenant)) {
     return { error: MESSAGE_PAIEMENT_BLOQUE };
   }
-  const limiteMembres = PLANS[tenant.plan].limiteMembres;
+  const plan = limitesEffectives(tenant);
+  const limiteMembres = plan.limiteMembres;
   if (limiteMembres !== null) {
     const nbMembres = await prisma.membre.count({ where: { tenantId: session.tenantId } });
     if (nbMembres >= limiteMembres) {
       return {
-        error: `Limite de ${limiteMembres} membres atteinte pour le plan ${PLANS[tenant.plan].label}. Passez à un plan supérieur depuis la page Abonnement pour continuer.`,
+        error: `Limite de ${limiteMembres} membres atteinte pour le plan ${plan.label}. Passez à un plan supérieur depuis la page Abonnement pour continuer.`,
       };
     }
   }
@@ -74,6 +82,7 @@ export async function createMembre(
       role: data.role,
       statut: data.statut,
       notes: data.notes || null,
+      ...relanceChampsDepuisFrequence(data.relanceFrequence),
     },
   });
 
@@ -117,6 +126,7 @@ export async function updateMembre(
       role: data.role,
       statut: data.statut,
       notes: data.notes || null,
+      ...relanceChampsDepuisFrequence(data.relanceFrequence),
     },
   });
 

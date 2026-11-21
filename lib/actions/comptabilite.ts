@@ -6,7 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { requireSession } from "@/lib/auth";
 import { depenseSchema } from "@/lib/validation/depense";
 import { compterDepensesMoisCourant } from "@/lib/comptabilite/agregats";
-import { PLANS } from "@/lib/plans";
+import { limitesEffectives } from "@/lib/plans";
 import { paiementBloque, MESSAGE_PAIEMENT_BLOQUE } from "@/lib/paiement-guard";
 import { withToast } from "@/lib/toast";
 import type { ActionState } from "@/lib/actions/types";
@@ -38,17 +38,18 @@ export async function createDepense(
 
   const tenant = await prisma.tenant.findUniqueOrThrow({
     where: { id: session.tenantId },
-    select: { plan: true, paiementValide: true },
+    select: { plan: true, paiementValide: true, typeCompte: true },
   });
   if (paiementBloque(tenant)) {
     return { error: MESSAGE_PAIEMENT_BLOQUE };
   }
-  const limiteDepenses = PLANS[tenant.plan].limiteDepensesParMois;
+  const plan = limitesEffectives(tenant);
+  const limiteDepenses = plan.limiteDepensesParMois;
   if (limiteDepenses !== null) {
     const nbCeMois = await compterDepensesMoisCourant(session.tenantId);
     if (nbCeMois >= limiteDepenses) {
       return {
-        error: `Limite de ${limiteDepenses} dépenses par mois atteinte pour le plan ${PLANS[tenant.plan].label}. Passez à un plan supérieur depuis la page Abonnement pour continuer.`,
+        error: `Limite de ${limiteDepenses} dépenses par mois atteinte pour le plan ${plan.label}. Passez à un plan supérieur depuis la page Abonnement pour continuer.`,
       };
     }
   }

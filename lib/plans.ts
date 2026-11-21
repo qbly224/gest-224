@@ -1,4 +1,4 @@
-import type { PlanAbonnement } from "@prisma/client";
+import type { PlanAbonnement, TypeCompte } from "@prisma/client";
 
 export type DefinitionPlan = {
   id: PlanAbonnement;
@@ -71,6 +71,32 @@ export const LISTE_PLANS = [PLANS.gratuit, PLANS.starter, PLANS.pro];
 
 export function estPlanValide(value: string): value is PlanAbonnement {
   return value === "gratuit" || value === "starter" || value === "pro";
+}
+
+/**
+ * Limites réellement applicables à un tenant : pour un compte association
+ * ayant payé (ou en cours d'essai gratuit - les deux mettent
+ * paiementValide=true et plan="starter" dès le webhook
+ * checkout.session.completed, cf. app/api/stripe/webhook/route.ts),
+ * l'accès est illimité quel que soit le plan Starter facturé en arrière-
+ * plan - une association ne choisit pas de palier, seulement si elle
+ * paie ou non. Tant que le paiement n'a pas été initié (plan encore
+ * "gratuit"), les limites du plan gratuit s'appliquent normalement.
+ */
+export function limitesEffectives(tenant: {
+  plan: PlanAbonnement;
+  typeCompte: TypeCompte;
+}): DefinitionPlan {
+  if (tenant.typeCompte === "association" && tenant.plan !== "gratuit") {
+    return {
+      ...PLANS[tenant.plan],
+      limiteDocumentsParMois: null,
+      limiteClients: null,
+      limiteDepensesParMois: null,
+      limiteMembres: null,
+    };
+  }
+  return PLANS[tenant.plan];
 }
 
 /**

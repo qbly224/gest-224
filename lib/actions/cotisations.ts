@@ -15,6 +15,7 @@ function parseCotisationForm(formData: FormData) {
     membreId: formData.get("membreId"),
     periode: formData.get("periode"),
     montant: formData.get("montant"),
+    dateEcheance: formData.get("dateEcheance") || undefined,
     datePaiement: formData.get("datePaiement") || undefined,
     moyenPaiement: formData.get("moyenPaiement") || undefined,
   });
@@ -52,6 +53,7 @@ export async function createCotisation(
       membreId: data.membreId,
       periode: data.periode,
       montant: data.montant,
+      dateEcheance: data.dateEcheance ? new Date(data.dateEcheance) : null,
       datePaiement: data.datePaiement ? new Date(data.datePaiement) : null,
       moyenPaiement: data.moyenPaiement || null,
     },
@@ -98,6 +100,7 @@ export async function updateCotisation(
       membreId: data.membreId,
       periode: data.periode,
       montant: data.montant,
+      dateEcheance: data.dateEcheance ? new Date(data.dateEcheance) : null,
       datePaiement: data.datePaiement ? new Date(data.datePaiement) : null,
       moyenPaiement: data.moyenPaiement || null,
     },

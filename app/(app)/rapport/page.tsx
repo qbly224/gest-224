@@ -3,19 +3,35 @@ import { getTranslations, getLocale } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { calculerRapportComplet } from "@/lib/comptabilite/agregats";
-import { PLANS } from "@/lib/plans";
+import { limitesEffectives } from "@/lib/plans";
 import { BoutonImprimer } from "@/components/rapport/bouton-imprimer";
+import { RapportAssociation } from "@/components/rapport/rapport-association";
 import { formatEuros } from "@/lib/format";
 import type { Locale } from "@/i18n/config";
 import type { TypeDocument } from "@prisma/client";
 
-export default async function RapportPage() {
+export default async function RapportPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ annee?: string }>;
+}) {
   const session = await requireSession();
   const t = await getTranslations("app.rapport");
   const tTypes = await getTranslations("app.typesDocument");
   const locale = (await getLocale()) as Locale;
   const tenant = await prisma.tenant.findUniqueOrThrow({ where: { id: session.tenantId } });
-  const plan = PLANS[tenant.plan];
+  const plan = limitesEffectives(tenant);
+
+  if (tenant.typeCompte === "association") {
+    const { annee } = await searchParams;
+    return (
+      <RapportAssociation
+        session={session}
+        tenant={tenant}
+        anneeInitiale={annee ? Number(annee) : new Date().getFullYear()}
+      />
+    );
+  }
 
   if (!plan.rapportComplet) {
     return (

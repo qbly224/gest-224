@@ -31,7 +31,14 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
             <button
               key={tc}
               type="button"
-              onClick={() => setTypeCompte(tc)}
+              onClick={() => {
+                setTypeCompte(tc);
+                // Un compte association n'a qu'un seul plan, payant, sans
+                // palier (cf. lib/plans.ts, limitesEffectives) : pas de
+                // choix à faire, contrairement à une entreprise.
+                if (tc === "association") setPlan("starter");
+                else setPlan(planInitial);
+              }}
               className={`rounded-sm border px-3 py-2 text-center font-sans text-sm transition-colors ${
                 typeCompte === tc
                   ? "border-encre bg-encre text-ivoire"
@@ -45,35 +52,49 @@ export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
         <input type="hidden" name="typeCompte" value={typeCompte} />
       </fieldset>
 
-      <fieldset className="space-y-2">
-        <legend className="font-titre text-lg text-encre">{t("plan")}</legend>
-        <input type="hidden" name="plan" value={plan} />
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-          {LISTE_PLANS.map((p) => (
-            <button
-              key={p.id}
-              type="button"
-              onClick={() => setPlan(p.id)}
-              className={`rounded-sm border px-2 py-2 text-center font-sans text-xs transition-colors ${
-                plan === p.id
-                  ? "border-encre bg-encre text-ivoire"
-                  : "border-encre/30 text-encre hover:bg-encre/5"
-              }`}
-            >
-              <div className="font-medium">{tPlans(`${p.id}.label`)}</div>
-              <div className="font-mono">
-                {p.prixMensuel === 0 ? "0 €" : `${p.prixMensuel} €${t("parMois")}`}
-              </div>
-            </button>
-          ))}
-        </div>
-        <p className="font-sans text-xs text-encre/75">
-          <Link href="/tarifs" className="underline">
-            {t("comparerPlans")}
-          </Link>{" "}
-          - {t("modifiablePlus")}
-        </p>
-      </fieldset>
+      {typeCompte === "entreprise" ? (
+        <fieldset className="space-y-2">
+          <legend className="font-titre text-lg text-encre">{t("plan")}</legend>
+          <input type="hidden" name="plan" value={plan} />
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            {LISTE_PLANS.map((p) => (
+              <button
+                key={p.id}
+                type="button"
+                onClick={() => setPlan(p.id)}
+                className={`rounded-sm border px-2 py-2 text-center font-sans text-xs transition-colors ${
+                  plan === p.id
+                    ? "border-encre bg-encre text-ivoire"
+                    : "border-encre/30 text-encre hover:bg-encre/5"
+                }`}
+              >
+                <div className="font-medium">{tPlans(`${p.id}.label`)}</div>
+                <div className="font-mono">
+                  {p.prixMensuel === 0 ? "0 €" : `${p.prixMensuel} €${t("parMois")}`}
+                </div>
+              </button>
+            ))}
+          </div>
+          <p className="font-sans text-xs text-encre/75">
+            <Link href="/tarifs" className="underline">
+              {t("comparerPlans")}
+            </Link>{" "}
+            - {t("modifiablePlus")}
+          </p>
+          {plan !== "gratuit" && (
+            <p className="font-sans text-xs text-encre/75">{t("essaiGratuit")}</p>
+          )}
+        </fieldset>
+      ) : (
+        <fieldset className="space-y-2">
+          <legend className="font-titre text-lg text-encre">{t("plan")}</legend>
+          <input type="hidden" name="plan" value="starter" />
+          <div className="rounded-sm border border-encre/30 bg-encre/5 px-4 py-3">
+            <p className="font-sans text-sm text-encre">{t("planAssociationTitre")}</p>
+            <p className="mt-1 font-sans text-xs text-encre/75">{t("planAssociationDescription")}</p>
+          </div>
+        </fieldset>
+      )}
 
       <fieldset className="space-y-4 border-t border-encre/10 pt-5">
         <legend className="font-titre text-lg text-encre">

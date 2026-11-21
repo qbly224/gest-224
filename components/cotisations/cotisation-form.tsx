@@ -101,6 +101,24 @@ export function CotisationForm({
       </div>
 
       <div>
+        <label className={labelClass} htmlFor="dateEcheance">
+          {t("dateEcheance")}
+        </label>
+        <input
+          id="dateEcheance"
+          name="dateEcheance"
+          type="date"
+          defaultValue={
+            cotisation?.dateEcheance
+              ? cotisation.dateEcheance.toISOString().slice(0, 10)
+              : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
+          }
+          className={inputClass}
+        />
+        <p className="mt-1 font-sans text-xs text-encre/70">{t("dateEcheanceAide")}</p>
+      </div>
+
+      <div>
         <label className="flex items-center gap-2 font-sans text-sm text-encre">
           <input
             type="checkbox"

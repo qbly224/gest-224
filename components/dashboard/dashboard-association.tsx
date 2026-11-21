@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { formatEuros, formatDate } from "@/lib/format";
 import { obtenirLocale } from "@/i18n/request";
-import { PLANS } from "@/lib/plans";
+import { limitesEffectives } from "@/lib/plans";
 import type { SessionPayload } from "@/lib/session";
 
 export async function DashboardAssociation({ session }: { session: SessionPayload }) {
@@ -26,7 +26,7 @@ export async function DashboardAssociation({ session }: { session: SessionPayloa
       }),
     ]);
 
-  const plan = PLANS[tenant.plan];
+  const plan = limitesEffectives(tenant);
   const montantImpaye = cotisationsImpayees.reduce((total, c) => total + Number(c.montant), 0);
 
   return (

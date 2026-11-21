@@ -207,6 +207,8 @@ model Tenant {
   membres                Membre[]
   cotisations            Cotisation[]
   reunions               Reunion[]
+  dons                   Don[]
+  lignesBudget           LigneBudget[]
 
   @@map("tenants")
 }
@@ -685,6 +687,13 @@ model Membre {
   statut         StatutMembre @default(actif)
   notes          String?
 
+  // Relances automatiques de cotisations en retard (cf.
+  // lib/relances-cotisations.ts) : même principe que pour les clients et
+  // les factures (lib/relances.ts) - réglable par membre, en plus de
+  // l'interrupteur général du tenant.
+  relancesActivees       Boolean @default(true) @map("relances_activees")
+  relanceIntervalleJours Int     @default(7) @map("relance_intervalle_jours")
+
   actif          Boolean      @default(true)
   createdAt      DateTime     @default(now()) @map("created_at")
   updatedAt      DateTime     @updatedAt @map("updated_at")
@@ -711,8 +720,14 @@ model Cotisation {
   // à chaque association plutôt que d'imposer une année civile stricte.
   periode       String
   montant       Decimal   @db.Decimal(10, 2)
+  dateEcheance  DateTime? @map("date_echeance")
   datePaiement  DateTime? @map("date_paiement")
   moyenPaiement String?   @map("moyen_paiement")
+
+  // Date du dernier email de relance de retard envoyé pour cette cotisation
+  // (cf. lib/relances-cotisations.ts) - évite de relancer plus souvent que
+  // l'intervalle propre au membre (membre.relanceIntervalleJours).
+  dernierRappelEnvoyeAt DateTime? @map("dernier_rappel_envoye_at")
 
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @updatedAt @map("updated_at")
@@ -739,6 +754,61 @@ model Reunion {
 
   @@index([tenantId])
   @@map("reunions")
+}
+
+enum TypeDon {
+  don
+  subvention
+}
+
+// Don ponctuel ou subvention perçue par l'association - distinct des
+// cotisations (liées à un membre, récurrentes par nature) : un don vient
+// d'un tiers libre (personne, entreprise, collectivité) et n'a pas de
+// statut payé/impayé, il est enregistré au moment où il est reçu.
+model Don {
+  id        String   @id @default(uuid())
+
+  tenantId  String   @map("tenant_id")
+  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  type      TypeDon  @default(don)
+  donateur  String
+  montant   Decimal  @db.Decimal(12, 2)
+  date      DateTime @default(now())
+  notes     String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([tenantId])
+  @@map("dons")
+}
+
+enum TypeLigneBudget {
+  recette
+  depense
+}
+
+// Budget prévisionnel d'une association : montant attendu par catégorie et
+// par année, comparé ensuite au réalisé (cotisations+dons pour les
+// recettes, Depense pour les dépenses) dans le rapport financier.
+model LigneBudget {
+  id           String          @id @default(uuid())
+
+  tenantId     String          @map("tenant_id")
+  tenant       Tenant          @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  annee        Int
+  categorie    String
+  type         TypeLigneBudget
+  montantPrevu Decimal         @db.Decimal(12, 2) @map("montant_prevu")
+  notes        String?
+
+  createdAt    DateTime        @default(now()) @map("created_at")
+  updatedAt    DateTime        @updatedAt @map("updated_at")
+
+  @@index([tenantId])
+  @@map("lignes_budget")
 }
 
 // ---------------------------------------------------------------------------

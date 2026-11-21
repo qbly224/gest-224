@@ -27,6 +27,8 @@ import {
   ChevronDown,
   HandCoins,
   CalendarDays,
+  Gift,
+  PiggyBank,
 } from "lucide-react";
 import type { TypeCompte } from "@prisma/client";
 import { signOut } from "@/lib/actions/auth";
@@ -66,6 +68,8 @@ const LIENS_ASSOCIATION = [
   { href: "/cotisations", cle: "cotisations", Icon: HandCoins },
   { href: "/reunions", cle: "reunions", Icon: CalendarDays },
   { href: "/depenses", cle: "depenses", Icon: Wallet },
+  { href: "/dons", cle: "dons", Icon: Gift },
+  { href: "/budget", cle: "budget", Icon: PiggyBank },
   { href: "/rapport", cle: "rapport", Icon: BarChart3 },
   { href: "/entreprise", cle: "association", Icon: Building2 },
   { href: "/abonnement", cle: "abonnement", Icon: Star },

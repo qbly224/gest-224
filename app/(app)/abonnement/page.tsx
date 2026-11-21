@@ -4,7 +4,7 @@ import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { compterDocumentsMoisCourant } from "@/lib/documents/usage";
 import { compterDepensesMoisCourant } from "@/lib/comptabilite/agregats";
-import { LISTE_PLANS, PLANS } from "@/lib/plans";
+import { LISTE_PLANS, PLANS, limitesEffectives } from "@/lib/plans";
 import {
   choisirPlanPaye,
   demanderPlanEspeces,
@@ -21,14 +21,18 @@ export default async function AbonnementPage({
   const t = await getTranslations("app.abonnement");
   const { paiement } = await searchParams;
 
-  const [tenant, nbClients, nbDocumentsCeMois, nbDepensesCeMois] = await Promise.all([
-    prisma.tenant.findUniqueOrThrow({ where: { id: session.tenantId } }),
-    prisma.client.count({ where: { tenantId: session.tenantId } }),
+  const tenant = await prisma.tenant.findUniqueOrThrow({ where: { id: session.tenantId } });
+  const estAssociation = tenant.typeCompte === "association";
+
+  const [nbClientsOuMembres, nbDocumentsCeMois, nbDepensesCeMois] = await Promise.all([
+    estAssociation
+      ? prisma.membre.count({ where: { tenantId: session.tenantId, actif: true } })
+      : prisma.client.count({ where: { tenantId: session.tenantId } }),
     compterDocumentsMoisCourant(session.tenantId),
     compterDepensesMoisCourant(session.tenantId),
   ]);
 
-  const planActuel = PLANS[tenant.plan];
+  const planActuel = limitesEffectives(tenant);
 
   return (
     <div>
@@ -59,23 +63,30 @@ export default async function AbonnementPage({
       )}
 
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {!estAssociation && (
+          <div className="rounded-sm border border-encre/20 bg-white/40 p-6">
+            <p className="font-mono text-2xl text-encre">
+              {nbDocumentsCeMois}
+              {planActuel.limiteDocumentsParMois !== null && (
+                <span className="text-encre/70"> / {planActuel.limiteDocumentsParMois}</span>
+              )}
+            </p>
+            <p className="mt-1 font-sans text-sm text-encre/70">{t("documentsCeMois")}</p>
+          </div>
+        )}
         <div className="rounded-sm border border-encre/20 bg-white/40 p-6">
           <p className="font-mono text-2xl text-encre">
-            {nbDocumentsCeMois}
-            {planActuel.limiteDocumentsParMois !== null && (
-              <span className="text-encre/70"> / {planActuel.limiteDocumentsParMois}</span>
+            {nbClientsOuMembres}
+            {(estAssociation ? planActuel.limiteMembres : planActuel.limiteClients) !== null && (
+              <span className="text-encre/70">
+                {" "}
+                / {estAssociation ? planActuel.limiteMembres : planActuel.limiteClients}
+              </span>
             )}
           </p>
-          <p className="mt-1 font-sans text-sm text-encre/70">{t("documentsCeMois")}</p>
-        </div>
-        <div className="rounded-sm border border-encre/20 bg-white/40 p-6">
-          <p className="font-mono text-2xl text-encre">
-            {nbClients}
-            {planActuel.limiteClients !== null && (
-              <span className="text-encre/70"> / {planActuel.limiteClients}</span>
-            )}
+          <p className="mt-1 font-sans text-sm text-encre/70">
+            {estAssociation ? t("membresEnregistres") : t("clientsEnregistres")}
           </p>
-          <p className="mt-1 font-sans text-sm text-encre/70">{t("clientsEnregistres")}</p>
         </div>
         <div className="rounded-sm border border-encre/20 bg-white/40 p-6">
           <p className="font-mono text-2xl text-encre">
@@ -107,6 +118,44 @@ export default async function AbonnementPage({
         )}
       </div>
 
+      {estAssociation ? (
+        <div className="mt-8 max-w-sm">
+          <div className="flex flex-col rounded-sm border border-encre bg-encre/5 p-6">
+            <h2 className="font-titre text-xl text-encre">{t("planAssociationTitre")}</h2>
+            <p className="mt-2 font-mono text-2xl text-encre">
+              {PLANS.starter.prixMensuel} €
+              <span className="font-sans text-sm text-encre/75"> {t("parMois")}</span>
+            </p>
+            <p className="mt-2 font-sans text-sm text-encre/80">{t("planAssociationDescription")}</p>
+            {tenant.plan === "gratuit" ? (
+              <div className="mt-6 space-y-2">
+                <form action={choisirPlanPaye}>
+                  <input type="hidden" name="plan" value="starter" />
+                  <button
+                    type="submit"
+                    className="w-full rounded-sm bg-encre px-4 py-2 font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
+                  >
+                    {t("payerCarte")}
+                  </button>
+                </form>
+                <form action={demanderPlanEspeces}>
+                  <input type="hidden" name="plan" value="starter" />
+                  <button
+                    type="submit"
+                    className="w-full rounded-sm border border-encre/30 px-4 py-2 font-sans text-sm text-encre hover:bg-encre/5"
+                  >
+                    {t("payerEspeces")}
+                  </button>
+                </form>
+              </div>
+            ) : (
+              <span className="mt-6 inline-block w-full rounded-sm bg-encre px-4 py-2 text-center font-mono text-xs uppercase text-ivoire opacity-60">
+                {t("planActuelBadge")}
+              </span>
+            )}
+          </div>
+        </div>
+      ) : (
       <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
         {LISTE_PLANS.map((plan) => {
           const estActuel = plan.id === tenant.plan;
@@ -181,6 +230,7 @@ export default async function AbonnementPage({
           );
         })}
       </div>
+      )}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { relanceFrequenceSchema } from "@/lib/validation/client";
 
 export const roleMembreSchema = z.enum([
   "president",
@@ -27,6 +28,7 @@ export const membreSchema = z.object({
   role: roleMembreSchema,
   statut: statutMembreSchema,
   notes: z.string().trim().max(2000).optional().or(z.literal("")),
+  relanceFrequence: relanceFrequenceSchema,
 });
 
 export type MembreInput = z.infer<typeof membreSchema>;

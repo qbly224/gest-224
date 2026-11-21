@@ -309,6 +309,9 @@
       "plan": "Plan",
       "comparerPlans": "Comparer les plans",
       "modifiablePlus": "modifiable à tout moment depuis votre espace.",
+      "essaiGratuit": "1 mois d'essai gratuit avant le premier prélèvement, sans engagement.",
+      "planAssociationTitre": "Plan unique, accès complet",
+      "planAssociationDescription": "Un seul plan pour les associations, sans palier ni limite : membres, cotisations, réunions, dépenses illimités. 1 mois d'essai gratuit avant le premier prélèvement.",
       "parMois": "/mois",
       "typeCompte": "Type de compte",
       "typeCompteEntreprise": "Entreprise",
@@ -595,7 +598,16 @@
       "cotisationsTitre": "Cotisations",
       "cotisationsVide": "Aucune cotisation enregistrée pour ce membre.",
       "payeeLe": "Payée le {date}",
-      "impayee": "Impayée"
+      "impayee": "Impayée",
+      "relances": "Relances de cotisations en retard",
+      "relanceFrequence": "Fréquence de relance pour ce membre",
+      "relanceAide": "S'ajoute à l'interrupteur général des relances (page Association). Une cotisation sans date d'échéance n'est jamais relancée.",
+      "relanceDesactivee": "Désactivées pour ce membre",
+      "relanceQuotidienne": "Tous les jours",
+      "relanceHebdomadaire": "1 fois par semaine",
+      "relance3xMois": "3 fois par mois (tous les 10 jours)",
+      "relance2xMois": "2 fois par mois (tous les 15 jours)",
+      "relanceMensuelle": "1 fois par mois"
     },
     "cotisations": {
       "titre": "Cotisations",
@@ -607,6 +619,8 @@
       "periode": "Période",
       "periodePlaceholder": "Ex. 2026 ou 2026-2027",
       "montant": "Montant (€)",
+      "dateEcheance": "Date d'échéance",
+      "dateEcheanceAide": "Sert aux relances automatiques - laissez vide pour ne jamais relancer cette cotisation.",
       "dejaPayee": "Déjà payée",
       "datePaiement": "Date de paiement",
       "moyenPaiement": "Moyen de paiement",
@@ -626,6 +640,7 @@
       "payeeLe": "Payée le {date}",
       "impayee": "Impayée",
       "marquerPayee": "Marquer payée",
+      "telechargerRecu": "Télécharger le reçu",
       "confirmSuppression": "Supprimer définitivement cette cotisation ?"
     },
     "reunions": {
@@ -644,6 +659,59 @@
       "enregistre": "Réunion enregistrée.",
       "emptyDefault": "Aucune réunion pour l'instant.",
       "confirmSuppression": "Supprimer définitivement cette réunion ?"
+    },
+    "dons": {
+      "titre": "Dons et subventions",
+      "nouveauBouton": "Nouveau don",
+      "nouveauTitre": "Nouveau don ou subvention",
+      "modifierTitre": "Modifier le don",
+      "type": "Type",
+      "typeDon": "Don",
+      "typeSubvention": "Subvention",
+      "donateur": "Donateur / organisme",
+      "donateurPlaceholder": "Ex. Mairie de..., Jean Dupont, Fondation...",
+      "montant": "Montant (€)",
+      "date": "Date de réception",
+      "notes": "Notes",
+      "enregistrer": "Enregistrer",
+      "enregistre": "Don enregistré.",
+      "tous": "Tous",
+      "filtrer": "Filtrer",
+      "reinitialiser": "Réinitialiser",
+      "emptyFiltre": "Aucun don ne correspond à ces critères.",
+      "emptyDefault": "Aucun don ou subvention pour l'instant.",
+      "totalLabel": "Total : {total}",
+      "colDate": "Date",
+      "colDonateur": "Donateur",
+      "colType": "Type",
+      "colMontant": "Montant",
+      "telechargerRecu": "Télécharger le reçu",
+      "confirmSuppression": "Supprimer définitivement ce don ?"
+    },
+    "budget": {
+      "titre": "Budget prévisionnel",
+      "description": "Montants attendus par catégorie pour l'année sélectionnée, à comparer au réalisé dans le rapport financier.",
+      "anneePrecedente": "Année précédente",
+      "anneeSuivante": "Année suivante",
+      "recettesPrevues": "Recettes prévues",
+      "depensesPrevues": "Dépenses prévues",
+      "ajouterLigne": "Ajouter une ligne",
+      "emptyDefault": "Aucune ligne pour cette année.",
+      "total": "Total",
+      "soldePrevisionnel": "Solde prévisionnel : {solde}",
+      "voirRapport": "Voir le rapport financier",
+      "nouveauTitre": "Nouvelle ligne de budget",
+      "modifierTitre": "Modifier la ligne de budget",
+      "annee": "Année",
+      "type": "Type",
+      "typeRecette": "Recette",
+      "typeDepense": "Dépense",
+      "categorie": "Catégorie",
+      "categoriePlaceholder": "Ex. Cotisations, Location de salle, Subventions...",
+      "montantPrevu": "Montant prévu (€)",
+      "notes": "Notes",
+      "enregistrer": "Enregistrer",
+      "confirmSuppression": "Supprimer définitivement cette ligne de budget ?"
     },
     "catalogue": {
       "titre": "Produits",
@@ -865,6 +933,28 @@
       "fecDateFin": "Date de fin",
       "fecTelecharger": "Télécharger le FEC"
     },
+    "rapportAssociation": {
+      "titre": "Rapport financier",
+      "anneePrecedente": "Année précédente",
+      "anneeSuivante": "Année suivante",
+      "soldeAnnee": "Solde de l'année",
+      "recettesAnnee": "Recettes de l'année",
+      "depensesAnnee": "Dépenses de l'année",
+      "cotisationsTitre": "Cotisations (tous exercices confondus)",
+      "totalDues": "Total dû",
+      "totalEncaissees": "Total encaissé",
+      "totalImpayees": "Impayé ({nombre} cotisation(s))",
+      "donsTitre": "Dons et subventions de l'année",
+      "voirDons": "Voir le détail des dons",
+      "budgetTitre": "Comparaison au budget prévisionnel",
+      "budgetVide": "Aucun budget prévisionnel défini pour cette année.",
+      "colPrevu": "Prévu",
+      "colRealise": "Réalisé",
+      "colEcart": "Écart",
+      "recettes": "Recettes",
+      "depenses": "Dépenses",
+      "voirBudget": "Voir le budget prévisionnel"
+    },
     "entreprise": {
       "titre": "Fiche entreprise",
       "description": "Ces informations apparaissent sur tous vos documents commerciaux.",
@@ -954,6 +1044,10 @@
           "marquee_payee": "Cotisation marquée payée",
           "supprimee": "Cotisation supprimée"
         },
+        "don": {
+          "cree": "Don enregistré",
+          "supprime": "Don supprimé"
+        },
         "admin": {
           "tenant": {
             "actif_bascule": "Compte activé/désactivé (admin)",
@@ -1005,6 +1099,7 @@
       "paiementEnAttente": "Paiement en espèces en attente de validation par un administrateur - vous pouvez consulter votre historique, mais pas créer de nouveaux éléments tant qu'il n'est pas validé.",
       "documentsCeMois": "Documents créés ce mois-ci",
       "clientsEnregistres": "Clients enregistrés",
+      "membresEnregistres": "Membres actifs",
       "depensesCeMois": "Dépenses saisies ce mois-ci",
       "accesRapport": "Votre plan donne accès au",
       "rapportComplet": "rapport complet",
@@ -1013,7 +1108,9 @@
       "parMois": "/ mois",
       "repasserGratuit": "Repasser au gratuit",
       "payerCarte": "Payer par carte",
-      "payerEspeces": "Payer en espèces / virement"
+      "payerEspeces": "Payer en espèces / virement",
+      "planAssociationTitre": "Plan unique association",
+      "planAssociationDescription": "Accès illimité à tous les modules (membres, cotisations, réunions, dépenses) sans palier. 1 mois d'essai gratuit avant le premier prélèvement."
     },
     "admin": {
       "titre": "Administration de la plateforme",
@@ -1153,6 +1250,8 @@
       "membres": "Membres",
       "cotisations": "Cotisations",
       "reunions": "Réunions",
+      "dons": "Dons et subventions",
+      "budget": "Budget prévisionnel",
       "association": "Association"
     }
   }
