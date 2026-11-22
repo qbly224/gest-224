@@ -10,7 +10,7 @@ export async function PublicHeader() {
     <header className="sticky top-0 z-20 border-b border-encre/15 bg-ivoire/85 backdrop-blur">
       <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-6 py-5">
         <Link href="/" className="font-titre text-lg text-encre">
-          Gest-224
+          UniGest
         </Link>
         <nav className="flex flex-wrap items-center gap-6 font-sans text-sm text-encre/80">
           <Link href="/tarifs" className="hover:text-encre">

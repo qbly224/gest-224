@@ -49,7 +49,7 @@ export async function PublicFooter() {
       <div className="relative mx-auto max-w-5xl px-6 py-12">
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
           <div>
-            <p className="font-titre text-lg text-white">Gest-224</p>
+            <p className="font-titre text-lg text-white">UniGest</p>
             <p className="mt-2 font-sans text-sm text-white/80">{t("tagline")}</p>
           </div>
           {colonnes.map((colonne) => (
@@ -74,7 +74,7 @@ export async function PublicFooter() {
           ))}
         </div>
         <p className="mt-10 border-t border-white/15 pt-6 font-sans text-xs text-white/70">
-          © {new Date().getFullYear()} Gest-224. {t("droitsReserves")}
+          © {new Date().getFullYear()} UniGest. {t("droitsReserves")}
         </p>
       </div>
     </footer>

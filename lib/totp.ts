@@ -82,7 +82,7 @@ export function verifierCodeTotp(secretBase32: string, code: string): boolean {
 export function construireUriOtpAuth(
   secretBase32: string,
   compte: string,
-  emetteur = "Gest-224"
+  emetteur = "UniGest"
 ): string {
   const label = encodeURIComponent(`${emetteur}:${compte}`);
   const params = new URLSearchParams({

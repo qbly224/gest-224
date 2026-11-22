@@ -1,6 +1,6 @@
 /**
  * Comptes du Plan Comptable Général (PCG) utilisés par défaut pour générer
- * le FEC. Gest-224 ne tient pas de comptabilité d'engagement (pas de grand
+ * le FEC. UniGest ne tient pas de comptabilité d'engagement (pas de grand
  * livre, pas de lettrage, pas de ventilation par nature de dépense au-delà
  * du libellé libre saisi par l'utilisateur) : ces comptes sont donc des
  * valeurs par défaut raisonnables, PAS une comptabilité certifiée. Le texte

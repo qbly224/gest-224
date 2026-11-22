@@ -76,7 +76,7 @@ function ligneVersTexte(l: LigneFec): string {
 
 /**
  * Génère le FEC (Fichier des Écritures Comptables) sur une période donnée,
- * en comptabilité de trésorerie (cohérent avec le reste de Gest-224, qui ne
+ * en comptabilité de trésorerie (cohérent avec le reste de UniGest, qui ne
  * tient pas de grand livre d'engagement) : une écriture par recette
  * encaissée, une par avoir émis, une par dépense. Voir plan-comptable.ts
  * pour les limites de cette ventilation par défaut.

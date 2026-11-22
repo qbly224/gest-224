@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Gest-224",
-    short_name: "Gest-224",
+    name: "UniGest",
+    short_name: "UniGest",
     description: "Gestion commerciale multi-entreprises",
     start_url: "/tableau-de-bord",
     display: "standalone",

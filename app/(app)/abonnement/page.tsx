@@ -126,6 +126,9 @@ export default async function AbonnementPage({
               {PLANS.starter.prixMensuel} €
               <span className="font-sans text-sm text-encre/75"> {t("parMois")}</span>
             </p>
+            <span className="mt-2 inline-block w-fit rounded-full border border-encre/40 px-3 py-1 font-sans text-xs font-medium text-encre">
+              {t("planAssociationBadge")}
+            </span>
             <p className="mt-2 font-sans text-sm text-encre/80">{t("planAssociationDescription")}</p>
             {tenant.plan === "gratuit" ? (
               <div className="mt-6 space-y-2">

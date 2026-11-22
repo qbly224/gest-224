@@ -82,7 +82,7 @@ export function AppShell({
           >
             <Menu size={22} />
           </button>
-          <span className="flex-1 font-titre text-base text-encre">Gest-224</span>
+          <span className="flex-1 font-titre text-base text-encre">UniGest</span>
           <Link
             href="/recherche"
             aria-label={t("rechercherAria")}

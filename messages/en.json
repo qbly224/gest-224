@@ -30,11 +30,11 @@
       "surtitre": "E-invoicing & association management",
       "titre": "The e-invoicing platform",
       "titreSuite": "and all-in-one association management.",
-      "description": "Gest-224 handles your whole document chain with compliant e-invoicing (Factur-X format) for businesses, or your whole association's management - members, dues, meetings, finances - for French non-profits. One account, chosen for your activity at signup.",
+      "description": "UniGest handles your whole document chain with compliant e-invoicing (Factur-X format) for businesses, or your whole association's management - members, dues, meetings, finances - for French non-profits. One account, chosen for your activity at signup.",
       "creerCompteGratuit": "Create my free account",
       "voirTarifs": "See pricing",
       "aucuneCarteBancaire": "No credit card required for the free plan.",
-      "fonctionnalitesTitre": "Gest-224 for businesses",
+      "fonctionnalitesTitre": "UniGest for businesses",
       "fonctionnalites": {
         "devisFactures": {
           "titre": "Compliant quotes and invoices",
@@ -69,8 +69,8 @@
       "ctaDescription": "Create your account in under two minutes.",
       "creerCompte": "Create my account",
       "statDocuments": "Documents generated on the platform",
-      "metaDescription": "Gest-224: e-invoicing platform (Factur-X) and association management platform (members, dues, meetings). Free trial, no card required.",
-      "associationTitre": "Gest-224 for association management",
+      "metaDescription": "UniGest: e-invoicing platform (Factur-X) and association management platform (members, dues, meetings). Free trial, no card required.",
+      "associationTitre": "UniGest for association management",
       "associationDescription": "A French non-profit association chooses this same account at signup: members, dues, meetings, finances and communication, all in one tool.",
       "associationFonctionnalites": {
         "membres": {
@@ -93,25 +93,25 @@
     },
     "aPropos": {
       "surtitre": "About",
-      "titre": "Why Gest-224",
-      "p1": "Gest-224 was born from a simple observation: running a small business or an association - quotes, invoices, membership dues, basic bookkeeping - still often relies on makeshift spreadsheets or tools built for large organizations, too heavy for a sole trader, a small business or a small association.",
+      "titre": "Why UniGest",
+      "p1": "UniGest was born from a simple observation: running a small business or an association - quotes, invoices, membership dues, basic bookkeeping - still often relies on makeshift spreadsheets or tools built for large organizations, too heavy for a sole trader, a small business or a small association.",
       "p2": "For businesses, we're building a platform that handles the full document chain - from quote to invoice, through purchase orders, delivery notes, deposit invoices and credit notes - in line with French and European invoicing rules: gapless sequential numbering, mandatory legal notices, VAT exemption handling (art. 293 B of the French tax code), late payment penalties.",
       "p3": "On top of that, simplified bookkeeping: revenue entries are generated automatically when an invoice is marked paid, expenses are logged in a few clicks, and a dashboard gives a clear view of the balance and monthly activity - without turning the user into an accountant.",
       "sousTitreAssociation": "And for associations?",
       "p4": "A French non-profit association can choose this same account at signup: member management with status tracking, membership dues with automatic receipt generation, meeting organisation with sign-ups and attendance tracking, donations and grants, a projected budget compared against actuals, and a dedicated financial report. A single plan, no tiers, giving access to every feature once the subscription is active - with a one-month free trial, just like a business account.",
       "p5": "Several people can manage the same association account, each with a role that matches their responsibilities - president, treasurer, communications or secretary - so everyone only sees what concerns them. Announcements are emailed to every active member, and important documents (bylaws, internal rules, meeting minutes, activity reports) are kept in a dedicated archive, sorted by category.",
       "sousTitreRoadmap": "Always moving forward",
-      "p6": "Gest-224 already generates invoices in the Factur-X format (PDF/A-3 with embedded CII XML), one of the e-invoicing formats recognised by the French tax authority. Transmission through a Partner Dematerialisation Platform (PDP), required for the full business-to-business e-invoicing reform, is part of our roadmap."
+      "p6": "UniGest already generates invoices in the Factur-X format (PDF/A-3 with embedded CII XML), one of the e-invoicing formats recognised by the French tax authority. Transmission through a Partner Dematerialisation Platform (PDP), required for the full business-to-business e-invoicing reform, is part of our roadmap."
     },
     "tarifs": {
-      "surtitre": "Gest-224",
+      "surtitre": "UniGest",
       "titre": "Simple pricing, no commitment",
       "dejaInscrit": "Already have an account?",
       "seConnecter": "Log in",
       "parMois": "/ month",
       "choisir": "Choose {plan}",
       "changementLibre": "You can change plans at any time from your account.",
-      "metaDescription": "Discover Gest-224's pricing: three plans for businesses and a single unlimited plan for associations, with a one-month free trial.",
+      "metaDescription": "Discover UniGest's pricing: three plans for businesses and a single unlimited plan for associations, with a one-month free trial.",
       "associationTitre": "Running an association?",
       "associationDescription": "A single plan, no tiers: unlimited access to every feature once your subscription is active, with a one-month free trial just like a business account.",
       "associationCta": "Create an association account"
@@ -119,25 +119,25 @@
     "legal": {
       "misAJourLabel": "Last updated:",
       "avisTraduction": "This page is provided in French and English. In the event of any discrepancy, the French version prevails.",
-      "metaDescription": "Legal information for Gest-224: terms, privacy, and legal notice."
+      "metaDescription": "Legal information for UniGest: terms, privacy, and legal notice."
     },
     "legalCgu": {
       "titre": "Terms of Use",
-      "intro": "These terms of use (\"Terms\") govern access to and use of the Gest-224 platform (the \"Service\"), available in particular at gest-224.onrender.com. By creating an account, you accept these Terms without reservation.",
+      "intro": "These terms of use (\"Terms\") govern access to and use of the UniGest platform (the \"Service\"), available in particular at gest-224.onrender.com. By creating an account, you accept these Terms without reservation.",
       "s1Titre": "1. Purpose of the Service",
-      "s1Corps": "Gest-224 is an online management software (SaaS) that lets a business or an association (the \"User\") manage its activity from an account suited to its type of structure: for a business, creating and managing quotes, purchase orders, delivery notes, invoices, deposit invoices and credit notes, plus simplified bookkeeping (revenue and expenses); for an association, member management, membership dues tracking, meeting organisation, donations and grants, a projected budget and a financial report.",
+      "s1Corps": "UniGest is an online management software (SaaS) that lets a business or an association (the \"User\") manage its activity from an account suited to its type of structure: for a business, creating and managing quotes, purchase orders, delivery notes, invoices, deposit invoices and credit notes, plus simplified bookkeeping (revenue and expenses); for an association, member management, membership dues tracking, meeting organisation, donations and grants, a projected budget and a financial report.",
       "s2Titre": "2. Account creation",
       "s2Corps": "Access to the Service requires creating an account, linked to a business (identified in particular by its SIRET number) or an association (identified by its RNA number where applicable), and to a primary user. Information provided at signup must be accurate and kept up to date. The User is responsible for the confidentiality of their credentials and for any activity carried out from their account.",
       "s3Titre": "3. Compliant use",
       "s3Corps": "The User agrees to use the Service in accordance with its intended purpose and applicable regulations, particularly regarding commercial invoicing. The User is in particular prohibited from: any fraudulent use (fake invoices, identity theft), any attempt to access another business's data without authorization, and any use of the Service for unlawful purposes.",
       "s4Titre": "4. User responsibility for issued documents",
-      "s4Corps": "Gest-224 provides tools to generate documents compliant with French invoicing rules (numbering, mandatory notices), but the accuracy of the information entered (identity, amounts, VAT rates, tax regime) is the sole responsibility of the User. Gest-224 does not replace accounting, tax or legal advice. For an association, the same principles apply to the membership-dues and donation receipts generated by the platform.",
+      "s4Corps": "UniGest provides tools to generate documents compliant with French invoicing rules (numbering, mandatory notices), but the accuracy of the information entered (identity, amounts, VAT rates, tax regime) is the sole responsibility of the User. UniGest does not replace accounting, tax or legal advice. For an association, the same principles apply to the membership-dues and donation receipts generated by the platform.",
       "s5Titre": "5. Availability and evolution of the Service",
-      "s5Corps": "Gest-224 uses reasonable means to ensure the availability of the Service, without guaranteeing uninterrupted operation. Maintenance operations may cause temporary unavailability. The Service may evolve (new features, changes to existing features); substantial changes are announced whenever possible.",
+      "s5Corps": "UniGest uses reasonable means to ensure the availability of the Service, without guaranteeing uninterrupted operation. Maintenance operations may cause temporary unavailability. The Service may evolve (new features, changes to existing features); substantial changes are announced whenever possible.",
       "s6Titre": "6. Suspension and termination",
-      "s6Corps": "Gest-224 may suspend access to an account in the event of a breach of these Terms, non-payment on a paid plan, or suspicious activity. The User may permanently delete their account and all their data at any time from the \"Company\" page of their workspace.",
+      "s6Corps": "UniGest may suspend access to an account in the event of a breach of these Terms, non-payment on a paid plan, or suspicious activity. The User may permanently delete their account and all their data at any time from the \"Company\" page of their workspace.",
       "s7Titre": "7. Limitation of liability",
-      "s7Corps": "To the extent permitted by law, Gest-224 shall not be liable for any indirect damages resulting from use of the Service, nor for the consequences of a data entry error made by the User.",
+      "s7Corps": "To the extent permitted by law, UniGest shall not be liable for any indirect damages resulting from use of the Service, nor for the consequences of a data entry error made by the User.",
       "s8Titre": "8. Changes to these Terms",
       "s8Corps": "These Terms may be amended at any time. The applicable version is the one in effect at the time the Service is used.",
       "s9Titre": "9. Governing law",
@@ -145,15 +145,15 @@
     },
     "legalCgv": {
       "titre": "Terms of Sale",
-      "introPart1": "These terms of sale (\"Terms of Sale\") apply to subscribing to a paid plan on the Gest-224 platform, in addition to the ",
+      "introPart1": "These terms of sale (\"Terms of Sale\") apply to subscribing to a paid plan on the UniGest platform, in addition to the ",
       "introLien": "Terms of Use",
       "introPart2": ".",
       "s1Titre": "1. Professional nature of the contract",
-      "s1Corps": "Signing up to Gest-224 requires identifying a business (company name, SIRET number) or an association (name, RNA number where applicable). The subscription is therefore taken out by a legal entity acting in the course of its professional or associative activity, not by a consumer within the meaning of the French Consumer Code. The 14-day right of withdrawal provided for in articles L221-18 et seq. of the French Consumer Code, reserved for contracts entered into with consumers, therefore does not apply.",
+      "s1Corps": "Signing up to UniGest requires identifying a business (company name, SIRET number) or an association (name, RNA number where applicable). The subscription is therefore taken out by a legal entity acting in the course of its professional or associative activity, not by a consumer within the meaning of the French Consumer Code. The 14-day right of withdrawal provided for in articles L221-18 et seq. of the French Consumer Code, reserved for contracts entered into with consumers, therefore does not apply.",
       "s2Titre": "2. Plans and pricing",
       "s2Part1": "The available plans (Free, Starter, Pro) and their prices are presented on the ",
       "s2Lien": "Pricing",
-      "s2Part2": " page. Prices are shown in euros. Gest-224 reserves the right to change its prices; any change is announced before it takes effect and does not apply retroactively to an already-invoiced subscription.",
+      "s2Part2": " page. Prices are shown in euros. UniGest reserves the right to change its prices; any change is announced before it takes effect and does not apply retroactively to an already-invoiced subscription.",
       "s3Titre": "3. Payment methods",
       "s3Intro": "Two payment methods are offered:",
       "s3Item1Gras": "Card payment",
@@ -170,9 +170,9 @@
     },
     "legalConfidentialite": {
       "titre": "Privacy Policy",
-      "intro": "This policy describes how Gest-224 collects, uses, and protects personal data processed as part of the Service, in accordance with the General Data Protection Regulation (GDPR) and the French Data Protection Act (loi Informatique et Libertés).",
+      "intro": "This policy describes how UniGest collects, uses, and protects personal data processed as part of the Service, in accordance with the General Data Protection Regulation (GDPR) and the French Data Protection Act (loi Informatique et Libertés).",
       "s1Titre": "1. Data controller",
-      "s1Corps": "To be completed before commercial launch: company name, legal form, address, and contact email of the Gest-224 publisher, acting as data controller within the meaning of the GDPR.",
+      "s1Corps": "To be completed before commercial launch: company name, legal form, address, and contact email of the UniGest publisher, acting as data controller within the meaning of the GDPR.",
       "s2Titre": "2. Data collected",
       "s2Item1Gras": "Account data",
       "s2Item1Reste": ": last name, first name, email, password (hashed, never stored in plain text).",
@@ -182,7 +182,7 @@
       "s2Item3Reste": ": information about a business's clients or an association's members (name, address, email, phone, SIRET number where applicable), and about related documents or activity (invoices, membership dues, donations).",
       "s2Item4Gras": "Technical data",
       "s2Item4Reste": ": IP address (used only to limit login attempts), and technical logs necessary for the operation and security of the Service.",
-      "s2Corps": "Gest-224 does not install any advertising or tracking cookies. Only a session cookie, strictly necessary for authentication, is used.",
+      "s2Corps": "UniGest does not install any advertising or tracking cookies. Only a session cookie, strictly necessary for authentication, is used.",
       "s3Titre": "3. Purposes and legal basis",
       "s3Item1": "Provision of the Service (performance of the contract);",
       "s3Item2": "Issuance of business documents compliant with French regulations (legal obligation);",
@@ -234,8 +234,8 @@
     "villeLyon": {
       "surtitre": "Business management in Lyon and the Rhône region",
       "titre": "The invoicing and management software for businesses in Lyon",
-      "intro": "Gest-224 is published by QbelyTech, a company based in Vaulx-en-Velin, in the heart of the Lyon metropolitan area. Built with and for freelancers, tradespeople and small businesses in the Rhône-Alpes region, it brings quotes, invoices and accounting together in a single tool, with nothing to install.",
-      "p1": "Across Lyon, Villeurbanne, Vaulx-en-Velin and the wider metropolitan area, freelancers and small businesses often juggle several tools (spreadsheets, Word templates, separate accounting software) to manage quotes and invoices. Gest-224 brings this entire document chain together in a single application, accessible from any browser, with nothing to install.",
+      "intro": "UniGest is published by QbelyTech, a company based in Vaulx-en-Velin, in the heart of the Lyon metropolitan area. Built with and for freelancers, tradespeople and small businesses in the Rhône-Alpes region, it brings quotes, invoices and accounting together in a single tool, with nothing to install.",
+      "p1": "Across Lyon, Villeurbanne, Vaulx-en-Velin and the wider metropolitan area, freelancers and small businesses often juggle several tools (spreadsheets, Word templates, separate accounting software) to manage quotes and invoices. UniGest brings this entire document chain together in a single application, accessible from any browser, with nothing to install.",
       "p2": "Every document (quote, purchase order, delivery note, invoice) follows French and European legal requirements, with sequential numbering and an invoice that becomes unalterable as soon as it is issued - a requirement under article 286-I-3° bis of the French tax code, which applies to businesses in the region as everywhere in France.",
       "p3": "Data is hosted in Europe (Paris region) and backed up daily. No credit card is required to get started: the free plan lets you try the tool before moving to a higher plan as your business grows.",
       "avantagesTitre": "Built for freelancers and small businesses in the region",
@@ -256,12 +256,12 @@
       "faqTitre": "Frequently asked questions",
       "faq": {
         "q1": {
-          "question": "Is Gest-224 suitable for sole traders in Lyon?",
+          "question": "Is UniGest suitable for sole traders in Lyon?",
           "reponse": "Yes, the free plan is designed to get started with no commitment and no credit card, and covers the needs of a sole trader or small business: quotes, invoices and expense tracking."
         },
         "q2": {
-          "question": "Do I need to be based in Lyon to use Gest-224?",
-          "reponse": "No, Gest-224 is an online application usable anywhere in France. QbelyTech, the publisher, is based in Vaulx-en-Velin, but the software is aimed at all French businesses."
+          "question": "Do I need to be based in Lyon to use UniGest?",
+          "reponse": "No, UniGest is an online application usable anywhere in France. QbelyTech, the publisher, is based in Vaulx-en-Velin, but the software is aimed at all French businesses."
         },
         "q3": {
           "question": "Are the generated invoices legally compliant?",
@@ -275,8 +275,8 @@
     "villeParis": {
       "surtitre": "Business management in Paris and Île-de-France",
       "titre": "Quotes, invoices and accounting for businesses in Paris",
-      "intro": "Between overheads, competition and administrative requirements, freelancers and small businesses in Île-de-France need reliable tools without wasting time on setup. Gest-224 brings quotes, invoices and accounting together in an online application, accessible from anywhere in seconds.",
-      "p1": "In Paris, as across the rest of Île-de-France, the density of freelancers and small businesses makes administrative work time-consuming: quotes that need to go out fast to avoid losing a client, invoices that must be error-free, expense tracking for VAT or tax returns. Gest-224 centralises this entire document chain in a single tool.",
+      "intro": "Between overheads, competition and administrative requirements, freelancers and small businesses in Île-de-France need reliable tools without wasting time on setup. UniGest brings quotes, invoices and accounting together in an online application, accessible from anywhere in seconds.",
+      "p1": "In Paris, as across the rest of Île-de-France, the density of freelancers and small businesses makes administrative work time-consuming: quotes that need to go out fast to avoid losing a client, invoices that must be error-free, expense tracking for VAT or tax returns. UniGest centralises this entire document chain in a single tool.",
       "p2": "Every document (quote, purchase order, delivery note, invoice) follows French and European legal requirements. Once issued, an invoice becomes unalterable - in accordance with article 286-I-3° bis of the French tax code - and any correction goes through a credit note, without ever modifying the original document.",
       "p3": "Data is hosted in Europe (Paris region) and backed up automatically every day. The free plan requires no credit card: you can try the tool before moving to a higher plan as your business grows.",
       "avantagesTitre": "Built for freelancers, SMEs and businesses across Île-de-France",
@@ -297,12 +297,12 @@
       "faqTitre": "Frequently asked questions",
       "faq": {
         "q1": {
-          "question": "Is Gest-224 suitable for freelancers in Paris?",
+          "question": "Is UniGest suitable for freelancers in Paris?",
           "reponse": "Yes, the free plan is designed to get started with no commitment and no credit card, and covers the needs of a freelancer or small business: quotes, invoices and expense tracking."
         },
         "q2": {
-          "question": "Is Gest-224 also suitable for SMEs and larger structures?",
-          "reponse": "Yes, beyond the plans designed to get started solo, Gest-224 offers higher plans with higher limits, suited to teams and larger invoicing volumes."
+          "question": "Is UniGest also suitable for SMEs and larger structures?",
+          "reponse": "Yes, beyond the plans designed to get started solo, UniGest offers higher plans with higher limits, suited to teams and larger invoicing volumes."
         },
         "q3": {
           "question": "Are the generated invoices legally compliant?",
@@ -315,7 +315,7 @@
     }
   },
   "cookies": {
-    "message": "Gest-224 only uses a strictly necessary session cookie to keep you signed in - no advertising or analytics cookies.",
+    "message": "UniGest only uses a strictly necessary session cookie to keep you signed in - no advertising or analytics cookies.",
     "enSavoirPlus": "Learn more",
     "jaiCompris": "Got it"
   },
@@ -341,7 +341,8 @@
       "modifiablePlus": "changeable at any time from your account.",
       "essaiGratuit": "1 month free trial before the first charge, no commitment.",
       "planAssociationTitre": "Single plan, full access",
-      "planAssociationDescription": "One single plan for associations, no tier or limit: unlimited members, membership dues, meetings, expenses. 1 month free trial before the first charge.",
+      "planAssociationDescription": "A single plan for associations, no tiers, no limits: unlimited members, dues, meetings and expenses once the subscription is active.",
+      "planAssociationBadge": "1-month free trial",
       "parMois": "/month",
       "typeCompte": "Account type",
       "typeCompteEntreprise": "Company",
@@ -1022,7 +1023,7 @@
       "aucuneRecette": "No revenue recorded.",
       "documentsParType": "Documents by type",
       "fecTitre": "FEC export (Fichier des Écritures Comptables)",
-      "fecDescription": "Generates the standardized file required in case of a French tax audit (art. L47 A of the LPF). Important: Gest-224 does not keep a full accrual-accounting ledger - the accounts used (sales, VAT, purchases) are reasonable but generic defaults. Have this file checked, and corrected if needed, by your accountant before submitting it to the tax authorities.",
+      "fecDescription": "Generates the standardized file required in case of a French tax audit (art. L47 A of the LPF). Important: UniGest does not keep a full accrual-accounting ledger - the accounts used (sales, VAT, purchases) are reasonable but generic defaults. Have this file checked, and corrected if needed, by your accountant before submitting it to the tax authorities.",
       "fecDateDebut": "Start date",
       "fecDateFin": "End date",
       "fecTelecharger": "Download FEC"
@@ -1218,11 +1219,12 @@
       "payerCarte": "Pay by card",
       "payerEspeces": "Pay by cash / bank transfer",
       "planAssociationTitre": "Single association plan",
-      "planAssociationDescription": "Unlimited access to all modules (members, membership dues, meetings, expenses), no tier. 1 month free trial before the first charge."
+      "planAssociationDescription": "Unlimited access to every module (members, dues, meetings, expenses) with no tiers, once the subscription is active.",
+      "planAssociationBadge": "1-month free trial"
     },
     "admin": {
       "titre": "Platform administration",
-      "description": "Overview of all companies registered on Gest-224.",
+      "description": "Overview of all companies registered on UniGest.",
       "entreprisesInscrites": "Registered companies",
       "actives": "active",
       "utilisateurs": "Users",

@@ -37,7 +37,7 @@ export default function OpengraphImage() {
               display: "flex",
             }}
           >
-            Gest-224
+            UniGest
           </div>
           <div
             style={{

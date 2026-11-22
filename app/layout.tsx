@@ -17,18 +17,18 @@ const ibmPlexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Gest-224",
-    template: "%s | Gest-224",
+    default: "UniGest",
+    template: "%s | UniGest",
   },
   description: "Gestion commerciale multi-entreprises",
   openGraph: {
-    siteName: "Gest-224",
+    siteName: "UniGest",
     type: "website",
   },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Gest-224",
+    title: "UniGest",
   },
 };
 

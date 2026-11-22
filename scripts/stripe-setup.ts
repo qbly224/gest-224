@@ -1,10 +1,14 @@
 /**
- * Provisionne Stripe pour Gest-224 : les deux plans payants (produits +
+ * Provisionne Stripe pour UniGest : les deux plans payants (produits +
  * prix récurrents mensuels) et le webhook applicatif, pour éviter de le
  * faire à la main dans le dashboard.
  *
  * Idempotent : un produit/prix/webhook déjà présent (recherché par nom ou
- * URL) est réutilisé plutôt que dupliqué.
+ * URL) est réutilisé plutôt que dupliqué. Important après un renommage de
+ * marque : les produits Stripe déjà créés sous l'ancien nom ("Gest-224
+ * Starter"/"Gest-224 Pro") doivent être renommés en place (dashboard ou
+ * `stripe.products.update`), pas recréés - relancer ce script tel quel ne
+ * les retrouverait plus (recherche par nom exact) et créerait des doublons.
  *
  * Usage :
  *   STRIPE_SECRET_KEY=sk_test_... npx tsx scripts/stripe-setup.ts
@@ -75,7 +79,7 @@ async function main() {
 
   const resultats: Record<string, string> = {};
   for (const plan of [PLANS.starter, PLANS.pro]) {
-    const produit = await trouverOuCreerProduit(stripe, `Gest-224 ${plan.label}`);
+    const produit = await trouverOuCreerProduit(stripe, `UniGest ${plan.label}`);
     const prix = await trouverOuCreerPrix(stripe, produit, plan.prixMensuel * 100);
     resultats[plan.id] = prix.id;
     console.log(`${plan.label} : produit ${produit.id}, prix ${prix.id} (${plan.prixMensuel} €/mois)`);

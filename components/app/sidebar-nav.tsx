@@ -109,7 +109,7 @@ export function SidebarNav({
   return (
     <div className="flex h-full flex-col">
       <div className="border-b border-encre/15 px-5 py-5">
-        <span className="font-titre text-lg text-encre">Gest-224</span>
+        <span className="font-titre text-lg text-encre">UniGest</span>
         <p className="mt-0.5 truncate font-mono text-xs text-encre/75">{raisonSociale}</p>
       </div>
 

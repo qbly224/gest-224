@@ -30,11 +30,11 @@
       "surtitre": "Facturation électronique & gestion d'association",
       "titre": "La plateforme de facturation électronique",
       "titreSuite": "et de gestion d'association, tout-en-un.",
-      "description": "Gest-224 gère toute votre chaîne documentaire avec une facturation électronique conforme (format Factur-X) pour les entreprises, ou toute la gestion de votre association - membres, cotisations, réunions, finances - pour les associations loi 1901. Un seul compte, choisi selon votre activité à l'inscription.",
+      "description": "UniGest gère toute votre chaîne documentaire avec une facturation électronique conforme (format Factur-X) pour les entreprises, ou toute la gestion de votre association - membres, cotisations, réunions, finances - pour les associations loi 1901. Un seul compte, choisi selon votre activité à l'inscription.",
       "creerCompteGratuit": "Créer mon compte gratuitement",
       "voirTarifs": "Voir les tarifs",
       "aucuneCarteBancaire": "Aucune carte bancaire requise pour le plan gratuit.",
-      "fonctionnalitesTitre": "Gest-224 pour les entreprises",
+      "fonctionnalitesTitre": "UniGest pour les entreprises",
       "fonctionnalites": {
         "devisFactures": {
           "titre": "Devis et factures conformes",
@@ -69,8 +69,8 @@
       "ctaDescription": "Créez votre compte en moins de deux minutes.",
       "creerCompte": "Créer mon compte",
       "statDocuments": "Documents générés sur la plateforme",
-      "metaDescription": "Gest-224 : plateforme de facturation électronique (Factur-X) et de gestion d'association (membres, cotisations, réunions). Essai gratuit, sans carte bancaire.",
-      "associationTitre": "Gest-224 pour la gestion d'association",
+      "metaDescription": "UniGest : plateforme de facturation électronique (Factur-X) et de gestion d'association (membres, cotisations, réunions). Essai gratuit, sans carte bancaire.",
+      "associationTitre": "UniGest pour la gestion d'association",
       "associationDescription": "Une association loi 1901 choisit ce même compte à l'inscription : membres, cotisations, réunions, finances et communication, réunis dans un seul outil.",
       "associationFonctionnalites": {
         "membres": {
@@ -93,25 +93,25 @@
     },
     "aPropos": {
       "surtitre": "À propos",
-      "titre": "Pourquoi Gest-224",
-      "p1": "Gest-224 est né d'un constat simple : la gestion d'une petite entreprise ou d'une association - devis, factures, cotisations, comptabilité de base - repose encore souvent sur des tableurs bricolés ou des outils pensés pour de grandes structures, trop lourds pour un auto-entrepreneur, une TPE ou une petite association.",
+      "titre": "Pourquoi UniGest",
+      "p1": "UniGest est né d'un constat simple : la gestion d'une petite entreprise ou d'une association - devis, factures, cotisations, comptabilité de base - repose encore souvent sur des tableurs bricolés ou des outils pensés pour de grandes structures, trop lourds pour un auto-entrepreneur, une TPE ou une petite association.",
       "p2": "Pour les entreprises, nous construisons une plateforme qui prend en charge la chaîne documentaire complète - du devis à la facture, en passant par le bon de commande, le bon de livraison, la facture d'acompte et l'avoir - dans le respect des règles françaises et européennes de facturation : numérotation séquentielle sans trou, mentions légales obligatoires, gestion de la franchise en base de TVA (art. 293 B du CGI), pénalités de retard.",
       "p3": "À cela s'ajoute une comptabilité simplifiée : les recettes se génèrent automatiquement lorsqu'une facture est marquée payée, les dépenses se saisissent en quelques clics, et un tableau de bord donne une vue claire du solde et de l'activité mensuelle - sans transformer l'utilisateur en comptable.",
       "sousTitreAssociation": "Et pour les associations ?",
       "p4": "Une association loi 1901 peut choisir ce même compte dès l'inscription : gestion des membres et de leur statut, suivi des cotisations avec génération automatique de reçus, organisation des réunions avec inscriptions et suivi des présences, dons et subventions, budget prévisionnel comparé au réalisé, et un rapport financier dédié. Un seul plan, sans palier, qui donne accès à l'ensemble des fonctionnalités une fois l'abonnement actif - avec un mois d'essai gratuit, comme pour un compte entreprise.",
       "p5": "Plusieurs personnes peuvent gérer le même compte association, chacune avec un rôle adapté - président, trésorier, en charge de la communication ou secrétaire - pour que chacune n'accède qu'à ce qui la concerne. Les annonces se diffusent par email à tous les membres actifs, et les documents importants (statuts, règlement intérieur, procès-verbaux, rapports d'activité) se conservent dans une archive dédiée, classée par catégorie.",
       "sousTitreRoadmap": "Toujours en mouvement",
-      "p6": "Gest-224 génère déjà des factures au format Factur-X (PDF/A-3 avec XML CII embarqué), l'un des formats de facturation électronique reconnus par l'administration fiscale française. La transmission via une Plateforme de Dématérialisation Partenaire (PDP), nécessaire à la réforme complète de la facturation électronique interentreprises, fait partie de notre feuille de route."
+      "p6": "UniGest génère déjà des factures au format Factur-X (PDF/A-3 avec XML CII embarqué), l'un des formats de facturation électronique reconnus par l'administration fiscale française. La transmission via une Plateforme de Dématérialisation Partenaire (PDP), nécessaire à la réforme complète de la facturation électronique interentreprises, fait partie de notre feuille de route."
     },
     "tarifs": {
-      "surtitre": "Gest-224",
+      "surtitre": "UniGest",
       "titre": "Des tarifs simples, sans engagement",
       "dejaInscrit": "Déjà inscrit ?",
       "seConnecter": "Se connecter",
       "parMois": "/ mois",
       "choisir": "Choisir {plan}",
       "changementLibre": "Vous pourrez changer de plan à tout moment depuis votre espace.",
-      "metaDescription": "Découvrez les tarifs de Gest-224 : trois plans pour les entreprises et un plan unique illimité pour les associations, avec un mois d'essai gratuit.",
+      "metaDescription": "Découvrez les tarifs de UniGest : trois plans pour les entreprises et un plan unique illimité pour les associations, avec un mois d'essai gratuit.",
       "associationTitre": "Vous gérez une association ?",
       "associationDescription": "Un seul plan, sans palier : accès illimité à toutes les fonctionnalités une fois votre abonnement actif, avec un mois d'essai gratuit comme pour un compte entreprise.",
       "associationCta": "Créer un compte association"
@@ -119,25 +119,25 @@
     "legal": {
       "misAJourLabel": "Dernière mise à jour :",
       "avisTraduction": "Cette page est fournie en français et en anglais. En cas de divergence, la version française fait foi.",
-      "metaDescription": "Informations légales de Gest-224 : conditions, confidentialité et mentions légales."
+      "metaDescription": "Informations légales de UniGest : conditions, confidentialité et mentions légales."
     },
     "legalCgu": {
       "titre": "Conditions générales d'utilisation",
-      "intro": "Les présentes conditions générales d'utilisation (« CGU ») régissent l'accès et l'utilisation de la plateforme Gest-224 (le « Service »), accessible notamment à l'adresse gest-224.onrender.com. En créant un compte, vous acceptez sans réserve les présentes CGU.",
+      "intro": "Les présentes conditions générales d'utilisation (« CGU ») régissent l'accès et l'utilisation de la plateforme UniGest (le « Service »), accessible notamment à l'adresse gest-224.onrender.com. En créant un compte, vous acceptez sans réserve les présentes CGU.",
       "s1Titre": "1. Objet du Service",
-      "s1Corps": "Gest-224 est un logiciel de gestion en ligne (SaaS) qui permet à une entreprise ou à une association (l'« Utilisateur ») de gérer son activité depuis un compte adapté à son type de structure : pour une entreprise, création et gestion de devis, bons de commande, bons de livraison, factures, factures d'acompte et avoirs, ainsi qu'un suivi comptable simplifié (recettes et dépenses) ; pour une association, gestion des membres, suivi des cotisations, organisation des réunions, dons et subventions, budget prévisionnel et rapport financier.",
+      "s1Corps": "UniGest est un logiciel de gestion en ligne (SaaS) qui permet à une entreprise ou à une association (l'« Utilisateur ») de gérer son activité depuis un compte adapté à son type de structure : pour une entreprise, création et gestion de devis, bons de commande, bons de livraison, factures, factures d'acompte et avoirs, ainsi qu'un suivi comptable simplifié (recettes et dépenses) ; pour une association, gestion des membres, suivi des cotisations, organisation des réunions, dons et subventions, budget prévisionnel et rapport financier.",
       "s2Titre": "2. Création de compte",
       "s2Corps": "L'accès au Service nécessite la création d'un compte, associé à une entreprise (identifiée notamment par son SIRET) ou à une association (identifiée par son numéro RNA le cas échéant), et à un utilisateur titulaire. Les informations fournies lors de l'inscription doivent être exactes et tenues à jour. L'Utilisateur est responsable de la confidentialité de ses identifiants et de toute activité effectuée depuis son compte.",
       "s3Titre": "3. Utilisation conforme",
       "s3Corps": "L'Utilisateur s'engage à utiliser le Service conformément à sa destination et à la réglementation applicable, notamment en matière de facturation commerciale. Il s'interdit notamment : toute utilisation frauduleuse (fausses factures, usurpation d'identité), toute tentative d'accès non autorisé aux données d'une autre entreprise, et toute exploitation du Service à des fins illicites.",
       "s4Titre": "4. Responsabilité de l'Utilisateur sur les documents émis",
-      "s4Corps": "Gest-224 fournit les outils de génération de documents conformes aux règles françaises de facturation (numérotation, mentions légales), mais l'exactitude des informations saisies (identité, montants, taux de TVA, régime fiscal) relève de la seule responsabilité de l'Utilisateur. Gest-224 ne se substitue pas à un conseil comptable, fiscal ou juridique. Pour une association, les mêmes principes s'appliquent aux reçus de cotisation et de don générés par la plateforme.",
+      "s4Corps": "UniGest fournit les outils de génération de documents conformes aux règles françaises de facturation (numérotation, mentions légales), mais l'exactitude des informations saisies (identité, montants, taux de TVA, régime fiscal) relève de la seule responsabilité de l'Utilisateur. UniGest ne se substitue pas à un conseil comptable, fiscal ou juridique. Pour une association, les mêmes principes s'appliquent aux reçus de cotisation et de don générés par la plateforme.",
       "s5Titre": "5. Disponibilité et évolution du Service",
-      "s5Corps": "Gest-224 met en œuvre les moyens raisonnables pour assurer la disponibilité du Service, sans garantie d'absence d'interruption. Des opérations de maintenance peuvent entraîner des indisponibilités temporaires. Le Service peut évoluer (nouvelles fonctionnalités, modification de fonctionnalités existantes) ; les évolutions substantielles sont annoncées dans la mesure du possible.",
+      "s5Corps": "UniGest met en œuvre les moyens raisonnables pour assurer la disponibilité du Service, sans garantie d'absence d'interruption. Des opérations de maintenance peuvent entraîner des indisponibilités temporaires. Le Service peut évoluer (nouvelles fonctionnalités, modification de fonctionnalités existantes) ; les évolutions substantielles sont annoncées dans la mesure du possible.",
       "s6Titre": "6. Suspension et résiliation",
-      "s6Corps": "Gest-224 peut suspendre l'accès à un compte en cas de manquement aux présentes CGU, de défaut de paiement pour un plan payant, ou d'activité suspecte. L'Utilisateur peut à tout moment supprimer définitivement son compte et l'ensemble de ses données depuis la page « Entreprise » de son espace.",
+      "s6Corps": "UniGest peut suspendre l'accès à un compte en cas de manquement aux présentes CGU, de défaut de paiement pour un plan payant, ou d'activité suspecte. L'Utilisateur peut à tout moment supprimer définitivement son compte et l'ensemble de ses données depuis la page « Entreprise » de son espace.",
       "s7Titre": "7. Limitation de responsabilité",
-      "s7Corps": "Dans les limites permises par la loi, la responsabilité de Gest-224 ne saurait être engagée pour tout dommage indirect résultant de l'utilisation du Service, ni pour les conséquences d'une erreur de saisie de l'Utilisateur.",
+      "s7Corps": "Dans les limites permises par la loi, la responsabilité de UniGest ne saurait être engagée pour tout dommage indirect résultant de l'utilisation du Service, ni pour les conséquences d'une erreur de saisie de l'Utilisateur.",
       "s8Titre": "8. Modification des CGU",
       "s8Corps": "Les présentes CGU peuvent être modifiées à tout moment. La version applicable est celle en vigueur au moment de l'utilisation du Service.",
       "s9Titre": "9. Droit applicable",
@@ -145,15 +145,15 @@
     },
     "legalCgv": {
       "titre": "Conditions générales de vente",
-      "introPart1": "Les présentes conditions générales de vente (« CGV ») s'appliquent à la souscription d'un abonnement payant à la plateforme Gest-224, en complément des ",
+      "introPart1": "Les présentes conditions générales de vente (« CGV ») s'appliquent à la souscription d'un abonnement payant à la plateforme UniGest, en complément des ",
       "introLien": "conditions générales d'utilisation",
       "introPart2": ".",
       "s1Titre": "1. Nature professionnelle du contrat",
-      "s1Corps": "L'inscription à Gest-224 requiert l'identification d'une entreprise (raison sociale, SIRET) ou d'une association (raison sociale, numéro RNA le cas échéant). L'abonnement est donc souscrit par une personne morale agissant dans le cadre de son activité professionnelle ou associative, et non par un consommateur au sens du Code de la consommation. Le droit de rétractation de 14 jours prévu aux articles L221-18 et suivants du Code de la consommation, réservé aux contrats conclus avec des consommateurs, ne s'applique donc pas.",
+      "s1Corps": "L'inscription à UniGest requiert l'identification d'une entreprise (raison sociale, SIRET) ou d'une association (raison sociale, numéro RNA le cas échéant). L'abonnement est donc souscrit par une personne morale agissant dans le cadre de son activité professionnelle ou associative, et non par un consommateur au sens du Code de la consommation. Le droit de rétractation de 14 jours prévu aux articles L221-18 et suivants du Code de la consommation, réservé aux contrats conclus avec des consommateurs, ne s'applique donc pas.",
       "s2Titre": "2. Plans et tarifs",
       "s2Part1": "Les plans disponibles (Gratuit, Starter, Pro) et leurs tarifs sont présentés sur la page ",
       "s2Lien": "Tarifs",
-      "s2Part2": ". Les tarifs sont exprimés en euros. Gest-224 se réserve le droit de modifier ses tarifs ; toute modification est annoncée avant sa prise d'effet et ne s'applique pas rétroactivement à un abonnement déjà facturé.",
+      "s2Part2": ". Les tarifs sont exprimés en euros. UniGest se réserve le droit de modifier ses tarifs ; toute modification est annoncée avant sa prise d'effet et ne s'applique pas rétroactivement à un abonnement déjà facturé.",
       "s3Titre": "3. Modalités de paiement",
       "s3Intro": "Deux modalités de règlement sont proposées :",
       "s3Item1Gras": "Paiement par carte bancaire",
@@ -170,9 +170,9 @@
     },
     "legalConfidentialite": {
       "titre": "Politique de confidentialité",
-      "intro": "Cette politique décrit comment Gest-224 collecte, utilise et protège les données à caractère personnel traitées dans le cadre du Service, conformément au Règlement général sur la protection des données (RGPD) et à la loi Informatique et Libertés.",
+      "intro": "Cette politique décrit comment UniGest collecte, utilise et protège les données à caractère personnel traitées dans le cadre du Service, conformément au Règlement général sur la protection des données (RGPD) et à la loi Informatique et Libertés.",
       "s1Titre": "1. Responsable du traitement",
-      "s1Corps": "À compléter avant lancement commercial : raison sociale, forme juridique, adresse et email de contact de l'éditeur de Gest-224, responsable du traitement au sens du RGPD.",
+      "s1Corps": "À compléter avant lancement commercial : raison sociale, forme juridique, adresse et email de contact de l'éditeur de UniGest, responsable du traitement au sens du RGPD.",
       "s2Titre": "2. Données collectées",
       "s2Item1Gras": "Données de compte",
       "s2Item1Reste": " : nom, prénom, email, mot de passe (haché, jamais stocké en clair).",
@@ -182,7 +182,7 @@
       "s2Item3Reste": " : informations sur les clients d'une entreprise ou les membres d'une association (nom, adresse, email, téléphone, SIRET le cas échéant), et sur les documents ou activités associées (factures, cotisations, dons).",
       "s2Item4Gras": "Données techniques",
       "s2Item4Reste": " : adresse IP (utilisée uniquement pour la limitation de tentatives de connexion), et journaux techniques nécessaires au fonctionnement et à la sécurité du Service.",
-      "s2Corps": "Gest-224 n'installe aucun cookie publicitaire ou de suivi. Seul un cookie de session strictement nécessaire à l'authentification est utilisé.",
+      "s2Corps": "UniGest n'installe aucun cookie publicitaire ou de suivi. Seul un cookie de session strictement nécessaire à l'authentification est utilisé.",
       "s3Titre": "3. Finalités et base légale",
       "s3Item1": "Fourniture du Service (exécution du contrat) ;",
       "s3Item2": "Émission de documents commerciaux conformes à la réglementation française (obligation légale) ;",
@@ -234,8 +234,8 @@
     "villeLyon": {
       "surtitre": "Gestion commerciale à Lyon et dans le Rhône",
       "titre": "Le logiciel de facturation et de gestion pour les entreprises lyonnaises",
-      "intro": "Gest-224 est édité par QbelyTech, une entreprise basée à Vaulx-en-Velin, au cœur de la métropole de Lyon. Conçu avec et pour les indépendants, artisans et petites entreprises de la région Rhône-Alpes, il réunit devis, factures et comptabilité dans un seul outil, sans rien installer.",
-      "p1": "Entre Lyon, Villeurbanne, Vaulx-en-Velin et l'ensemble de la métropole, les indépendants et petites entreprises jonglent souvent entre plusieurs outils (tableurs, modèles Word, logiciels de comptabilité séparés) pour gérer leurs devis et leurs factures. Gest-224 réunit toute cette chaîne documentaire dans une seule application, accessible depuis un navigateur, sans installation.",
+      "intro": "UniGest est édité par QbelyTech, une entreprise basée à Vaulx-en-Velin, au cœur de la métropole de Lyon. Conçu avec et pour les indépendants, artisans et petites entreprises de la région Rhône-Alpes, il réunit devis, factures et comptabilité dans un seul outil, sans rien installer.",
+      "p1": "Entre Lyon, Villeurbanne, Vaulx-en-Velin et l'ensemble de la métropole, les indépendants et petites entreprises jonglent souvent entre plusieurs outils (tableurs, modèles Word, logiciels de comptabilité séparés) pour gérer leurs devis et leurs factures. UniGest réunit toute cette chaîne documentaire dans une seule application, accessible depuis un navigateur, sans installation.",
       "p2": "Chaque document (devis, bon de commande, bon de livraison, facture) respecte les mentions légales françaises et européennes, avec une numérotation séquentielle et une facture devenue inaltérable dès son émission - une exigence de l'article 286-I-3° bis du Code général des impôts, à laquelle les entreprises de la région sont soumises comme partout en France.",
       "p3": "Les données sont hébergées en Europe (région Paris) et sauvegardées quotidiennement. Pas de carte bancaire requise pour démarrer : le plan gratuit permet de tester l'outil avant de passer à un plan supérieur si l'activité grandit.",
       "avantagesTitre": "Pensé pour les indépendants et petites entreprises de la région",
@@ -256,12 +256,12 @@
       "faqTitre": "Questions fréquentes",
       "faq": {
         "q1": {
-          "question": "Gest-224 convient-il aux auto-entrepreneurs de Lyon ?",
+          "question": "UniGest convient-il aux auto-entrepreneurs de Lyon ?",
           "reponse": "Oui, le plan gratuit est pensé pour démarrer sans engagement ni carte bancaire, et couvre les besoins d'un auto-entrepreneur ou d'une petite entreprise : devis, factures et suivi des dépenses."
         },
         "q2": {
-          "question": "Faut-il être basé à Lyon pour utiliser Gest-224 ?",
-          "reponse": "Non, Gest-224 est une application en ligne utilisable partout en France. QbelyTech, l'éditeur, est basé à Vaulx-en-Velin, mais le logiciel s'adresse à toutes les entreprises françaises."
+          "question": "Faut-il être basé à Lyon pour utiliser UniGest ?",
+          "reponse": "Non, UniGest est une application en ligne utilisable partout en France. QbelyTech, l'éditeur, est basé à Vaulx-en-Velin, mais le logiciel s'adresse à toutes les entreprises françaises."
         },
         "q3": {
           "question": "Les factures générées sont-elles conformes à la réglementation ?",
@@ -275,8 +275,8 @@
     "villeParis": {
       "surtitre": "Gestion commerciale à Paris et en Île-de-France",
       "titre": "Devis, factures et comptabilité pour les entreprises parisiennes",
-      "intro": "Entre charges, concurrence et exigences administratives, les indépendants et petites entreprises d'Île-de-France ont besoin d'outils fiables sans perdre de temps en configuration. Gest-224 réunit devis, factures et comptabilité dans une application en ligne, accessible depuis n'importe où en quelques secondes.",
-      "p1": "À Paris comme dans le reste de l'Île-de-France, la densité d'indépendants et de petites entreprises rend la gestion administrative chronophage : devis à envoyer rapidement pour ne pas perdre un client, factures à émettre sans erreur, suivi des dépenses pour la déclaration de TVA ou de résultat. Gest-224 centralise toute cette chaîne documentaire dans un seul outil.",
+      "intro": "Entre charges, concurrence et exigences administratives, les indépendants et petites entreprises d'Île-de-France ont besoin d'outils fiables sans perdre de temps en configuration. UniGest réunit devis, factures et comptabilité dans une application en ligne, accessible depuis n'importe où en quelques secondes.",
+      "p1": "À Paris comme dans le reste de l'Île-de-France, la densité d'indépendants et de petites entreprises rend la gestion administrative chronophage : devis à envoyer rapidement pour ne pas perdre un client, factures à émettre sans erreur, suivi des dépenses pour la déclaration de TVA ou de résultat. UniGest centralise toute cette chaîne documentaire dans un seul outil.",
       "p2": "Chaque document (devis, bon de commande, bon de livraison, facture) respecte les mentions légales françaises et européennes. Une fois émise, une facture devient inaltérable - conformément à l'article 286-I-3° bis du Code général des impôts - et toute correction passe par un avoir, sans jamais modifier la pièce d'origine.",
       "p3": "Les données sont hébergées en Europe (région Paris) et sauvegardées automatiquement chaque jour. Le plan gratuit ne demande aucune carte bancaire : vous pouvez tester l'outil avant de passer à un plan supérieur si votre activité grandit.",
       "avantagesTitre": "Pensé pour les indépendants, PME et entreprises d'Île-de-France",
@@ -297,12 +297,12 @@
       "faqTitre": "Questions fréquentes",
       "faq": {
         "q1": {
-          "question": "Gest-224 convient-il aux indépendants parisiens ?",
+          "question": "UniGest convient-il aux indépendants parisiens ?",
           "reponse": "Oui, le plan gratuit est pensé pour démarrer sans engagement ni carte bancaire, et couvre les besoins d'un indépendant ou d'une petite entreprise : devis, factures et suivi des dépenses."
         },
         "q2": {
-          "question": "Gest-224 convient-il aussi aux PME et plus grandes structures ?",
-          "reponse": "Oui, au-delà des plans pensés pour démarrer seul, Gest-224 propose des plans supérieurs avec des limites plus élevées, adaptés aux équipes et aux volumes de facturation plus importants."
+          "question": "UniGest convient-il aussi aux PME et plus grandes structures ?",
+          "reponse": "Oui, au-delà des plans pensés pour démarrer seul, UniGest propose des plans supérieurs avec des limites plus élevées, adaptés aux équipes et aux volumes de facturation plus importants."
         },
         "q3": {
           "question": "Les factures générées sont-elles conformes à la réglementation ?",
@@ -315,7 +315,7 @@
     }
   },
   "cookies": {
-    "message": "Gest-224 utilise uniquement un cookie de session strictement nécessaire à la connexion à votre espace - aucun cookie publicitaire ni de mesure d'audience.",
+    "message": "UniGest utilise uniquement un cookie de session strictement nécessaire à la connexion à votre espace - aucun cookie publicitaire ni de mesure d'audience.",
     "enSavoirPlus": "En savoir plus",
     "jaiCompris": "J'ai compris"
   },
@@ -341,7 +341,8 @@
       "modifiablePlus": "modifiable à tout moment depuis votre espace.",
       "essaiGratuit": "1 mois d'essai gratuit avant le premier prélèvement, sans engagement.",
       "planAssociationTitre": "Plan unique, accès complet",
-      "planAssociationDescription": "Un seul plan pour les associations, sans palier ni limite : membres, cotisations, réunions, dépenses illimités. 1 mois d'essai gratuit avant le premier prélèvement.",
+      "planAssociationDescription": "Un seul plan pour les associations, sans palier ni limite : membres, cotisations, réunions, dépenses illimités une fois l'abonnement actif.",
+      "planAssociationBadge": "1 mois d'essai gratuit",
       "parMois": "/mois",
       "typeCompte": "Type de compte",
       "typeCompteEntreprise": "Entreprise",
@@ -1022,7 +1023,7 @@
       "aucuneRecette": "Aucune recette enregistrée.",
       "documentsParType": "Documents par type",
       "fecTitre": "Export FEC (Fichier des Écritures Comptables)",
-      "fecDescription": "Génère le fichier normalisé exigé en cas de contrôle fiscal (art. L47 A du LPF). Important : Gest-224 ne tient pas une comptabilité d'engagement complète - les comptes utilisés (ventes, TVA, achats) sont des valeurs par défaut raisonnables mais génériques. Faites vérifier et, si besoin, corriger ce fichier par votre expert-comptable avant de le transmettre à l'administration.",
+      "fecDescription": "Génère le fichier normalisé exigé en cas de contrôle fiscal (art. L47 A du LPF). Important : UniGest ne tient pas une comptabilité d'engagement complète - les comptes utilisés (ventes, TVA, achats) sont des valeurs par défaut raisonnables mais génériques. Faites vérifier et, si besoin, corriger ce fichier par votre expert-comptable avant de le transmettre à l'administration.",
       "fecDateDebut": "Date de début",
       "fecDateFin": "Date de fin",
       "fecTelecharger": "Télécharger le FEC"
@@ -1218,11 +1219,12 @@
       "payerCarte": "Payer par carte",
       "payerEspeces": "Payer en espèces / virement",
       "planAssociationTitre": "Plan unique association",
-      "planAssociationDescription": "Accès illimité à tous les modules (membres, cotisations, réunions, dépenses) sans palier. 1 mois d'essai gratuit avant le premier prélèvement."
+      "planAssociationDescription": "Accès illimité à tous les modules (membres, cotisations, réunions, dépenses) sans palier, une fois l'abonnement actif.",
+      "planAssociationBadge": "1 mois d'essai gratuit"
     },
     "admin": {
       "titre": "Administration de la plateforme",
-      "description": "Vue sur l'ensemble des entreprises inscrites sur Gest-224.",
+      "description": "Vue sur l'ensemble des entreprises inscrites sur UniGest.",
       "entreprisesInscrites": "Entreprises inscrites",
       "actives": "actives",
       "utilisateurs": "Utilisateurs",

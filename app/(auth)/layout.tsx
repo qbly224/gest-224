@@ -9,7 +9,7 @@ const RULED_LINES =
 
 // Petits papiers du registre qui traînent sur le bureau, en fond - pour que
 // le vide autour de la page active ne soit pas un simple aplat, tout en
-// restant parlant sur ce que fait Gest-224 (devis, factures, comptabilité).
+// restant parlant sur ce que fait UniGest (devis, factures, comptabilité).
 const PAPIERS = [
   { label: "DEVIS\nN° 2024-014", top: "10%", left: "7%", rotate: -10, delay: "0s", duration: "8s" },
   { label: "FACTURE\nN° 2024-089", top: "62%", left: "9%", rotate: 7, delay: "1.4s", duration: "9s" },

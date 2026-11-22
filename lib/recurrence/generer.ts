@@ -123,7 +123,7 @@ export async function genererFacturesRecurrentesDues(): Promise<{
             `La facture n° ${document.numero} (« ${modele.designation} », client : ` +
             `${client.raisonSociale ?? `${client.prenom ?? ""} ${client.nom ?? ""}`.trim()}) ` +
             `vient d'être générée automatiquement en brouillon à partir de votre modèle récurrent.\n\n` +
-            `Merci de la relire et de l'envoyer depuis votre espace Gest-224 :\n` +
+            `Merci de la relire et de l'envoyer depuis votre espace UniGest :\n` +
             `${SITE_URL}/factures/${document.id}`
         );
       } catch (err) {

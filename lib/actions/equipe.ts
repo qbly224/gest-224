@@ -106,8 +106,8 @@ export async function inviterMembreEquipe(
   try {
     await envoyerEmail(
       data.email,
-      `Invitation à rejoindre ${tenant.raisonSociale} sur Gest-224`,
-      `Vous avez été invité·e à rejoindre ${tenant.raisonSociale} sur Gest-224.\n\n` +
+      `Invitation à rejoindre ${tenant.raisonSociale} sur UniGest`,
+      `Vous avez été invité·e à rejoindre ${tenant.raisonSociale} sur UniGest.\n\n` +
         `Définissez votre mot de passe pour activer votre compte (lien valable 7 jours) :\n${lien}\n\n` +
         `Si vous ne vous attendiez pas à cette invitation, ignorez cet email.`
     );
@@ -210,7 +210,7 @@ export async function renvoyerInvitation(userId: string): Promise<void> {
   try {
     await envoyerEmail(
       utilisateur.email,
-      `Invitation à rejoindre ${tenant.raisonSociale} sur Gest-224`,
+      `Invitation à rejoindre ${tenant.raisonSociale} sur UniGest`,
       `Définissez votre mot de passe pour activer votre compte (lien valable 7 jours) :\n${lien}\n\n` +
         `Si vous ne vous attendiez pas à cette invitation, ignorez cet email.`
     );

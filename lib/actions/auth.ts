@@ -410,7 +410,7 @@ export async function demanderReinitialisation(
   try {
     await envoyerEmail(
       email,
-      "Réinitialisation de votre mot de passe Gest-224",
+      "Réinitialisation de votre mot de passe UniGest",
       `Vous avez demandé la réinitialisation de votre mot de passe.\n\n` +
         `Ce lien est valable une heure :\n${lien}\n\n` +
         `Si vous n'êtes pas à l'origine de cette demande, ignorez cet email.`

@@ -8,7 +8,7 @@ import { initialActionState } from "@/lib/actions/types";
 import { FieldError } from "@/components/forms/field-error";
 import { SubmitButton } from "@/components/forms/submit-button";
 import { ledgerInputClass, ledgerLabelClass, ledgerSelectClass, ledgerErrorClass } from "@/lib/auth-ui";
-import { LISTE_PLANS } from "@/lib/plans";
+import { LISTE_PLANS, PLANS } from "@/lib/plans";
 import type { PlanAbonnement } from "@prisma/client";
 
 type TypeCompte = "entreprise" | "association";
@@ -97,10 +97,23 @@ export function SignUpForm({
         <fieldset className="space-y-2">
           <legend className="font-titre text-lg text-encre">{t("plan")}</legend>
           <input type="hidden" name="plan" value="starter" />
-          <div className="rounded-sm border border-encre/30 bg-encre/5 px-4 py-3">
-            <p className="font-sans text-sm text-encre">{t("planAssociationTitre")}</p>
-            <p className="mt-1 font-sans text-xs text-encre/75">{t("planAssociationDescription")}</p>
+          <div className="rounded-sm border border-encre bg-encre px-4 py-4 text-center text-ivoire">
+            <p className="font-sans text-sm font-medium">{t("planAssociationTitre")}</p>
+            <p className="mt-1 font-mono text-2xl">
+              {PLANS.starter.prixMensuel} €
+              <span className="font-sans text-sm text-ivoire/80">{t("parMois")}</span>
+            </p>
+            <span className="mt-3 inline-block rounded-full border border-ivoire/50 px-3 py-1 font-sans text-xs font-medium">
+              {t("planAssociationBadge")}
+            </span>
+            <p className="mt-3 font-sans text-xs text-ivoire/85">{t("planAssociationDescription")}</p>
           </div>
+          <p className="font-sans text-xs text-encre/75">
+            <Link href="/tarifs" className="underline">
+              {t("comparerPlans")}
+            </Link>{" "}
+            - {t("modifiablePlus")}
+          </p>
         </fieldset>
       )}
 
