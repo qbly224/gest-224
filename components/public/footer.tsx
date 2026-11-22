@@ -12,6 +12,7 @@ export async function PublicFooter() {
       liens: [
         { href: "/tarifs", label: tHeader("tarifs") },
         { href: "/a-propos", label: tHeader("aPropos") },
+        { href: "/a-propos#association", label: t("gestionAssociation") },
         { href: "/inscription", label: t("creerCompte") },
         { href: "/connexion", label: tHeader("connexion") },
       ],

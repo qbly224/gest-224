@@ -24,7 +24,9 @@ export default async function AProposPage() {
         <p>{t("p2")}</p>
         <p>{t("p3")}</p>
 
-        <h2 className="pt-2 font-titre text-xl text-encre">{t("sousTitreAssociation")}</h2>
+        <h2 id="association" className="pt-2 font-titre text-xl text-encre scroll-mt-20">
+          {t("sousTitreAssociation")}
+        </h2>
         <p>{t("p4")}</p>
         <p>{t("p5")}</p>
 
