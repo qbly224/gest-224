@@ -65,6 +65,17 @@ export default async function TarifsPage() {
         <p className="mt-10 text-center font-sans text-xs text-encre/70">
           {t("changementLibre")}
         </p>
+
+        <div className="mx-auto mt-16 max-w-2xl rounded-sm border border-encre/20 bg-surface/70 p-6 text-center">
+          <h2 className="font-titre text-xl text-encre">{t("associationTitre")}</h2>
+          <p className="mt-2 font-sans text-sm text-encre/75">{t("associationDescription")}</p>
+          <Link
+            href="/inscription?type=association"
+            className="mt-5 inline-block rounded-sm border border-encre/30 px-5 py-2 font-sans text-sm text-encre hover:bg-encre/5"
+          >
+            {t("associationCta")}
+          </Link>
+        </div>
       </div>
     </main>
   );

@@ -13,12 +13,20 @@ import type { PlanAbonnement } from "@prisma/client";
 
 type TypeCompte = "entreprise" | "association";
 
-export function SignUpForm({ planInitial }: { planInitial: PlanAbonnement }) {
+export function SignUpForm({
+  planInitial,
+  typeCompteInitial = "entreprise",
+}: {
+  planInitial: PlanAbonnement;
+  typeCompteInitial?: TypeCompte;
+}) {
   const t = useTranslations("auth.inscription");
   const tPlans = useTranslations("plans");
   const [state, formAction] = useActionState(signUp, initialActionState);
-  const [plan, setPlan] = useState<PlanAbonnement>(planInitial);
-  const [typeCompte, setTypeCompte] = useState<TypeCompte>("entreprise");
+  const [plan, setPlan] = useState<PlanAbonnement>(
+    typeCompteInitial === "association" ? "starter" : planInitial
+  );
+  const [typeCompte, setTypeCompte] = useState<TypeCompte>(typeCompteInitial);
 
   return (
     <form action={formAction} className="mt-8 space-y-7">

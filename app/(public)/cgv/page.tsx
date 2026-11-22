@@ -34,6 +34,7 @@ export default async function CgvPage() {
           </a>
           {t("s2Part2")}
         </p>
+        <p>{t("s2CorpsAssociation")}</p>
       </Section>
 
       <Section titre={t("s3Titre")}>
