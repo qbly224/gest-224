@@ -21,6 +21,7 @@ import { enregistrerAudit } from "@/lib/audit";
 import { getTranslations, getLocale } from "next-intl/server";
 import { renderDocumentHtml } from "@/lib/pdf/template";
 import { genererPdf } from "@/lib/pdf/generate";
+import { autoriserGenerationPdf, MESSAGE_LIMITE_PDF } from "@/lib/pdf/limite";
 import { envoyerEmail } from "@/lib/email";
 import { formatEuros } from "@/lib/format";
 import type { Locale } from "@/i18n/config";
@@ -478,6 +479,14 @@ async function envoyerParEmailAutomatique(
   const emetteur = doc.emetteurSnapshot as unknown as EmetteurSnapshot;
   if (!client.email) {
     return { success: false, error: "Ce client n'a pas d'adresse email enregistrée." };
+  }
+
+  const tenant = await prisma.tenant.findUniqueOrThrow({
+    where: { id: session.tenantId },
+    select: { plan: true, typeCompte: true },
+  });
+  if (!(await autoriserGenerationPdf({ id: session.tenantId, ...tenant }))) {
+    return { success: false, error: MESSAGE_LIMITE_PDF };
   }
 
   const locale = (await getLocale()) as Locale;

@@ -408,10 +408,9 @@
     "gratuit": {
       "label": "Gratuit",
       "fonctionnalites": [
-        "5 documents par mois (devis, factures, etc.)",
-        "5 clients",
-        "Génération PDF illimitée",
-        "Comptabilité simplifiée (5 dépenses/mois)"
+        "4 documents par mois (devis, factures, etc.)",
+        "4 clients",
+        "4 générations de PDF par mois"
       ]
     },
     "starter": {

@@ -88,15 +88,17 @@ export default async function AbonnementPage({
             {estAssociation ? t("membresEnregistres") : t("clientsEnregistres")}
           </p>
         </div>
-        <div className="rounded-sm border border-encre/20 bg-white/40 p-6">
-          <p className="font-mono text-2xl text-encre">
-            {nbDepensesCeMois}
-            {planActuel.limiteDepensesParMois !== null && (
-              <span className="text-encre/70"> / {planActuel.limiteDepensesParMois}</span>
-            )}
-          </p>
-          <p className="mt-1 font-sans text-sm text-encre/70">{t("depensesCeMois")}</p>
-        </div>
+        {planActuel.limiteDepensesParMois !== 0 && (
+          <div className="rounded-sm border border-encre/20 bg-white/40 p-6">
+            <p className="font-mono text-2xl text-encre">
+              {nbDepensesCeMois}
+              {planActuel.limiteDepensesParMois !== null && (
+                <span className="text-encre/70"> / {planActuel.limiteDepensesParMois}</span>
+              )}
+            </p>
+            <p className="mt-1 font-sans text-sm text-encre/70">{t("depensesCeMois")}</p>
+          </div>
+        )}
       </div>
 
       <div className="mt-6 flex flex-wrap items-center gap-4">

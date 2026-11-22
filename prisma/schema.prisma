@@ -217,6 +217,7 @@ model Tenant {
   annonces               Annonce[]
   documentsAssociatifs   DocumentAssociatif[]
   jobsEmail              JobEmail[]
+  generationsPdf         GenerationPdf[]
 
   @@map("tenants")
 }
@@ -913,6 +914,22 @@ model DocumentAssociatif {
 
   @@index([tenantId])
   @@map("documents_associatifs")
+}
+
+// Compteur de générations de PDF (facture, Factur-X, reçu...), un
+// enregistrement par génération - sert uniquement à appliquer la limite
+// mensuelle du plan gratuit (cf. lib/pdf/limite.ts), jamais affiché à
+// l'utilisateur.
+model GenerationPdf {
+  id        String   @id @default(uuid())
+
+  tenantId  String   @map("tenant_id")
+  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([tenantId, createdAt])
+  @@map("generations_pdf")
 }
 
 // ---------------------------------------------------------------------------

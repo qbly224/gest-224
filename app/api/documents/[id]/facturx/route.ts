@@ -3,6 +3,7 @@ import { getSession } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 import { renderDocumentHtml } from "@/lib/pdf/template";
 import { genererPdf } from "@/lib/pdf/generate";
+import { autoriserGenerationPdf, MESSAGE_LIMITE_PDF } from "@/lib/pdf/limite";
 import { genererCiiXml } from "@/lib/facturx/cii-xml";
 import { embarquerXmlDansPdf } from "@/lib/facturx/embarquer";
 import type { ClientSnapshot, EmetteurSnapshot } from "@/lib/documents/snapshot";
@@ -36,6 +37,14 @@ export async function GET(
       { error: "Le format Factur-X ne s'applique qu'aux factures et avoirs." },
       { status: 400 }
     );
+  }
+
+  const tenant = await prisma.tenant.findUniqueOrThrow({
+    where: { id: session.tenantId },
+    select: { plan: true, typeCompte: true },
+  });
+  if (!(await autoriserGenerationPdf({ id: session.tenantId, ...tenant }))) {
+    return NextResponse.json({ error: MESSAGE_LIMITE_PDF }, { status: 403 });
   }
 
   const emetteur = document.emetteurSnapshot as unknown as EmetteurSnapshot;

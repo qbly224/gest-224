@@ -53,7 +53,10 @@ export async function createDepense(
     const nbCeMois = await compterDepensesMoisCourant(session.tenantId);
     if (nbCeMois >= limiteDepenses) {
       return {
-        error: `Limite de ${limiteDepenses} dépenses par mois atteinte pour le plan ${plan.label}. Passez à un plan supérieur depuis la page Abonnement pour continuer.`,
+        error:
+          limiteDepenses === 0
+            ? `La comptabilité simplifiée n'est pas disponible sur le plan ${plan.label}. Passez à un plan supérieur depuis la page Abonnement pour y accéder.`
+            : `Limite de ${limiteDepenses} dépenses par mois atteinte pour le plan ${plan.label}. Passez à un plan supérieur depuis la page Abonnement pour continuer.`,
       };
     }
   }

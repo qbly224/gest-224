@@ -7,6 +7,7 @@ export type DefinitionPlan = {
   limiteDocumentsParMois: number | null; // null = illimité
   limiteClients: number | null;
   limiteDepensesParMois: number | null;
+  limitePdfParMois: number | null;
   // Plafond de membres pour un compte "association" - indépendant de
   // limiteClients (un compte association ne crée jamais de Client).
   limiteMembres: number | null;
@@ -19,16 +20,16 @@ export const PLANS: Record<PlanAbonnement, DefinitionPlan> = {
     id: "gratuit",
     label: "Gratuit",
     prixMensuel: 0,
-    limiteDocumentsParMois: 5,
-    limiteClients: 5,
-    limiteDepensesParMois: 5,
+    limiteDocumentsParMois: 4,
+    limiteClients: 4,
+    limiteDepensesParMois: 0,
+    limitePdfParMois: 4,
     limiteMembres: 10,
     rapportComplet: false,
     fonctionnalites: [
-      "5 documents par mois (devis, factures, etc.)",
-      "5 clients",
-      "Génération PDF illimitée",
-      "Comptabilité simplifiée (5 dépenses/mois)",
+      "4 documents par mois (devis, factures, etc.)",
+      "4 clients",
+      "4 générations de PDF par mois",
     ],
   },
   starter: {
@@ -38,6 +39,7 @@ export const PLANS: Record<PlanAbonnement, DefinitionPlan> = {
     limiteDocumentsParMois: 50,
     limiteClients: 100,
     limiteDepensesParMois: null,
+    limitePdfParMois: null,
     limiteMembres: 150,
     rapportComplet: true,
     fonctionnalites: [
@@ -55,6 +57,7 @@ export const PLANS: Record<PlanAbonnement, DefinitionPlan> = {
     limiteDocumentsParMois: null,
     limiteClients: null,
     limiteDepensesParMois: null,
+    limitePdfParMois: null,
     limiteMembres: null,
     rapportComplet: true,
     fonctionnalites: [
@@ -93,6 +96,7 @@ export function limitesEffectives(tenant: {
       limiteDocumentsParMois: null,
       limiteClients: null,
       limiteDepensesParMois: null,
+      limitePdfParMois: null,
       limiteMembres: null,
     };
   }

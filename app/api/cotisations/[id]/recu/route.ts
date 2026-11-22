@@ -3,6 +3,7 @@ import { getSession } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 import { renderRecuHtml } from "@/lib/pdf/recu-template";
 import { genererPdf } from "@/lib/pdf/generate";
+import { autoriserGenerationPdf, MESSAGE_LIMITE_PDF } from "@/lib/pdf/limite";
 import { LABELS_MOYEN_PAIEMENT, estMoyenPaiementValide } from "@/lib/paiement-moyens";
 
 export async function GET(
@@ -31,6 +32,8 @@ export async function GET(
           codePostal: true,
           ville: true,
           pays: true,
+          plan: true,
+          typeCompte: true,
         },
       },
     },
@@ -44,6 +47,9 @@ export async function GET(
       { error: "Aucun reçu : cette cotisation n'est pas encore marquée payée." },
       { status: 400 }
     );
+  }
+  if (!(await autoriserGenerationPdf({ id: session.tenantId, ...cotisation.tenant }))) {
+    return NextResponse.json({ error: MESSAGE_LIMITE_PDF }, { status: 403 });
   }
 
   const html = renderRecuHtml({

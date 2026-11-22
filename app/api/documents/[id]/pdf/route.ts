@@ -3,6 +3,7 @@ import { getSession } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 import { renderDocumentHtml } from "@/lib/pdf/template";
 import { genererPdf } from "@/lib/pdf/generate";
+import { autoriserGenerationPdf, MESSAGE_LIMITE_PDF } from "@/lib/pdf/limite";
 
 export async function GET(
   request: Request,
@@ -26,6 +27,14 @@ export async function GET(
 
   if (!document) {
     return NextResponse.json({ error: "Document introuvable." }, { status: 404 });
+  }
+
+  const tenant = await prisma.tenant.findUniqueOrThrow({
+    where: { id: session.tenantId },
+    select: { plan: true, typeCompte: true },
+  });
+  if (!(await autoriserGenerationPdf({ id: session.tenantId, ...tenant }))) {
+    return NextResponse.json({ error: MESSAGE_LIMITE_PDF }, { status: 403 });
   }
 
   const html = renderDocumentHtml(document);

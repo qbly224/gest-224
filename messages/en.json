@@ -408,10 +408,9 @@
     "gratuit": {
       "label": "Free",
       "fonctionnalites": [
-        "5 documents per month (quotes, invoices, etc.)",
-        "5 clients",
-        "Unlimited PDF generation",
-        "Simplified accounting (5 expenses/month)"
+        "4 documents per month (quotes, invoices, etc.)",
+        "4 clients",
+        "4 PDF generations per month"
       ]
     },
     "starter": {
