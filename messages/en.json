@@ -89,7 +89,11 @@
           "titre": "Team and communication",
           "description": "President, treasurer, communications, secretary: each with their own role. Announcements emailed to every member."
         }
-      }
+      },
+      "essaiGratuitBadge": "1 month free",
+      "associationNotePart1": "Running an association? A single plan at €19/month, 1-month free trial — ",
+      "associationNoteLien": "see the details",
+      "associationNotePart2": "."
     },
     "aPropos": {
       "surtitre": "About",
@@ -112,9 +116,8 @@
       "choisir": "Choose {plan}",
       "changementLibre": "You can change plans at any time from your account.",
       "metaDescription": "Discover UniGest's pricing: three plans for businesses and a single unlimited plan for associations, with a one-month free trial.",
-      "associationTitre": "Running an association?",
-      "associationDescription": "A single plan, no tiers: unlimited access to every feature once your subscription is active, with a one-month free trial just like a business account.",
-      "associationCta": "Create an association account"
+      "essaiGratuitBadge": "1 month free",
+      "planLabelAssociation": "Association"
     },
     "legal": {
       "misAJourLabel": "Last updated:",
@@ -429,6 +432,15 @@
         "Full document chain (quote to credit note)",
         "Unlimited simplified accounting",
         "Full report (accounting + activity)"
+      ]
+    },
+    "association": {
+      "label": "Association",
+      "fonctionnalites": [
+        "Unlimited members and dues",
+        "Meetings, attendance and minutes",
+        "Donations, budget and financial report",
+        "Multi-role team and communication"
       ]
     }
   },

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { LISTE_PLANS } from "@/lib/plans";
+import { LISTE_PLANS, PLANS } from "@/lib/plans";
 import { Reveal } from "@/components/public/reveal";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -32,10 +32,15 @@ export default async function TarifsPage() {
           </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3">
+        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {LISTE_PLANS.map((plan, i) => (
             <Reveal key={plan.id} delayMs={i * 100}>
               <div className="flex h-full flex-col rounded-sm border border-encre/20 bg-surface/70 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-encre/40 hover:shadow-xl hover:shadow-encre/10">
+                {plan.id !== "gratuit" && (
+                  <span className="mb-2 inline-block w-fit rounded-full bg-encre/10 px-2.5 py-0.5 font-sans text-xs font-medium text-encre">
+                    {t("essaiGratuitBadge")}
+                  </span>
+                )}
                 <h2 className="font-titre text-xl text-encre">{tPlans(`${plan.id}.label`)}</h2>
                 <p className="mt-2 font-mono text-3xl text-encre">
                   {plan.prixMensuel === 0 ? "0 €" : `${plan.prixMensuel} €`}
@@ -60,22 +65,40 @@ export default async function TarifsPage() {
               </div>
             </Reveal>
           ))}
+
+          <Reveal delayMs={LISTE_PLANS.length * 100}>
+            <div className="flex h-full flex-col rounded-sm border border-encre/20 bg-surface/70 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-encre/40 hover:shadow-xl hover:shadow-encre/10">
+              <span className="mb-2 inline-block w-fit rounded-full bg-encre/10 px-2.5 py-0.5 font-sans text-xs font-medium text-encre">
+                {t("essaiGratuitBadge")}
+              </span>
+              <h2 className="font-titre text-xl text-encre">{t("planLabelAssociation")}</h2>
+              <p className="mt-2 font-mono text-3xl text-encre">
+                {PLANS.starter.prixMensuel} €
+                <span className="font-sans text-sm text-encre/75"> {t("parMois")}</span>
+              </p>
+
+              <ul className="mt-6 flex-1 space-y-2 font-sans text-sm text-encre/80">
+                {tPlans.raw("association.fonctionnalites").map((f: string) => (
+                  <li key={f} className="flex gap-2">
+                    <span className="text-encre/70">-</span>
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <Link
+                href="/inscription?type=association"
+                className="mt-6 rounded-sm bg-encre px-4 py-2 text-center font-sans text-sm font-medium text-ivoire hover:bg-encre-light"
+              >
+                {t("choisir", { plan: t("planLabelAssociation") })}
+              </Link>
+            </div>
+          </Reveal>
         </div>
 
         <p className="mt-10 text-center font-sans text-xs text-encre/70">
           {t("changementLibre")}
         </p>
-
-        <div className="mx-auto mt-16 max-w-2xl rounded-sm border border-encre/20 bg-surface/70 p-6 text-center">
-          <h2 className="font-titre text-xl text-encre">{t("associationTitre")}</h2>
-          <p className="mt-2 font-sans text-sm text-encre/75">{t("associationDescription")}</p>
-          <Link
-            href="/inscription?type=association"
-            className="mt-5 inline-block rounded-sm border border-encre/30 px-5 py-2 font-sans text-sm text-encre hover:bg-encre/5"
-          >
-            {t("associationCta")}
-          </Link>
-        </div>
       </div>
     </main>
   );

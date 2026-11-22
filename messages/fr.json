@@ -89,7 +89,11 @@
           "titre": "Équipe et communication",
           "description": "Président, trésorier, communication, secrétaire : chacun son rôle. Annonces diffusées par email à tous les membres."
         }
-      }
+      },
+      "essaiGratuitBadge": "1 mois gratuit",
+      "associationNotePart1": "Vous gérez une association ? Un plan unique à 19 €/mois, 1 mois d'essai gratuit — ",
+      "associationNoteLien": "voir le détail",
+      "associationNotePart2": "."
     },
     "aPropos": {
       "surtitre": "À propos",
@@ -112,9 +116,8 @@
       "choisir": "Choisir {plan}",
       "changementLibre": "Vous pourrez changer de plan à tout moment depuis votre espace.",
       "metaDescription": "Découvrez les tarifs de UniGest : trois plans pour les entreprises et un plan unique illimité pour les associations, avec un mois d'essai gratuit.",
-      "associationTitre": "Vous gérez une association ?",
-      "associationDescription": "Un seul plan, sans palier : accès illimité à toutes les fonctionnalités une fois votre abonnement actif, avec un mois d'essai gratuit comme pour un compte entreprise.",
-      "associationCta": "Créer un compte association"
+      "essaiGratuitBadge": "1 mois gratuit",
+      "planLabelAssociation": "Association"
     },
     "legal": {
       "misAJourLabel": "Dernière mise à jour :",
@@ -429,6 +432,15 @@
         "Toute la chaîne documentaire (devis à avoir)",
         "Comptabilité simplifiée illimitée",
         "Rapport complet (comptabilité + activité)"
+      ]
+    },
+    "association": {
+      "label": "Association",
+      "fonctionnalites": [
+        "Membres et cotisations illimités",
+        "Réunions, présences et comptes-rendus",
+        "Dons, budget et rapport financier",
+        "Équipe multi-rôles et communication"
       ]
     }
   },

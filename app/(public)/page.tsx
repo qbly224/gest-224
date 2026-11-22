@@ -152,6 +152,11 @@ export default async function AccueilPage() {
             {LISTE_PLANS.map((plan, i) => (
               <Reveal key={plan.id} delayMs={i * 100}>
                 <div className="flex h-full flex-col rounded-sm border border-encre/20 bg-surface/70 p-6 text-left transition-all duration-300 hover:-translate-y-1 hover:border-encre/40 hover:shadow-xl hover:shadow-encre/10">
+                  {plan.id !== "gratuit" && (
+                    <span className="mb-2 inline-block w-fit rounded-full bg-encre/10 px-2.5 py-0.5 font-sans text-xs font-medium text-encre">
+                      {t("essaiGratuitBadge")}
+                    </span>
+                  )}
                   <h3 className="font-titre text-xl text-encre">{tPlans(`${plan.id}.label`)}</h3>
                   <p className="mt-2 font-mono text-2xl text-encre">
                     {plan.prixMensuel === 0 ? "0 €" : `${plan.prixMensuel} €`}
@@ -170,6 +175,13 @@ export default async function AccueilPage() {
           <Link href="/tarifs" className="mt-6 inline-block font-sans text-sm text-encre underline">
             {t("comparerPlans")}
           </Link>
+          <p className="mt-3 font-sans text-sm text-encre/70">
+            {t("associationNotePart1")}
+            <Link href="/tarifs" className="underline">
+              {t("associationNoteLien")}
+            </Link>
+            {t("associationNotePart2")}
+          </p>
         </div>
       </section>
 
