@@ -185,6 +185,15 @@ model Tenant {
   // l'historique toujours possible).
   paiementValide         Boolean   @default(true) @map("paiement_valide")
 
+  // Date du premier échec de paiement récurrent non résolu (webhook Stripe
+  // invoice.payment_failed), remise à null dès que le paiement repasse
+  // (invoice.payment_succeeded). Sert uniquement de point de départ au
+  // délai de grâce avant blocage - cf. lib/paiement-echec.ts : le compte
+  // reste pleinement actif jusqu'au 5 du mois (relances par email entre
+  // temps), puis paiementValide bascule à false s'il n'est toujours pas
+  // résolu (job planifié quotidien).
+  paiementEnEchecDepuis  DateTime? @map("paiement_en_echec_depuis")
+
   // Désactive l'envoi des emails de relance automatique pour les factures
   // en retard (cf. app/api/cron/relances/route.ts) sans toucher au reste du
   // compte.

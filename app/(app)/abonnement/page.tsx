@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, getLocale } from "next-intl/server";
 import { requireSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { compterDocumentsMoisCourant } from "@/lib/documents/usage";
@@ -11,6 +11,9 @@ import {
   annulerAbonnement,
   ouvrirPortailFacturation,
 } from "@/lib/actions/paiement";
+import { prochainCinqDuMois } from "@/lib/paiement-echec";
+import { formatDate } from "@/lib/format";
+import type { Locale } from "@/i18n/config";
 
 export default async function AbonnementPage({
   searchParams,
@@ -19,6 +22,7 @@ export default async function AbonnementPage({
 }) {
   const session = await requireSession();
   const t = await getTranslations("app.abonnement");
+  const locale = (await getLocale()) as Locale;
   const { paiement } = await searchParams;
 
   const tenant = await prisma.tenant.findUniqueOrThrow({ where: { id: session.tenantId } });
@@ -58,7 +62,17 @@ export default async function AbonnementPage({
 
       {tenant.plan !== "gratuit" && !tenant.paiementValide && (
         <p className="mt-4 rounded-sm bg-red-50 px-3 py-2 font-sans text-sm text-red-700">
-          {t("paiementEnAttente")}
+          {tenant.paiementEnEchecDepuis ? t("paiementBloqueEchec") : t("paiementEnAttente")}
+        </p>
+      )}
+
+      {tenant.plan !== "gratuit" && tenant.paiementValide && tenant.paiementEnEchecDepuis && (
+        <p className="mt-4 rounded-sm bg-amber-50 px-3 py-2 font-sans text-sm text-amber-800">
+          {t("paiementEnEchec", {
+            date: formatDate(prochainCinqDuMois(tenant.paiementEnEchecDepuis), locale, {
+              dateStyle: "long",
+            }),
+          })}
         </p>
       )}
 

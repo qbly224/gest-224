@@ -3,6 +3,16 @@ import type Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
 import { prisma } from "@/lib/prisma";
 import { estPlanValide } from "@/lib/plans";
+import { enregistrerEchecPaiement, resoudreEchecPaiement } from "@/lib/paiement-echec";
+
+// Depuis la restructuration de l'API Invoices (versions Stripe récentes),
+// l'abonnement source n'est plus sur invoice.subscription mais nesté sous
+// invoice.parent.subscription_details.subscription.
+function idAbonnementFacture(invoice: Stripe.Invoice): string | null {
+  const details = invoice.parent?.subscription_details;
+  if (!details?.subscription) return null;
+  return typeof details.subscription === "string" ? details.subscription : details.subscription.id;
+}
 
 /**
  * Source de vérité pour `Tenant.plan` une fois le paiement branché : ni la
@@ -66,6 +76,39 @@ export async function POST(request: Request) {
           where: { id: tenantId, stripeSubscriptionId: subscription.id },
           data: { plan: "gratuit", stripeSubscriptionId: null, paiementValide: true },
         });
+      }
+      break;
+    }
+
+    // Renouvellement mensuel refusé (carte expirée/refusée...). Ne bloque
+    // rien tout de suite : enregistrerEchecPaiement() relance par email et
+    // démarre le délai de grâce, bloquerAbonnementsEnEchec() (job planifié)
+    // s'occupe du blocage effectif une fois le 5 du mois dépassé.
+    case "invoice.payment_failed": {
+      const invoice = event.data.object as Stripe.Invoice;
+      const subscriptionId = idAbonnementFacture(invoice);
+      if (subscriptionId) {
+        const tenant = await prisma.tenant.findFirst({
+          where: { stripeSubscriptionId: subscriptionId },
+          select: { id: true },
+        });
+        if (tenant) await enregistrerEchecPaiement(tenant.id);
+      }
+      break;
+    }
+
+    // Reprise après un ou plusieurs échecs (carte mise à jour, nouvelle
+    // tentative Stripe réussie...) : efface l'échec en cours et redonne
+    // l'accès complet immédiatement, sans attendre le prochain 5 du mois.
+    case "invoice.payment_succeeded": {
+      const invoice = event.data.object as Stripe.Invoice;
+      const subscriptionId = idAbonnementFacture(invoice);
+      if (subscriptionId) {
+        const tenant = await prisma.tenant.findFirst({
+          where: { stripeSubscriptionId: subscriptionId },
+          select: { id: true },
+        });
+        if (tenant) await resoudreEchecPaiement(tenant.id);
       }
       break;
     }

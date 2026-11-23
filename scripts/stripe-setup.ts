@@ -50,9 +50,17 @@ async function trouverOuCreerPrix(
 }
 
 const URL_WEBHOOK = "https://gest-224.onrender.com/api/stripe/webhook";
+// invoice.payment_failed/succeeded pilotent le délai de grâce avant blocage
+// d'un abonnement impayé (cf. lib/paiement-echec.ts) - ajoutés après la
+// création initiale du webhook, donc pas forcément déjà activés sur un
+// endpoint existant : si ce script trouve un webhook pour cette URL plutôt
+// que d'en créer un, il ne modifie pas ses événements activés (vérifier/les
+// ajouter à la main depuis le dashboard Stripe si besoin).
 const EVENEMENTS_WEBHOOK: Stripe.WebhookEndpointCreateParams.EnabledEvent[] = [
   "checkout.session.completed",
   "customer.subscription.deleted",
+  "invoice.payment_failed",
+  "invoice.payment_succeeded",
 ];
 
 async function trouverOuCreerWebhook(

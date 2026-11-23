@@ -16,4 +16,4 @@ export function paiementBloque(tenant: {
 }
 
 export const MESSAGE_PAIEMENT_BLOQUE =
-  "Votre paiement est en attente de validation - vous pouvez consulter votre historique, mais pas créer de nouveaux éléments tant qu'il n'est pas validé. Voir la page Abonnement.";
+  "Votre abonnement n'est pas à jour - vous pouvez consulter votre historique, mais pas créer de nouveaux éléments tant que ce n'est pas réglé. Voir la page Abonnement pour le détail.";

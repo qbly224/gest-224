@@ -56,3 +56,18 @@ select cron.schedule(
   );
   $$
 );
+
+-- Bascule paiementValide à false pour les tenants dont le paiement récurrent
+-- échoue depuis plus que le délai de grâce (cf. lib/paiement-echec.ts :
+-- prochainCinqDuMois). Secret dédié (CRON_SECRET_PAIEMENTS), même raison
+-- que pour la file d'emails ci-dessus.
+select cron.schedule(
+  'gest224-paiements-en-echec',
+  '0 5 * * *',
+  $$
+  select net.http_get(
+    url := 'https://gest-224.onrender.com/api/cron/paiements-en-echec',
+    headers := jsonb_build_object('x-cron-secret', '<CRON_SECRET_PAIEMENTS_RENDER>')
+  );
+  $$
+);

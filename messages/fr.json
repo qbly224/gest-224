@@ -1217,6 +1217,8 @@
       "paiementSucces": "Paiement confirmé - votre plan a été mis à jour.",
       "paiementAnnule": "Paiement annulé - votre plan n'a pas changé.",
       "paiementEnAttente": "Paiement en espèces en attente de validation par un administrateur - vous pouvez consulter votre historique, mais pas créer de nouveaux éléments tant qu'il n'est pas validé.",
+      "paiementBloqueEchec": "Votre dernier paiement a échoué et le délai de grâce est dépassé - vous pouvez consulter votre historique, mais pas créer de nouveaux éléments. Mettez à jour votre moyen de paiement pour rétablir l'accès immédiatement.",
+      "paiementEnEchec": "Votre dernier paiement a échoué. Mettez à jour votre moyen de paiement avant le {date} pour éviter que votre compte ne passe en lecture seule.",
       "documentsCeMois": "Documents créés ce mois-ci",
       "clientsEnregistres": "Clients enregistrés",
       "membresEnregistres": "Membres actifs",

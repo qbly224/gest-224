@@ -1217,6 +1217,8 @@
       "paiementSucces": "Payment confirmed - your plan has been updated.",
       "paiementAnnule": "Payment cancelled - your plan has not changed.",
       "paiementEnAttente": "Cash payment pending administrator validation - you can view your history, but cannot create new items until it is validated.",
+      "paiementBloqueEchec": "Your last payment failed and the grace period has passed - you can view your history, but not create new items. Update your payment method to restore access immediately.",
+      "paiementEnEchec": "Your last payment failed. Update your payment method before {date} to avoid your account switching to read-only.",
       "documentsCeMois": "Documents created this month",
       "clientsEnregistres": "Registered clients",
       "membresEnregistres": "Active members",
